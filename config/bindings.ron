@@ -1,0 +1,8 @@
+(
+    axes: {
+        "horizontal": Emulated(pos: Key(D), neg: Key(A))
+    },
+    actions: {
+        "jump": [[Key(Space)]]
+    }
+)
