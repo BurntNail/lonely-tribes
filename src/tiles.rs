@@ -1,13 +1,7 @@
 use amethyst::{
     core::math::Point3,
-    ecs::{World},
-    prelude::*,
-    renderer::{
-        plugins::RenderFlat2D,
-        types::DefaultBackend,
-        RenderingBundle,
-    },
-    tiles::{RenderTiles2D, Tile},
+    ecs::World,
+    tiles::Tile,
 };
 
 #[derive(Clone, Default)]

@@ -7,11 +7,12 @@ use amethyst::{
 };
 
 use log::info;
-use amethyst::assets::Loader;
-use amethyst::tiles::TileMap;
+use amethyst::assets::{Loader, Handle};
+use amethyst::tiles::{TileMap, MapStorage};
 use crate::tiles::SimpleTile;
-use amethyst::core::math::Vector3;
+use amethyst::core::math::{Vector3, Point3};
 use amethyst::renderer::sprite::SpriteSheetHandle;
+use amethyst::renderer::SpriteRender;
 
 pub struct MyState;
 
@@ -26,23 +27,26 @@ impl SimpleState for MyState {
         init_camera(world, &dimensions);
 
         let sprite_handle = load_sprite_sheet(world, "art/colored_tilemap_packed");
+        // let map = TileMap::<SimpleTile>::new(
+        //     Vector3::new(8, 8, 1), // The dimensions of the map
+        //     Vector3::new(14, 10, 1), // The dimensions of each tile
+        //     Some(sprite_handle),
+        // );
 
-        let map = TileMap::<SimpleTile>::new(
-            Vector3::new(8, 8, 1), // The dimensions of the map
-            Vector3::new(14, 10, 1), // The dimensions of each tile
-            Some(sprite_handle),
-        );
-        let transform = Transform::default();
+        let mut t = Transform::default();
+        t.set_translation_xyz(WIDTH as f32 / 2.0, HEIGHT as f32 / 2.0, 0.0);
+
+        let spr = SpriteRender::new(sprite_handle, 5);
 
         world
             .create_entity()
-            .with(map)
-            .with(transform)
+            .with(spr)
+            .with(t)
             .build();
     }
 }
 
-fn load_sprite_sheet (world: &mut World, path: &str) -> SpriteSheetHandle {
+fn load_sprite_sheet (world: &mut World, path: &str) -> Handle<SpriteSheet> {
     info!("Loaded sprite sheet: {}", path);
     let tex_handle =
         world.read_resource::<Loader>().load(format!("{}.png", path), ImageFormat::default(), (), &world.read_resource::<AssetStorage<Texture>>());

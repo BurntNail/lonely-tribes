@@ -12,6 +12,7 @@ use amethyst::{
 };
 use amethyst::tiles::RenderTiles2D;
 use crate::tiles::SimpleTile;
+use amethyst::renderer::palette::Srgba;
 
 mod state;
 mod tiles;
@@ -35,9 +36,9 @@ fn main() -> amethyst::Result<()> {
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
                     RenderToWindow::from_config_path(display_config)?
-                        .with_clear([0.34, 0.36, 0.52, 1.0]),
+                        .with_clear(get_colours(34.0, 35.0, 35.0)),
                 )
-                .with_plugin(RenderUi::default())
+                // .with_plugin(RenderUi::default())
                 .with_plugin(RenderFlat2D::default())
                 .with_plugin(RenderTiles2D::<SimpleTile>::default())
         )?;
@@ -46,4 +47,12 @@ fn main() -> amethyst::Result<()> {
     game.run();
 
     Ok(())
+}
+
+
+fn get_colours (r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
+    let (r, g, b, a) = Srgba::new(r_a / 255., g_a / 255., b_a / 255., 1.0)
+        .into_linear()
+        .into_components();
+    [r, g, b, a]
 }
