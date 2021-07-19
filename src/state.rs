@@ -1,60 +1,90 @@
 use amethyst::{
-    assets::{AssetStorage},
+    assets::AssetStorage,
     core::transform::Transform,
     prelude::*,
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     window::ScreenDimensions,
 };
 
+use crate::level::{Room, SpriteRequest};
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
+use amethyst::assets::{Handle, Loader, RonFormat};
 use log::info;
-use amethyst::assets::{Loader, Handle};
-use amethyst::tiles::{TileMap, MapStorage};
-use crate::tiles::SimpleTile;
-use amethyst::core::math::{Vector3, Point3};
-use amethyst::renderer::sprite::SpriteSheetHandle;
 use amethyst::renderer::SpriteRender;
+use crate::components::TileTransform;
 
-pub struct MyState;
+#[derive(Default)]
+pub struct MyState {
+    handle: Option<Handle<SpriteSheet>>,
+    app_root_dir: String
+}
 
-pub const WIDTH: u32 = 8 * 16 * 2;
-pub const HEIGHT: u32 = 8 * 9 * 2; //each sprite is 8px wide
-
+impl MyState {
+    pub fn new (app_root_dir: String) -> Self {
+        Self {
+            handle: None,
+            app_root_dir
+        }
+    }
+}
 
 impl SimpleState for MyState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
-        let dimensions = ScreenDimensions::new(WIDTH, HEIGHT, 1.0); //No idea what HDPI is, so have set it to 1
+        let dimensions = ScreenDimensions::new(ARENA_WIDTH, ARENA_HEIGHT, 1.0); //No idea what HDPI is, so have set it to 1
         init_camera(world, &dimensions);
 
-        let sprite_handle = load_sprite_sheet(world, "art/colored_tilemap_packed");
-        // let map = TileMap::<SimpleTile>::new(
-        //     Vector3::new(8, 8, 1), // The dimensions of the map
-        //     Vector3::new(14, 10, 1), // The dimensions of each tile
-        //     Some(sprite_handle),
-        // );
+        self.handle
+            .replace(load_sprite_sheet(world, "art/colored_tilemap_packed"));
 
-        let mut t = Transform::default();
-        t.set_translation_xyz(WIDTH as f32 / 2.0, HEIGHT as f32 / 2.0, 0.0);
-
-        let spr = SpriteRender::new(sprite_handle, 5);
-
-        world
-            .create_entity()
-            .with(spr)
-            .with(t)
-            .build();
+        // let mut lvl_path = self.app_root_dir.clone();
+        // lvl_path.push_str("/maps/test.ron");
+        let lvl_path = "assets/maps/test.ron".to_string(); //TODO: Fix FQDN
+        load_level(world, self.handle.clone().unwrap(), lvl_path.as_str());
     }
 }
 
-fn load_sprite_sheet (world: &mut World, path: &str) -> Handle<SpriteSheet> {
-    info!("Loaded sprite sheet: {}", path);
-    let tex_handle =
-        world.read_resource::<Loader>().load(format!("{}.png", path), ImageFormat::default(), (), &world.read_resource::<AssetStorage<Texture>>());
+fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) {
+    let lvl = Room::new(path);
+
+    if lvl.data.is_empty() {
+        return;
+    }
+
+    for x in 0..lvl.data.len() {
+        for y in 0..lvl.data[0].len() {
+            let spr_index = lvl.data[x][y].get_index();
+
+            if spr_index == 16 {
+                continue;
+            }
+
+            let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
+
+            world
+                .create_entity()
+                .with(spr)
+                .with(Transform::default())
+                .with(TileTransform::new(x, y))
+                .build();
+        }
+    }
+}
+
+fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
+    info!("Loading sprite sheet: {}", path);
+    let tex_handle = world.read_resource::<Loader>().load(
+        format!("{}.png", path),
+        ImageFormat::default(),
+        (),
+        &world.read_resource::<AssetStorage<Texture>>(),
+    );
+
     world.read_resource::<Loader>().load(
         format!("{}.ron", path),
         SpriteSheetFormat(tex_handle),
         (),
-        &world.read_resource::<AssetStorage<SpriteSheet>>()
+        &world.read_resource::<AssetStorage<SpriteSheet>>(),
     )
 }
 

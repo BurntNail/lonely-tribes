@@ -1,3 +1,4 @@
+use amethyst::renderer::palette::Srgba;
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -7,15 +8,20 @@ use amethyst::{
         types::DefaultBackend,
         RenderingBundle,
     },
-    ui::{RenderUi, UiBundle},
+    ui::UiBundle,
     utils::application_root_dir,
 };
-use amethyst::tiles::RenderTiles2D;
-use crate::tiles::SimpleTile;
-use amethyst::renderer::palette::Srgba;
+use crate::systems::UpdateTileTransforms;
 
+mod level;
 mod state;
-mod tiles;
+mod systems;
+mod components;
+
+pub const WIDTH: u32 = 16;
+pub const HEIGHT: u32 = 9;
+pub const ARENA_WIDTH: u32 = 8 * WIDTH;
+pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 32 sprites by 18 sprites
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
@@ -38,19 +44,18 @@ fn main() -> amethyst::Result<()> {
                     RenderToWindow::from_config_path(display_config)?
                         .with_clear(get_colours(34.0, 35.0, 35.0)),
                 )
-                // .with_plugin(RenderUi::default())
-                .with_plugin(RenderFlat2D::default())
-                .with_plugin(RenderTiles2D::<SimpleTile>::default())
-        )?;
+                .with_plugin(RenderFlat2D::default()),
+        )?
+        .with(UpdateTileTransforms, "update_tile_transforms", &[]);
 
-    let mut game = Application::new(resources, state::MyState, game_data)?;
+    let resources_path_str = format!("{:?}", resources.clone());
+    let mut game = Application::new(resources, state::MyState::new(resources_path_str), game_data)?;
     game.run();
 
     Ok(())
 }
 
-
-fn get_colours (r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
+fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     let (r, g, b, a) = Srgba::new(r_a / 255., g_a / 255., b_a / 255., 1.0)
         .into_linear()
         .into_components();

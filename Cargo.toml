@@ -7,7 +7,9 @@ edition = "2018"
 
 [dependencies]
 log = "0.4.14"
+serde = "1.0.126"
+ron = "0.6.4"
 
 [dependencies.amethyst]
 version = "0.15.3"
-features = ["vulkan", "tiles"]
+features = ["vulkan"]
