@@ -1,13 +1,11 @@
-use amethyst::core::math::Vector3;
 use amethyst::{
-    core::{transform::Transform, Time},
+    core::{transform::Transform},
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
-    renderer::Camera,
 };
 use crate::level::Room;
 use crate::components::TileTransform;
-use crate::{WIDTH, HEIGHT};
+use crate::HEIGHT;
 
 #[derive(SystemDesc)]
 pub struct UpdateTileTransforms;

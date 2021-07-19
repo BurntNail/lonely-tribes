@@ -6,9 +6,9 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
-use crate::level::{Room, SpriteRequest};
+use crate::level::Room;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
-use amethyst::assets::{Handle, Loader, RonFormat};
+use amethyst::assets::{Handle, Loader};
 use log::info;
 use amethyst::renderer::SpriteRender;
 use crate::components::TileTransform;

@@ -1,10 +1,6 @@
 use crate::{HEIGHT, WIDTH};
-use amethyst::assets::{Asset, Handle, ProcessableAsset, ProcessingState};
-use amethyst::core::ecs::DenseVecStorage;
-use amethyst::Error;
 use serde::{Deserialize, Serialize};
-use std::fs::{File, read_to_string};
-use std::io::{BufReader, BufRead};
+use std::fs::read_to_string;
 use ron::de::from_str;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -97,7 +93,7 @@ pub struct Room {
 impl Room {
     pub fn new (path: &str) -> Self {
         log::info!("Loading Room: {}", path);
-        let file_contents = read_to_string(path).unwrap_or("".to_string());
+        let file_contents = read_to_string(path).unwrap_or_else(|_| "".to_string());
         let raw_room = from_str(file_contents.as_str()).unwrap_or(ReadInRoom::default());
 
         let mut res: Vec<Vec<SpriteRequest>> = Vec::new();
@@ -106,7 +102,7 @@ impl Room {
             let mut col = Vec::new();
             for _y in 0..HEIGHT {
                 let spr_index = raw_room.map.get(i).unwrap_or_else(|| {
-                    // log::warn!("Room Data for index_{} not found", i);
+                    log::warn!("Room Data for index_{} not found", i);
                     &16
                 });
                 col.push(SpriteRequest::at_index(spr_index));

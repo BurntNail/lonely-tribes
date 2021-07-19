@@ -48,7 +48,7 @@ fn main() -> amethyst::Result<()> {
         )?
         .with(UpdateTileTransforms, "update_tile_transforms", &[]);
 
-    let resources_path_str = format!("{:?}", resources.clone());
+    let resources_path_str = format!("{:?}", resources);
     let mut game = Application::new(resources, state::MyState::new(resources_path_str), game_data)?;
     game.run();
 
