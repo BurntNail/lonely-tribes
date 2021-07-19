@@ -39,7 +39,7 @@ impl SimpleState for MyState {
 
         // let mut lvl_path = self.app_root_dir.clone();
         // lvl_path.push_str("/maps/test.ron");
-        let lvl_path = "assets/maps/test.ron".to_string(); //TODO: Fix FQDN
+        let lvl_path = "assets/maps/test-room-one.png".to_string(); //TODO: Fix FQDN
         load_level(world, self.handle.clone().unwrap(), lvl_path.as_str());
     }
 }
@@ -53,9 +53,9 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
 
     for x in 0..lvl.data.len() {
         for y in 0..lvl.data[0].len() {
-            let spr_index = lvl.data[x][y].get_index();
+            let spr_index = lvl.data[x][y].get_spritesheet_index();
 
-            if spr_index == 16 {
+            if spr_index == 9999 {
                 continue;
             }
 

@@ -1,4 +1,4 @@
 (
     title: "Fallout ?!",
-    dimensions: Some((1280, 720)),
+    dimensions: Some((1600, 900)),
 )

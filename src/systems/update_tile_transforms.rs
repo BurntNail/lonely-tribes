@@ -22,11 +22,10 @@ impl<'s> System<'s> for UpdateTileTransforms {
     fn run(&mut self, (tiles, mut transforms): Self::SystemData) {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
-            trans.set_translation_xyz(
-                tile.x as f32 * 8.0 + TILE_WIDTH,
-                (HEIGHT as usize - tile.y) as f32 * 8.0 + TILE_HEIGHT,
-                old_z
-            );
+            let x = tile.x as f32 * 8.0 + TILE_WIDTH;
+            let y = (HEIGHT as usize - tile.y) as f32 * 8.0 - TILE_HEIGHT;
+
+            trans.set_translation_xyz(x, y, old_z);
         }
     }
 }

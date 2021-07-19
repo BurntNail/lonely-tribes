@@ -12,6 +12,9 @@ use amethyst::{
     utils::application_root_dir,
 };
 use crate::systems::UpdateTileTransforms;
+#[macro_use]
+extern crate lazy_static;
+
 
 mod level;
 mod state;

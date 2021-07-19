@@ -150,7 +150,7 @@ dependencies = [
  "objekt",
  "parking_lot 0.10.2",
  "rayon",
- "ron 0.5.1",
+ "ron",
  "serde",
 ]
 
@@ -178,7 +178,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "587b1ab5cec425194e727f229ff018d7c33a6af2a129ac6cd6243cedd06aef63"
 dependencies = [
  "log",
- "ron 0.5.1",
+ "ron",
  "serde",
 ]
 
@@ -314,7 +314,7 @@ dependencies = [
  "log",
  "palette",
  "rendy",
- "ron 0.5.1",
+ "ron",
  "serde",
  "smallvec 1.6.1",
  "static_assertions 1.1.0",
@@ -346,7 +346,7 @@ dependencies = [
  "log",
  "paste",
  "rand 0.7.3",
- "ron 0.5.1",
+ "ron",
  "serde",
  "smallvec 1.6.1",
  "unicode-normalization",
@@ -506,12 +506,6 @@ name = "base64"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b41b7ea54a0c9d92199de89e20e58d49f02f8e699814ef3fdf266f6f748d15c7"
-
-[[package]]
-name = "base64"
-version = "0.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "904dfeac50f3cdaba28fc6f57fdcddb75f49ed61346676a78c4ffe55877802fd"
 
 [[package]]
 name = "bindgen"
@@ -1402,6 +1396,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "gif"
+version = "0.11.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5a668f699973d0f573d15749b7002a9ac9e1f9c6b220e7b165601334c173d8de"
+dependencies = [
+ "color_quant",
+ "weezl",
+]
+
+[[package]]
 name = "gimli"
 version = "0.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1546,7 +1550,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "35371e467cd7b0b3d1d6013d619203658467df12d61b0ca43cd67b743b1965eb"
 dependencies = [
  "byteorder",
- "gif",
+ "gif 0.10.3",
  "jpeg-decoder",
  "lzw",
  "num-iter",
@@ -1564,7 +1568,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08ed2ada878397b045454ac7cfb011d73132c59f31a955d230bd1f1c2e68eb4a"
 dependencies = [
  "byteorder",
- "gif",
+ "gif 0.10.3",
  "jpeg-decoder",
  "num-iter",
  "num-rational 0.2.4",
@@ -1583,11 +1587,14 @@ dependencies = [
  "bytemuck",
  "byteorder",
  "color_quant",
+ "gif 0.11.2",
  "jpeg-decoder",
  "num-iter",
  "num-rational 0.3.2",
  "num-traits 0.2.14",
  "png 0.16.8",
+ "scoped_threadpool",
+ "tiff 0.6.1",
 ]
 
 [[package]]
@@ -3092,24 +3099,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "ron"
-version = "0.6.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "064ea8613fb712a19faf920022ec8ddf134984f100090764a4e1d768f3827f1f"
-dependencies = [
- "base64 0.13.0",
- "bitflags",
- "serde",
-]
-
-[[package]]
 name = "rouguelike-rpg"
 version = "0.1.0"
 dependencies = [
  "amethyst",
+ "image 0.23.14",
+ "lazy_static",
  "log",
- "ron 0.6.4",
- "serde",
 ]
 
 [[package]]
@@ -3582,6 +3578,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "tiff"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a53f4706d65497df0c4349241deddf35f84cee19c87ed86ea8ca590f4464437"
+dependencies = [
+ "jpeg-decoder",
+ "miniz_oxide 0.4.4",
+ "weezl",
+]
+
+[[package]]
 name = "time"
 version = "0.1.43"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3845,6 +3852,12 @@ dependencies = [
  "dlib",
  "lazy_static",
 ]
+
+[[package]]
+name = "weezl"
+version = "0.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d8b77fdfd5a253be4ab714e4ffa3c49caf146b4de743e97510c0656cf90f1e8e"
 
 [[package]]
 name = "winapi"

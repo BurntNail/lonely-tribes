@@ -1,5 +1,6 @@
 use amethyst::core::ecs::{Component, DenseVecStorage};
 
+#[derive(Debug)]
 pub struct TileTransform {
     pub x: usize,
     pub y: usize
