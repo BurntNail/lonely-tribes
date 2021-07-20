@@ -9,7 +9,6 @@ use amethyst::{
 use crate::level::Room;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use amethyst::assets::{Handle, Loader};
-use log::info;
 use amethyst::renderer::SpriteRender;
 use crate::components::TileTransform;
 
@@ -72,7 +71,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
 }
 
 fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
-    info!("Loading sprite sheet: {}", path);
+    log::info!("Loading sprite sheet: {}", path);
     let tex_handle = world.read_resource::<Loader>().load(
         format!("{}.png", path),
         ImageFormat::default(),
