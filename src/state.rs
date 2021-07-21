@@ -7,10 +7,15 @@ use amethyst::{
 };
 
 use crate::level::Room;
-use crate::{ARENA_HEIGHT, ARENA_WIDTH};
+use crate::{ARENA_HEIGHT, ARENA_WIDTH, HEIGHT};
 use amethyst::assets::{Handle, Loader};
 use amethyst::renderer::SpriteRender;
-use crate::components::TileTransform;
+use crate::components::{TileTransform, Collider, ColliderList};
+use crate::systems::UpdateTileTransforms;
+use crate::tag::Tag;
+use crate::tag::Tag::Player;
+use crate::components::NPC;
+use log::Level::Trace;
 
 #[derive(Default)]
 pub struct MyState {
@@ -36,11 +41,14 @@ impl SimpleState for MyState {
         self.handle
             .replace(load_sprite_sheet(world, "art/colored_tilemap_packed"));
 
+        world.register::<crate::components::Player>();
+        world.register::<crate::components::Collider>();
+        world.register::<crate::components::NPC>();
+
         // let mut lvl_path = self.app_root_dir.clone();
         // lvl_path.push_str("/maps/test.ron");
         let lvl_path = "assets/maps/test-room-one.png".to_string(); //TODO: Fix FQDN
-        load_level(world, self.handle.clone().unwrap(), lvl_path.as_str());
-    }
+        load_level(world, self.handle.clone().unwrap(), lvl_path.as_str()); }
 }
 
 fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) {
@@ -59,13 +67,51 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
             }
 
             let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
+            let tag = Tag::from_spr(lvl.data[x][y]);
+            let tt = TileTransform::new(x as i32, y as i32);
 
-            world
-                .create_entity()
-                .with(spr)
-                .with(Transform::default())
-                .with(TileTransform::new(x, y))
-                .build();
+            world.create_entity().with(ColliderList::new()).build();
+
+            match tag {
+                Tag::Player => {
+                    let mut trans = Transform::default();
+                    trans.set_translation_z(0.5);
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(trans)
+                        .with(crate::components::Player::default())
+                        .build();
+                },
+                Tag::NPC {is_enemy} => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(Transform::default())
+                        .with(NPC::new(is_enemy))
+                        .with(Collider::default())
+                        .build();
+
+                },
+                Tag::Collision => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(Transform::default()) //TODO: Work out way to optimise for static obj
+                        .with(Collider::default())
+                        .build();
+                },
+                _ => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(UpdateTileTransforms::tile_to_transform(tt))
+                        .build();
+                }
+            }
         }
     }
 }

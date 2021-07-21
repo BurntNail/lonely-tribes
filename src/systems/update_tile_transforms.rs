@@ -10,8 +10,8 @@ use crate::HEIGHT;
 #[derive(SystemDesc)]
 pub struct UpdateTileTransforms;
 
-const TILE_WIDTH: f32 = 8.0 / 2.0;
-const TILE_HEIGHT: f32 = 8.0 / 2.0;
+pub const TILE_WIDTH: f32 = 8.0 / 2.0;
+pub const TILE_HEIGHT: f32 = 8.0 / 2.0;
 
 impl<'s> System<'s> for UpdateTileTransforms {
     type SystemData = (
@@ -23,9 +23,27 @@ impl<'s> System<'s> for UpdateTileTransforms {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
             let x = tile.x as f32 * 8.0 + TILE_WIDTH;
-            let y = (HEIGHT as usize - tile.y) as f32 * 8.0 - TILE_HEIGHT;
+            let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
 
             trans.set_translation_xyz(x, y, old_z);
         }
     }
+
+}
+
+impl UpdateTileTransforms {
+    pub fn tile_to_transform (tile: TileTransform) -> Transform {
+        let mut trans = Transform::default();
+        let (x, y, z) = Self::tile_to_xyz(tile);
+        trans.set_translation_xyz(x, y, z);
+        trans
+    }
+    pub fn tile_to_xyz (tile: TileTransform) -> (f32, f32, f32) {
+        let mut trans = Transform::default();
+        let z = trans.translation().z;
+        let x = tile.x as f32 * 8.0 + TILE_WIDTH;
+        let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
+        (x, y, z)
+    }
+
 }

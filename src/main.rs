@@ -11,7 +11,9 @@ use amethyst::{
     ui::UiBundle,
     utils::application_root_dir,
 };
-use crate::systems::UpdateTileTransforms;
+use crate::systems::{UpdateTileTransforms, MovePlayerSystem, CollidersListSystem};
+use crate::components::ColliderList;
+
 #[macro_use]
 extern crate lazy_static;
 
@@ -20,11 +22,12 @@ mod level;
 mod state;
 mod systems;
 mod components;
+mod tag;
 
-pub const WIDTH: u32 = 16;
-pub const HEIGHT: u32 = 9;
+pub const WIDTH: u32 = 32;
+pub const HEIGHT: u32 = 18;
 pub const ARENA_WIDTH: u32 = 8 * WIDTH;
-pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 32 sprites by 18 sprites
+pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
@@ -33,13 +36,13 @@ fn main() -> amethyst::Result<()> {
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display.ron");
-    let key_bindings_path = app_root.join("config/bindings.ron");
+    let input_bundle =
+        InputBundle::<StringBindings>::new().with_bindings_from_file(app_root.join("config/bindings.ron"))?;
+
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
-        .with_bundle(
-            InputBundle::<StringBindings>::new().with_bindings_from_file(&key_bindings_path)?,
-        )?
+        .with_bundle(input_bundle)?
         .with_bundle(UiBundle::<StringBindings>::new())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
@@ -49,7 +52,9 @@ fn main() -> amethyst::Result<()> {
                 )
                 .with_plugin(RenderFlat2D::default()),
         )?
-        .with(UpdateTileTransforms, "update_tile_transforms", &[]);
+        .with(UpdateTileTransforms, "update_tile_transforms", &[])
+        .with(CollidersListSystem, "collider_list", &[])
+        .with(MovePlayerSystem, "player_input", &["collider_list"]);
 
     let resources_path_str = format!("{:?}", resources);
     let mut game = Application::new(resources, state::MyState::new(resources_path_str), game_data)?;

@@ -1,8 +1,9 @@
 (
-    axes: {
-        "horizontal": Emulated(pos: Key(D), neg: Key(A))
-    },
+    axes: {},
     actions: {
-        "jump": [[Key(Space)]]
+        "up": [[Key(W)]],
+        "down": [[Key(S)]],
+        "left": [[Key(A)]],
+        "right": [[Key(D)]],
     }
 )

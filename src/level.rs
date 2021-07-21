@@ -26,18 +26,20 @@ pub enum SpriteRequest {
     Door,
     Blank,
     Shrubbery,
-    DarkShrubbery
+    DarkShrubbery,
+    Tree,
+    WarpedTree
 }
 
 lazy_static!{
     static ref SPRITESHEET_SWATCH_HASHMAP: HashMap<Rgba<u8>, SpriteRequest> = {
         use SpriteRequest::*;
-        let c = |r: u8, g: u8, b: u8| { return Rgba::from([r, g, b, 255]); };
-
         let mut map = HashMap::new();
+        
+        let c = |r: u8, g: u8, b: u8| { return Rgba::from([r, g, b, 255]); };
         let mut  s = |r: u8, g: u8, b: u8, s: SpriteRequest| map.insert(c(r, g, b), s);
 
-        //In Asperite there is a palette of colours. These are in the same order, reading like English - Left to Right, Top to Bottom
+        //In Asperite there is a default palette of colours. These are in the same order, reading like English - Left to Right, Top to Bottom
         s(0, 0, 0, BackWall); //1
         s(34, 32, 52, BackWallLeftCorner);
         s(69, 40, 60, BackWallRightCorner);
@@ -52,13 +54,18 @@ lazy_static!{
         s(55, 148, 110, Axe);
         s(75, 105, 47, Shrubbery);//4
         s(82, 75, 36, DarkShrubbery);
-
+        s(50, 60, 57, Tree);
+        s(63, 63, 116, WarpedTree);
+        s(48, 96, 130, Player); //5
 
         map
     };
 }
 
 impl SpriteRequest {
+
+
+    ///Function to get the index on the spritesheet for a SpriteRequest
     pub fn get_spritesheet_index(&self) -> usize { //REMEMBER - AMETHYST GOES BY ROWS
         use SpriteRequest::*;
         match self {
@@ -83,6 +90,8 @@ impl SpriteRequest {
             Arrow => 67,
             Shrubbery => 61,
             DarkShrubbery => 60,
+            Tree => 74,
+            WarpedTree => 77,
             Blank => 9999,
         }
     }
