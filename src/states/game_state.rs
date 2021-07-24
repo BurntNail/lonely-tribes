@@ -1,7 +1,8 @@
-use crate::afterwards_state::PostGameState;
 use crate::components::{Collider, ColliderList, TileTransform};
 use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
+use crate::states::states_util::init_camera;
+use crate::states::PostGameState;
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -11,8 +12,7 @@ use amethyst::{
     assets::AssetStorage,
     core::transform::Transform,
     prelude::*,
-    renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
-    window::ScreenDimensions,
+    renderer::{ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
 };
 
 pub struct PuzzleState {
@@ -33,8 +33,7 @@ impl SimpleState for PuzzleState {
         let world = data.world;
         world.delete_all();
 
-        let dimensions = ScreenDimensions::new(ARENA_WIDTH, ARENA_HEIGHT, 1.0); //No idea what HDPI is, so have set it to 1
-        init_camera(world, &dimensions);
+        init_camera(world, (ARENA_WIDTH as f32, ARENA_HEIGHT as f32));
 
         self.handle
             .replace(load_sprite_sheet(world, "art/colored_tilemap_packed"));
@@ -149,15 +148,4 @@ fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
         (),
         &world.read_resource::<AssetStorage<SpriteSheet>>(),
     )
-}
-
-fn init_camera(world: &mut World, dimensions: &ScreenDimensions) {
-    let mut transform = Transform::default();
-    transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 1.0);
-
-    world
-        .create_entity()
-        .with(Camera::standard_2d(dimensions.width(), dimensions.height()))
-        .with(transform)
-        .build();
 }

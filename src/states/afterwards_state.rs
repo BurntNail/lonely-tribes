@@ -1,10 +1,8 @@
 use crate::components::{GameWinState, WinStateEnum};
-use crate::game_state::PuzzleState;
+use crate::states::PuzzleState;
 use amethyst::assets::Loader;
 use amethyst::core::ecs::{Builder, World, WorldExt};
-use amethyst::core::Transform;
 use amethyst::input::{InputEvent, VirtualKeyCode};
-use amethyst::renderer::Camera;
 use amethyst::ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform};
 use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans};
 
@@ -18,7 +16,7 @@ impl SimpleState for PostGameState {
         log::info!("{}", won_txt);
 
         get_end_txt(world, won_txt);
-        init_camera(world, (200.0, 60.0));
+        // init_camera(world, (200.0, 60.0));
     }
 
     fn handle_event(
@@ -76,15 +74,4 @@ pub fn get_end_txt(world: &mut World, won_txt: String) {
         Anchor::Middle,
     );
     world.create_entity().with(trans).with(txt).build();
-}
-
-fn init_camera(world: &mut World, wh: (f32, f32)) {
-    let mut transform = Transform::default();
-    transform.set_translation_xyz(wh.0 * 0.5, wh.1 * 0.5, 1.0);
-
-    world
-        .create_entity()
-        .with(Camera::standard_2d(wh.0, wh.1))
-        .with(transform)
-        .build();
 }

@@ -19,10 +19,9 @@ use amethyst::{
 #[macro_use]
 extern crate lazy_static;
 
-mod afterwards_state;
 mod components;
-mod game_state;
 mod level;
+mod states;
 mod systems;
 mod tag;
 
@@ -63,8 +62,7 @@ fn main() -> amethyst::Result<()> {
         )
         .with(EndOfGameSystem, "end_of_game", &["collider_list"]);
 
-    // let resources_path_str = format!("{:?}", resources);
-    let mut game = Application::new(resources, game_state::PuzzleState::default(), game_data)?;
+    let mut game = Application::new(resources, states::PuzzleState::default(), game_data)?;
     game.run();
 
     Ok(())
@@ -77,9 +75,16 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     [r, g, b, a]
 }
 
-//TODO: Re-organise
+//TODO: Multiple Levels
+//TODO: Level Select Screen
+//TODO: Start Screen
+//TODO: Pause Menu
+//TODO: Redo EOG Screen
+
 //TODO: Timer
 //TODO: Save Score (time)
+
 //TODO: Enemies
 //TODO: Combat
+
 //TODO: Power-Ups
