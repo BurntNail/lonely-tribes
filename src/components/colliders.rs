@@ -3,22 +3,19 @@ use amethyst::core::ecs::{Component, DefaultVecStorage};
 
 #[derive(Debug)]
 pub struct Collider {
-    pub is_trigger: bool,
-    pub trigger_id: Option<usize>, //Make it Option<(bool, usize)>
+    pub trigger: Option<usize>,
 }
 impl Default for Collider {
     fn default() -> Self {
         Self {
-            is_trigger: false,
-            trigger_id: Option::None,
+            trigger: Option::None,
         }
     }
 }
 impl Collider {
     pub fn new(is_trigger: bool, trigger_id: usize) -> Self {
         Self {
-            is_trigger,
-            trigger_id: Some(trigger_id),
+            trigger: if is_trigger { Some(trigger_id) } else { None },
         }
     }
 }

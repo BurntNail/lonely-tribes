@@ -20,8 +20,8 @@ impl<'s> System<'s> for CollidersListSystem {
 
         for (t, c) in (&tiles, &colliders).join() {
             let tt = TileTransform::from_ref(t);
-            if c.is_trigger {
-                triggers_list.push((tt, c.trigger_id.unwrap_or(9999)));
+            if c.trigger.is_some() {
+                triggers_list.push((tt, c.trigger.unwrap_or(9999)));
             } else {
                 colliders_list.push(tt);
             }
