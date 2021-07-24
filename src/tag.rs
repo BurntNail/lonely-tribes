@@ -1,5 +1,4 @@
 use crate::level::SpriteRequest;
-use amethyst::core::ecs::{Component, DenseVecStorage};
 
 #[derive(Copy, Clone, Debug)]
 pub enum Tag {

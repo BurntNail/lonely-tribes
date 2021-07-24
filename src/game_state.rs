@@ -4,8 +4,7 @@ use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
-use crate::tag::Tag::Player;
-use crate::{ARENA_HEIGHT, ARENA_WIDTH, HEIGHT};
+use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use amethyst::assets::{Handle, Loader};
 use amethyst::renderer::SpriteRender;
 use amethyst::{
@@ -15,7 +14,6 @@ use amethyst::{
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     window::ScreenDimensions,
 };
-use log::Level::Trace;
 
 pub struct PuzzleState {
     handle: Option<Handle<SpriteSheet>>,
@@ -49,13 +47,12 @@ impl SimpleState for PuzzleState {
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        let mut world = data.world;
+        let world = data.world;
         world.delete_all();
         log::info!("Deleted all entities");
 
-        match self.ws {
-            WinStateEnum::End { won } => world.insert(GameWinState::new(Some(won))),
-            _ => {}
+        if let WinStateEnum::End { won } = self.ws {
+            world.insert(GameWinState::new(Some(won)))
         }
     }
 
@@ -65,7 +62,7 @@ impl SimpleState for PuzzleState {
         self.ws = ws;
 
         match ws {
-            WinStateEnum::End { won } => Trans::Switch(Box::new(PostGameState)),
+            WinStateEnum::End { .. } => Trans::Switch(Box::new(PostGameState)),
             WinStateEnum::TBD => Trans::None,
         }
     }

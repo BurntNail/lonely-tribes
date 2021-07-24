@@ -1,13 +1,11 @@
 use crate::components::{GameWinState, WinStateEnum};
 use crate::game_state::PuzzleState;
-use crate::{ARENA_HEIGHT, ARENA_WIDTH};
-use amethyst::assets::{AssetStorage, Loader};
-use amethyst::core::ecs::{Builder, Entity, World, WorldExt};
+use amethyst::assets::Loader;
+use amethyst::core::ecs::{Builder, World, WorldExt};
 use amethyst::core::Transform;
-use amethyst::input::{InputEvent, StringBindings, VirtualKeyCode};
+use amethyst::input::{InputEvent, VirtualKeyCode};
 use amethyst::renderer::Camera;
-use amethyst::ui::{Anchor, FontAsset, LineMode, TtfFormat, UiText, UiTransform};
-use amethyst::window::ScreenDimensions;
+use amethyst::ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform};
 use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans};
 
 pub struct PostGameState;
@@ -17,7 +15,7 @@ impl SimpleState for PostGameState {
         let world = data.world;
 
         let won_txt = format!("{} Press [R] to Restart", get_win_txt(world));
-        log::info!("{}", won_txt.clone());
+        log::info!("{}", won_txt);
 
         get_end_txt(world, won_txt);
         init_camera(world, (200.0, 60.0));

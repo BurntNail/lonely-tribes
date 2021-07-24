@@ -1,9 +1,8 @@
-use crate::level::SpriteRequest::Player;
 use crate::{HEIGHT, WIDTH};
 use image::{DynamicImage, GenericImageView, Rgba};
 use std::collections::HashMap;
-use std::fs::read_to_string;
 
+#[allow(dead_code)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum SpriteRequest {
     BackWall,
@@ -39,7 +38,7 @@ lazy_static! {
         use SpriteRequest::*;
         let mut map = HashMap::new();
 
-        let c = |r: u8, g: u8, b: u8| { return Rgba::from([r, g, b, 255]); };
+        let c = |r: u8, g: u8, b: u8| { Rgba::from([r, g, b, 255]) };
         let mut  s = |r: u8, g: u8, b: u8, s: SpriteRequest| map.insert(c(r, g, b), s);
 
         //In Asperite there is a default palette of colours. These are in the same order, reading like English - Left to Right, Top to Bottom
@@ -131,7 +130,7 @@ impl Room {
         image::open(path)
             .unwrap_or_else(|err| {
                 log::error!("Image Error for Room {}: {}", path, err);
-                return DynamicImage::new_bgr8(16, 9);
+                DynamicImage::new_bgr8(WIDTH, HEIGHT)
             })
             .pixels()
             .for_each(|(x, y, px)| {

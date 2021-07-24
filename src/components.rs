@@ -1,5 +1,4 @@
-use amethyst::core::ecs::{Component, DefaultVecStorage, DenseVecStorage, NullStorage};
-use amethyst::core::math::VecStorage;
+use amethyst::core::ecs::{Component, DefaultVecStorage};
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub struct TileTransform {
@@ -40,6 +39,7 @@ impl Component for Player {
     type Storage = DefaultVecStorage<Self>;
 }
 
+#[allow(dead_code)]
 pub struct NPC {
     is_enemy: bool,
 }
@@ -146,6 +146,7 @@ impl GameWinState {
             },
         }
     }
+    #[allow(dead_code)]
     pub fn new_ref(won_opt: Option<&bool>) -> Self {
         match won_opt {
             None => Self {

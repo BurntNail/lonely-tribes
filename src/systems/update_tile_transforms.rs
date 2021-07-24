@@ -1,10 +1,9 @@
 use crate::components::TileTransform;
-use crate::level::Room;
 use crate::HEIGHT;
 use amethyst::{
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{Join, ReadStorage, System, SystemData, WriteStorage},
 };
 
 #[derive(SystemDesc)]
@@ -35,8 +34,7 @@ impl UpdateTileTransforms {
         trans
     }
     pub fn tile_to_xyz(tile: TileTransform) -> (f32, f32, f32) {
-        let mut trans = Transform::default();
-        let z = trans.translation().z;
+        let z = 0.0;
         let x = tile.x as f32 * 8.0 + TILE_WIDTH;
         let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
         (x, y, z)

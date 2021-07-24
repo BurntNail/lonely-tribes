@@ -1,14 +1,7 @@
-use crate::components::{
-    Collider, ColliderList, GameWinState, Player, TileTransform, WinStateEnum,
-};
-use crate::level::Room;
-use crate::{HEIGHT, WIDTH};
-use amethyst::core::ecs::Entities;
-use amethyst::input::{InputHandler, StringBindings};
+use crate::components::{ColliderList, GameWinState, Player, TileTransform, WinStateEnum};
 use amethyst::{
-    core::transform::Transform,
     derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, SystemData, Write},
 };
 use std::collections::HashMap;
 
@@ -24,7 +17,7 @@ impl<'s> System<'s> for EndOfGameSystem {
     );
 
     fn run(&mut self, (tiles, players, list, mut gws): Self::SystemData) {
-        let mut trigger_tiles = list.get_triggers();
+        let trigger_tiles = list.get_triggers();
 
         let mut count_match = HashMap::new();
         let mut count_bad = 0;

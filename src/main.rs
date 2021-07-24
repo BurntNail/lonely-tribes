@@ -1,4 +1,3 @@
-use crate::components::ColliderList;
 use crate::systems::{
     CollidersListSystem, EndOfGameSystem, MovePlayerSystem, UpdateTileTransforms,
 };
@@ -64,7 +63,7 @@ fn main() -> amethyst::Result<()> {
         )
         .with(EndOfGameSystem, "end_of_game", &["collider_list"]);
 
-    let resources_path_str = format!("{:?}", resources);
+    // let resources_path_str = format!("{:?}", resources);
     let mut game = Application::new(resources, game_state::PuzzleState::default(), game_data)?;
     game.run();
 
@@ -77,3 +76,10 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
         .into_components();
     [r, g, b, a]
 }
+
+//TODO: Re-organise
+//TODO: Timer
+//TODO: Save Score (time)
+//TODO: Enemies
+//TODO: Combat
+//TODO: Power-Ups

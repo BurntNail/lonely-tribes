@@ -1,10 +1,7 @@
 use crate::components::{Collider, ColliderList, TileTransform};
-use crate::level::Room;
-use crate::HEIGHT;
 use amethyst::{
-    core::transform::Transform,
     derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
+    ecs::{Join, ReadStorage, System, SystemData, Write},
 };
 
 #[derive(SystemDesc)]
@@ -30,7 +27,7 @@ impl<'s> System<'s> for CollidersListSystem {
             }
         }
 
-        list.set(colliders_list.clone());
+        list.set(colliders_list);
         list.set_triggers(triggers_list);
     }
 }
