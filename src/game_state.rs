@@ -1,13 +1,6 @@
-use amethyst::{
-    assets::AssetStorage,
-    core::transform::Transform,
-    prelude::*,
-    renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
-    window::ScreenDimensions,
-};
-
-use crate::components::{NPC, WinStateEnum, GameWinState};
+use crate::afterwards_state::PostGameState;
 use crate::components::{Collider, ColliderList, TileTransform};
+use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
@@ -15,22 +8,24 @@ use crate::tag::Tag::Player;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH, HEIGHT};
 use amethyst::assets::{Handle, Loader};
 use amethyst::renderer::SpriteRender;
+use amethyst::{
+    assets::AssetStorage,
+    core::transform::Transform,
+    prelude::*,
+    renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
+    window::ScreenDimensions,
+};
 use log::Level::Trace;
-use crate::afterwards_state::PostGameState;
 
-#[derive(Default)]
 pub struct PuzzleState {
     handle: Option<Handle<SpriteSheet>>,
-    app_root_dir: String,
-    ws: WinStateEnum
+    ws: WinStateEnum,
 }
-
-impl PuzzleState {
-    pub fn new(app_root_dir: String) -> Self {
+impl Default for PuzzleState {
+    fn default() -> Self {
         Self {
             handle: None,
-            app_root_dir,
-            ws: WinStateEnum::TBD
+            ws: WinStateEnum::default()
         }
     }
 }
@@ -38,6 +33,8 @@ impl PuzzleState {
 impl SimpleState for PuzzleState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
+        world.delete_all();
+
         let dimensions = ScreenDimensions::new(ARENA_WIDTH, ARENA_HEIGHT, 1.0); //No idea what HDPI is, so have set it to 1
         init_camera(world, &dimensions);
 
@@ -47,15 +44,14 @@ impl SimpleState for PuzzleState {
         world.register::<crate::components::NPC>();
         world.insert(GameWinState::default());
 
-
-        let lvl_path = "assets/maps/test-room-one.png".to_string(); //TODO: Fix FQDN
-        load_level(world, self.handle.clone().unwrap(), lvl_path.as_str());
+        let lvl_path = "assets/maps/test-room-one.png"; //TODO: Fix FQDN
+        load_level(world, self.handle.clone().unwrap(), lvl_path);
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let mut world = data.world;
         world.delete_all();
-        log::info!("Deleted all");
+        log::info!("Deleted all entities");
 
         match self.ws {
             WinStateEnum::End { won } => world.insert(GameWinState::new(Some(won))),
@@ -69,13 +65,10 @@ impl SimpleState for PuzzleState {
         self.ws = ws;
 
         match ws {
-            WinStateEnum::End {won} => {
-                Trans::Switch(Box::new(PostGameState))
-            },
-            WinStateEnum::TBD => Trans::None
+            WinStateEnum::End { won } => Trans::Switch(Box::new(PostGameState)),
+            WinStateEnum::TBD => Trans::None,
         }
     }
-
 }
 
 fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) {
