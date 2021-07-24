@@ -1,14 +1,14 @@
 use crate::components::{GameWinState, WinStateEnum};
+use crate::game_state::PuzzleState;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use amethyst::assets::{AssetStorage, Loader};
 use amethyst::core::ecs::{Builder, Entity, World, WorldExt};
 use amethyst::core::Transform;
+use amethyst::input::{InputEvent, StringBindings, VirtualKeyCode};
 use amethyst::renderer::Camera;
 use amethyst::ui::{Anchor, FontAsset, LineMode, TtfFormat, UiText, UiTransform};
 use amethyst::window::ScreenDimensions;
-use amethyst::{GameData, SimpleState, StateData, StateEvent, SimpleTrans, Trans};
-use amethyst::input::{StringBindings, InputEvent, VirtualKeyCode};
-use crate::game_state::PuzzleState;
+use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans};
 
 pub struct PostGameState;
 
@@ -23,20 +23,20 @@ impl SimpleState for PostGameState {
         init_camera(world, (200.0, 60.0));
     }
 
-    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
+    fn handle_event(
+        &mut self,
+        _data: StateData<'_, GameData<'_, '_>>,
+        event: StateEvent,
+    ) -> SimpleTrans {
         match event {
-            StateEvent::Input(input_event) => {
-                match input_event {
-                    InputEvent::KeyPressed { key_code, .. } => {
-                        match key_code {
-                            VirtualKeyCode::R => Trans::Switch(Box::new(PuzzleState::default())),
-                            _ => Trans::None
-                        }
-                    }
-                    _ => Trans::None
-                }
-            }
-            _ => Trans::None
+            StateEvent::Input(input_event) => match input_event {
+                InputEvent::KeyPressed { key_code, .. } => match key_code {
+                    VirtualKeyCode::R => Trans::Switch(Box::new(PuzzleState::default())),
+                    _ => Trans::None,
+                },
+                _ => Trans::None,
+            },
+            _ => Trans::None,
         }
     }
 }
@@ -53,7 +53,6 @@ pub fn get_win_txt(world: &World) -> String {
 }
 
 pub fn get_end_txt(world: &mut World, won_txt: String) {
-
     let font = world.read_resource::<Loader>().load(
         "fonts/ZxSpectrum.ttf",
         TtfFormat,

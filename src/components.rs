@@ -1,4 +1,4 @@
-use amethyst::core::ecs::{Component, DenseVecStorage, NullStorage, DefaultVecStorage};
+use amethyst::core::ecs::{Component, DefaultVecStorage, DenseVecStorage, NullStorage};
 use amethyst::core::math::VecStorage;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -11,7 +11,7 @@ impl Component for TileTransform {
 }
 impl Default for TileTransform {
     fn default() -> Self {
-        Self {x: 0, y: 0}
+        Self { x: 0, y: 0 }
     }
 }
 impl TileTransform {
@@ -29,11 +29,11 @@ impl TileTransform {
 
 #[derive(Default)]
 pub struct Player {
-    pub id: usize
+    pub id: usize,
 }
 impl Player {
-    pub fn new (id: usize) -> Self {
-        Self {id}
+    pub fn new(id: usize) -> Self {
+        Self { id }
     }
 }
 impl Component for Player {
@@ -50,7 +50,7 @@ impl NPC {
 }
 impl Default for NPC {
     fn default() -> Self {
-        Self {is_enemy: false}
+        Self { is_enemy: false }
     }
 }
 impl Component for NPC {
@@ -60,21 +60,21 @@ impl Component for NPC {
 #[derive(Debug)]
 pub struct Collider {
     pub is_trigger: bool,
-    pub trigger_id: Option<usize>
+    pub trigger_id: Option<usize>, //Make it Option<(bool, usize)>
 }
 impl Default for Collider {
     fn default() -> Self {
         Self {
             is_trigger: false,
-            trigger_id: Option::None
+            trigger_id: Option::None,
         }
     }
 }
 impl Collider {
-    pub fn new (is_trigger: bool, trigger_id: usize) -> Self {
+    pub fn new(is_trigger: bool, trigger_id: usize) -> Self {
         Self {
             is_trigger,
-            trigger_id: Some(trigger_id)
+            trigger_id: Some(trigger_id),
         }
     }
 }
@@ -84,24 +84,27 @@ impl Component for Collider {
 
 pub struct ColliderList {
     colls: Vec<TileTransform>,
-    triggers: Vec<(TileTransform, usize)>
+    triggers: Vec<(TileTransform, usize)>,
 }
 impl ColliderList {
     pub fn new() -> Self {
-        Self { colls: Vec::new(), triggers: Vec::new() }
+        Self {
+            colls: Vec::new(),
+            triggers: Vec::new(),
+        }
     }
 
     pub fn set(&mut self, c: Vec<TileTransform>) {
         self.colls = c;
     }
-    pub fn set_triggers (&mut self, t: Vec<(TileTransform, usize)>) {
+    pub fn set_triggers(&mut self, t: Vec<(TileTransform, usize)>) {
         self.triggers = t;
     }
 
     pub fn get(&self) -> Vec<TileTransform> {
         self.colls.clone()
     }
-    pub fn get_triggers (&self) -> Vec<(TileTransform, usize)> {
+    pub fn get_triggers(&self) -> Vec<(TileTransform, usize)> {
         self.triggers.clone()
     }
 }
@@ -113,8 +116,8 @@ impl Default for ColliderList {
 
 #[derive(Debug, Copy, Clone)]
 pub enum WinStateEnum {
-    End {won: bool},
-    TBD
+    End { won: bool },
+    TBD,
 }
 impl Default for WinStateEnum {
     fn default() -> Self {
@@ -123,29 +126,39 @@ impl Default for WinStateEnum {
 }
 #[derive(Copy, Clone, Debug)]
 pub struct GameWinState {
-    pub ws: WinStateEnum
+    pub ws: WinStateEnum,
 }
 impl Default for GameWinState {
     fn default() -> Self {
-        GameWinState {ws: WinStateEnum::default()}
+        GameWinState {
+            ws: WinStateEnum::default(),
+        }
     }
 }
 impl GameWinState {
-    pub fn new (won_opt: Option<bool>) -> Self {
+    pub fn new(won_opt: Option<bool>) -> Self {
         match won_opt {
-            None => Self { ws:WinStateEnum::TBD },
-            Some(won) => Self { ws: WinStateEnum::End {won}}
+            None => Self {
+                ws: WinStateEnum::TBD,
+            },
+            Some(won) => Self {
+                ws: WinStateEnum::End { won },
+            },
         }
     }
-    pub fn new_ref (won_opt: Option<&bool>) -> Self {
+    pub fn new_ref(won_opt: Option<&bool>) -> Self {
         match won_opt {
-            None => Self { ws:WinStateEnum::TBD },
+            None => Self {
+                ws: WinStateEnum::TBD,
+            },
             Some(won_ref) => {
                 let mut won = false;
                 if won_ref == &true {
                     won = true;
                 }
-                Self { ws: WinStateEnum::End { won } }
+                Self {
+                    ws: WinStateEnum::End { won },
+                }
             }
         }
     }

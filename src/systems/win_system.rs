@@ -1,13 +1,15 @@
-use crate::components::{Collider, ColliderList, Player, TileTransform, GameWinState, WinStateEnum};
+use crate::components::{
+    Collider, ColliderList, GameWinState, Player, TileTransform, WinStateEnum,
+};
 use crate::level::Room;
 use crate::{HEIGHT, WIDTH};
+use amethyst::core::ecs::Entities;
 use amethyst::input::{InputHandler, StringBindings};
 use amethyst::{
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::{Join, Read, Write, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
 };
-use amethyst::core::ecs::Entities;
 use std::collections::HashMap;
 
 #[derive(SystemDesc)]
@@ -44,7 +46,7 @@ impl<'s> System<'s> for EndOfGameSystem {
         }
 
         if count_bad > 0 {
-            gws.ws = WinStateEnum::End {won: false};
+            gws.ws = WinStateEnum::End { won: false };
             return;
         }
 
@@ -55,11 +57,11 @@ impl<'s> System<'s> for EndOfGameSystem {
 
             if v != &expected {
                 win = false;
-                log::info!("Got {}, Expected {}", v, expected);
+                // log::info!("Got {}, Expected {}", v, expected);
             }
         }
         if win {
-            gws.ws = WinStateEnum::End {won: true};
+            gws.ws = WinStateEnum::End { won: true };
         }
     }
 }

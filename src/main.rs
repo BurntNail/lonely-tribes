@@ -3,6 +3,7 @@ use crate::systems::{
     CollidersListSystem, EndOfGameSystem, MovePlayerSystem, UpdateTileTransforms,
 };
 use amethyst::renderer::palette::Srgba;
+use amethyst::ui::RenderUi;
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -15,7 +16,6 @@ use amethyst::{
     ui::UiBundle,
     utils::application_root_dir,
 };
-use amethyst::ui::RenderUi;
 
 #[macro_use]
 extern crate lazy_static;
@@ -65,11 +65,7 @@ fn main() -> amethyst::Result<()> {
         .with(EndOfGameSystem, "end_of_game", &["collider_list"]);
 
     let resources_path_str = format!("{:?}", resources);
-    let mut game = Application::new(
-        resources,
-        game_state::PuzzleState::default(),
-        game_data,
-    )?;
+    let mut game = Application::new(resources, game_state::PuzzleState::default(), game_data)?;
     game.run();
 
     Ok(())

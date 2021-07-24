@@ -1,11 +1,13 @@
-use crate::components::{Collider, ColliderList, Player, TileTransform, GameWinState, WinStateEnum};
+use crate::components::{
+    Collider, ColliderList, GameWinState, Player, TileTransform, WinStateEnum,
+};
 use crate::level::Room;
 use crate::{HEIGHT, WIDTH};
 use amethyst::input::{InputHandler, StringBindings};
 use amethyst::{
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::{Join, Read, Write, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
 };
 
 #[derive(SystemDesc)]
@@ -38,6 +40,7 @@ impl<'s> System<'s> for MovePlayerSystem {
             for possibility in &collision_tiles {
                 if &proposed_tile == possibility {
                     works = false;
+                    break;
                 }
             }
             if proposed_tile.x < 0

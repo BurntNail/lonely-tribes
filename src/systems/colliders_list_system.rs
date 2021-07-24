@@ -4,7 +4,7 @@ use crate::HEIGHT;
 use amethyst::{
     core::transform::Transform,
     derive::SystemDesc,
-    ecs::{Join, Write, Read, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
 };
 
 #[derive(SystemDesc)]

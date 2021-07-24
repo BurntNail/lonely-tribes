@@ -25,7 +25,7 @@ impl Default for PuzzleState {
     fn default() -> Self {
         Self {
             handle: None,
-            ws: WinStateEnum::default()
+            ws: WinStateEnum::default(),
         }
     }
 }
