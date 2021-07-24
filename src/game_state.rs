@@ -6,33 +6,36 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
+use crate::components::{NPC, WinStateEnum, GameWinState};
+use crate::components::{Collider, ColliderList, TileTransform};
 use crate::level::Room;
-use crate::{ARENA_HEIGHT, ARENA_WIDTH, HEIGHT};
-use amethyst::assets::{Handle, Loader};
-use amethyst::renderer::SpriteRender;
-use crate::components::{TileTransform, Collider, ColliderList};
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
 use crate::tag::Tag::Player;
-use crate::components::NPC;
+use crate::{ARENA_HEIGHT, ARENA_WIDTH, HEIGHT};
+use amethyst::assets::{Handle, Loader};
+use amethyst::renderer::SpriteRender;
 use log::Level::Trace;
+use crate::afterwards_state::PostGameState;
 
 #[derive(Default)]
-pub struct MyState {
+pub struct PuzzleState {
     handle: Option<Handle<SpriteSheet>>,
-    app_root_dir: String
+    app_root_dir: String,
+    ws: WinStateEnum
 }
 
-impl MyState {
-    pub fn new (app_root_dir: String) -> Self {
+impl PuzzleState {
+    pub fn new(app_root_dir: String) -> Self {
         Self {
             handle: None,
-            app_root_dir
+            app_root_dir,
+            ws: WinStateEnum::TBD
         }
     }
 }
 
-impl SimpleState for MyState {
+impl SimpleState for PuzzleState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
         let dimensions = ScreenDimensions::new(ARENA_WIDTH, ARENA_HEIGHT, 1.0); //No idea what HDPI is, so have set it to 1
@@ -41,14 +44,38 @@ impl SimpleState for MyState {
         self.handle
             .replace(load_sprite_sheet(world, "art/colored_tilemap_packed"));
 
-        world.register::<crate::components::Player>();
-        world.register::<crate::components::Collider>();
         world.register::<crate::components::NPC>();
+        world.insert(GameWinState::default());
 
-        // let mut lvl_path = self.app_root_dir.clone();
-        // lvl_path.push_str("/maps/test.ron");
+
         let lvl_path = "assets/maps/test-room-one.png".to_string(); //TODO: Fix FQDN
-        load_level(world, self.handle.clone().unwrap(), lvl_path.as_str()); }
+        load_level(world, self.handle.clone().unwrap(), lvl_path.as_str());
+    }
+
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        let mut world = data.world;
+        world.delete_all();
+        log::info!("Deleted all");
+
+        match self.ws {
+            WinStateEnum::End { won } => world.insert(GameWinState::new(Some(won))),
+            _ => {}
+        }
+    }
+
+    fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        let game_state = data.world.read_resource::<GameWinState>();
+        let ws = game_state.ws;
+        self.ws = ws;
+
+        match ws {
+            WinStateEnum::End {won} => {
+                Trans::Switch(Box::new(PostGameState))
+            },
+            WinStateEnum::TBD => Trans::None
+        }
+    }
+
 }
 
 fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) {
@@ -70,10 +97,11 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
             let tag = Tag::from_spr(lvl.data[x][y]);
             let tt = TileTransform::new(x as i32, y as i32);
 
-            world.create_entity().with(ColliderList::new()).build();
+            world.insert(ColliderList::new());
+            world.insert(GameWinState::default());
 
             match tag {
-                Tag::Player => {
+                Tag::Player(id) => {
                     let mut trans = Transform::default();
                     trans.set_translation_z(0.5);
                     world
@@ -81,10 +109,11 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(spr)
                         .with(tt)
                         .with(trans)
-                        .with(crate::components::Player::default())
+                        .with(Collider::new(true, id))
+                        .with(crate::components::Player::new(id))
                         .build();
-                },
-                Tag::NPC {is_enemy} => {
+                }
+                Tag::NPC { is_enemy } => {
                     world
                         .create_entity()
                         .with(spr)
@@ -93,8 +122,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(NPC::new(is_enemy))
                         .with(Collider::default())
                         .build();
-
-                },
+                }
                 Tag::Collision => {
                     world
                         .create_entity()
@@ -103,7 +131,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(Transform::default()) //TODO: Work out way to optimise for static obj
                         .with(Collider::default())
                         .build();
-                },
+                }
                 _ => {
                     world
                         .create_entity()

@@ -1,12 +1,12 @@
-use amethyst::{
-    core::{transform::Transform},
-    derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
-};
+use crate::components::{Collider, ColliderList, Player, TileTransform, GameWinState, WinStateEnum};
 use crate::level::Room;
-use crate::components::{TileTransform, Player, Collider, ColliderList};
 use crate::{HEIGHT, WIDTH};
 use amethyst::input::{InputHandler, StringBindings};
+use amethyst::{
+    core::transform::Transform,
+    derive::SystemDesc,
+    ecs::{Join, Read, Write, ReadStorage, System, SystemData, WriteStorage},
+};
 
 #[derive(SystemDesc)]
 pub struct MovePlayerSystem;
@@ -16,14 +16,11 @@ impl<'s> System<'s> for MovePlayerSystem {
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
         Read<'s, InputHandler<StringBindings>>,
-        ReadStorage<'s, ColliderList>
+        Read<'s, ColliderList>,
     );
 
-    fn run(&mut self, (mut tiles, players, input, lists): Self::SystemData) {
-        let mut collision_tiles = Vec::new();
-        for list in (&lists).join() {
-            collision_tiles = list.get();
-        }
+    fn run(&mut self, (mut tiles, players, input, list): Self::SystemData) {
+        let mut collision_tiles = list.get();
 
         for (tile, player) in (&mut tiles, &players).join() {
             let mut proposed_tile = tile.clone();
@@ -37,16 +34,17 @@ impl<'s> System<'s> for MovePlayerSystem {
                 proposed_tile.x += 1;
             }
 
-            //TODO: Make sure player doesnt go OOB
-
             let mut works = true;
-            // log::info!("Testing {:?}", collision_tiles);
             for possibility in &collision_tiles {
                 if &proposed_tile == possibility {
                     works = false;
                 }
             }
-            if proposed_tile.x < 0 || proposed_tile.y < 0 || proposed_tile.x > WIDTH as i32 - 1 || proposed_tile.y > HEIGHT as i32 - 1 {
+            if proposed_tile.x < 0
+                || proposed_tile.y < 0
+                || proposed_tile.x > WIDTH as i32 - 1
+                || proposed_tile.y > HEIGHT as i32 - 1
+            {
                 works = false;
             }
 
@@ -55,5 +53,4 @@ impl<'s> System<'s> for MovePlayerSystem {
             }
         }
     }
-
 }

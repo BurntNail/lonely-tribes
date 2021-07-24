@@ -1,7 +1,8 @@
+use crate::level::SpriteRequest::Player;
 use crate::{HEIGHT, WIDTH};
-use std::fs::read_to_string;
-use image::{GenericImageView, Rgba, DynamicImage};
+use image::{DynamicImage, GenericImageView, Rgba};
 use std::collections::HashMap;
+use std::fs::read_to_string;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum SpriteRequest {
@@ -15,7 +16,9 @@ pub enum SpriteRequest {
     FrontWallRightCorner,
     LeftWallDown,
     RightWallDown,
-    Player,
+    TUpDownLeft,
+    TUpDownRight,
+    Player(usize),
     Orc,
     EmptyHeart,
     FullHeart,
@@ -28,14 +31,14 @@ pub enum SpriteRequest {
     Shrubbery,
     DarkShrubbery,
     Tree,
-    WarpedTree
+    WarpedTree,
 }
 
-lazy_static!{
+lazy_static! {
     static ref SPRITESHEET_SWATCH_HASHMAP: HashMap<Rgba<u8>, SpriteRequest> = {
         use SpriteRequest::*;
         let mut map = HashMap::new();
-        
+
         let c = |r: u8, g: u8, b: u8| { return Rgba::from([r, g, b, 255]); };
         let mut  s = |r: u8, g: u8, b: u8, s: SpriteRequest| map.insert(c(r, g, b), s);
 
@@ -56,17 +59,21 @@ lazy_static!{
         s(82, 75, 36, DarkShrubbery);
         s(50, 60, 57, Tree);
         s(63, 63, 116, WarpedTree);
-        s(48, 96, 130, Player); //5
+        s(48, 96, 130, Player(0)); //5
+        s(91, 110, 225, Player(1));
+        s(99, 155, 255, Player(2));
+        s(95, 205, 228, Player(3));
+        s(203, 219, 252, TUpDownLeft); //6
+        s(255, 255, 255, TUpDownRight);
 
         map
     };
 }
 
 impl SpriteRequest {
-
-
     ///Function to get the index on the spritesheet for a SpriteRequest
-    pub fn get_spritesheet_index(&self) -> usize { //REMEMBER - AMETHYST GOES BY ROWS
+    pub fn get_spritesheet_index(&self) -> usize {
+        //REMEMBER - AMETHYST GOES BY ROWS
         use SpriteRequest::*;
         match self {
             BackWall => 1,
@@ -80,7 +87,15 @@ impl SpriteRequest {
             Door => 30,
             FrontWallLeftCorner => 28,
             FrontWallRightCorner => 31,
-            Player => 4,
+            Player(index) => match index {
+                0 => 4,
+                1 => 5,
+                2 => 6,
+                3 => 7,
+                _ => 9999,
+            },
+            TUpDownLeft => 71,
+            TUpDownRight => 70,
             Orc => 11,
             EmptyHeart => 89,
             FullHeart => 90,
@@ -97,33 +112,35 @@ impl SpriteRequest {
     }
 
     pub fn from_colour_swatch(col: &Rgba<u8>) -> &Self {
-        SPRITESHEET_SWATCH_HASHMAP.get(col).unwrap_or(&SpriteRequest::Blank)
+        SPRITESHEET_SWATCH_HASHMAP
+            .get(col)
+            .unwrap_or(&SpriteRequest::Blank)
     }
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Room {
     pub data: Vec<Vec<SpriteRequest>>,
-    // neighbours: HashMap<((usize, usize)), Room>
 }
 
 impl Room {
-    pub fn new (path: &str) -> Self {
+    pub fn new(path: &str) -> Self {
         log::info!("Loading Room: {}", path);
         let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
-        image::open(path).unwrap_or_else(|err| {
-            log::error!("Image Error for Room {}: {}", path, err);
-            return DynamicImage::new_bgr8(16, 9);
-        })
 
-            .pixels().for_each(|(x, y, px)| {
-            let res = *SpriteRequest::from_colour_swatch(&px);
-            if res != SpriteRequest::Blank {
-                data[x as usize][y as usize] = res;
-                log::info!("Loading {:?} for ({}, {})", res, x, y);
-            }
-        } );
+        image::open(path)
+            .unwrap_or_else(|err| {
+                log::error!("Image Error for Room {}: {}", path, err);
+                return DynamicImage::new_bgr8(16, 9);
+            })
+            .pixels()
+            .for_each(|(x, y, px)| {
+                let res = *SpriteRequest::from_colour_swatch(&px);
+                if res != SpriteRequest::Blank {
+                    data[x as usize][y as usize] = res;
+                }
+            });
 
-        Self {data}
+        Self { data }
     }
 }

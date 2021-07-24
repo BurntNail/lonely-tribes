@@ -1,3 +1,5 @@
+use crate::components::ColliderList;
+use crate::systems::{CollidersListSystem, MovePlayerSystem, UpdateTileTransforms, EndOfGameSystem};
 use amethyst::renderer::palette::Srgba;
 use amethyst::{
     core::transform::TransformBundle,
@@ -11,18 +13,16 @@ use amethyst::{
     ui::UiBundle,
     utils::application_root_dir,
 };
-use crate::systems::{UpdateTileTransforms, MovePlayerSystem, CollidersListSystem};
-use crate::components::ColliderList;
 
 #[macro_use]
 extern crate lazy_static;
 
-
-mod level;
-mod state;
-mod systems;
 mod components;
+mod level;
+mod game_state;
+mod systems;
 mod tag;
+mod afterwards_state;
 
 pub const WIDTH: u32 = 32;
 pub const HEIGHT: u32 = 18;
@@ -36,9 +36,8 @@ fn main() -> amethyst::Result<()> {
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display.ron");
-    let input_bundle =
-        InputBundle::<StringBindings>::new().with_bindings_from_file(app_root.join("config/bindings.ron"))?;
-
+    let input_bundle = InputBundle::<StringBindings>::new()
+        .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
@@ -54,10 +53,15 @@ fn main() -> amethyst::Result<()> {
         )?
         .with(UpdateTileTransforms, "update_tile_transforms", &[])
         .with(CollidersListSystem, "collider_list", &[])
-        .with(MovePlayerSystem, "player_input", &["collider_list"]);
+        .with(MovePlayerSystem, "player_input", &["collider_list"])
+        .with(EndOfGameSystem, "end", &["collider_list"]);
 
     let resources_path_str = format!("{:?}", resources);
-    let mut game = Application::new(resources, state::MyState::new(resources_path_str), game_data)?;
+    let mut game = Application::new(
+        resources,
+        game_state::PuzzleState::new(resources_path_str),
+        game_data,
+    )?;
     game.run();
 
     Ok(())

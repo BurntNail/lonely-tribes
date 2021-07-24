@@ -1,11 +1,11 @@
-use amethyst::{
-    core::{transform::Transform},
-    derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
-};
+use crate::components::{Collider, ColliderList, TileTransform};
 use crate::level::Room;
-use crate::components::{TileTransform, Collider, ColliderList};
 use crate::HEIGHT;
+use amethyst::{
+    core::transform::Transform,
+    derive::SystemDesc,
+    ecs::{Join, Write, Read, ReadStorage, System, SystemData, WriteStorage},
+};
 
 #[derive(SystemDesc)]
 pub struct CollidersListSystem;
@@ -14,17 +14,23 @@ impl<'s> System<'s> for CollidersListSystem {
     type SystemData = (
         ReadStorage<'s, TileTransform>,
         ReadStorage<'s, Collider>,
-        WriteStorage<'s, ColliderList>
+        Write<'s, ColliderList>,
     );
 
-    fn run(&mut self, (tiles, colliders, mut lists): Self::SystemData) {
+    fn run(&mut self, (tiles, colliders, mut list): Self::SystemData) {
         let mut colliders_list = Vec::new();
-        for (t, _col) in (&tiles, &colliders).join() {
-            colliders_list.push(TileTransform::from_ref(t));
-        }
-        for list in (&mut lists).join() {
-            list.set(colliders_list.clone())
-        }
-    }
+        let mut triggers_list = Vec::new();
 
+        for (t, c) in (&tiles, &colliders).join() {
+            let tt = TileTransform::from_ref(t);
+            if c.is_trigger {
+                triggers_list.push((tt, c.trigger_id.unwrap_or(9999)));
+            } else {
+                colliders_list.push(tt);
+            }
+        }
+
+        list.set(colliders_list.clone());
+        list.set_triggers(triggers_list);
+    }
 }
