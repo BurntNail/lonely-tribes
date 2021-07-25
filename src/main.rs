@@ -1,6 +1,4 @@
-use crate::systems::{
-    CollidersListSystem, EndOfGameSystem, MovePlayerSystem, UpdateTileTransforms,
-};
+use crate::systems::{CollidersListSystem, EndOfGameSystem, MovePlayerSystem, UpdateTileTransforms, TextWobbleSystem};
 use amethyst::renderer::palette::Srgba;
 use amethyst::ui::RenderUi;
 use amethyst::{
@@ -18,6 +16,8 @@ use amethyst::{
 
 #[macro_use]
 extern crate lazy_static;
+#[macro_use]
+extern crate amethyst;
 
 mod components;
 mod level;
@@ -60,9 +60,10 @@ fn main() -> amethyst::Result<()> {
             "player_input",
             &["collider_list", "update_tile_transforms"],
         )
-        .with(EndOfGameSystem, "end_of_game", &["collider_list"]);
+        .with(EndOfGameSystem, "end_of_game", &["collider_list"])
+        .with(TextWobbleSystem, "txt_wobble", &[]);
 
-    let mut game = Application::new(resources, states::PuzzleState::default(), game_data)?;
+    let mut game = Application::new(resources, states::StartGameState::default(), game_data)?;
     game.run();
 
     Ok(())
@@ -75,10 +76,17 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     [r, g, b, a]
 }
 
+//todos
+//split into sections by 2 lines
+//split into bits by 1 line
+//split into objectives by line
+
+//TODO: Start Screen
+
 //TODO: Multiple Levels
 //TODO: Level Select Screen
-//TODO: Start Screen
-//TODO: Pause Menu
+
+//TODO: Pause Menu (necessary?)
 //TODO: Redo EOG Screen
 
 //TODO: Timer
@@ -88,3 +96,5 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
 //TODO: Combat
 
 //TODO: Power-Ups
+
+//TODO: Music/SFX

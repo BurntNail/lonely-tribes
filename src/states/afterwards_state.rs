@@ -1,4 +1,5 @@
 use crate::components::{GameWinState, WinStateEnum};
+use crate::states::states_util::load_font;
 use crate::states::PuzzleState;
 use amethyst::assets::Loader;
 use amethyst::core::ecs::{Builder, World, WorldExt};
@@ -49,12 +50,6 @@ pub fn get_win_txt(world: &World) -> String {
 }
 
 pub fn get_end_txt(world: &mut World, won_txt: String) {
-    let font = world.read_resource::<Loader>().load(
-        "fonts/ZxSpectrum.ttf",
-        TtfFormat,
-        (),
-        &world.read_resource(),
-    );
     let trans = UiTransform::new(
         "won_txt".to_string(),
         Anchor::Middle,
@@ -66,7 +61,7 @@ pub fn get_end_txt(world: &mut World, won_txt: String) {
         1000.0,
     );
     let txt = UiText::new(
-        font,
+        load_font(world, "ZxSpectrum"),
         won_txt,
         [1.0; 4],
         75.0,

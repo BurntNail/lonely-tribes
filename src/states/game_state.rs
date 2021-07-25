@@ -1,13 +1,14 @@
 use crate::components::{Collider, ColliderList, TileTransform};
 use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
-use crate::states::states_util::init_camera;
+use crate::states::states_util::{init_camera, load_sprite_sheet};
 use crate::states::PostGameState;
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use amethyst::assets::{Handle, Loader};
 use amethyst::renderer::SpriteRender;
+use amethyst::ui::{FontAsset, TtfFormat};
 use amethyst::{
     assets::AssetStorage,
     core::transform::Transform,
@@ -131,21 +132,4 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
             }
         }
     }
-}
-
-fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
-    log::info!("Loading sprite sheet: {}", path);
-    let tex_handle = world.read_resource::<Loader>().load(
-        format!("{}.png", path),
-        ImageFormat::default(),
-        (),
-        &world.read_resource::<AssetStorage<Texture>>(),
-    );
-
-    world.read_resource::<Loader>().load(
-        format!("{}.ron", path),
-        SpriteSheetFormat(tex_handle),
-        (),
-        &world.read_resource::<AssetStorage<SpriteSheet>>(),
-    )
 }
