@@ -31,7 +31,7 @@ impl<'s> System<'s> for EndOfGameSystem {
                 if player_tile == trigger_tile {
                     if &id == trigger_id {
                         count_match.insert(id, count_match.get(&id).unwrap_or(&0) + 1);
-                    } else {
+                    } else if trigger_id <= &3 { //4 players, starting from ind 0
                         count_bad += 1;
                     }
                 }

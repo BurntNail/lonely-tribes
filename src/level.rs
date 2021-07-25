@@ -15,6 +15,8 @@ pub enum SpriteRequest {
     FrontWallRightCorner,
     LeftWallDown,
     RightWallDown,
+    LeftWallUp,
+    RightWallUp,
     TUpDownLeft,
     TUpDownRight,
     Player(usize),
@@ -64,6 +66,8 @@ lazy_static! {
         s(95, 205, 228, Player(3));
         s(203, 219, 252, TUpDownLeft); //6
         s(255, 255, 255, TUpDownRight);
+        s(155, 173, 183, LeftWallUp);
+        s(132, 126, 135, RightWallUp);
 
         map
     };
@@ -82,6 +86,8 @@ impl SpriteRequest {
             RightWall => 17,
             LeftWallDown => 45,
             RightWallDown => 44,
+            LeftWallUp => 43,
+            RightWallUp => 42,
             FrontWall => 58,
             Door => 30,
             FrontWallLeftCorner => 28,

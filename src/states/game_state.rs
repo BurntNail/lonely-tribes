@@ -102,7 +102,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(Collider::new(true, id))
                         .with(crate::components::Player::new(id))
                         .build();
-                }
+                },
                 Tag::NPC { is_enemy } => {
                     world
                         .create_entity()
@@ -112,7 +112,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(NPC::new(is_enemy))
                         .with(Collider::default())
                         .build();
-                }
+                },
                 Tag::Collision => {
                     world
                         .create_entity()
@@ -120,6 +120,15 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(Transform::default()) //TODO: Work out way to optimise for static obj
                         .with(Collider::default())
+                        .build();
+                },
+                Tag::Trigger(trigger_type) => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(Transform::default())
+                        .with(Collider::new(true, trigger_type.get_id()))
                         .build();
                 }
                 _ => {
