@@ -1,6 +1,10 @@
-use crate::systems::{CollidersListSystem, EndOfGameSystem, MovePlayerSystem, UpdateTileTransforms, TextWobbleSystem};
+use crate::systems::{
+    CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, TextWobbleSystem,
+    UpdateTileTransforms,
+};
 use amethyst::renderer::palette::Srgba;
 use amethyst::ui::RenderUi;
+use amethyst::utils::fps_counter::FpsCounterSystem;
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -13,20 +17,20 @@ use amethyst::{
     ui::UiBundle,
     utils::application_root_dir,
 };
+use crate::bindings::MovementBindingTypes;
 
 #[macro_use]
 extern crate lazy_static;
-#[macro_use]
-extern crate amethyst;
 
 mod components;
 mod level;
 mod states;
 mod systems;
 mod tag;
+mod bindings;
 
-pub const WIDTH: u32 = 64;
-pub const HEIGHT: u32 = 36;
+pub const WIDTH: u32 = 32;
+pub const HEIGHT: u32 = 18;
 pub const ARENA_WIDTH: u32 = 8 * WIDTH;
 pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
 
@@ -37,7 +41,7 @@ fn main() -> amethyst::Result<()> {
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display.ron");
-    let input_bundle = InputBundle::<StringBindings>::new()
+    let input_bundle = InputBundle::<MovementBindingTypes>::new()
         .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
 
     let game_data = GameDataBuilder::default()
@@ -61,7 +65,9 @@ fn main() -> amethyst::Result<()> {
             &["collider_list", "update_tile_transforms"],
         )
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
-        .with(TextWobbleSystem, "txt_wobble", &[]);
+        .with(TextWobbleSystem, "txt_wobble", &[])
+        .with(FpsCounterSystem, "fps", &[])
+        .with(FpsPrinterSystem, "fps_printer", &["fps"]);
 
     let mut game = Application::new(resources, states::StartGameState::default(), game_data)?;
     game.run();
@@ -77,16 +83,14 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
 }
 
 //todos
-//split into sections by 2 lines
-//split into bits by 1 line
-//split into objectives by line
 
-//TODO: Start Screen
+//TODO: Fix Movement
 
-//TODO: Multiple Levels
-//TODO: Level Select Screen
+//TODO: Docu-Comments
 
 //TODO: Pause Menu (necessary?)
+//TODO: Multiple Levels
+//TODO: Level Select Screen
 //TODO: Redo EOG Screen
 
 //TODO: Timer

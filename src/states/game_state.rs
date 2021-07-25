@@ -1,12 +1,13 @@
 use crate::components::{Collider, ColliderList, TileTransform};
 use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
-use crate::states::states_util::{init_camera, load_sprite_sheet};
+use crate::states::states_util::{get_trans, init_camera, load_sprite_sheet};
 use crate::states::PostGameState;
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
 use amethyst::assets::{Handle, Loader};
+use amethyst::input::{InputEvent, VirtualKeyCode};
 use amethyst::renderer::SpriteRender;
 use amethyst::ui::{FontAsset, TtfFormat};
 use amethyst::{
@@ -56,6 +57,14 @@ impl SimpleState for PuzzleState {
         }
     }
 
+    fn handle_event(
+        &mut self,
+        _data: StateData<'_, GameData<'_, '_>>,
+        event: StateEvent,
+    ) -> SimpleTrans {
+        get_trans(event)
+    }
+
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let game_state = data.world.read_resource::<GameWinState>();
         let ws = game_state.ws;
@@ -102,7 +111,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(Collider::new(true, id))
                         .with(crate::components::Player::new(id))
                         .build();
-                },
+                }
                 Tag::NPC { is_enemy } => {
                     world
                         .create_entity()
@@ -112,7 +121,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(NPC::new(is_enemy))
                         .with(Collider::default())
                         .build();
-                },
+                }
                 Tag::Collision => {
                     world
                         .create_entity()
@@ -121,7 +130,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(Transform::default()) //TODO: Work out way to optimise for static obj
                         .with(Collider::default())
                         .build();
-                },
+                }
                 Tag::Trigger(trigger_type) => {
                     world
                         .create_entity()

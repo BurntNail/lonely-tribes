@@ -1,8 +1,11 @@
+use crate::states::PuzzleState;
 use amethyst::assets::{AssetStorage, Handle, Loader};
 use amethyst::core::ecs::{Builder, World, WorldExt};
 use amethyst::core::Transform;
+use amethyst::input::{InputEvent, VirtualKeyCode};
 use amethyst::renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture};
 use amethyst::ui::{FontAsset, TtfFormat};
+use amethyst::{SimpleTrans, StateEvent, Trans};
 
 pub fn init_camera(world: &mut World, wh: (f32, f32)) {
     let mut transform = Transform::default();
@@ -39,4 +42,17 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
         (),
         &world.read_resource::<AssetStorage<SpriteSheet>>(),
     )
+}
+
+pub fn get_trans(event: StateEvent) -> SimpleTrans {
+    match event {
+        StateEvent::Input(input_event) => match input_event {
+            InputEvent::KeyPressed { key_code, .. } => match key_code {
+                VirtualKeyCode::R => Trans::Switch(Box::new(PuzzleState::default())),
+                _ => Trans::None,
+            },
+            _ => Trans::None,
+        },
+        _ => Trans::None,
+    }
 }

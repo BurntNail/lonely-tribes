@@ -1,15 +1,15 @@
-use amethyst::core::ecs::{System, ReadStorage, WriteStorage, Read, Join};
 use crate::components::TextWobble;
-use amethyst::ui::UiTransform;
+use amethyst::core::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::core::Time;
+use amethyst::ui::UiTransform;
 
 pub struct TextWobbleSystem;
 
-impl <'s> System<'s> for TextWobbleSystem {
+impl<'s> System<'s> for TextWobbleSystem {
     type SystemData = (
         WriteStorage<'s, TextWobble>,
         WriteStorage<'s, UiTransform>,
-        Read<'s, Time>
+        Read<'s, Time>,
     );
 
     fn run(&mut self, (mut txt_wobbles, mut ui_transforms, time): Self::SystemData) {
@@ -21,7 +21,6 @@ impl <'s> System<'s> for TextWobbleSystem {
 
             let offset = cos_val * wobble.distance / 2.0;
             trans.local_y = wobble.old_y + offset;
-
         }
     }
 }

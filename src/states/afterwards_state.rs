@@ -1,5 +1,5 @@
 use crate::components::{GameWinState, WinStateEnum};
-use crate::states::states_util::load_font;
+use crate::states::states_util::{get_trans, load_font};
 use crate::states::PuzzleState;
 use amethyst::assets::Loader;
 use amethyst::core::ecs::{Builder, World, WorldExt};
@@ -25,16 +25,7 @@ impl SimpleState for PostGameState {
         _data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
-        match event {
-            StateEvent::Input(input_event) => match input_event {
-                InputEvent::KeyPressed { key_code, .. } => match key_code {
-                    VirtualKeyCode::R => Trans::Switch(Box::new(PuzzleState::default())),
-                    _ => Trans::None,
-                },
-                _ => Trans::None,
-            },
-            _ => Trans::None,
-        }
+        get_trans(event)
     }
 }
 

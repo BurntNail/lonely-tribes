@@ -7,16 +7,16 @@ pub enum Tag {
     Collision,
     Floor,
     Weapon,
-    Trigger (TriggerType),
+    Trigger(TriggerType),
 }
 #[derive(Copy, Clone, Debug)]
 pub enum TriggerType {
-    Door
+    Door,
 }
 impl TriggerType {
-    pub fn get_id (&self) -> usize {
+    pub fn get_id(&self) -> usize {
         match self {
-            Self::Door => 10
+            Self::Door => 10,
         }
     }
 }
