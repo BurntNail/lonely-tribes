@@ -1,23 +1,22 @@
-use crate::components::{Collider, ColliderList, TileTransform};
-use crate::components::{GameWinState, WinStateEnum, NPC};
-use crate::level::Room;
-use crate::states::states_util::{get_trans_puzzle, init_camera, load_sprite_sheet};
-use crate::states::{PostGameState, TrueEnd};
-use crate::systems::UpdateTileTransforms;
-use crate::tag::Tag;
-use crate::{ARENA_HEIGHT, ARENA_WIDTH};
-use amethyst::assets::{Handle, Loader};
-use amethyst::input::{InputEvent, VirtualKeyCode};
-use amethyst::renderer::SpriteRender;
-use amethyst::ui::{FontAsset, TtfFormat};
+use crate::{
+    components::{Collider, ColliderList, GameWinState, TileTransform, WinStateEnum, NPC},
+    level::Room,
+    states::{
+        states_util::{get_trans_puzzle, init_camera, load_sprite_sheet},
+        {PostGameState, TrueEnd},
+    },
+    systems::UpdateTileTransforms,
+    tag::Tag,
+    {ARENA_HEIGHT, ARENA_WIDTH},
+};
 use amethyst::{
-    assets::AssetStorage,
+    assets::Handle,
     core::transform::Transform,
+    input::VirtualKeyCode,
     prelude::*,
-    renderer::{ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
+    renderer::{SpriteRender, SpriteSheet},
 };
 use std::collections::HashMap;
-use std::collections::VecDeque;
 
 lazy_static! {
     pub static ref LEVELS: Vec<String> = {
@@ -104,7 +103,7 @@ impl SimpleState for PuzzleState {
                 } else {
                     Trans::Switch(Box::new(TrueEnd::default()))
                 }
-            },
+            }
             WinStateEnum::TBD => Trans::None,
         }
     }

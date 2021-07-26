@@ -1,7 +1,11 @@
 use crate::components::TextWobble;
-use amethyst::core::ecs::{Join, Read, ReadStorage, System, WriteStorage};
-use amethyst::core::Time;
-use amethyst::ui::UiTransform;
+use amethyst::{
+    core::{
+        ecs::{Join, Read, System, WriteStorage},
+        Time,
+    },
+    ui::UiTransform,
+};
 
 pub struct TextWobbleSystem;
 

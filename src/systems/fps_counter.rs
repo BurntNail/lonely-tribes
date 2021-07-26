@@ -1,5 +1,7 @@
-use amethyst::core::ecs::{Read, System};
-use amethyst::utils::fps_counter::FpsCounter;
+use amethyst::{
+    core::ecs::{Read, System},
+    utils::fps_counter::FpsCounter,
+};
 
 pub struct FpsPrinterSystem;
 

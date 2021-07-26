@@ -1,14 +1,14 @@
-use amethyst::{SimpleState, StateData, GameData, StateEvent, SimpleTrans, Trans};
-use std::collections::HashMap;
-use amethyst::input::{VirtualKeyCode, InputEvent};
-use crate::states::states_util::{get_trans_puzzle, load_font};
-use crate::states::StartGameState;
-use amethyst::core::ecs::{World, WorldExt, Builder, Entity};
-use amethyst::ui::{UiTransform, Anchor, UiText, LineMode, Interactable, UiEventType};
+use crate::states::{states_util::load_font, StartGameState};
+use amethyst::{
+    core::ecs::{Builder, Entity, World, WorldExt},
+    input::{InputEvent, VirtualKeyCode},
+    ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
+    {GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans},
+};
 
 #[derive(Default)]
 pub struct TrueEnd {
-    btn: Option<Entity>
+    btn: Option<Entity>,
 }
 
 impl SimpleState for TrueEnd {
@@ -34,11 +34,11 @@ impl SimpleState for TrueEnd {
         match event {
             StateEvent::Input(event) => {
                 if let InputEvent::KeyPressed { key_code, .. } = event {
-                      if key_code == VirtualKeyCode::Return || key_code == VirtualKeyCode::Space {
-                          back_to_mm = true;
-                      }
+                    if key_code == VirtualKeyCode::Return || key_code == VirtualKeyCode::Space {
+                        back_to_mm = true;
+                    }
                 }
-            },
+            }
             StateEvent::Ui(event) => {
                 let is_target = event.target == self.btn.unwrap(); //TODO: Better than unwrap
                 let mut txts = data.world.write_storage::<UiText>();
@@ -58,7 +58,7 @@ impl SimpleState for TrueEnd {
                         _ => {}
                     }
                 }
-            },
+            }
             _ => {}
         }
 
@@ -70,7 +70,7 @@ impl SimpleState for TrueEnd {
     }
 }
 
-pub fn get_true_end_txt (world: &mut World) -> Entity{
+pub fn get_true_end_txt(world: &mut World) -> Entity {
     let trans = UiTransform::new(
         "end_txt".to_string(),
         Anchor::Middle,
@@ -89,8 +89,10 @@ pub fn get_true_end_txt (world: &mut World) -> Entity{
         LineMode::Wrap,
         Anchor::Middle,
     );
-    world.create_entity()
-        .with(trans).with(txt)
+    world
+        .create_entity()
+        .with(trans)
+        .with(txt)
         .with(Interactable)
         .build()
 }

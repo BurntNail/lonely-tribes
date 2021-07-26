@@ -1,11 +1,13 @@
-use crate::components::{GameWinState, WinStateEnum};
-use crate::states::states_util::{get_trans_puzzle, load_font};
-use crate::states::PuzzleState;
-use amethyst::assets::Loader;
-use amethyst::core::ecs::{Builder, World, WorldExt};
-use amethyst::input::{InputEvent, VirtualKeyCode};
-use amethyst::ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform};
-use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans};
+use crate::{
+    components::{GameWinState, WinStateEnum},
+    states::states_util::{get_trans_puzzle, load_font},
+};
+use amethyst::{
+    core::ecs::{Builder, World, WorldExt},
+    input::VirtualKeyCode,
+    ui::{Anchor, LineMode, UiText, UiTransform},
+    {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
+};
 use std::collections::HashMap;
 
 pub struct PostGameState {

@@ -1,9 +1,12 @@
-use crate::components::TextWobble;
-use crate::states::states_util::load_font;
-use crate::states::PuzzleState;
-use amethyst::core::ecs::{Builder, Entity, World, WorldExt};
-use amethyst::ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform};
-use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent};
+use crate::{
+    components::TextWobble,
+    states::{states_util::load_font, PuzzleState},
+};
+use amethyst::{
+    core::ecs::{Builder, Entity, World, WorldExt},
+    ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
+    {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
+};
 
 #[derive(Default)]
 pub struct StartGameState {

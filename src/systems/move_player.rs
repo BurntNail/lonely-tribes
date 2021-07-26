@@ -1,10 +1,11 @@
-use crate::components::{ColliderList, Player, TileTransform};
-use crate::{HEIGHT, WIDTH};
-use amethyst::core::Time;
-use amethyst::input::{InputHandler, StringBindings};
+use crate::{
+    components::{ColliderList, Player, TileTransform},
+    {HEIGHT, WIDTH},
+};
 use amethyst::{
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
+    input::{InputHandler, StringBindings},
 };
 
 #[derive(SystemDesc)]

@@ -1,11 +1,13 @@
 use crate::states::PuzzleState;
-use amethyst::assets::{AssetStorage, Handle, Loader};
-use amethyst::core::ecs::{Builder, World, WorldExt};
-use amethyst::core::Transform;
-use amethyst::input::{InputEvent, VirtualKeyCode};
-use amethyst::renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture};
-use amethyst::ui::{FontAsset, TtfFormat};
-use amethyst::{SimpleState, SimpleTrans, State, StateEvent, Trans};
+use amethyst::{
+    assets::{AssetStorage, Handle, Loader},
+    core::ecs::{Builder, World, WorldExt},
+    core::Transform,
+    input::{InputEvent, VirtualKeyCode},
+    renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
+    ui::{FontAsset, TtfFormat},
+    {SimpleTrans, StateEvent, Trans},
+};
 use std::collections::HashMap;
 
 pub fn init_camera(world: &mut World, wh: (f32, f32)) {

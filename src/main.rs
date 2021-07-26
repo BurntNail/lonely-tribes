@@ -2,20 +2,18 @@ use crate::systems::{
     CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, TextWobbleSystem,
     UpdateTileTransforms,
 };
-use amethyst::renderer::palette::Srgba;
-use amethyst::ui::RenderUi;
-use amethyst::utils::fps_counter::FpsCounterSystem;
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
     prelude::*,
     renderer::{
+        palette::Srgba,
         plugins::{RenderFlat2D, RenderToWindow},
         types::DefaultBackend,
         RenderingBundle,
     },
-    ui::UiBundle,
-    utils::application_root_dir,
+    ui::{RenderUi, UiBundle},
+    utils::{application_root_dir, fps_counter::FpsCounterSystem},
 };
 
 #[macro_use]

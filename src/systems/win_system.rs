@@ -1,5 +1,6 @@
 use crate::components::{ColliderList, GameWinState, Player, TileTransform, WinStateEnum};
 use amethyst::{
+    components::{ColliderList, GameWinState, Player, TileTransform, WinStateEnum},
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, Write},
 };
