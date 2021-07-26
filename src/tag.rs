@@ -25,7 +25,7 @@ impl Tag {
     pub fn from_spr(spr: SpriteRequest) -> Self {
         use SpriteRequest::*;
         use Tag::*;
-        use TriggerType::*;
+        // use TriggerType::*;
         match spr {
             SpriteRequest::Player(id) => Tag::Player(id),
             SpriteRequest::Door => Tag::Trigger(TriggerType::Door),

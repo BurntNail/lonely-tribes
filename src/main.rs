@@ -17,7 +17,6 @@ use amethyst::{
     ui::UiBundle,
     utils::application_root_dir,
 };
-use crate::bindings::MovementBindingTypes;
 
 #[macro_use]
 extern crate lazy_static;
@@ -27,7 +26,6 @@ mod level;
 mod states;
 mod systems;
 mod tag;
-mod bindings;
 
 pub const WIDTH: u32 = 32;
 pub const HEIGHT: u32 = 18;
@@ -41,7 +39,7 @@ fn main() -> amethyst::Result<()> {
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display.ron");
-    let input_bundle = InputBundle::<MovementBindingTypes>::new()
+    let input_bundle = InputBundle::<StringBindings>::new()
         .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
 
     let game_data = GameDataBuilder::default()

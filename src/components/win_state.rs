@@ -8,33 +8,38 @@ impl Default for WinStateEnum {
         Self::TBD
     }
 }
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct GameWinState {
     pub ws: WinStateEnum,
+    pub level_from: usize,
 }
 impl Default for GameWinState {
     fn default() -> Self {
         GameWinState {
             ws: WinStateEnum::default(),
+            level_from: 0,
         }
     }
 }
 impl GameWinState {
-    pub fn new(won_opt: Option<bool>) -> Self {
+    pub fn new(won_opt: Option<bool>, level_from: usize) -> Self {
         match won_opt {
             None => Self {
                 ws: WinStateEnum::TBD,
+                level_from,
             },
             Some(won) => Self {
                 ws: WinStateEnum::End { won },
+                level_from,
             },
         }
     }
     #[allow(dead_code)]
-    pub fn new_ref(won_opt: Option<&bool>) -> Self {
+    pub fn new_ref(won_opt: Option<&bool>, level_from: usize) -> Self {
         match won_opt {
             None => Self {
                 ws: WinStateEnum::TBD,
+                level_from,
             },
             Some(won_ref) => {
                 let mut won = false;
@@ -43,6 +48,7 @@ impl GameWinState {
                 }
                 Self {
                     ws: WinStateEnum::End { won },
+                    level_from,
                 }
             }
         }

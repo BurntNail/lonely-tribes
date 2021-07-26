@@ -132,8 +132,9 @@ impl Room {
     pub fn new(path: &str) -> Self {
         log::info!("Loading Room: {}", path);
         let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
+        let path = format!("assets/maps/{}", path);
 
-        image::open(path)
+        image::open(path.clone())
             .unwrap_or_else(|err| {
                 log::error!("Image Error for Room {}: {}", path, err);
                 DynamicImage::new_bgr8(WIDTH, HEIGHT)

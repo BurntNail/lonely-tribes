@@ -6,7 +6,6 @@ use amethyst::{
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
 };
-use crate::bindings::*;
 
 #[derive(SystemDesc)]
 pub struct MovePlayerSystem;
@@ -15,7 +14,7 @@ impl<'s> System<'s> for MovePlayerSystem {
     type SystemData = (
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
-        Read<'s, InputHandler<MovementBindingTypes>>,
+        Read<'s, InputHandler<StringBindings>>,
         Read<'s, ColliderList>,
         // Read<'s, Time>,
     );
@@ -24,15 +23,15 @@ impl<'s> System<'s> for MovePlayerSystem {
         let collision_tiles = list.get();
 
         for (tile, _) in (&mut tiles, &players).join() {
-            use ActionBinding::*;
             let mut proposed_tile = *tile;
-            if input.action_is_down(&Up).unwrap_or(false) {
+
+            if input.action_is_down("Up").unwrap_or(false) {
                 proposed_tile.y -= 1;
-            } else if input.action_is_down(&Down).unwrap_or(false) {
+            } else if input.action_is_down("Down").unwrap_or(false) {
                 proposed_tile.y += 1;
-            } else if input.action_is_down(&Left).unwrap_or(false) {
+            } else if input.action_is_down("Left").unwrap_or(false) {
                 proposed_tile.x -= 1;
-            } else if input.action_is_down(&Right).unwrap_or(false) {
+            } else if input.action_is_down("Right").unwrap_or(false) {
                 proposed_tile.x += 1;
             }
 

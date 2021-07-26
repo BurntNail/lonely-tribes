@@ -5,7 +5,8 @@ use amethyst::core::Transform;
 use amethyst::input::{InputEvent, VirtualKeyCode};
 use amethyst::renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture};
 use amethyst::ui::{FontAsset, TtfFormat};
-use amethyst::{SimpleTrans, StateEvent, Trans};
+use amethyst::{SimpleState, SimpleTrans, State, StateEvent, Trans};
+use std::collections::HashMap;
 
 pub fn init_camera(world: &mut World, wh: (f32, f32)) {
     let mut transform = Transform::default();
@@ -44,15 +45,19 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
     )
 }
 
-pub fn get_trans(event: StateEvent) -> SimpleTrans {
-    match event {
-        StateEvent::Input(input_event) => match input_event {
-            InputEvent::KeyPressed { key_code, .. } => match key_code {
-                VirtualKeyCode::R => Trans::Switch(Box::new(PuzzleState::default())),
-                _ => Trans::None,
-            },
-            _ => Trans::None,
-        },
-        _ => Trans::None,
+pub fn get_trans_puzzle(
+    event: StateEvent,
+    actions: &HashMap<VirtualKeyCode, usize>,
+) -> SimpleTrans {
+    let mut t = Trans::None;
+    if let StateEvent::Input(event) = event {
+        if let InputEvent::KeyPressed { key_code, .. } = event {
+            actions.iter().for_each(|(k, v)| {
+                if &key_code == k {
+                    t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                }
+            });
+        }
     }
+    t
 }

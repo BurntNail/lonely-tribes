@@ -1,7 +1,7 @@
 use crate::components::{Collider, ColliderList, TileTransform};
 use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
-use crate::states::states_util::{get_trans, init_camera, load_sprite_sheet};
+use crate::states::states_util::{get_trans_puzzle, init_camera, load_sprite_sheet};
 use crate::states::PostGameState;
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
@@ -16,16 +16,37 @@ use amethyst::{
     prelude::*,
     renderer::{ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
 };
+use std::collections::HashMap;
+use std::collections::VecDeque;
+
+lazy_static! {
+    static ref LEVELS: Vec<String> = {
+        let vec = vec!["lvl-01.png".to_string(), "lvl-02.png".to_string()];
+        vec
+    };
+}
 
 pub struct PuzzleState {
     handle: Option<Handle<SpriteSheet>>,
     ws: WinStateEnum,
+    level_index: usize,
+    actions: HashMap<VirtualKeyCode, usize>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
         Self {
             handle: None,
             ws: WinStateEnum::default(),
+            level_index: 0,
+            actions: HashMap::new(),
+        }
+    }
+}
+impl PuzzleState {
+    pub fn new(level_index: usize) -> Self {
+        PuzzleState {
+            level_index,
+            ..Default::default()
         }
     }
 }
@@ -41,10 +62,16 @@ impl SimpleState for PuzzleState {
             .replace(load_sprite_sheet(world, "art/colored_tilemap_packed"));
 
         world.register::<crate::components::NPC>();
-        world.insert(GameWinState::default());
+        world.insert(GameWinState::new(None, self.level_index));
 
-        let lvl_path = "assets/maps/test-room-one.png"; //TODO: Fix FQDN
-        load_level(world, self.handle.clone().unwrap(), lvl_path);
+        let this_level = LEVELS
+            .get(self.level_index)
+            .unwrap_or(&"test-room-one.png".to_string())
+            .as_str()
+            .to_string();
+        load_level(world, self.handle.clone().unwrap(), this_level);
+
+        self.actions.insert(VirtualKeyCode::R, self.level_index);
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
@@ -53,7 +80,7 @@ impl SimpleState for PuzzleState {
         log::info!("Deleted all entities");
 
         if let WinStateEnum::End { won } = self.ws {
-            world.insert(GameWinState::new(Some(won)))
+            world.insert(GameWinState::new(Some(won), self.level_index));
         }
     }
 
@@ -62,7 +89,7 @@ impl SimpleState for PuzzleState {
         _data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
-        get_trans(event)
+        get_trans_puzzle(event, &self.actions)
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
@@ -71,14 +98,14 @@ impl SimpleState for PuzzleState {
         self.ws = ws;
 
         match ws {
-            WinStateEnum::End { .. } => Trans::Switch(Box::new(PostGameState)),
+            WinStateEnum::End { .. } => Trans::Switch(Box::new(PostGameState::new())),
             WinStateEnum::TBD => Trans::None,
         }
     }
 }
 
-fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) {
-    let lvl = Room::new(path);
+fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: String) {
+    let lvl = Room::new(path.as_str());
 
     if lvl.data.is_empty() {
         return;

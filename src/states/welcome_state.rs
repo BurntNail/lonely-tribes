@@ -2,7 +2,7 @@ use crate::components::TextWobble;
 use crate::states::states_util::load_font;
 use crate::states::PuzzleState;
 use amethyst::core::ecs::{Builder, Entity, World, WorldExt};
-use amethyst::ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform};
+use amethyst::ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform};
 use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent};
 
 #[derive(Default)]
@@ -13,6 +13,9 @@ pub struct StartGameState {
 impl SimpleState for StartGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
+
+        world.register::<Interactable>();
+        world.register::<UiImage>();
 
         self.btn = Some(init_menu(world));
     }
@@ -26,6 +29,7 @@ impl SimpleState for StartGameState {
             let is_target = ui_event.target == self.btn.unwrap(); //TODO: Better solution than unwrap
             let mut texts = data.world.write_storage::<UiText>();
             let txt = texts.get_mut(ui_event.target);
+            log::info!("Ui Event: {:?}", ui_event.event_type);
 
             if let Some(txt) = txt {
                 match ui_event.event_type {
