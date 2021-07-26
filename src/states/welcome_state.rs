@@ -13,6 +13,7 @@ pub struct StartGameState {
 impl SimpleState for StartGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
+        world.delete_all();
 
         world.register::<Interactable>();
         world.register::<UiImage>();

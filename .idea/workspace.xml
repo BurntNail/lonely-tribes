@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add next-level capability&#10;Go back to StringBindings to fix UI input">
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="RON File" />
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="KotlinMultiplatform">
+    <allAvailableExecutables />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="39tr7i9p" />
+  </component>
+  <component name="ProjectId" id="1vGkmeXYzhHghKCboLbffx5vHE3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/states" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/rouguelike-rpg/assets/maps/test.ron.rs" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/states" />
+      <recent name="$PROJECT_DIR$/src/systems" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/systems" />
+      <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src/states" />
+      <recent name="$PROJECT_DIR$/assets/art" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="cargo doc --open" />
+      <command value="cargo fmt" />
+      <command value="cargo clippy" />
+      <command value="cargo clean" />
+      <command value="cargo run --release" />
+      <command value="cargo run" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Cargo.run">
+    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="build --all --all-targets" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clean" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="clean" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="doc" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="doc --open" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fmt" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="fmt" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --release" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Cargo.build" />
+      <item itemvalue="Cargo.clean" />
+      <item itemvalue="Cargo.doc" />
+      <item itemvalue="Cargo.fmt" />
+      <item itemvalue="Cargo.run release" />
+      <item itemvalue="Cargo.run" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Cargo.run" />
+        <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.run release" />
+        <item itemvalue="Cargo.clean" />
+        <item itemvalue="Cargo.doc" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
+    <option name="version" value="2" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="" />
+      <created>1626195973497</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626195973497</updated>
+      <workItem from="1626195975113" duration="4343000" />
+      <workItem from="1626252472218" duration="725000" />
+      <workItem from="1626339645542" duration="2702000" />
+      <workItem from="1626376321336" duration="627000" />
+      <workItem from="1626423977973" duration="511000" />
+      <workItem from="1626448255726" duration="2015000" />
+      <workItem from="1626534412588" duration="841000" />
+      <workItem from="1626597243309" duration="170000" />
+      <workItem from="1626597422091" duration="4342000" />
+      <workItem from="1626641498687" duration="2177000" />
+      <workItem from="1626678231486" duration="1794000" />
+      <workItem from="1626687894821" duration="2335000" />
+      <workItem from="1626694875050" duration="935000" />
+      <workItem from="1626696623888" duration="35000" />
+      <workItem from="1626696671906" duration="4248000" />
+      <workItem from="1626703967397" duration="1507000" />
+      <workItem from="1626729046839" duration="638000" />
+      <workItem from="1626766128404" duration="1783000" />
+      <workItem from="1626852344841" duration="3039000" />
+      <workItem from="1626856027140" duration="3890000" />
+      <workItem from="1626901684017" duration="949000" />
+      <workItem from="1626971963942" duration="2217000" />
+      <workItem from="1626976814055" duration="279000" />
+      <workItem from="1626978048295" duration="2954000" />
+      <workItem from="1627025611945" duration="1997000" />
+      <workItem from="1627063988852" duration="172000" />
+      <workItem from="1627117716028" duration="1847000" />
+      <workItem from="1627124194805" duration="49000" />
+      <workItem from="1627125129055" duration="570000" />
+      <workItem from="1627144126433" duration="11035000" />
+      <workItem from="1627200853590" duration="3986000" />
+      <workItem from="1627211919751" duration="701000" />
+      <workItem from="1627212633543" duration="95000" />
+      <workItem from="1627233902407" duration="1730000" />
+      <workItem from="1627298055430" duration="2290000" />
+      <workItem from="1627325794467" duration="4850000" />
+      <workItem from="1627332118760" duration="1214000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
+      <created>1627332004500</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1627332004500</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add next-level capability&#10;Go back to StringBindings to fix UI input" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add next-level capability&#10;Go back to StringBindings to fix UI input" />
+  </component>
+</project>

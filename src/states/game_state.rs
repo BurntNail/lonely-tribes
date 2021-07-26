@@ -2,7 +2,7 @@ use crate::components::{Collider, ColliderList, TileTransform};
 use crate::components::{GameWinState, WinStateEnum, NPC};
 use crate::level::Room;
 use crate::states::states_util::{get_trans_puzzle, init_camera, load_sprite_sheet};
-use crate::states::PostGameState;
+use crate::states::{PostGameState, TrueEnd};
 use crate::systems::UpdateTileTransforms;
 use crate::tag::Tag;
 use crate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -20,7 +20,7 @@ use std::collections::HashMap;
 use std::collections::VecDeque;
 
 lazy_static! {
-    static ref LEVELS: Vec<String> = {
+    pub static ref LEVELS: Vec<String> = {
         let vec = vec!["lvl-01.png".to_string(), "lvl-02.png".to_string()];
         vec
     };
@@ -98,7 +98,13 @@ impl SimpleState for PuzzleState {
         self.ws = ws;
 
         match ws {
-            WinStateEnum::End { .. } => Trans::Switch(Box::new(PostGameState::new())),
+            WinStateEnum::End { .. } => {
+                if self.level_index < LEVELS.len() - 1 {
+                    Trans::Switch(Box::new(PostGameState::new()))
+                } else {
+                    Trans::Switch(Box::new(TrueEnd::default()))
+                }
+            },
             WinStateEnum::TBD => Trans::None,
         }
     }
