@@ -5,7 +5,6 @@ use amethyst::{
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{FontAsset, TtfFormat},
 };
-use std::collections::HashMap;
 
 ///Helper function to initialise a camera in the world
 ///

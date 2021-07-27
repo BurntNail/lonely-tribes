@@ -17,9 +17,9 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet},
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
     input::InputEvent,
+    winit::{Event, WindowEvent}
 };
 use std::collections::HashMap;
-use amethyst::ui::UiEventType;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -89,7 +89,6 @@ impl SimpleState for PuzzleState {
         let world = data.world;
 
         world.delete_all();
-        log::info!("Deleted all entities");
 
         if let WinStateEnum::End { won } = self.ws {
             world.insert(GameWinState::new(
@@ -107,24 +106,39 @@ impl SimpleState for PuzzleState {
     ) -> SimpleTrans {
         let mut t = Trans::None;
 
-        if let StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) = event {
-            self.actions.iter().for_each(|(k, v)| {
-                if &key_code == k {
-                    t = Trans::Switch(Box::new(PuzzleState::new(*v)));
-                }
-            });
+        match event {
+            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+                self.actions.iter().for_each(|(k, v)| {
+                    if &key_code == k {
+                        t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                    }
+                });
 
-            if key_code == VirtualKeyCode::Space {
-                if let Some(btn) = self.score_button {
-                    let mut hiddens = data.world.write_storage::<Hidden>();
-                    if hiddens.contains(btn) {
-                        hiddens.remove(btn);
-                    } else {
-                        hiddens.insert(btn, Hidden);
+                if key_code == VirtualKeyCode::Space {
+                    if let Some(btn) = self.score_button {
+                        let mut hiddens = data.world.write_storage::<Hidden>();
+                        if hiddens.contains(btn) {
+                            hiddens.remove(btn);
+                        } else {
+                            hiddens.insert(btn, Hidden).unwrap_or_else(|e| {
+                                log::error!("Unable to insert btn into hiddens - {}", e);
+                                None
+                            });
+                        }
                     }
                 }
-            }
-        }
+            },
+            StateEvent::Window(Event::WindowEvent {event, .. }) => {
+                match event {
+                    WindowEvent::CloseRequested | WindowEvent::Destroyed => {
+                        let mut gws = data.world.write_resource::<GameWinState>();
+                        gws.ws = WinStateEnum::End {won: false};
+                    }
+                    _ => {}
+                }
+            },
+            _ => {}
+        };
 
         t
     }
@@ -137,10 +151,8 @@ impl SimpleState for PuzzleState {
         match ws {
             WinStateEnum::End { won } => {
                 if self.level_index >= LEVELS.len() - 1 && won {
-                    log::info!("Switching to true end at {}", self.level_index);
                     Trans::Switch(Box::new(TrueEnd::default()))
                 } else {
-                    log::info!("PGS at {}", self.level_index);
                     Trans::Switch(Box::new(PostGameState::new()))
                 }
             }

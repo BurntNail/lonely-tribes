@@ -32,24 +32,23 @@ impl SimpleState for PostGameState {
         let world = data.world;
 
         let (level_from, is_last_level, won, score) = get_stuff(world);
-        log::info!("Score for {} = {}", level_from, score);
         let mut high_score = HighScores::default();
+
         let nu_high_score = high_score.add_score_and_write(level_from, score);
 
         let won_txt = if won {
-            "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
+            let win = "You Won! Press [R] to Restart, or [N] to go to the Next Level";
+            if nu_high_score.is_none() {
+                format!("You got a new high score - {}!\n\n{}", score, win)
+            } else {
+                format!(
+                    "You didn't beat your high score of {}...\n\n{}",
+                    nu_high_score.unwrap_or_else(|| unreachable!()),
+                    win
+                )
+            }
         } else {
-            "You Lost... Press [R] to Restart."
-        };
-
-        let won_txt = if nu_high_score.is_none() {
-            format!("You got a new high score - {}!\n\n{}", score, won_txt)
-        } else {
-            format!(
-                "You didn't beat your high score of {}...\n\n{}",
-                nu_high_score.unwrap_or_else(|| unreachable!()),
-                won_txt
-            )
+            "You Lost... Press [R] to Restart.".to_string()
         };
 
         let mut map = HashMap::new();
