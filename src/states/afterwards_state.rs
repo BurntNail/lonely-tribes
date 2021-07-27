@@ -12,6 +12,7 @@ use amethyst::{
     {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
 };
 use std::collections::HashMap;
+use crate::high_scores::HighScores;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
@@ -33,7 +34,10 @@ impl SimpleState for PostGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        let (level_from, is_last_level, won) = get_stuff(world);
+        let (level_from, is_last_level, won, score) = get_stuff(world);
+        log::info!("Score for {} = {}", level_from, score);
+        let mut high_score = HighScores::default();
+        high_score.add_score_and_write(level_from, score);
 
         let won_txt = if won {
             "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
@@ -68,15 +72,19 @@ impl SimpleState for PostGameState {
 ///  - A usize - the level before the PGS
 ///  - A bool - whether or not that was the last level
 ///  - Another bool - whether or not the previous level was won
-pub fn get_stuff (world: &World) -> (usize, bool, bool) {
+///  - An f32 - the score from the previous level
+pub fn get_stuff (world: &World) -> (usize, bool, bool, i32) {
     let gws = world.read_resource::<GameWinState>();
+
     let level_from = gws.level_from;
     let is_last_level = level_from >= LEVELS.len() - 1;
     let won = match gws.ws {
         WinStateEnum::End { won } => won,
         _ => false,
     };
-    (level_from, is_last_level, won)
+    let score = gws.level_no_of_moves;
+
+    (level_from, is_last_level, won, score)
 }
 
 ///Function to insert text onto the PostGameState screen, with the win_text being that text

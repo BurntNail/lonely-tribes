@@ -28,12 +28,12 @@ mod level;
 mod states;
 mod systems;
 mod tag;
+mod high_scores;
 
 pub const WIDTH: u32 = 64;
 pub const HEIGHT: u32 = 36;
 pub const ARENA_WIDTH: u32 = 8 * WIDTH;
 pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
-
 
 fn main() -> amethyst::Result<()> {
     let opts = Flags::from_args();
@@ -105,7 +105,6 @@ pub struct Flags {
 
 //todos
 
-//TODO: Timer
 //TODO: Save Score (time)
 
 //TODO: dev cheats

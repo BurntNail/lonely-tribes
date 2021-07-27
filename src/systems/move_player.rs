@@ -5,9 +5,10 @@ use crate::{
 use amethyst::{
     core::Time,
     derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{Join, Read, Write, ReadStorage, System, SystemData, WriteStorage},
     input::{InputHandler, StringBindings},
 };
+use crate::components::GameWinState;
 
 pub const INTERVAL: f32 = 0.05;
 
@@ -29,9 +30,10 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, ColliderList>,
         Read<'s, Time>,
+        Write<'s, GameWinState>
     );
 
-    fn run(&mut self, (mut tiles, players, input, list, time): Self::SystemData) {
+    fn run(&mut self, (mut tiles, players, input, list, time, mut gws): Self::SystemData) {
         self.timer += time.delta_seconds();
 
         if self.timer > INTERVAL {
@@ -66,6 +68,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
 
                 if works {
+                    gws.level_no_of_moves += 1;
                     tile.set(proposed_tile);
                 }
             }

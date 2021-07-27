@@ -67,7 +67,7 @@ impl SimpleState for PuzzleState {
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
         world.register::<crate::components::NPC>();
-        world.insert(GameWinState::new(None, self.level_index));
+        world.insert(GameWinState::new(None, self.level_index, 0));
 
         let this_level = LEVELS
             .get(self.level_index)
@@ -81,11 +81,12 @@ impl SimpleState for PuzzleState {
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
+
         world.delete_all();
         log::info!("Deleted all entities");
 
         if let WinStateEnum::End { won } = self.ws {
-            world.insert(GameWinState::new(Some(won), self.level_index));
+            world.insert(GameWinState::new(Some(won), self.level_index, get_no_of_moves(world)));
         }
     }
 
@@ -115,6 +116,12 @@ impl SimpleState for PuzzleState {
             WinStateEnum::TBD => Trans::None,
         }
     }
+}
+
+///Function to get the number of moves from the last round
+fn get_no_of_moves(world: &World) -> i32 {
+    let gws = world.read_resource::<GameWinState>();
+    gws.level_no_of_moves
 }
 
 ///Loads in a level given a path
