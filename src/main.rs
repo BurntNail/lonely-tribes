@@ -106,12 +106,12 @@ pub struct Flags {
 
 //todos
 
-//TODO: dev cheats
-
 //TODO: Power-Ups
 
+//TODO: dev cheats
+
 //TODO: Level Select Screen
-//TODO: Show level times
+//TODO: Show level scores
 
 //TODO: Enemies
 //TODO: Combat

@@ -43,16 +43,14 @@ impl SimpleState for PostGameState {
         };
 
         let won_txt = if nu_high_score.is_none() {
-            format!("You got a new high score - {}! {}", score, won_txt)
+            format!("You got a new high score - {}!\n\n{}", score, won_txt)
         } else {
             format!(
-                "You didn't beat your high score of {}... {}",
+                "You didn't beat your high score of {}...\n\n{}",
                 nu_high_score.unwrap_or_else(|| unreachable!()),
                 won_txt
             )
         };
-
-        log::info!("{}", won_txt);
 
         let mut map = HashMap::new();
         map.insert(VirtualKeyCode::R, level_from);
@@ -123,7 +121,7 @@ pub fn get_end_txt(world: &mut World, won_txt: String) {
         load_font(world, "ZxSpectrum"),
         won_txt,
         [1.0; 4],
-        75.0,
+        50.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
