@@ -6,10 +6,21 @@ use amethyst::{
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
     input::{InputHandler, StringBindings},
+    core::Time
 };
 
+pub const INTERVAL: f32 = 0.05;
+
 #[derive(SystemDesc)]
-pub struct MovePlayerSystem;
+pub struct MovePlayerSystem {
+    timer: f32
+}
+
+impl Default for MovePlayerSystem {
+    fn default() -> Self {
+        Self {timer: 0.0}
+    }
+}
 
 impl<'s> System<'s> for MovePlayerSystem {
     type SystemData = (
@@ -17,43 +28,48 @@ impl<'s> System<'s> for MovePlayerSystem {
         ReadStorage<'s, Player>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, ColliderList>,
-        // Read<'s, Time>,
+        Read<'s, Time>,
     );
 
-    fn run(&mut self, (mut tiles, players, input, list): Self::SystemData) {
-        let collision_tiles = list.get();
+    fn run(&mut self, (mut tiles, players, input, list, time): Self::SystemData) {
+        self.timer += time.delta_seconds();
 
-        for (tile, _) in (&mut tiles, &players).join() {
-            let mut proposed_tile = *tile;
+        if self.timer > INTERVAL {
+            let collision_tiles = list.get();
 
-            if input.action_is_down("Up").unwrap_or(false) {
-                proposed_tile.y -= 1;
-            } else if input.action_is_down("Down").unwrap_or(false) {
-                proposed_tile.y += 1;
-            } else if input.action_is_down("Left").unwrap_or(false) {
-                proposed_tile.x -= 1;
-            } else if input.action_is_down("Right").unwrap_or(false) {
-                proposed_tile.x += 1;
-            }
+            for (tile, _) in (&mut tiles, &players).join() {
+                let mut proposed_tile = *tile;
 
-            let mut works = true;
-            for possibility in &collision_tiles {
-                if &proposed_tile == possibility {
+                if input.action_is_down("Up").unwrap_or(false) {
+                    proposed_tile.y -= 1;
+                } else if input.action_is_down("Down").unwrap_or(false) {
+                    proposed_tile.y += 1;
+                } else if input.action_is_down("Left").unwrap_or(false) {
+                    proposed_tile.x -= 1;
+                } else if input.action_is_down("Right").unwrap_or(false) {
+                    proposed_tile.x += 1;
+                }
+
+                let mut works = true;
+                for possibility in &collision_tiles {
+                    if &proposed_tile == possibility {
+                        works = false;
+                        break;
+                    }
+                }
+                if proposed_tile.x < 0
+                    || proposed_tile.y < 0
+                    || proposed_tile.x > WIDTH as i32 - 1
+                    || proposed_tile.y > HEIGHT as i32 - 1
+                {
                     works = false;
-                    break;
+                }
+
+                if works {
+                    tile.set(proposed_tile);
                 }
             }
-            if proposed_tile.x < 0
-                || proposed_tile.y < 0
-                || proposed_tile.x > WIDTH as i32 - 1
-                || proposed_tile.y > HEIGHT as i32 - 1
-            {
-                works = false;
-            }
-
-            if works {
-                tile.set(proposed_tile);
-            }
+            self.timer = 0.0;
         }
     }
 }
