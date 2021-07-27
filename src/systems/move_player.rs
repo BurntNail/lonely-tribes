@@ -3,22 +3,22 @@ use crate::{
     {HEIGHT, WIDTH},
 };
 use amethyst::{
+    core::Time,
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, WriteStorage},
     input::{InputHandler, StringBindings},
-    core::Time
 };
 
 pub const INTERVAL: f32 = 0.05;
 
 #[derive(SystemDesc)]
 pub struct MovePlayerSystem {
-    timer: f32
+    timer: f32,
 }
 
 impl Default for MovePlayerSystem {
     fn default() -> Self {
-        Self {timer: 0.0}
+        Self { timer: 0.0 }
     }
 }
 

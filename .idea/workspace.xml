@@ -4,13 +4,19 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix Warnings&#10;Clean up Imports (useless, but makes me feel better)">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix Movement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-01.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-01.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-02.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-02.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/colliders.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/npc.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/npc.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text_wobble.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/text_wobble.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/true_end.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,16 +82,16 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="cargo doc --open" />
       <command value="cargo fmt" />
       <command value="cargo clippy" />
       <command value="cargo clean" />
       <command value="cargo run --release" />
       <command value="cargo run" />
       <command value="cargo check" />
+      <command value="cargo doc --open" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.doc">
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="build --all --all-targets" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -118,8 +124,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="clean" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="clean" />
+    <configuration name="doc" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="doc --open" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -184,19 +190,19 @@
     </configuration>
     <list>
       <item itemvalue="Cargo.build" />
-      <item itemvalue="Cargo.clean" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run release" />
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.check" />
+      <item itemvalue="Cargo.doc" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.run" />
+        <item itemvalue="Cargo.doc" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.run release" />
-        <item itemvalue="Cargo.clean" />
       </list>
     </recent_temporary>
   </component>
@@ -249,7 +255,7 @@
       <workItem from="1627298055430" duration="2290000" />
       <workItem from="1627325794467" duration="4850000" />
       <workItem from="1627332118760" duration="3783000" />
-      <workItem from="1627375902265" duration="1081000" />
+      <workItem from="1627375902265" duration="6341000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -272,7 +278,21 @@
       <option name="project" value="LOCAL" />
       <updated>1627334574503</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add Level 3&#10;Fix switching between PostGameState and TrueEnd&#10;Change from 32x18 to 64x36">
+      <created>1627377002577</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1627377002577</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix Movement">
+      <created>1627377009693</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1627377009693</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,6 +314,8 @@
     <MESSAGE value="Add next-level capability&#10;Go back to StringBindings to fix UI input" />
     <MESSAGE value="Add End Of Game" />
     <MESSAGE value="Fix Warnings&#10;Clean up Imports (useless, but makes me feel better)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Warnings&#10;Clean up Imports (useless, but makes me feel better)" />
+    <MESSAGE value="Add Level 3&#10;Fix switching between PostGameState and TrueEnd&#10;Change from 32x18 to 64x36" />
+    <MESSAGE value="Fix Movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Movement" />
   </component>
 </project>

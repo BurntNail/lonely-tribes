@@ -6,8 +6,10 @@ use amethyst::{
     {GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans},
 };
 
+///State for when the user has finished all levels
 #[derive(Default)]
 pub struct TrueEnd {
+    ///Stores the Entity for the Button as an option for easier initialisation
     btn: Option<Entity>,
 }
 
@@ -24,13 +26,6 @@ impl SimpleState for TrueEnd {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut back_to_mm = false;
-        // if let StateEvent::Input(event) = event {
-        //     if let InputEvent::KeyPressed { key_code, .. } = event {
-        //         if key_code == VirtualKeyCode::Return || key_code == VirtualKeyCode::Space {
-        //
-        //         }
-        //     }
-        // }
         match event {
             StateEvent::Input(event) => {
                 if let InputEvent::KeyPressed { key_code, .. } = event {
@@ -70,6 +65,9 @@ impl SimpleState for TrueEnd {
     }
 }
 
+///Instantiates text with end text detailing how to get back to the main menu
+///
+///Returns the entity of that text, for checking when it was clicked
 pub fn get_true_end_txt(world: &mut World) -> Entity {
     let trans = UiTransform::new(
         "end_txt".to_string(),

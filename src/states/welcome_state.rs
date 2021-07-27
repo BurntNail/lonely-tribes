@@ -8,8 +8,10 @@ use amethyst::{
     {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
 };
 
+///State for welcoming the player to the game
 #[derive(Default)]
 pub struct StartGameState {
+    ///Stores the Entity for the Button as an option for easier initialisation
     btn: Option<Entity>,
 }
 
@@ -69,8 +71,6 @@ impl SimpleState for StartGameState {
 }
 
 ///Function to initialise Start Screen Main Menu
-///
-///  - Takes in the data.world
 ///
 /// Returns an Entity with the Start Button
 fn init_menu(world: &mut World) -> Entity {

@@ -10,6 +10,10 @@ use amethyst::{
 };
 use std::collections::HashMap;
 
+///Helper function to initialise a camera in the world
+///
+///  - **world** is the Specs World
+///  - **wh** is a tuple containing the width and the height in f32s
 pub fn init_camera(world: &mut World, wh: (f32, f32)) {
     let mut transform = Transform::default();
     transform.set_translation_xyz(wh.0 * 0.5, wh.1 * 0.5, 1.0);
@@ -21,6 +25,9 @@ pub fn init_camera(world: &mut World, wh: (f32, f32)) {
         .build();
 }
 
+///Helper function to load in a font, given the world, and a path (eg. *ZxSpectrum*)
+///
+/// Returns a handle to a fontasset
 pub fn load_font(world: &mut World, path: &str) -> Handle<FontAsset> {
     world.read_resource::<Loader>().load(
         format!("fonts/{}.ttf", path),
@@ -30,23 +37,29 @@ pub fn load_font(world: &mut World, path: &str) -> Handle<FontAsset> {
     )
 }
 
+///Helper function to load in a font, given the world, and a path (without an extension, eg. *SpriteSheetPacked*)
+///
+/// The function assumes that there is a ron file with details of the spritesheet
+///
+/// Returns a handle to a spritesheet
 pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
     log::info!("Loading sprite sheet: {}", path);
     let tex_handle = world.read_resource::<Loader>().load(
-        format!("{}.png", path),
+        format!("art/{}.png", path),
         ImageFormat::default(),
         (),
         &world.read_resource::<AssetStorage<Texture>>(),
     );
 
     world.read_resource::<Loader>().load(
-        format!("{}.ron", path),
+        format!("art/{}.ron", path),
         SpriteSheetFormat(tex_handle),
         (),
         &world.read_resource::<AssetStorage<SpriteSheet>>(),
     )
 }
 
+///Function to get an Amethyst SimpleTrans given a StateEvent, and a hashmap detailing which Keys lead to which level indicies for *LEVELS*
 pub fn get_trans_puzzle(
     event: StateEvent,
     actions: &HashMap<VirtualKeyCode, usize>,

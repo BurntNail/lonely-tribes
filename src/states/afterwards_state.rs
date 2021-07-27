@@ -2,7 +2,7 @@ use crate::{
     components::{GameWinState, WinStateEnum},
     states::{
         states_util::{get_trans_puzzle, load_font},
-        LEVELS
+        LEVELS,
     },
 };
 use amethyst::{
@@ -13,11 +13,15 @@ use amethyst::{
 };
 use std::collections::HashMap;
 
+///State for when after a *PuzzleState*
 pub struct PostGameState {
+    ///A HashMap containing key presses, which lead to indicies for levels in *LEVELS*
     map: HashMap<VirtualKeyCode, usize>,
 }
 
 impl PostGameState {
+    ///Constructor for PostGameState
+    /// Initialises the Actions Map as an empty HashMap
     pub fn new() -> Self {
         PostGameState {
             map: HashMap::new(),
@@ -29,14 +33,21 @@ impl SimpleState for PostGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        let level_from = get_level(world);
+        let gws = world.read_resource::<GameWinState>();
+        let level_from = gws.level_from;
         let is_last_level = level_from >= LEVELS.len() - 1;
-        let won = get_win(world);
+        let won = match gws.ws {
+            WinStateEnum::End { won } => won,
+            _ => false,
+        };
 
-        let won_txt = get_win_txt(won);
+        let won_txt = if won {
+            "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
+        } else {
+            "You Lost... Press [R] to Restart."
+        };
+        let won_txt = won_txt.to_string();
         log::info!("{}", won_txt);
-
-
 
         let mut map = HashMap::new();
         map.insert(VirtualKeyCode::R, level_from);
@@ -57,27 +68,10 @@ impl SimpleState for PostGameState {
     }
 }
 
-pub fn get_win_txt(won: bool) -> String {
-    let won_txt = if won {
-        "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
-    } else {
-        "You Lost... Press [R] to Restart."
-    };
-    won_txt.to_string()
-}
-pub fn get_level(world: &World) -> usize {
-    let gws = world.read_resource::<GameWinState>();
-    gws.level_from
-}
-
-pub fn get_win(world: &World) -> bool {
-    let gws = world.read_resource::<GameWinState>();
-    match gws.ws {
-        WinStateEnum::End { won } => won,
-        _ => false,
-    }
-}
-
+///Function to insert text onto the PostGameState screen, with the win_text being that text
+///The text is **not** interactable.
+///
+///By default, it uses a non-bold sans-serif font called ZxSpectrum
 pub fn get_end_txt(world: &mut World, won_txt: String) {
     let trans = UiTransform::new(
         "won_txt".to_string(),

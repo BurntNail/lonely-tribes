@@ -16,25 +16,31 @@ use amethyst::{
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
 };
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    path::PathBuf,
+    fs::{read_dir, ReadDir},
+};
 
 lazy_static! {
+    ///List of strings holding the file paths to all levels
     pub static ref LEVELS: Vec<String> = {
-        let vec = vec!["lvl-01.png".to_string(), "lvl-02.png".to_string(), "lvl-03.png".to_string()];
-        vec
+        vec!["lvl-01.png".to_string(), "lvl-02.png".to_string(), "lvl-03.png".to_string()]
     };
 }
 
+///State for when the User is in a puzzle
 pub struct PuzzleState {
-    handle: Option<Handle<SpriteSheet>>,
+    ///Holding the current WinState
     ws: WinStateEnum,
+    ///The index of the current level in *LEVELS*
     level_index: usize,
+    ///Holding a HashMap of which keys lead to which indicies of *LEVELS*
     actions: HashMap<VirtualKeyCode, usize>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
         Self {
-            handle: None,
             ws: WinStateEnum::default(),
             level_index: 0,
             actions: HashMap::new(),
@@ -42,6 +48,9 @@ impl Default for PuzzleState {
     }
 }
 impl PuzzleState {
+    ///Constructor for PuzzleState
+    ///
+    ///  - **level_index** is the level index for *LEVELS*
     pub fn new(level_index: usize) -> Self {
         PuzzleState {
             level_index,
@@ -57,8 +66,7 @@ impl SimpleState for PuzzleState {
 
         init_camera(world, (ARENA_WIDTH as f32, ARENA_HEIGHT as f32));
 
-        self.handle
-            .replace(load_sprite_sheet(world, "art/colored_tilemap_packed"));
+        let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
         world.register::<crate::components::NPC>();
         world.insert(GameWinState::new(None, self.level_index));
@@ -68,7 +76,7 @@ impl SimpleState for PuzzleState {
             .unwrap_or(&"test-room-one.png".to_string())
             .as_str()
             .to_string();
-        load_level(world, self.handle.clone().unwrap(), this_level);
+        load_level(world, handle, this_level);
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
     }
@@ -111,6 +119,11 @@ impl SimpleState for PuzzleState {
     }
 }
 
+///Loads in a level given a path
+///
+///  - **world** is the current game World from Specs
+///  - **sprites_handle** is a handle to the spritesheet
+///  - **path** is the Path to the level eg. *"lvl-01.png"*
 fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: String) {
     let lvl = Room::new(path.as_str());
 
@@ -142,7 +155,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .with(spr)
                         .with(tt)
                         .with(trans)
-                        .with(Collider::new(true, id))
+                        .with(Collider::new(id))
                         .with(crate::components::Player::new(id))
                         .build();
                 }
@@ -171,7 +184,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .with(spr)
                         .with(tt)
                         .with(Transform::default())
-                        .with(Collider::new(true, trigger_type.get_id()))
+                        .with(Collider::new(trigger_type.get_id()))
                         .build();
                 }
                 _ => {
