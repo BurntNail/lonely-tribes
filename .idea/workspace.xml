@@ -4,15 +4,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="StructOpt">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Rust File" />
         <option value="RON File" />
+        <option value="Rust File" />
       </list>
     </option>
   </component>
@@ -88,18 +88,7 @@
       <command value="cargo doc --open" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.build">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Cargo.fmt">
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="build --all --all-targets" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -231,18 +220,18 @@
     <list>
       <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.run release (with fps)" />
+      <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run release" />
       <item itemvalue="Cargo.run" />
-      <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.check" />
       <item itemvalue="Cargo.doc" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.run" />
-        <item itemvalue="Cargo.doc" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.doc" />
         <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.run release" />
       </list>
@@ -297,7 +286,8 @@
       <workItem from="1627298055430" duration="2290000" />
       <workItem from="1627325794467" duration="4850000" />
       <workItem from="1627332118760" duration="3783000" />
-      <workItem from="1627375902265" duration="12141000" />
+      <workItem from="1627375902265" duration="13819000" />
+      <workItem from="1627406855487" duration="78000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -348,7 +338,21 @@
       <option name="project" value="LOCAL" />
       <updated>1627390052282</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add high scores">
+      <created>1627395042108</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1627395042108</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add high scores">
+      <created>1627395052469</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1627395052469</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,6 +378,8 @@
     <MESSAGE value="Fix Movement" />
     <MESSAGE value="Add Docu-Comments" />
     <MESSAGE value="StructOpt" />
-    <option name="LAST_COMMIT_MESSAGE" value="StructOpt" />
+    <MESSAGE value="Add high scores p2" />
+    <MESSAGE value="Add high scores" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add high scores" />
   </component>
 </project>

@@ -1,8 +1,8 @@
 use crate::{
-    components::{Collider, ColliderList, GameWinState, TileTransform, WinStateEnum, NPC},
+    components::{Collider, ColliderList, GameWinState, Score, TileTransform, WinStateEnum, NPC},
     level::Room,
     states::{
-        states_util::{get_trans_puzzle, init_camera, load_sprite_sheet},
+        states_util::{get_trans_puzzle, init_camera, load_font, load_sprite_sheet},
         {PostGameState, TrueEnd},
     },
     systems::UpdateTileTransforms,
@@ -11,14 +11,13 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::transform::Transform,
+    core::{ecs::Entity, transform::Transform},
     input::VirtualKeyCode,
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
+    ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
 };
-use std::{
-    collections::HashMap,
-};
+use std::collections::HashMap;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -35,6 +34,8 @@ pub struct PuzzleState {
     level_index: usize,
     ///Holding a HashMap of which keys lead to which indicies of *LEVELS*
     actions: HashMap<VirtualKeyCode, usize>,
+    ///Option variable to hold the Score text
+    score_button: Option<Entity>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
@@ -42,6 +43,7 @@ impl Default for PuzzleState {
             ws: WinStateEnum::default(),
             level_index: 0,
             actions: HashMap::new(),
+            score_button: None,
         }
     }
 }
@@ -77,6 +79,8 @@ impl SimpleState for PuzzleState {
         load_level(world, handle, this_level);
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
+
+        self.score_button = Some(add_score(world));
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
@@ -86,7 +90,11 @@ impl SimpleState for PuzzleState {
         log::info!("Deleted all entities");
 
         if let WinStateEnum::End { won } = self.ws {
-            world.insert(GameWinState::new(Some(won), self.level_index, get_no_of_moves(world)));
+            world.insert(GameWinState::new(
+                Some(won),
+                self.level_index,
+                get_no_of_moves(world),
+            ));
         }
     }
 
@@ -118,7 +126,36 @@ impl SimpleState for PuzzleState {
     }
 }
 
-///Function to get the number of moves from the last round
+///Adds an entity with UiText to mark the score to the player
+fn add_score(world: &mut World) -> Entity {
+    let trans = UiTransform::new(
+        "score_txt".to_string(),
+        Anchor::Middle,
+        Anchor::Middle,
+        -575.0,
+        400.0,
+        0.5,
+        350.0,
+        1000.0,
+    );
+    let txt = UiText::new(
+        load_font(world, "ZxSpectrumBold"),
+        "Current Score: 0".to_string(),
+        [1.0; 4],
+        25.0,
+        LineMode::Wrap,
+        Anchor::Middle,
+    );
+    world
+        .create_entity()
+        .with(trans)
+        .with(txt)
+        .with(Interactable)
+        .with(Score)
+        .build()
+}
+
+///Function to get the number of moves from this round
 fn get_no_of_moves(world: &World) -> i32 {
     let gws = world.read_resource::<GameWinState>();
     gws.level_no_of_moves

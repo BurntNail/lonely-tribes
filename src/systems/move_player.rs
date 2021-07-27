@@ -1,3 +1,4 @@
+use crate::components::GameWinState;
 use crate::{
     components::{ColliderList, Player, TileTransform},
     {HEIGHT, WIDTH},
@@ -5,13 +6,13 @@ use crate::{
 use amethyst::{
     core::Time,
     derive::SystemDesc,
-    ecs::{Join, Read, Write, ReadStorage, System, SystemData, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-use crate::components::GameWinState;
 
 pub const INTERVAL: f32 = 0.05;
 
+///System for capturing player movement, and collision
 #[derive(SystemDesc)]
 pub struct MovePlayerSystem {
     timer: f32,
@@ -30,11 +31,12 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, ColliderList>,
         Read<'s, Time>,
-        Write<'s, GameWinState>
+        Write<'s, GameWinState>,
     );
 
     fn run(&mut self, (mut tiles, players, input, list, time, mut gws): Self::SystemData) {
         self.timer += time.delta_seconds();
+        let mut actual_movement = false;
 
         if self.timer > INTERVAL {
             let collision_tiles = list.get();
@@ -44,12 +46,16 @@ impl<'s> System<'s> for MovePlayerSystem {
 
                 if input.action_is_down("Up").unwrap_or(false) {
                     proposed_tile.y -= 1;
+                    actual_movement = true;
                 } else if input.action_is_down("Down").unwrap_or(false) {
                     proposed_tile.y += 1;
+                    actual_movement = true;
                 } else if input.action_is_down("Left").unwrap_or(false) {
                     proposed_tile.x -= 1;
+                    actual_movement = true;
                 } else if input.action_is_down("Right").unwrap_or(false) {
                     proposed_tile.x += 1;
+                    actual_movement = true;
                 }
 
                 let mut works = true;
@@ -68,10 +74,14 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
 
                 if works {
-                    gws.level_no_of_moves += 1;
                     tile.set(proposed_tile);
                 }
             }
+
+            if actual_movement {
+                gws.level_no_of_moves += 1;
+            }
+
             self.timer = 0.0;
         }
     }

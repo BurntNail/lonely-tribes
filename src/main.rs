@@ -1,8 +1,6 @@
-use crate::{
-    systems::{
-    CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, TextWobbleSystem,
-    UpdateTileTransforms,
-    },
+use crate::systems::{
+    CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, ScoreUpdaterSystem,
+    TextWobbleSystem, UpdateTileTransforms,
 };
 use amethyst::{
     core::transform::TransformBundle,
@@ -17,18 +15,18 @@ use amethyst::{
     ui::{RenderUi, UiBundle},
     utils::{application_root_dir, fps_counter::FpsCounterSystem},
 };
-use structopt::StructOpt;
 use log::LevelFilter;
+use structopt::StructOpt;
 
 #[macro_use]
 extern crate lazy_static;
 
 mod components;
+mod high_scores;
 mod level;
 mod states;
 mod systems;
 mod tag;
-mod high_scores;
 
 pub const WIDTH: u32 = 64;
 pub const HEIGHT: u32 = 36;
@@ -68,16 +66,18 @@ fn main() -> amethyst::Result<()> {
             &["collider_list", "update_tile_transforms"],
         )
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
-        .with(TextWobbleSystem, "txt_wobble", &[]);
+        .with(TextWobbleSystem, "txt_wobble", &[])
+        .with(ScoreUpdaterSystem, "score_updater", &[]);
 
     if !opts.console {
         log::set_max_level(LevelFilter::Error);
     } else if opts.fps {
-        game_data = game_data
-            .with(FpsCounterSystem, "fps", &[])
-            .with(FpsPrinterSystem, "fps_printer", &["fps"]);
+        game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
+            FpsPrinterSystem,
+            "fps_printer",
+            &["fps"],
+        );
     }
-
 
     let mut game = Application::new(resources, states::StartGameState::default(), game_data)?;
     game.run();
@@ -92,6 +92,7 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     [r, g, b, a]
 }
 
+///Class for Flags for use with StructOpt
 #[derive(StructOpt, Debug)]
 pub struct Flags {
     ///Enable an FPS counter in the console
@@ -100,12 +101,10 @@ pub struct Flags {
 
     ///Enable the console
     #[structopt(short, long)]
-    pub console: bool
+    pub console: bool,
 }
 
 //todos
-
-//TODO: Save Score (time)
 
 //TODO: dev cheats
 

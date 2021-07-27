@@ -19,14 +19,14 @@ pub struct GameWinState {
     ///The level for which *ws* refers to
     pub level_from: usize,
     ///Amount of time the level has taken
-    pub level_no_of_moves: i32
+    pub level_no_of_moves: i32,
 }
 impl Default for GameWinState {
     fn default() -> Self {
         GameWinState {
             ws: WinStateEnum::default(),
             level_from: 0,
-            level_no_of_moves: 0
+            level_no_of_moves: 0,
         }
     }
 }
@@ -41,12 +41,12 @@ impl GameWinState {
             None => Self {
                 ws: WinStateEnum::TBD,
                 level_from,
-                level_no_of_moves: level_timer_len
+                level_no_of_moves: level_timer_len,
             },
             Some(won) => Self {
                 ws: WinStateEnum::End { won },
                 level_from,
-                level_no_of_moves: level_timer_len
+                level_no_of_moves: level_timer_len,
             },
         }
     }
@@ -57,7 +57,7 @@ impl GameWinState {
             None => Self {
                 ws: WinStateEnum::TBD,
                 level_from,
-                level_no_of_moves: 0
+                level_no_of_moves: 0,
             },
             Some(won_ref) => {
                 let mut won = false;
@@ -67,7 +67,7 @@ impl GameWinState {
                 Self {
                     ws: WinStateEnum::End { won },
                     level_from,
-                    level_no_of_moves: 0
+                    level_no_of_moves: 0,
                 }
             }
         }

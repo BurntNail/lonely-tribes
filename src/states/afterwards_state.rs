@@ -1,3 +1,4 @@
+use crate::high_scores::HighScores;
 use crate::{
     components::{GameWinState, WinStateEnum},
     states::{
@@ -12,7 +13,6 @@ use amethyst::{
     {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
 };
 use std::collections::HashMap;
-use crate::high_scores::HighScores;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
@@ -37,14 +37,24 @@ impl SimpleState for PostGameState {
         let (level_from, is_last_level, won, score) = get_stuff(world);
         log::info!("Score for {} = {}", level_from, score);
         let mut high_score = HighScores::default();
-        high_score.add_score_and_write(level_from, score);
+        let nu_high_score = high_score.add_score_and_write(level_from, score);
 
         let won_txt = if won {
             "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
         } else {
             "You Lost... Press [R] to Restart."
         };
-        let won_txt = won_txt.to_string();
+
+        let won_txt = if nu_high_score.is_none() {
+            format!("You got a new high score - {}! {}", score, won_txt)
+        } else {
+            format!(
+                "You didn't beat your high score of {}... {}",
+                nu_high_score.unwrap_or_else(|| unreachable!()),
+                won_txt
+            )
+        };
+
         log::info!("{}", won_txt);
 
         let mut map = HashMap::new();
@@ -73,7 +83,7 @@ impl SimpleState for PostGameState {
 ///  - A bool - whether or not that was the last level
 ///  - Another bool - whether or not the previous level was won
 ///  - An f32 - the score from the previous level
-pub fn get_stuff (world: &World) -> (usize, bool, bool, i32) {
+pub fn get_stuff(world: &World) -> (usize, bool, bool, i32) {
     let gws = world.read_resource::<GameWinState>();
 
     let level_from = gws.level_from;
