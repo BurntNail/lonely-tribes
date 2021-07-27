@@ -2,7 +2,7 @@ use crate::{
     components::{Collider, ColliderList, GameWinState, Score, TileTransform, WinStateEnum, NPC},
     level::Room,
     states::{
-        states_util::{get_trans_puzzle, init_camera, load_font, load_sprite_sheet},
+        states_util::{init_camera, load_font, load_sprite_sheet},
         {PostGameState, TrueEnd},
     },
     systems::UpdateTileTransforms,
@@ -11,13 +11,15 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::{ecs::Entity, transform::Transform},
+    core::{ecs::Entity, transform::Transform, Hidden},
     input::VirtualKeyCode,
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
+    input::InputEvent,
 };
 use std::collections::HashMap;
+use amethyst::ui::UiEventType;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -100,10 +102,31 @@ impl SimpleState for PuzzleState {
 
     fn handle_event(
         &mut self,
-        _data: StateData<'_, GameData<'_, '_>>,
+        data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
-        get_trans_puzzle(event, &self.actions)
+        let mut t = Trans::None;
+
+        if let StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) = event {
+            self.actions.iter().for_each(|(k, v)| {
+                if &key_code == k {
+                    t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                }
+            });
+
+            if key_code == VirtualKeyCode::H {
+                if let Some(btn) = self.score_button {
+                    let mut hiddens = data.world.write_storage::<Hidden>();
+                    if hiddens.contains(btn) {
+                        hiddens.remove(btn);
+                    } else {
+                        hiddens.insert(btn, Hidden);
+                    }
+                }
+            }
+        }
+
+        t
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {

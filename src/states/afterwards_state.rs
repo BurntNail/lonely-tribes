@@ -2,17 +2,14 @@ use crate::high_scores::HighScores;
 use crate::{
     components::{GameWinState, WinStateEnum},
     states::{
-        states_util::{get_trans_puzzle, load_font},
+        states_util::load_font,
         LEVELS,
     },
 };
-use amethyst::{
-    core::ecs::{Builder, World, WorldExt},
-    input::VirtualKeyCode,
-    ui::{Anchor, LineMode, UiText, UiTransform},
-    {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
-};
+use amethyst::{core::ecs::{Builder, World, WorldExt}, input::VirtualKeyCode, ui::{Anchor, LineMode, UiText, UiTransform}, {GameData, SimpleState, SimpleTrans, StateData, StateEvent}, Trans};
 use std::collections::HashMap;
+use amethyst::input::InputEvent;
+use crate::states::PuzzleState;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
@@ -72,7 +69,17 @@ impl SimpleState for PostGameState {
         _data: StateData<'_, GameData<'_, '_>>,
         event: StateEvent,
     ) -> SimpleTrans {
-        get_trans_puzzle(event, &self.map)
+        let mut t = Trans::None;
+        if let StateEvent::Input(event) = event {
+            if let InputEvent::KeyPressed { key_code, .. } = event {
+                self.map.iter().for_each(|(k, v)| {
+                    if &key_code == k {
+                        t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                    }
+                });
+            }
+        }
+        t
     }
 }
 

@@ -1,12 +1,9 @@
-use crate::states::PuzzleState;
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
     core::ecs::{Builder, World, WorldExt},
     core::Transform,
-    input::{InputEvent, VirtualKeyCode},
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{FontAsset, TtfFormat},
-    {SimpleTrans, StateEvent, Trans},
 };
 use std::collections::HashMap;
 
@@ -57,22 +54,4 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
         (),
         &world.read_resource::<AssetStorage<SpriteSheet>>(),
     )
-}
-
-///Function to get an Amethyst SimpleTrans given a StateEvent, and a hashmap detailing which Keys lead to which level indicies for *LEVELS*
-pub fn get_trans_puzzle(
-    event: StateEvent,
-    actions: &HashMap<VirtualKeyCode, usize>,
-) -> SimpleTrans {
-    let mut t = Trans::None;
-    if let StateEvent::Input(event) = event {
-        if let InputEvent::KeyPressed { key_code, .. } = event {
-            actions.iter().for_each(|(k, v)| {
-                if &key_code == k {
-                    t = Trans::Switch(Box::new(PuzzleState::new(*v)));
-                }
-            });
-        }
-    }
-    t
 }
