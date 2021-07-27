@@ -114,7 +114,7 @@ impl SimpleState for PuzzleState {
                 }
             });
 
-            if key_code == VirtualKeyCode::H {
+            if key_code == VirtualKeyCode::Space {
                 if let Some(btn) = self.score_button {
                     let mut hiddens = data.world.write_storage::<Hidden>();
                     if hiddens.contains(btn) {

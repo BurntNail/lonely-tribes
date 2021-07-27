@@ -83,7 +83,7 @@
       <command value="cargo doc --open" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run (with fps)">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="build --all --all-targets" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -224,9 +224,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.fmt" />
-        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.doc" />
         <item itemvalue="Cargo.run release" />
       </list>
