@@ -1,6 +1,9 @@
 use crate::{
     components::{GameWinState, WinStateEnum},
-    states::states_util::{get_trans_puzzle, load_font},
+    states::{
+        states_util::{get_trans_puzzle, load_font},
+        LEVELS
+    },
 };
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
@@ -26,13 +29,18 @@ impl SimpleState for PostGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        let won_txt = get_win_txt(world);
+        let level_from = get_level(world);
+        let is_last_level = level_from >= LEVELS.len() - 1;
+        let won = get_win(world);
+
+        let won_txt = get_win_txt(won);
         log::info!("{}", won_txt);
 
-        let level_from = get_level(world);
+
+
         let mut map = HashMap::new();
         map.insert(VirtualKeyCode::R, level_from);
-        if get_win(world) {
+        if won && !is_last_level {
             map.insert(VirtualKeyCode::N, level_from + 1);
         }
         self.map = map;
@@ -49,9 +57,9 @@ impl SimpleState for PostGameState {
     }
 }
 
-pub fn get_win_txt(world: &World) -> String {
-    let won_txt = if get_win(world) {
-        "You Won! Press [R] to Restart, or [N] to go to the Next Level"
+pub fn get_win_txt(won: bool) -> String {
+    let won_txt = if won {
+        "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
     } else {
         "You Lost... Press [R] to Restart."
     };

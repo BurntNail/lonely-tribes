@@ -20,7 +20,7 @@ use std::collections::HashMap;
 
 lazy_static! {
     pub static ref LEVELS: Vec<String> = {
-        let vec = vec!["lvl-01.png".to_string(), "lvl-02.png".to_string()];
+        let vec = vec!["lvl-01.png".to_string(), "lvl-02.png".to_string(), "lvl-03.png".to_string()];
         vec
     };
 }
@@ -97,11 +97,13 @@ impl SimpleState for PuzzleState {
         self.ws = ws;
 
         match ws {
-            WinStateEnum::End { .. } => {
-                if self.level_index < LEVELS.len() - 1 {
-                    Trans::Switch(Box::new(PostGameState::new()))
-                } else {
+            WinStateEnum::End { won } => {
+                if self.level_index >= LEVELS.len() - 1 && won {
+                    log::info!("Switching to true end at {}", self.level_index);
                     Trans::Switch(Box::new(TrueEnd::default()))
+                } else {
+                    log::info!("PGS at {}", self.level_index);
+                    Trans::Switch(Box::new(PostGameState::new()))
                 }
             }
             WinStateEnum::TBD => Trans::None,

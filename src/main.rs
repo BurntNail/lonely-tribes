@@ -25,8 +25,8 @@ mod states;
 mod systems;
 mod tag;
 
-pub const WIDTH: u32 = 32;
-pub const HEIGHT: u32 = 18;
+pub const WIDTH: u32 = 64;
+pub const HEIGHT: u32 = 36;
 pub const ARENA_WIDTH: u32 = 8 * WIDTH;
 pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
 
@@ -56,14 +56,16 @@ fn main() -> amethyst::Result<()> {
         .with(UpdateTileTransforms, "update_tile_transforms", &[])
         .with(CollidersListSystem, "collider_list", &[])
         .with(
-            MovePlayerSystem,
+            MovePlayerSystem::default(),
             "player_input",
             &["collider_list", "update_tile_transforms"],
         )
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
-        .with(TextWobbleSystem, "txt_wobble", &[])
-        .with(FpsCounterSystem, "fps", &[])
-        .with(FpsPrinterSystem, "fps_printer", &["fps"]);
+        .with(TextWobbleSystem, "txt_wobble", &[]);
+
+    // let game_data = game_data
+    //     .with(FpsCounterSystem, "fps", &[])
+    //     .with(FpsPrinterSystem, "fps_printer", &["fps"]);
 
     let mut game = Application::new(resources, states::StartGameState::default(), game_data)?;
     game.run();
@@ -79,15 +81,10 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
 }
 
 //todos
-
-//TODO: Fix Movement
-
 //TODO: Docu-Comments
 
 //TODO: Pause Menu (necessary?)
-//TODO: Multiple Levels
 //TODO: Level Select Screen
-//TODO: Redo EOG Screen
 
 //TODO: Timer
 //TODO: Save Score (time)
