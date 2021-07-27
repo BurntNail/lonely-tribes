@@ -25,6 +25,7 @@ impl Default for MovePlayerSystem {
 }
 
 impl<'s> System<'s> for MovePlayerSystem {
+    #[allow(clippy::type_complexity)]
     type SystemData = (
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,

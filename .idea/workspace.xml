@@ -4,11 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix High Score Saving">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Help State">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,15 +75,15 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="cargo fmt" />
-      <command value="cargo clippy" />
       <command value="cargo clean" />
       <command value="cargo run --release" />
       <command value="cargo run" />
       <command value="cargo check" />
       <command value="cargo doc --open" />
+      <command value="cargo clippy" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -115,6 +115,22 @@
     </configuration>
     <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="check" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clippy" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="clippy" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -193,22 +209,6 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --release" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -230,18 +230,18 @@
       <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.fmt" />
-      <item itemvalue="Cargo.run release" />
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.check" />
       <item itemvalue="Cargo.doc" />
+      <item itemvalue="Cargo.clippy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.doc" />
-        <item itemvalue="Cargo.run release" />
       </list>
     </recent_temporary>
   </component>
@@ -295,7 +295,7 @@
       <workItem from="1627325794467" duration="4850000" />
       <workItem from="1627332118760" duration="3783000" />
       <workItem from="1627375902265" duration="13819000" />
-      <workItem from="1627406855487" duration="5773000" />
+      <workItem from="1627406855487" duration="6085000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -409,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627416398965</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Help State">
+      <created>1627416597140</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1627416597140</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -442,6 +449,7 @@
     <MESSAGE value="Change hide key to Space" />
     <MESSAGE value="Realise that this should be v3" />
     <MESSAGE value="Fix High Score Saving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix High Score Saving" />
+    <MESSAGE value="Help State" />
+    <option name="LAST_COMMIT_MESSAGE" value="Help State" />
   </component>
 </project>

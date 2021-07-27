@@ -141,7 +141,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
         40.0,
     );
     let help_btn_txt = UiText::new(
-        font_handle.clone(),
+        font_handle,
         String::from("Click here to get Help."),
         [1.0, 1.0, 1.0, 0.5],
         50.0,

@@ -14,8 +14,8 @@ pub struct HighScores {
 }
 impl Default for HighScores {
     fn default() -> Self {
-        let file = read_to_string(HIGH_SCORES_PATH).unwrap_or("".to_string());
-        let scores: HashMap<usize, i32> = from_str(file.as_str()).unwrap_or(HashMap::new());
+        let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
+        let scores: HashMap<usize, i32> = from_str(file.as_str()).unwrap_or_default();
 
         Self { scores }
     }
