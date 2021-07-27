@@ -4,10 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change hide key to Space">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix High Score Saving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +84,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="build --all --all-targets" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -281,7 +295,7 @@
       <workItem from="1627325794467" duration="4850000" />
       <workItem from="1627332118760" duration="3783000" />
       <workItem from="1627375902265" duration="13819000" />
-      <workItem from="1627406855487" duration="1624000" />
+      <workItem from="1627406855487" duration="5773000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -374,7 +388,28 @@
       <option name="project" value="LOCAL" />
       <updated>1627407644154</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Realise that this should be v3">
+      <created>1627408825624</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1627408825624</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix High Score Saving">
+      <created>1627415551140</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1627415551140</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fix High Score Saving">
+      <created>1627416398965</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1627416398965</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,6 +440,8 @@
     <MESSAGE value="Add Score Text for High Scores" />
     <MESSAGE value="Add hiding Scores" />
     <MESSAGE value="Change hide key to Space" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change hide key to Space" />
+    <MESSAGE value="Realise that this should be v3" />
+    <MESSAGE value="Fix High Score Saving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix High Score Saving" />
   </component>
 </project>
