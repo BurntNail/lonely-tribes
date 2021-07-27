@@ -1,15 +1,21 @@
-use crate::high_scores::HighScores;
 use crate::{
     components::{GameWinState, WinStateEnum},
     states::{
         states_util::load_font,
         LEVELS,
+        PuzzleState
     },
+    high_scores::HighScores,
+    Flags
 };
-use amethyst::{core::ecs::{Builder, World, WorldExt}, input::VirtualKeyCode, ui::{Anchor, LineMode, UiText, UiTransform}, {GameData, SimpleState, SimpleTrans, StateData, StateEvent}, Trans};
+use amethyst::{
+    core::ecs::{Builder, World, WorldExt},
+    input::{VirtualKeyCode, InputEvent},
+    ui::{Anchor, LineMode, UiText, UiTransform},
+    {GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans},
+};
 use std::collections::HashMap;
-use amethyst::input::InputEvent;
-use crate::states::PuzzleState;
+use structopt::StructOpt;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
@@ -34,18 +40,28 @@ impl SimpleState for PostGameState {
         let (level_from, is_last_level, won, score) = get_stuff(world);
         let mut high_score = HighScores::default();
 
-        let nu_high_score = high_score.add_score_and_write(level_from, score);
+        let opts: Flags = Flags::from_args();
+
+        let mut nu_high_score = None;
+
+        if !opts.debug {
+            nu_high_score = Some(high_score.add_score_and_write(level_from, score));
+        }
 
         let won_txt = if won {
             let win = "You Won! Press [R] to Restart, or [N] to go to the Next Level";
-            if nu_high_score.is_none() {
-                format!("You got a new high score - {}!\n\n{}", score, win)
+            if let Some(nu_high_score) = nu_high_score {
+                if nu_high_score.is_none() {
+                    format!("You got a new high score - {}!\n\n{}", score, win)
+                } else {
+                    format!(
+                        "You didn't beat your high score of {}...\n\n{}",
+                        nu_high_score.unwrap_or_else(|| unreachable!()),
+                        win
+                    )
+                }
             } else {
-                format!(
-                    "You didn't beat your high score of {}...\n\n{}",
-                    nu_high_score.unwrap_or_else(|| unreachable!()),
-                    win
-                )
+                format!("Debug Options are enabled, so High Scores are disabled, but...\n\n{}", win)
             }
         } else {
             "You Lost... Press [R] to Restart.".to_string()

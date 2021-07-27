@@ -34,9 +34,10 @@ pub const ARENA_WIDTH: u32 = 8 * WIDTH;
 pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
 
 fn main() -> amethyst::Result<()> {
-    let opts = Flags::from_args();
-
     amethyst::start_logger(Default::default());
+
+    let opts = Flags::from_args();
+    log::info!("Options: {:?}", opts);
 
     let app_root = application_root_dir()?;
 
@@ -102,6 +103,17 @@ pub struct Flags {
     ///Enable the console
     #[structopt(short, long)]
     pub console: bool,
+
+    ///Enable debug options (disables high scores)
+    ///
+    ///Similar to Valve svcheats
+    #[structopt(short, long)]
+    pub debug: bool,
+
+    ///Starting level
+    ///Requires debug mode
+    #[structopt(short, long)]
+    pub level: Option<usize>
 }
 
 //todos

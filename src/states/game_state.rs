@@ -8,6 +8,7 @@ use crate::{
     systems::UpdateTileTransforms,
     tag::Tag,
     {ARENA_HEIGHT, ARENA_WIDTH},
+    Flags
 };
 use amethyst::{
     assets::Handle,
@@ -20,6 +21,7 @@ use amethyst::{
     winit::{Event, WindowEvent}
 };
 use std::collections::HashMap;
+use structopt::StructOpt;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -41,9 +43,21 @@ pub struct PuzzleState {
 }
 impl Default for PuzzleState {
     fn default() -> Self {
+        let opts = Flags::from_args();
+
+        let mut level_index = 0;
+        if opts.debug {
+            level_index = opts.level.unwrap_or(1) - 1;
+            if level_index > LEVELS.len() - 1 {
+                level_index = 0;
+            }
+            log::info!("Starting early at level {}", level_index);
+        }
+
+
         Self {
             ws: WinStateEnum::default(),
-            level_index: 0,
+            level_index,
             actions: HashMap::new(),
             score_button: None,
         }
