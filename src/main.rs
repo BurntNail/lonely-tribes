@@ -93,7 +93,7 @@ fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     [r, g, b, a]
 }
 
-///Class for Flags for use with StructOpt
+///Flags for Making Friends
 #[derive(StructOpt, Debug)]
 pub struct Flags {
     ///Enable an FPS counter in the console
@@ -105,18 +105,19 @@ pub struct Flags {
     pub console: bool,
 
     ///Enable debug options (disables high scores)
-    ///
     ///Similar to Valve svcheats
     #[structopt(short, long)]
     pub debug: bool,
 
-    ///Starting level
-    ///Requires debug mode
+    ///Starting level, requires debug mode
     #[structopt(short, long)]
-    pub level: Option<usize>
+    pub level: Option<usize>,
 }
 
 //todos
+
+//TODO: Add options for movement style (timed, on-click)
+//TODO: Export some options to conf file
 
 //TODO: Power-Ups
 

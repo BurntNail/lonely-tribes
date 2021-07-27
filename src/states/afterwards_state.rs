@@ -1,16 +1,12 @@
 use crate::{
     components::{GameWinState, WinStateEnum},
-    states::{
-        states_util::load_font,
-        LEVELS,
-        PuzzleState
-    },
     high_scores::HighScores,
-    Flags
+    states::{states_util::load_font, PuzzleState, LEVELS},
+    Flags,
 };
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
-    input::{VirtualKeyCode, InputEvent},
+    input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
     {GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans},
 };
@@ -61,7 +57,10 @@ impl SimpleState for PostGameState {
                     )
                 }
             } else {
-                format!("Debug Options are enabled, so High Scores are disabled, but...\n\n{}", win)
+                format!(
+                    "Debug Options are enabled, so High Scores are disabled, but...\n\n{}",
+                    win
+                )
             }
         } else {
             "You Lost... Press [R] to Restart.".to_string()

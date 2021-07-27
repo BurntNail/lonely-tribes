@@ -7,18 +7,17 @@ use crate::{
     },
     systems::UpdateTileTransforms,
     tag::Tag,
-    {ARENA_HEIGHT, ARENA_WIDTH},
-    Flags
+    Flags, {ARENA_HEIGHT, ARENA_WIDTH},
 };
 use amethyst::{
     assets::Handle,
     core::{ecs::Entity, transform::Transform, Hidden},
+    input::InputEvent,
     input::VirtualKeyCode,
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
-    input::InputEvent,
-    winit::{Event, WindowEvent}
+    winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
@@ -53,7 +52,6 @@ impl Default for PuzzleState {
             }
             log::info!("Starting early at level {}", level_index);
         }
-
 
         Self {
             ws: WinStateEnum::default(),
@@ -121,7 +119,7 @@ impl SimpleState for PuzzleState {
         let mut t = Trans::None;
 
         match event {
-            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
                 self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -141,15 +139,13 @@ impl SimpleState for PuzzleState {
                         }
                     }
                 }
-            },
-            StateEvent::Window(Event::WindowEvent {event, .. }) => {
-                match event {
-                    WindowEvent::CloseRequested | WindowEvent::Destroyed => {
-                        let mut gws = data.world.write_resource::<GameWinState>();
-                        gws.ws = WinStateEnum::End {won: false};
-                    }
-                    _ => {}
+            }
+            StateEvent::Window(Event::WindowEvent { event, .. }) => match event {
+                WindowEvent::CloseRequested | WindowEvent::Destroyed => {
+                    let mut gws = data.world.write_resource::<GameWinState>();
+                    gws.ws = WinStateEnum::End { won: false };
                 }
+                _ => {}
             },
             _ => {}
         };

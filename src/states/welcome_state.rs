@@ -1,3 +1,4 @@
+use crate::states::HelpState;
 use crate::{
     components::TextWobble,
     states::{states_util::load_font, PuzzleState},
@@ -7,14 +8,13 @@ use amethyst::{
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
 };
-use crate::states::HelpState;
 
 ///State for welcoming the player to the game
 #[derive(Default)]
 pub struct StartGameState {
     ///Stores the Entity for the Button as an option for easier initialisation
     start_btn: Option<Entity>,
-    help_btn: Option<Entity>
+    help_btn: Option<Entity>,
 }
 
 impl SimpleState for StartGameState {
@@ -56,10 +56,10 @@ impl SimpleState for StartGameState {
                                     } else if is_help {
                                         t = SimpleTrans::Switch(Box::new(HelpState::default()));
                                     }
-                                },
+                                }
                                 UiEventType::HoverStart => txt.color = [1.0, 1.0, 1.0, 0.5],
                                 UiEventType::HoverStop => txt.color = [1.0; 4],
-                                _ => {},
+                                _ => {}
                             };
                         }
                     }
@@ -75,7 +75,6 @@ impl SimpleState for StartGameState {
 ///
 /// Returns an Entity with the Start Button, and one with the Help Button
 fn init_menu(world: &mut World) -> (Entity, Entity) {
-
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
     let welcome_trans = UiTransform::new(
         String::from("welcome_txt"),
@@ -100,8 +99,6 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
         .with(welcome_trans)
         .with(welcome_txt)
         .build();
-
-
 
     let font_handle = load_font(world, "ZxSpectrum");
     let start_btn_trans = UiTransform::new(
