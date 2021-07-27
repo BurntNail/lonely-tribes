@@ -18,8 +18,6 @@ use amethyst::{
 };
 use std::{
     collections::HashMap,
-    path::PathBuf,
-    fs::{read_dir, ReadDir},
 };
 
 lazy_static! {

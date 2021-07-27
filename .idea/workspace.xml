@@ -4,20 +4,14 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix Movement">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add Docu-Comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/colliders.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/npc.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/npc.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/text_wobble.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/text_wobble.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/true_end.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +85,18 @@
       <command value="cargo doc --open" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.doc">
+  <component name="RunManager" selected="Cargo.run">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="build --all --all-targets" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -156,6 +161,22 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="run (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run -- -c -f" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -173,7 +194,7 @@
       </method>
     </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run" />
+      <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -193,14 +214,15 @@
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run release" />
       <item itemvalue="Cargo.run" />
+      <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.check" />
       <item itemvalue="Cargo.doc" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.doc" />
         <item itemvalue="Cargo.fmt" />
-        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.check" />
         <item itemvalue="Cargo.run release" />
       </list>
@@ -255,7 +277,7 @@
       <workItem from="1627298055430" duration="2290000" />
       <workItem from="1627325794467" duration="4850000" />
       <workItem from="1627332118760" duration="3783000" />
-      <workItem from="1627375902265" duration="6341000" />
+      <workItem from="1627375902265" duration="8387000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -292,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627377009693</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add Docu-Comments">
+      <created>1627388003610</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1627388003610</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,6 +345,7 @@
     <MESSAGE value="Fix Warnings&#10;Clean up Imports (useless, but makes me feel better)" />
     <MESSAGE value="Add Level 3&#10;Fix switching between PostGameState and TrueEnd&#10;Change from 32x18 to 64x36" />
     <MESSAGE value="Fix Movement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Movement" />
+    <MESSAGE value="Add Docu-Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Docu-Comments" />
   </component>
 </project>

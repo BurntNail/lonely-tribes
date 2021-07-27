@@ -33,13 +33,7 @@ impl SimpleState for PostGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        let gws = world.read_resource::<GameWinState>();
-        let level_from = gws.level_from;
-        let is_last_level = level_from >= LEVELS.len() - 1;
-        let won = match gws.ws {
-            WinStateEnum::End { won } => won,
-            _ => false,
-        };
+        let (level_from, is_last_level, won) = get_stuff(world);
 
         let won_txt = if won {
             "You Won! Press [R] to Restart, or [N] to go to the Next Level" //Don't need to worry about winning - this will never happen because we will have the true end
@@ -66,6 +60,23 @@ impl SimpleState for PostGameState {
     ) -> SimpleTrans {
         get_trans_puzzle(event, &self.map)
     }
+}
+
+///Function to get necessary things for the PostGameState
+///
+/// Returns:
+///  - A usize - the level before the PGS
+///  - A bool - whether or not that was the last level
+///  - Another bool - whether or not the previous level was won
+pub fn get_stuff (world: &World) -> (usize, bool, bool) {
+    let gws = world.read_resource::<GameWinState>();
+    let level_from = gws.level_from;
+    let is_last_level = level_from >= LEVELS.len() - 1;
+    let won = match gws.ws {
+        WinStateEnum::End { won } => won,
+        _ => false,
+    };
+    (level_from, is_last_level, won)
 }
 
 ///Function to insert text onto the PostGameState screen, with the win_text being that text

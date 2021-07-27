@@ -35,7 +35,6 @@ impl SimpleState for StartGameState {
             let is_target = ui_event.target == self.btn.unwrap(); //TODO: Better solution than unwrap
             let mut texts = data.world.write_storage::<UiText>();
             let txt = texts.get_mut(ui_event.target);
-            log::info!("Ui Event: {:?}", ui_event.event_type);
 
             if let Some(txt) = txt {
                 match ui_event.event_type {
