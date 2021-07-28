@@ -112,6 +112,10 @@ pub struct Flags {
     ///Starting level, requires debug mode
     #[structopt(short, long)]
     pub level: Option<usize>,
+
+    ///Option to enable legacy movement
+    #[structopt(short, long)]
+    pub timed_movement: Option<f32>
 }
 
 //todos

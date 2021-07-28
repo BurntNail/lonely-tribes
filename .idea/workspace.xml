@@ -7,12 +7,6 @@
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="change version">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +82,7 @@
       <command value="cargo clippy" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="build --all --all-targets" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -170,7 +164,7 @@
       </method>
     </configuration>
     <configuration name="run (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run -- -c -f" />
+      <option name="command" value="run -- -c -f -t 0.05" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -186,7 +180,7 @@
       </method>
     </configuration>
     <configuration name="run release (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run --release -- -c -f" />
+      <option name="command" value="run --release -- -c -f -t 0.05" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -202,7 +196,7 @@
       </method>
     </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run -- -c" />
+      <option name="command" value="run -- -c -t 0.05" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -229,10 +223,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.doc" />
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.check" />
       </list>
     </recent_temporary>
@@ -288,7 +282,8 @@
       <workItem from="1627332118760" duration="3783000" />
       <workItem from="1627375902265" duration="13819000" />
       <workItem from="1627406855487" duration="8796000" />
-      <workItem from="1627419984100" duration="932000" />
+      <workItem from="1627419984100" duration="2509000" />
+      <workItem from="1627457569584" duration="949000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
