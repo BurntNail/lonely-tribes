@@ -115,17 +115,29 @@ pub struct Flags {
 
     ///Option to enable legacy movement
     #[structopt(short, long)]
-    pub timed_movement: Option<f32>
+    pub timed_movement: Option<f32>,
+
+    ///Option to use the debug level, requires debug mode
+    #[cfg(debug_assertions)]
+    #[structopt(long)]
+    pub debug_level: bool,
+
+    #[cfg(not(debug_assertions))]
+    #[structopt(skip = false)]
+    pub debug_level: bool,
 }
 
 //todos
 
-//TODO: Add options for movement style (timed, on-click)
-//TODO: Export some options to conf file
-
 //TODO: Power-Ups
+//TODO: Explain PowerUp Types (maybe in a new state like a pause menu?)
+//TODO: Show Power-Up timers left?
 
-//TODO: dev cheats
+//TODO: post-processing
+//eg. make it clear where the players are
+//maybe sprites that go on top?
+
+//TODO: Export some options to conf file
 
 //TODO: Level Select Screen
 //TODO: Show level scores

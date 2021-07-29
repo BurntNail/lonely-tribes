@@ -1,11 +1,10 @@
 use crate::{
-    components::{ColliderList, Player, TileTransform, GameWinState},
-    {HEIGHT, WIDTH},
-    Flags
+    components::{ColliderList, GameWinState, Player, TileTransform},
+    Flags, {HEIGHT, WIDTH},
 };
 use amethyst::{
-    derive::SystemDesc,
     core::Time,
+    derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
@@ -34,12 +33,12 @@ impl Default for MovePlayerSystem {
         if let Some(interval) = opts.timed_movement {
             Self {
                 can_move: None,
-                movement_timer: Some((0.0, interval))
+                movement_timer: Some((0.0, interval)),
             }
         } else {
             Self {
                 can_move: Some(false),
-                movement_timer: None
+                movement_timer: None,
             }
         }
     }
@@ -57,7 +56,6 @@ impl<'s> System<'s> for MovePlayerSystem {
     );
 
     fn run(&mut self, (mut tiles, players, input, list, time, mut gws): Self::SystemData) {
-
         //TODO: This works, but it would be nice if it was all in one if statement
 
         let mut actual_movement = false;
@@ -68,8 +66,6 @@ impl<'s> System<'s> for MovePlayerSystem {
             self.movement_timer = Some((timdt, int));
 
             if timdt > int {
-
-
                 for (tile, _) in (&mut tiles, &players).join() {
                     let mut proposed_tile = *tile;
 
@@ -161,7 +157,6 @@ impl<'s> System<'s> for MovePlayerSystem {
             }
 
             self.can_move = Some(!actual_movement);
-
         }
     }
 }

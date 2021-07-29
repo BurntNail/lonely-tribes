@@ -25,7 +25,18 @@ use structopt::StructOpt;
 lazy_static! {
     ///List of strings holding the file paths to all levels
     pub static ref LEVELS: Vec<String> = {
-        (1..7).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect()
+        let opts: Flags = Flags::from_args();
+
+        let mut out = (1..=6).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect();
+
+        if cfg!(debug_assertions) {
+            if opts.debug && opts.debug_level {
+                out = vec!["test-room-one.png".to_string()];
+            }
+
+        }
+
+        out
     };
 }
 
