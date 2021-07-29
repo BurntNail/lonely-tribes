@@ -1,6 +1,7 @@
 mod colliders;
 mod npc;
 mod player;
+mod power_up;
 mod score;
 mod text_wobble;
 mod tile_transform;
@@ -9,6 +10,7 @@ mod win_state;
 pub use colliders::{Collider, ColliderList};
 pub use npc::NPC;
 pub use player::Player;
+pub use power_up::{PowerUp, PowerUpType};
 pub use score::Score;
 pub use text_wobble::TextWobble;
 pub use tile_transform::TileTransform;

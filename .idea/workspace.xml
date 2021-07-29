@@ -4,10 +4,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="change version">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add option to load debug level">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,27 +82,23 @@
       <command value="cargo check" />
       <command value="cargo doc --open" />
       <command value="cargo clippy" />
+      <command value="cargo build --release" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
-    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="build --all --all-targets" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
+  <component name="RunManager" selected="Cargo.debug level">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+        <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="check" />
+    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -117,6 +115,22 @@
     </configuration>
     <configuration name="clippy" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="clippy" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run -- -c -t 0.05 -d --debug-level" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -212,22 +226,22 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.run (with fps)" />
+      <item itemvalue="Cargo.debug level" />
+      <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run" />
-      <item itemvalue="Cargo.check" />
       <item itemvalue="Cargo.doc" />
       <item itemvalue="Cargo.clippy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.build" />
+        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.doc" />
-        <item itemvalue="Cargo.check" />
       </list>
     </recent_temporary>
   </component>
@@ -283,7 +297,8 @@
       <workItem from="1627375902265" duration="13819000" />
       <workItem from="1627406855487" duration="8796000" />
       <workItem from="1627419984100" duration="2509000" />
-      <workItem from="1627457569584" duration="949000" />
+      <workItem from="1627457569584" duration="1077000" />
+      <workItem from="1627547621135" duration="3539000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -432,7 +447,21 @@
       <option name="project" value="LOCAL" />
       <updated>1627419557298</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Fix Movement - once and for all!">
+      <created>1627458564981</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1627458564981</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Add option to load debug level">
+      <created>1627550646110</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1627550646110</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -470,6 +499,8 @@
     <MESSAGE value="Add Debug Mode" />
     <MESSAGE value="Add More Levels" />
     <MESSAGE value="change version" />
-    <option name="LAST_COMMIT_MESSAGE" value="change version" />
+    <MESSAGE value="Fix Movement - once and for all!" />
+    <MESSAGE value="Add option to load debug level" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add option to load debug level" />
   </component>
 </project>

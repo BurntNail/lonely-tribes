@@ -1,3 +1,4 @@
+use crate::components::PowerUpType;
 use crate::{HEIGHT, WIDTH};
 use image::{DynamicImage, GenericImageView, Rgba};
 use std::collections::HashMap;
@@ -21,18 +22,15 @@ pub enum SpriteRequest {
     TUpDownRight,
     Player(usize),
     Orc,
-    EmptyHeart,
     FullHeart,
-    HalfHeart,
     Axe,
-    Bow,
-    Arrow,
     Door,
     Blank,
     Shrubbery,
     DarkShrubbery,
     Tree,
     WarpedTree,
+    PowerUp(PowerUpType),
 }
 
 lazy_static! {
@@ -55,7 +53,7 @@ lazy_static! {
         s(251, 242, 54, LeftWallDown);//3
         s(153, 229, 80, RightWallDown);
         s(106, 190, 48, Door);
-        s(55, 148, 110, Axe);
+        s(55, 148, 110, Orc);
         s(75, 105, 47, Shrubbery);//4
         s(82, 75, 36, DarkShrubbery);
         s(50, 60, 57, Tree);
@@ -66,8 +64,12 @@ lazy_static! {
         s(95, 205, 228, Player(3));
         s(203, 219, 252, TUpDownLeft); //6
         s(255, 255, 255, TUpDownRight);
-        s(155, 173, 183, LeftWallUp);
-        s(132, 126, 135, RightWallUp);
+
+
+        s(105, 106, 106, PowerUp(PowerUpType::Shield)); //7
+        s(89, 86, 82, PowerUp(PowerUpType::DoorBlocker));
+        s(118, 66, 138, PowerUp(PowerUpType::Controller));
+        s(172, 50, 50, PowerUp(PowerUpType::Portal));
 
         map
     };
@@ -99,15 +101,17 @@ impl SpriteRequest {
                 3 => 7,
                 _ => 9999,
             },
+            PowerUp(t) => match t {
+                PowerUpType::Shield => 93,
+                PowerUpType::DoorBlocker => 34,
+                PowerUpType::Controller => 9,
+                PowerUpType::Portal => 113,
+            },
             TUpDownLeft => 71,
             TUpDownRight => 70,
             Orc => 11,
-            EmptyHeart => 89,
             FullHeart => 90,
-            HalfHeart => 91,
             Axe => 63,
-            Bow => 65,
-            Arrow => 67,
             Shrubbery => 61,
             DarkShrubbery => 60,
             Tree => 74,
