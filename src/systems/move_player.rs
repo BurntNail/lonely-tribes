@@ -1,13 +1,15 @@
 use crate::{
-    components::{ColliderList, GameWinState, Player, TileTransform},
+    components::{ColliderList, GameWinState, Player, PowerUpHolder, PowerUpType, TileTransform},
+    tag::TriggerType,
     Flags, HEIGHT, WIDTH,
 };
 use amethyst::{
-    core::Time,
+    core::{ecs::Entities, Time},
     derive::SystemDesc,
     ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
+use rand::{thread_rng, Rng};
 use structopt::StructOpt;
 
 ///System for capturing player movement, and collision
@@ -53,13 +55,19 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, ColliderList>,
         Read<'s, Time>,
         Write<'s, GameWinState>,
+        Write<'s, PowerUpHolder>,
+        Entities<'s>
     );
 
-    fn run(&mut self, (mut tiles, players, input, list, time, mut gws): Self::SystemData) {
+    fn run(
+        &mut self,
+        (mut tiles, players, input, list, time, mut gws, mut powers, entities): Self::SystemData,
+    ) {
         //TODO: This works, but it would be nice if it was all in one if statement
 
         let mut actual_movement = false;
         let collision_tiles = list.get();
+        let trigger_tiles = list.get_triggers();
 
         if let Some((tim, int)) = self.movement_timer {
             let timdt = tim + time.delta_seconds();
@@ -83,19 +91,19 @@ impl<'s> System<'s> for MovePlayerSystem {
                         actual_movement = true;
                     }
 
-                    let mut works = true;
-                    for possibility in &collision_tiles {
-                        if &proposed_tile == possibility {
-                            works = false;
-                            break;
+                    let mut works = tile_is_bad(proposed_tile, &collision_tiles);
+
+                    for (trigger, tt) in &trigger_tiles {
+                        if &proposed_tile == trigger {
+                            let id = &tt.get_id();
+                            if PowerUpType::trigger_id_range().contains(id) {
+                                powers.add_pu(PowerUpType::from_trigger_id(id));
+                                let ent = powers.remove_entity(trigger);
+                                if let Some(ent) = ent {
+                                    entities.delete(ent);
+                                }
+                            }
                         }
-                    }
-                    if proposed_tile.x < 0
-                        || proposed_tile.y < 0
-                        || proposed_tile.x > WIDTH as i32 - 1
-                        || proposed_tile.y > HEIGHT as i32 - 1
-                    {
-                        works = false;
                     }
 
                     if works {
@@ -131,19 +139,19 @@ impl<'s> System<'s> for MovePlayerSystem {
                     actual_movement = true;
                 }
 
-                let mut works = true;
-                for possibility in &collision_tiles {
-                    if &proposed_tile == possibility {
-                        works = false;
-                        break;
+                let mut works = tile_is_bad(proposed_tile.clone(), &collision_tiles);
+
+                for (trigger, tt) in &trigger_tiles {
+                    if &proposed_tile == trigger {
+                        let id = &tt.get_id();
+                        if PowerUpType::trigger_id_range().contains(id) {
+                            powers.add_pu(PowerUpType::from_trigger_id(id));
+                            let ent = powers.remove_entity(trigger);
+                            if let Some(ent) = ent {
+                                entities.delete(ent);
+                            }
+                        }
                     }
-                }
-                if proposed_tile.x < 0
-                    || proposed_tile.y < 0
-                    || proposed_tile.x > WIDTH as i32 - 1
-                    || proposed_tile.y > HEIGHT as i32 - 1
-                {
-                    works = false;
                 }
 
                 if works && can_move && actual_movement {
@@ -159,4 +167,23 @@ impl<'s> System<'s> for MovePlayerSystem {
             self.can_move = Some(!actual_movement);
         }
     }
+}
+
+pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &Vec<TileTransform>) -> bool {
+    let mut works = true;
+    for possibility in collision_tiles {
+        if &proposed_tile == possibility {
+            works = false;
+            break;
+        }
+    }
+    if proposed_tile.x < 0
+        || proposed_tile.y < 0
+        || proposed_tile.x > WIDTH as i32 - 1
+        || proposed_tile.y > HEIGHT as i32 - 1
+    {
+        works = false;
+    }
+
+    works
 }

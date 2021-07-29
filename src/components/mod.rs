@@ -10,7 +10,7 @@ mod win_state;
 pub use colliders::{Collider, ColliderList};
 pub use npc::NPC;
 pub use player::Player;
-pub use power_up::{PowerUp, PowerUpType};
+pub use power_up::*;
 pub use score::Score;
 pub use text_wobble::TextWobble;
 pub use tile_transform::TileTransform;

@@ -1,5 +1,7 @@
-use crate::components::tile_transform::TileTransform;
-use amethyst::core::ecs::{Component, DefaultVecStorage};
+use crate::{components::tile_transform::TileTransform, tag::TriggerType};
+use amethyst::core::ecs::{Component, DefaultVecStorage, Entity};
+use std::collections::HashMap;
+use amethyst::renderer::palette::chromatic_adaptation::AdaptInto;
 
 ///Component to mark an entity as a collider
 #[derive(Debug)]
@@ -7,13 +9,11 @@ pub struct Collider {
     ///A variable of Option type to check if it is a trigger
     /// If it is None, then it is a normal collider,
     /// If it is Some, then the usize is the trigger ID
-    pub trigger: Option<usize>,
+    pub trigger: Option<TriggerType>,
 }
 impl Default for Collider {
     fn default() -> Self {
-        Self {
-            trigger: Option::None,
-        }
+        Self { trigger: None }
     }
 }
 impl Collider {
@@ -21,7 +21,7 @@ impl Collider {
     /// For non-trigger Colliders, use the default
     ///
     ///  - **trigger_id** is the id for the trigger
-    pub fn new(trigger_id: usize) -> Self {
+    pub fn new(trigger_id: TriggerType) -> Self {
         Self {
             trigger: Some(trigger_id),
         }
@@ -36,7 +36,8 @@ pub struct ColliderList {
     ///List of all colliders
     colls: Vec<TileTransform>,
     ///List of all Triggers
-    triggers: Vec<(TileTransform, usize)>,
+    triggers: Vec<(TileTransform, TriggerType)>,
+
 }
 impl ColliderList {
     ///Constructor for ColliderList
@@ -53,7 +54,7 @@ impl ColliderList {
         self.colls = c;
     }
     ///Sets the list of triggers
-    pub fn set_triggers(&mut self, t: Vec<(TileTransform, usize)>) {
+    pub fn set_triggers(&mut self, t: Vec<(TileTransform, TriggerType)>) {
         self.triggers = t;
     }
 
@@ -62,7 +63,7 @@ impl ColliderList {
         self.colls.clone()
     }
     ///Gets a clone of the list of triggers
-    pub fn get_triggers(&self) -> Vec<(TileTransform, usize)> {
+    pub fn get_triggers(&self) -> Vec<(TileTransform, TriggerType)> {
         self.triggers.clone()
     }
 }

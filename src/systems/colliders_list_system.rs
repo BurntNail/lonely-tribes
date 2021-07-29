@@ -21,7 +21,7 @@ impl<'s> System<'s> for CollidersListSystem {
         for (t, c) in (&tiles, &colliders).join() {
             let tt = TileTransform::from_ref(t);
             if c.trigger.is_some() {
-                triggers_list.push((tt, c.trigger.unwrap_or(9999)));
+                triggers_list.push((tt, c.trigger.expect("oof")));
             } else {
                 colliders_list.push(tt);
             }

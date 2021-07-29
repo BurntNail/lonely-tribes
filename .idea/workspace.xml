@@ -4,11 +4,21 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Spawn in PowerUps">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rustfmt.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rustfmt.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/test-room-one.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/test-room-one.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/colliders.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,20 +95,25 @@
       <command value="cargo build --release" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.fmt">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
+  <component name="RunManager" selected="Cargo.debug level">
+    <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="build --release" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
       <method v="2">
-        <option name="Make" enabled="true" />
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="build --release" />
+    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="build" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -130,7 +145,7 @@
       </method>
     </configuration>
     <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run -- -c -t 0.05 -d --debug-level" />
+      <option name="command" value="run -- -c -d --debug-level -t 0.01" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -230,6 +245,7 @@
       <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.debug level" />
       <item itemvalue="Cargo.build" />
+      <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.doc" />
@@ -238,9 +254,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.fmt" />
-        <item itemvalue="Cargo.build" />
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
+        <item itemvalue="Cargo.build release" />
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.doc" />
       </list>
     </recent_temporary>
@@ -298,7 +314,10 @@
       <workItem from="1627406855487" duration="8796000" />
       <workItem from="1627419984100" duration="2509000" />
       <workItem from="1627457569584" duration="1077000" />
-      <workItem from="1627547621135" duration="3869000" />
+      <workItem from="1627547621135" duration="6715000" />
+      <workItem from="1627578524063" duration="670000" />
+      <workItem from="1627583155247" duration="2190000" />
+      <workItem from="1627586953351" duration="2212000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -468,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627551368317</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!">
+      <created>1627551599795</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1627551599795</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,6 +535,7 @@
     <MESSAGE value="Fix Movement - once and for all!" />
     <MESSAGE value="Add option to load debug level" />
     <MESSAGE value="Spawn in PowerUps" />
-    <option name="LAST_COMMIT_MESSAGE" value="Spawn in PowerUps" />
+    <MESSAGE value="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!" />
   </component>
 </project>

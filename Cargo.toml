@@ -12,6 +12,7 @@ lazy_static = "1.4.0"
 serde = { version = "1", features = ["derive"] }
 ron = "0.6.4"
 structopt = "0.3"
+rand = "0.8.4"
 
 [dependencies.amethyst]
 version = "0.15.3"

@@ -40,7 +40,7 @@ impl SimpleState for PostGameState {
 
         let mut nu_high_score = None;
 
-        if !opts.debug {
+        if !opts.debug && won {
             nu_high_score = Some(high_score.add_score_and_write(level_from, score));
         }
 

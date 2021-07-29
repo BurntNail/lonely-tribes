@@ -1,12 +1,15 @@
 use crate::{
-    components::{Collider, ColliderList, GameWinState, Score, TileTransform, WinStateEnum, NPC},
+    components::{
+        Collider, ColliderList, GameWinState, PowerUpHolder, Score,
+        TileTransform, WinStateEnum, NPC,
+    },
     level::Room,
     states::{
         states_util::{init_camera, load_font, load_sprite_sheet},
         PostGameState, TrueEnd,
     },
     systems::UpdateTileTransforms,
-    tag::Tag,
+    tag::{Tag, TriggerType},
     Flags, ARENA_HEIGHT, ARENA_WIDTH,
 };
 use amethyst::{
@@ -20,6 +23,8 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
+use std::ops::Deref;
+use amethyst::core::shred::FetchMut;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -92,15 +97,18 @@ impl SimpleState for PuzzleState {
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
-        world.register::<crate::components::NPC>();
-        world.insert(GameWinState::new(None, self.level_index, 0));
 
         let this_level = LEVELS
             .get(self.level_index)
             .unwrap_or(&"test-room-one.png".to_string())
             .as_str()
             .to_string();
-        load_level(world, handle, this_level);
+        let holder = load_level(world, handle, this_level);
+
+        world.register::<crate::components::NPC>();
+        world.insert(GameWinState::new(None, self.level_index, 0));
+        world.insert(holder);
+
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
 
@@ -221,11 +229,12 @@ fn get_no_of_moves(world: &World) -> i32 {
 ///  - **world** is the current game World from Specs
 ///  - **sprites_handle** is a handle to the spritesheet
 ///  - **path** is the Path to the level eg. *"lvl-01.png"*
-fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: String) {
-    let lvl = Room::new(path.as_str());
+fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: String) -> PowerUpHolder {
+    let lvl = Room::new(path.as_str()); //TODO: Just use the map straight away
+    let mut holder = PowerUpHolder::new();
 
     if lvl.data.is_empty() {
-        return;
+        return holder;
     }
 
     for x in 0..lvl.data.len() {
@@ -252,7 +261,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .with(spr)
                         .with(tt)
                         .with(trans)
-                        .with(Collider::new(id))
+                        .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::Player::new(id))
                         .build();
                 }
@@ -276,13 +285,27 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .build();
                 }
                 Tag::Trigger(trigger_type) => {
-                    world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(Transform::default())
-                        .with(Collider::new(trigger_type.get_id()))
-                        .build();
+                    match trigger_type {
+                        TriggerType::Powerup(_) => {
+                            let e = world
+                                .create_entity()
+                                .with(spr)
+                                .with(tt)
+                                .with(Transform::default())
+                                .with(Collider::new(trigger_type))
+                                .build();
+                            holder.add_entity(tt, e);
+                        }
+                        _ => {
+                            world
+                                .create_entity()
+                                .with(spr)
+                                .with(tt)
+                                .with(Transform::default())
+                                .with(Collider::new(trigger_type))
+                                .build();
+                        }
+                    }
                 }
                 _ => {
                     world
@@ -294,4 +317,6 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
             }
         }
     }
+
+    holder
 }

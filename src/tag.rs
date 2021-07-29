@@ -13,12 +13,25 @@ pub enum Tag {
 pub enum TriggerType {
     Door,
     Powerup(PowerUpType),
+    Player(usize),
 }
 impl TriggerType {
     pub fn get_id(&self) -> usize {
         match self {
             Self::Door => 10,
             Self::Powerup(t) => t.get_trigger_id(),
+            Self::Player(u) => *u,
+        }
+    }
+    pub fn from_id(id: &usize) -> Self {
+        use TriggerType::*;
+        match id {
+            10 => Door,
+            0 => Player(0),
+            1 => Player(1),
+            2 => Player(2),
+            3 => Player(3),
+            _ => PowerUpType::from_trigger_id_tt(id),
         }
     }
 }

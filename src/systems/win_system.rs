@@ -28,10 +28,11 @@ impl<'s> System<'s> for EndOfGameSystem {
             player_count.insert(id, player_count.get(&id).unwrap_or(&0) + 1);
 
             for (trigger_tile, trigger_id) in &trigger_tiles {
+                let t_id = &trigger_id.get_id();
                 if player_tile == trigger_tile {
-                    if &id == trigger_id {
+                    if &id == t_id {
                         count_match.insert(id, count_match.get(&id).unwrap_or(&0) + 1);
-                    } else if trigger_id <= &3 {
+                    } else if t_id <= &3 {
                         //4 players, starting from ind 0
                         count_bad += 1;
                     }
@@ -51,7 +52,6 @@ impl<'s> System<'s> for EndOfGameSystem {
 
             if v != &expected {
                 win = false;
-                // log::info!("Got {}, Expected {}", v, expected);
             }
         }
         if win {
