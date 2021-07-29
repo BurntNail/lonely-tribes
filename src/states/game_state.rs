@@ -3,17 +3,16 @@ use crate::{
     level::Room,
     states::{
         states_util::{init_camera, load_font, load_sprite_sheet},
-        {PostGameState, TrueEnd},
+        PostGameState, TrueEnd,
     },
     systems::UpdateTileTransforms,
     tag::Tag,
-    Flags, {ARENA_HEIGHT, ARENA_WIDTH},
+    Flags, ARENA_HEIGHT, ARENA_WIDTH,
 };
 use amethyst::{
     assets::Handle,
     core::{ecs::Entity, transform::Transform, Hidden},
-    input::InputEvent,
-    input::VirtualKeyCode,
+    input::{InputEvent, VirtualKeyCode},
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},

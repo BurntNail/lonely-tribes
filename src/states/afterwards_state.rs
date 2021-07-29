@@ -8,7 +8,7 @@ use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
-    {GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans},
+    GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
 use structopt::StructOpt;

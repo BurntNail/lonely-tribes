@@ -1,9 +1,10 @@
-use crate::states::states_util::load_font;
-use crate::states::StartGameState;
-use amethyst::core::ecs::{Builder, World, WorldExt};
-use amethyst::input::{InputEvent, VirtualKeyCode};
-use amethyst::ui::{Anchor, LineMode, UiText, UiTransform};
-use amethyst::{GameData, SimpleState, SimpleTrans, StateData, StateEvent};
+use crate::states::{states_util::load_font, StartGameState};
+use amethyst::{
+    core::ecs::{Builder, World, WorldExt},
+    input::{InputEvent, VirtualKeyCode},
+    ui::{Anchor, LineMode, UiText, UiTransform},
+    GameData, SimpleState, SimpleTrans, StateData, StateEvent,
+};
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = "Welcome to Making Friends!\n\nThe aim of the game is to get all the people to meet, but different types shouldn't touch.\nUse WASD to move, Space to toggle showing the score, and R to restart if you get to a hard spot.\n\nHave fun!\n\n(Press Space or Return to get back to the main menu)";

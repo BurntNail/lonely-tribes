@@ -4,11 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add option to load debug level">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Spawn in PowerUps">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rustfmt.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rustfmt.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +85,7 @@
       <command value="cargo build --release" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.debug level">
+  <component name="RunManager" selected="Cargo.fmt">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -164,7 +164,7 @@
     <configuration name="fmt" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="fmt" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
+      <option name="channel" value="NIGHTLY" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -237,8 +237,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.doc" />
@@ -298,7 +298,7 @@
       <workItem from="1627406855487" duration="8796000" />
       <workItem from="1627419984100" duration="2509000" />
       <workItem from="1627457569584" duration="1077000" />
-      <workItem from="1627547621135" duration="3539000" />
+      <workItem from="1627547621135" duration="3869000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -461,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627550646110</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Spawn in PowerUps">
+      <created>1627551368317</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1627551368317</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,6 +508,7 @@
     <MESSAGE value="change version" />
     <MESSAGE value="Fix Movement - once and for all!" />
     <MESSAGE value="Add option to load debug level" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add option to load debug level" />
+    <MESSAGE value="Spawn in PowerUps" />
+    <option name="LAST_COMMIT_MESSAGE" value="Spawn in PowerUps" />
   </component>
 </project>

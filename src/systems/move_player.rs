@@ -1,6 +1,6 @@
 use crate::{
     components::{ColliderList, GameWinState, Player, TileTransform},
-    Flags, {HEIGHT, WIDTH},
+    Flags, HEIGHT, WIDTH,
 };
 use amethyst::{
     core::Time,

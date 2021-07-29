@@ -1,7 +1,9 @@
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
-    core::ecs::{Builder, World, WorldExt},
-    core::Transform,
+    core::{
+        ecs::{Builder, World, WorldExt},
+        Transform,
+    },
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{FontAsset, TtfFormat},
 };

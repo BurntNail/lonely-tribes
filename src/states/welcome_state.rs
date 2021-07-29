@@ -1,12 +1,11 @@
-use crate::states::HelpState;
 use crate::{
     components::TextWobble,
-    states::{states_util::load_font, PuzzleState},
+    states::{states_util::load_font, HelpState, PuzzleState},
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
-    {GameData, SimpleState, SimpleTrans, StateData, StateEvent},
+    GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 
 ///State for welcoming the player to the game

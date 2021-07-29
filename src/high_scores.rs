@@ -1,7 +1,9 @@
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::fs::{read_to_string, write};
+use std::{
+    collections::HashMap,
+    fs::{read_to_string, write},
+};
 
 ///The path to the high scores
 const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";

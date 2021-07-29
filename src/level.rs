@@ -1,5 +1,4 @@
-use crate::components::PowerUpType;
-use crate::{HEIGHT, WIDTH};
+use crate::{components::PowerUpType, HEIGHT, WIDTH};
 use image::{DynamicImage, GenericImageView, Rgba};
 use std::collections::HashMap;
 

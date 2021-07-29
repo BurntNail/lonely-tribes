@@ -3,7 +3,7 @@ use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
-    {GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans},
+    GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 
 ///State for when the user has finished all levels

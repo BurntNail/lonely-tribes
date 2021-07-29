@@ -8,12 +8,11 @@ pub struct PowerUp {
     pub times_left: usize,
 }
 
-
 impl PowerUp {
-    pub fn new (power_up: PowerUpType) -> Self {
+    pub fn new(power_up: PowerUpType) -> Self {
         Self {
             power_up,
-            times_left: power_up.get_uses()
+            times_left: power_up.get_uses(),
         }
     }
 }
@@ -53,12 +52,12 @@ impl PowerUpType {
     }
 
     ///Given a trigger id, get the powerup type
-    pub fn get_self_from_trigger_id (id: usize) -> Self {
+    pub fn get_self_from_trigger_id(id: usize) -> Self {
         match id {
             11 => Self::Shield,
             12 => Self::DoorBlocker,
             13 => Self::Controller,
-            _ => Self::Portal
+            _ => Self::Portal,
         }
     }
 }
