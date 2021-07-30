@@ -61,11 +61,50 @@ impl<'s> System<'s> for MovePlayerSystem {
         &mut self,
         (mut tiles, players, input, list, time, mut gws, mut powers, entities): Self::SystemData,
     ) {
-        //TODO: This works, but it would be nice if it was all in one if statement
 
         let mut actual_movement = false;
+        let mut add_to_score = false;
         let collision_tiles = list.get();
         let trigger_tiles = list.get_triggers();
+
+        let proposed_tile_addition = {
+            let mut t = TileTransform::default();
+            if input.action_is_down("Up").unwrap_or(false) {
+                t.y -= 1;
+                actual_movement = true;
+            } else if input.action_is_down("Down").unwrap_or(false) {
+                t.y += 1;
+                actual_movement = true;
+            } else if input.action_is_down("Left").unwrap_or(false) {
+                t.x -= 1;
+                actual_movement = true;
+            } else if input.action_is_down("Right").unwrap_or(false) {
+                t.x += 1;
+                actual_movement = true;
+            }
+
+            t
+        };
+        let mut check_powerups = |proposed_tile: &TileTransform| {
+            for (trigger, tt) in &trigger_tiles {
+                if proposed_tile == trigger {
+                    let id = &tt.get_id();
+                    if PowerUp::trigger_id_range().contains(id) {
+                        let ent = powers.remove_pu_entity(trigger);
+                        if let Some(ent) = ent {
+                            entities.delete(ent).unwrap_or_else(|err| {
+                                log::warn!(
+                                            "Error deleting powerup entity after collision: {}",
+                                            err
+                                        )
+                            })
+                        }
+
+                        powers.add_powerup(PowerUp::from_trigger_id(id));
+                    }
+                }
+            }
+        };
 
         if let Some((tim, int)) = self.movement_timer {
             let timdt = tim + time.delta_seconds();
@@ -73,42 +112,10 @@ impl<'s> System<'s> for MovePlayerSystem {
 
             if timdt > int {
                 for (tile, _) in (&mut tiles, &players).join() {
-                    let mut proposed_tile = *tile;
-
-                    if input.action_is_down("Up").unwrap_or(false) {
-                        proposed_tile.y -= 1;
-                        actual_movement = true;
-                    } else if input.action_is_down("Down").unwrap_or(false) {
-                        proposed_tile.y += 1;
-                        actual_movement = true;
-                    } else if input.action_is_down("Left").unwrap_or(false) {
-                        proposed_tile.x -= 1;
-                        actual_movement = true;
-                    } else if input.action_is_down("Right").unwrap_or(false) {
-                        proposed_tile.x += 1;
-                        actual_movement = true;
-                    }
+                    let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                     let works = tile_is_bad(proposed_tile, &collision_tiles);
-
-                    for (trigger, tt) in &trigger_tiles {
-                        if &proposed_tile == trigger {
-                            let id = &tt.get_id();
-                            if PowerUp::trigger_id_range().contains(id) {
-                                let ent = powers.remove_pu_entity(trigger);
-                                if let Some(ent) = ent {
-                                    entities.delete(ent).unwrap_or_else(|err| {
-                                        log::warn!(
-                                            "Error deleting powerup entity after collision: {}",
-                                            err
-                                        )
-                                    })
-                                }
-
-                                powers.add_powerup(PowerUp::from_trigger_id(id));
-                            }
-                        }
-                    }
+                    check_powerups(&proposed_tile);
 
                     if works {
                         tile.set(proposed_tile);
@@ -116,7 +123,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
 
                 if actual_movement {
-                    gws.level_no_of_moves += 1;
+                    add_to_score = true;
                 }
 
                 self.movement_timer = Some((0.0, int));
@@ -124,45 +131,11 @@ impl<'s> System<'s> for MovePlayerSystem {
         }
 
         if let Some(can_move) = self.can_move {
-            let mut add_to_score = false;
-
             for (tile, _) in (&mut tiles, &players).join() {
-                let mut proposed_tile = *tile;
-
-                if input.action_is_down("Up").unwrap_or(false) {
-                    proposed_tile.y -= 1;
-                    actual_movement = true;
-                } else if input.action_is_down("Down").unwrap_or(false) {
-                    proposed_tile.y += 1;
-                    actual_movement = true;
-                } else if input.action_is_down("Left").unwrap_or(false) {
-                    proposed_tile.x -= 1;
-                    actual_movement = true;
-                } else if input.action_is_down("Right").unwrap_or(false) {
-                    proposed_tile.x += 1;
-                    actual_movement = true;
-                }
+                let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                 let works = tile_is_bad(proposed_tile, &collision_tiles);
-
-                for (trigger, tt) in &trigger_tiles {
-                    if &proposed_tile == trigger {
-                        let id = &tt.get_id();
-                        if PowerUp::trigger_id_range().contains(id) {
-                            let ent = powers.remove_pu_entity(trigger);
-                            if let Some(ent) = ent {
-                                entities.delete(ent).unwrap_or_else(|err| {
-                                    log::warn!(
-                                        "Error deleting powerup entity after collision: {}",
-                                        err
-                                    )
-                                })
-                            }
-
-                            powers.add_powerup(PowerUp::from_trigger_id(id));
-                        }
-                    }
-                }
+                check_powerups(&proposed_tile);
 
                 if works && can_move && actual_movement {
                     tile.set(proposed_tile);
@@ -170,30 +143,29 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
             }
 
-            if add_to_score {
-                gws.level_no_of_moves += 1;
-            }
-
             self.can_move = Some(!actual_movement);
+        }
+
+        if add_to_score {
+            gws.level_no_of_moves += 1;
         }
     }
 }
 
 pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &[TileTransform]) -> bool {
-    let mut works = true;
-    for possibility in collision_tiles {
-        if &proposed_tile == possibility {
-            works = false;
-            break;
-        }
-    }
     if proposed_tile.x < 0
         || proposed_tile.y < 0
         || proposed_tile.x > WIDTH as i32 - 1
         || proposed_tile.y > HEIGHT as i32 - 1
     {
-        works = false;
+        return false;
     }
 
-    works
+    for possibility in collision_tiles {
+        if &proposed_tile == possibility {
+            return false;
+        }
+    }
+
+    return true;
 }

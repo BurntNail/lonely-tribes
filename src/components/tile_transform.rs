@@ -33,4 +33,11 @@ impl TileTransform {
     pub fn from_ref(t: &TileTransform) -> Self {
         Self { x: t.x, y: t.y }
     }
+
+    pub fn add_into_new (&self, t: TileTransform) -> Self {
+        Self {
+            x: self.x + t.x,
+            y: self.y + t.y
+        }
+    }
 }

@@ -26,7 +26,6 @@ impl<'s> System<'s> for PowerUpSystem {
         let mut rng = rand::thread_rng();
 
         for p in powers.clear() {
-            log::info!("DOING {:?}", p);
             match p {
                 PowerUp::Portal => {
                     let colliders = collider_list.get();

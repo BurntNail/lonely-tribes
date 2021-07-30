@@ -4,21 +4,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Powerups working hell yeah">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix move_player.rs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/colliders.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/npc.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/npc.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +84,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.debug level">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -313,7 +303,7 @@
       <workItem from="1627636279126" duration="501000" />
       <workItem from="1627654366023" duration="374000" />
       <workItem from="1627654748515" duration="2061000" />
-      <workItem from="1627662297131" duration="4391000" />
+      <workItem from="1627662297131" duration="5805000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -504,7 +494,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627668888491</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Clippy+Fmt For Powerups/General Technical Debt">
+      <created>1627670125624</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1627670125624</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,8 +520,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add next-level capability&#10;Go back to StringBindings to fix UI input" />
-    <MESSAGE value="Add End Of Game" />
     <MESSAGE value="Fix Warnings&#10;Clean up Imports (useless, but makes me feel better)" />
     <MESSAGE value="Add Level 3&#10;Fix switching between PostGameState and TrueEnd&#10;Change from 32x18 to 64x36" />
     <MESSAGE value="Fix Movement" />
@@ -548,6 +543,8 @@
     <MESSAGE value="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!" />
     <MESSAGE value="Get powerups to show, add their effect to a global list, and go away on use." />
     <MESSAGE value="Powerups working hell yeah" />
-    <option name="LAST_COMMIT_MESSAGE" value="Powerups working hell yeah" />
+    <MESSAGE value="Clippy+Fmt For Powerups/General Technical Debt" />
+    <MESSAGE value="Fix move_player.rs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix move_player.rs" />
   </component>
 </project>
