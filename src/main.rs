@@ -134,16 +134,13 @@ pub struct Flags {
 
 //todos
 
-//TODO: Explain PowerUp Types (maybe in a new state like a pause menu?)
+//TODO: With Sprites, make sure to account for Screen Scaling
 
 //TODO: post-processing
 //eg. make it clear where the players are
 //maybe sprites that go on top?
 
 //TODO: Export some options to conf file
-
-//TODO: Level Select Screen
-//TODO: Show level scores
 
 //TODO: Enemies (does it fit?)
 //TODO: Combat

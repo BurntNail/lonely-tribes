@@ -34,10 +34,10 @@ impl TileTransform {
         Self { x: t.x, y: t.y }
     }
 
-    pub fn add_into_new (&self, t: TileTransform) -> Self {
+    pub fn add_into_new(&self, t: TileTransform) -> Self {
         Self {
             x: self.x + t.x,
-            y: self.y + t.y
+            y: self.y + t.y,
         }
     }
 }

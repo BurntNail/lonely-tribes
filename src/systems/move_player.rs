@@ -61,7 +61,6 @@ impl<'s> System<'s> for MovePlayerSystem {
         &mut self,
         (mut tiles, players, input, list, time, mut gws, mut powers, entities): Self::SystemData,
     ) {
-
         let mut actual_movement = false;
         let mut add_to_score = false;
         let collision_tiles = list.get();
@@ -93,10 +92,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                         let ent = powers.remove_pu_entity(trigger);
                         if let Some(ent) = ent {
                             entities.delete(ent).unwrap_or_else(|err| {
-                                log::warn!(
-                                            "Error deleting powerup entity after collision: {}",
-                                            err
-                                        )
+                                log::warn!("Error deleting powerup entity after collision: {}", err)
                             })
                         }
 
@@ -153,19 +149,21 @@ impl<'s> System<'s> for MovePlayerSystem {
 }
 
 pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &[TileTransform]) -> bool {
+    let mut res = true;
+
     if proposed_tile.x < 0
         || proposed_tile.y < 0
         || proposed_tile.x > WIDTH as i32 - 1
         || proposed_tile.y > HEIGHT as i32 - 1
     {
-        return false;
+        res = false;
     }
 
     for possibility in collision_tiles {
         if &proposed_tile == possibility {
-            return false;
+            res = false;
         }
     }
 
-    return true;
+    res
 }

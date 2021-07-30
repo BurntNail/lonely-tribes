@@ -1,7 +1,7 @@
 use crate::{
     components::{GameWinState, WinStateEnum},
     high_scores::HighScores,
-    states::{states_util::load_font, PuzzleState, LEVELS},
+    states::{level_select::LevelSelectState, states_util::load_font, PuzzleState, LEVELS},
     Flags,
 };
 use amethyst::{
@@ -45,7 +45,7 @@ impl SimpleState for PostGameState {
         }
 
         let won_txt = if won {
-            let win = "You Won! Press [R] to Restart, or [N] to go to the Next Level";
+            let win = "You Won! Press [R] to Restart, [N] to go to the Next Level, or [L] to go to Level Select.";
             if let Some(nu_high_score) = nu_high_score {
                 if nu_high_score.is_none() {
                     format!("You got a new high score - {}!\n\n{}", score, win)
@@ -88,6 +88,9 @@ impl SimpleState for PostGameState {
                     t = Trans::Switch(Box::new(PuzzleState::new(*v)));
                 }
             });
+            if key_code == VirtualKeyCode::L {
+                t = Trans::Switch(Box::new(LevelSelectState::default()));
+            }
         }
         t
     }

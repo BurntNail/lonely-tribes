@@ -1,6 +1,6 @@
 use crate::{
     components::TextWobble,
-    states::{states_util::load_font, HelpState, PuzzleState},
+    states::{level_select::LevelSelectState, states_util::load_font, HelpState},
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
@@ -51,7 +51,9 @@ impl SimpleState for StartGameState {
                                 UiEventType::ClickStop => {
                                     txt.color = [1.0, 1.0, 1.0, 0.5];
                                     if is_start {
-                                        t = SimpleTrans::Switch(Box::new(PuzzleState::default()));
+                                        t = SimpleTrans::Switch(Box::new(
+                                            LevelSelectState::default(),
+                                        ));
                                     } else if is_help {
                                         t = SimpleTrans::Switch(Box::new(HelpState::default()));
                                     }

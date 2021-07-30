@@ -5,6 +5,7 @@ use crate::{
     },
     level::Room,
     states::{
+        level_select::LevelSelectState,
         states_util::{init_camera, load_font, load_sprite_sheet},
         PostGameState, TrueEnd,
     },
@@ -29,10 +30,10 @@ lazy_static! {
     pub static ref LEVELS: Vec<String> = {
         let opts: Flags = Flags::from_args();
 
-        let mut out = (1..=6).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect();
+        let mut out = (1..=7).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect();
 
         if cfg!(debug_assertions) && opts.debug && opts.debug_level{
-                out = vec!["test-room-one.png".to_string()];
+            out = vec!["test-room-one.png".to_string()];
         }
 
         out
@@ -150,6 +151,9 @@ impl SimpleState for PuzzleState {
                         }
                     }
                 }
+                if key_code == VirtualKeyCode::L {
+                    t = Trans::Switch(Box::new(LevelSelectState::default()));
+                }
             }
             StateEvent::Window(Event::WindowEvent { event, .. }) => match event {
                 WindowEvent::CloseRequested | WindowEvent::Destroyed => {
@@ -197,7 +201,7 @@ fn add_score(world: &mut World) -> Entity {
     let txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Current Score: 0".to_string(),
-        [1.0; 4],
+        [1.0, 1.0, 1.0, 0.5],
         25.0,
         LineMode::Wrap,
         Anchor::Middle,

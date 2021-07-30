@@ -1,6 +1,7 @@
 mod afterwards_state;
 mod game_state;
 mod help_state;
+mod level_select;
 mod states_util;
 mod true_end;
 mod welcome_state;

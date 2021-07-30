@@ -7,7 +7,7 @@ use amethyst::{
 };
 
 ///Text displayed in HelpState
-pub const HELP_TXT: &str = "Welcome to Making Friends!\n\nThe aim of the game is to get all the people to meet, but different types shouldn't touch.\nUse WASD to move, Space to toggle showing the score, and R to restart if you get to a hard spot.\n\nHave fun!\n\n(Press Space or Return to get back to the main menu)";
+pub const HELP_TXT: &str = "Welcome to Making Friends!\n\nThe aim of the game is to get all the people to meet, but different types shouldn't touch.\nUse WASD to move, Space to toggle showing the score, and R to restart if you get to a hard spot.\nPowerups - The guy who looks like he will trick you will randomly increase or decrease your score, the ghost/cross will kill half of all of the players (Thanos Snap), and the portal will teleport all of your players into random places (including walls and trees muah-ha-ha-ha-ha)\n\nHave fun!\n\n(Press Space or Return to get back to the main menu)";
 
 ///State to show Help
 #[derive(Default)]
