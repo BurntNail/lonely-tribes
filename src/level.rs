@@ -1,4 +1,4 @@
-use crate::{components::PowerUpType, HEIGHT, WIDTH};
+use crate::{components::PowerUp, HEIGHT, WIDTH};
 use image::{DynamicImage, GenericImageView, Rgba};
 use std::collections::HashMap;
 
@@ -29,7 +29,7 @@ pub enum SpriteRequest {
     DarkShrubbery,
     Tree,
     WarpedTree,
-    PowerUp(PowerUpType),
+    PowerUpSprite(PowerUp),
 }
 
 lazy_static! {
@@ -65,10 +65,9 @@ lazy_static! {
         s(255, 255, 255, TUpDownRight);
 
 
-        s(105, 106, 106, PowerUp(PowerUpType::Shield)); //7
-        s(89, 86, 82, PowerUp(PowerUpType::DoorBlocker));
-        s(118, 66, 138, PowerUp(PowerUpType::Controller));
-        s(172, 50, 50, PowerUp(PowerUpType::Portal));
+        s(105, 106, 106, PowerUpSprite(PowerUp::ScoreChanger)); //7
+        s(89, 86, 82, PowerUpSprite(PowerUp::Reaper));
+        s(118, 66, 138, PowerUpSprite(PowerUp::Portal));
 
         map
     };
@@ -100,11 +99,10 @@ impl SpriteRequest {
                 3 => 7,
                 _ => 9999,
             },
-            PowerUp(t) => match t {
-                PowerUpType::Shield => 93,
-                PowerUpType::DoorBlocker => 34,
-                PowerUpType::Controller => 9,
-                PowerUpType::Portal => 113,
+            PowerUpSprite(t) => match t {
+                PowerUp::Reaper => 23,
+                PowerUp::ScoreChanger => 13,
+                PowerUp::Portal => 113,
             },
             TUpDownLeft => 71,
             TUpDownRight => 70,

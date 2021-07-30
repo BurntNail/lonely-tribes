@@ -1,5 +1,5 @@
 use crate::{
-    components::{ColliderList, GameWinState, Player, PowerUpHolder, PowerUpType, TileTransform},
+    components::{ColliderList, GameWinState, Player, PowerUpHolder, PowerUp, TileTransform},
     tag::TriggerType,
     Flags, HEIGHT, WIDTH,
 };
@@ -61,7 +61,7 @@ impl<'s> System<'s> for MovePlayerSystem {
 
     fn run(
         &mut self,
-        (mut tiles, players, input, list, time, mut gws, mut powers, entities): Self::SystemData,
+        (mut tiles, players, input, list, time, mut gws, mut powers, mut entities): Self::SystemData,
     ) {
         //TODO: This works, but it would be nice if it was all in one if statement
 
@@ -96,12 +96,13 @@ impl<'s> System<'s> for MovePlayerSystem {
                     for (trigger, tt) in &trigger_tiles {
                         if &proposed_tile == trigger {
                             let id = &tt.get_id();
-                            if PowerUpType::trigger_id_range().contains(id) {
-                                powers.add_pu(PowerUpType::from_trigger_id(id));
-                                let ent = powers.remove_entity(trigger);
+                            if PowerUp::trigger_id_range().contains(id) {
+                                let ent = powers.remove_pu_entity(trigger);
                                 if let Some(ent) = ent {
                                     entities.delete(ent);
                                 }
+
+                                powers.add_powerup(PowerUp::from_trigger_id(id));
                             }
                         }
                     }
@@ -140,19 +141,6 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
 
                 let mut works = tile_is_bad(proposed_tile.clone(), &collision_tiles);
-
-                for (trigger, tt) in &trigger_tiles {
-                    if &proposed_tile == trigger {
-                        let id = &tt.get_id();
-                        if PowerUpType::trigger_id_range().contains(id) {
-                            powers.add_pu(PowerUpType::from_trigger_id(id));
-                            let ent = powers.remove_entity(trigger);
-                            if let Some(ent) = ent {
-                                entities.delete(ent);
-                            }
-                        }
-                    }
-                }
 
                 if works && can_move && actual_movement {
                     tile.set(proposed_tile);

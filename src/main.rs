@@ -1,7 +1,4 @@
-use crate::systems::{
-    CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, ScoreUpdaterSystem,
-    TextWobbleSystem, UpdateTileTransforms,
-};
+use crate::systems::{CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, ScoreUpdaterSystem, TextWobbleSystem, UpdateTileTransforms, PowerUpSystem};
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -63,12 +60,13 @@ fn main() -> amethyst::Result<()> {
         .with(CollidersListSystem, "collider_list", &[])
         .with(
             MovePlayerSystem::default(),
-            "player_input",
+            "move_player",
             &["collider_list", "update_tile_transforms"],
         )
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
         .with(TextWobbleSystem, "txt_wobble", &[])
-        .with(ScoreUpdaterSystem, "score_updater", &[]);
+        .with(ScoreUpdaterSystem, "score_updater", &[])
+        .with(PowerUpSystem, "powerups", &["collider_list", "update_tile_transforms", "move_player"]);
 
     if !opts.console {
         log::set_max_level(LevelFilter::Error);
@@ -129,9 +127,7 @@ pub struct Flags {
 
 //todos
 
-//TODO: Power-Ups
 //TODO: Explain PowerUp Types (maybe in a new state like a pause menu?)
-//TODO: Show Power-Up timers left?
 
 //TODO: post-processing
 //eg. make it clear where the players are

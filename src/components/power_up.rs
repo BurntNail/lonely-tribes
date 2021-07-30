@@ -1,76 +1,37 @@
 use crate::tag::TriggerType;
-use amethyst::core::ecs::{Component, Entity, NullStorage};
+use amethyst::core::ecs::{Component, Entity, NullStorage, Entities, Write, WriteStorage};
 use std::ops::Range;
 use std::collections::HashMap;
-use crate::components::TileTransform;
-
-///Struct to hold a currently being used PowerUp
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub struct PowerUp {
-    ///The type of PowerUp
-    pub power_up: PowerUpType,
-
-    ///The number of uses that power-up has left
-    pub times_left: usize,
-}
-
-impl PowerUp {
-    pub fn new(power_up: PowerUpType) -> Self {
-        Self {
-            power_up,
-            times_left: power_up.get_uses(),
-        }
-    }
-
-    pub fn use_it(&mut self) {
-        self.times_left -= 1;
-    }
-    pub fn is_done(&self) -> bool {
-        self.times_left <= 0
-    }
-}
+use crate::components::{TileTransform, GameWinState};
+use rand::Rng;
 
 ///The type of PowerUp
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub enum PowerUpType {
-    ///Makes it so that players cannot merge or lose
-    Shield,
-    ///Makes it so that all doors are blocked off
-    DoorBlocker,
-    ///Makes it so that only one type of player is controlled at once.
-    ///(The most recent one to merge)
-    Controller, //TODO: allow controller to switch type
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+pub enum PowerUp {
     ///Randomises the position of each player (including those already merged)
     Portal,
+    ///Kills half of all players randomly
+    Reaper,
+    ///50/50 chance of lowering or increasing your score
+    ScoreChanger
 }
-impl PowerUpType {
-    ///Get the number of uses that powerup has when it starts
-    pub fn get_uses(&self) -> usize {
-        match self {
-            PowerUpType::Shield => 3,
-            PowerUpType::DoorBlocker => 3,
-            PowerUpType::Controller => 5,
-            PowerUpType::Portal => 1,
-        }
-    }
+impl PowerUp {
 
     ///Get the trigger id
     pub fn get_trigger_id(&self) -> usize {
         match self {
-            Self::Shield => 11,
-            Self::DoorBlocker => 12,
-            Self::Controller => 13,
-            Self::Portal => 14,
+            Self::Portal => 12,
+            Self::Reaper => 13,
+            Self::ScoreChanger => 14
         }
     }
 
     ///Given a trigger id, get the powerup type
     pub fn from_trigger_id(id: &usize) -> Self {
         match id {
-            11 => Self::Shield,
-            12 => Self::DoorBlocker,
-            13 => Self::Controller,
-            _ => Self::Portal,
+            12 => Self::Portal,
+            13 => Self::Reaper,
+            _ => Self::ScoreChanger
         }
     }
     ///Turns a usize to a TriggerType
@@ -82,48 +43,52 @@ impl PowerUpType {
     ///
     /// Useful for checking if an trigger ID is a powerup
     pub fn trigger_id_range () -> Range<usize> {
-        (11..15)
+        (12..15)
     }
 }
 
 ///Resource to hold all current powerups
 pub struct PowerUpHolder {
-    ///Current Powerups
-    current: Vec<PowerUp>,
-
     ///Map of tiletransforms to entities for eventual deletion
-    map: HashMap<TileTransform, Entity>
+    pub powerup_entities: HashMap<TileTransform, Entity>,
+
+    ///Vector of players
+    pub players: Vec<Entity>,
+
+    ///Vector of Powerups to be Done
+    pub powerups: Vec<PowerUp>
 }
-impl PowerUpHolder {
+impl PowerUpHolder { //TODO: Docucomments
     pub fn new() -> Self {
         PowerUpHolder {
-            current: Vec::new(),
-            map: HashMap::new()
+            powerup_entities: HashMap::new(),
+            players: Vec::new(),
+            powerups: Vec::new()
         }
     }
 
-    pub fn prune(&mut self) {
-        self.current = self
-            .current
-            .clone()
-            .into_iter()
-            .filter(|p| p.is_done())
-            .collect();
+    pub fn add_pu_entity(&mut self, t: TileTransform, e: Entity) {
+        self.powerup_entities.insert(t, e);
+    }
+    pub fn remove_pu_entity(&mut self, t: &TileTransform) -> Option<Entity> {
+        self.powerup_entities.remove(t)
     }
 
-    pub fn add_pu(&mut self, t: PowerUpType) {
-        self.current.push(PowerUp::new(t));
+    pub fn add_entity (&mut self, player: Entity) {
+        self.players.push(player);
+    }
+    pub fn add_powerup(&mut self, p: PowerUp) {
+        if !self.powerups.contains(&p) {
+            self.powerups.push(p);
+        }
     }
 
-    pub fn get_powerups(&self) -> Vec<PowerUp> {
-        self.current.clone()
-    }
-
-    pub fn add_entity (&mut self, t: TileTransform, e: Entity) {
-        self.map.insert(t, e);
-    }
-    pub fn remove_entity (&mut self, t: &TileTransform) -> Option<Entity> {
-        self.map.remove(t)
+    pub fn clear (&mut self) -> Vec<PowerUp> {
+        let mut vec = Vec::new();
+        while let Some(p) = self.powerups.pop() {
+            vec.push(p);
+        }
+        vec
     }
 }
 impl Default for PowerUpHolder {

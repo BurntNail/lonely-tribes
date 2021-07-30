@@ -25,6 +25,7 @@ use std::collections::HashMap;
 use structopt::StructOpt;
 use std::ops::Deref;
 use amethyst::core::shred::FetchMut;
+use crate::components::PowerUp;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -256,7 +257,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                 Tag::Player(id) => {
                     let mut trans = Transform::default();
                     trans.set_translation_z(0.5);
-                    world
+                    let ent = world
                         .create_entity()
                         .with(spr)
                         .with(tt)
@@ -264,6 +265,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::Player::new(id))
                         .build();
+                    holder.add_entity(ent);
                 }
                 Tag::NPC { is_enemy } => {
                     world
@@ -294,7 +296,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                                 .with(Transform::default())
                                 .with(Collider::new(trigger_type))
                                 .build();
-                            holder.add_entity(tt, e);
+                            holder.add_pu_entity(tt, e);
                         }
                         _ => {
                             world

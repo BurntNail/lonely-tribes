@@ -1,4 +1,4 @@
-use crate::{components::PowerUpType, level::SpriteRequest};
+use crate::{components::PowerUp, level::SpriteRequest};
 
 #[derive(Copy, Clone, Debug)]
 pub enum Tag {
@@ -12,7 +12,7 @@ pub enum Tag {
 #[derive(Copy, Clone, Debug)]
 pub enum TriggerType {
     Door,
-    Powerup(PowerUpType),
+    Powerup(PowerUp),
     Player(usize),
 }
 impl TriggerType {
@@ -31,7 +31,7 @@ impl TriggerType {
             1 => Player(1),
             2 => Player(2),
             3 => Player(3),
-            _ => PowerUpType::from_trigger_id_tt(id),
+            _ => PowerUp::from_trigger_id_tt(id),
         }
     }
 }
@@ -43,7 +43,7 @@ impl Tag {
         match spr {
             SpriteRequest::Player(id) => Self::Player(id),
             SpriteRequest::Door => Self::Trigger(TriggerType::Door),
-            SpriteRequest::PowerUp(t) => Self::Trigger(TriggerType::Powerup(t)),
+            SpriteRequest::PowerUpSprite(t) => Self::Trigger(TriggerType::Powerup(t)),
             Orc => NPC { is_enemy: true },
             Axe => Weapon,
             Blank | Shrubbery | DarkShrubbery => Floor,
