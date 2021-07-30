@@ -82,14 +82,12 @@ impl SimpleState for PostGameState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = Trans::None;
-        if let StateEvent::Input(event) = event {
-            if let InputEvent::KeyPressed { key_code, .. } = event {
-                self.map.iter().for_each(|(k, v)| {
-                    if &key_code == k {
-                        t = Trans::Switch(Box::new(PuzzleState::new(*v)));
-                    }
-                });
-            }
+        if let StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) = event {
+            self.map.iter().for_each(|(k, v)| {
+                if &key_code == k {
+                    t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                }
+            });
         }
         t
     }

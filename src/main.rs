@@ -1,4 +1,7 @@
-use crate::systems::{CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, ScoreUpdaterSystem, TextWobbleSystem, UpdateTileTransforms, PowerUpSystem};
+use crate::systems::{
+    CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, PowerUpSystem,
+    ScoreUpdaterSystem, TextWobbleSystem, UpdateTileTransforms,
+};
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -66,7 +69,11 @@ fn main() -> amethyst::Result<()> {
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
-        .with(PowerUpSystem, "powerups", &["collider_list", "update_tile_transforms", "move_player"]);
+        .with(
+            PowerUpSystem,
+            "powerups",
+            &["collider_list", "update_tile_transforms", "move_player"],
+        );
 
     if !opts.console {
         log::set_max_level(LevelFilter::Error);

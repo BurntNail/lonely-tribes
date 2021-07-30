@@ -6,14 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Powerups working hell yeah">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/test-room-one.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/test-room-one.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/colliders.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/npc.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/npc.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,13 +88,13 @@
       <command value="cargo clean" />
       <command value="cargo run --release" />
       <command value="cargo run" />
-      <command value="cargo check" />
       <command value="cargo doc --open" />
       <command value="cargo clippy" />
       <command value="cargo build --release" />
+      <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.debug level">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -137,7 +141,7 @@
     <configuration name="clippy" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="clippy" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
+      <option name="channel" value="STABLE" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -152,22 +156,6 @@
     </configuration>
     <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run -- -c -d --debug-level -t 0.05" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="doc" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="doc --open" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -254,16 +242,14 @@
       <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run" />
-      <item itemvalue="Cargo.doc" />
       <item itemvalue="Cargo.clippy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build release" />
-        <item itemvalue="Cargo.clippy" />
-        <item itemvalue="Cargo.doc" />
       </list>
     </recent_temporary>
   </component>
@@ -327,7 +313,7 @@
       <workItem from="1627636279126" duration="501000" />
       <workItem from="1627654366023" duration="374000" />
       <workItem from="1627654748515" duration="2061000" />
-      <workItem from="1627662297131" duration="3231000" />
+      <workItem from="1627662297131" duration="4391000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -511,7 +497,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627594954551</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Powerups working hell yeah">
+      <created>1627668888491</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1627668888491</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

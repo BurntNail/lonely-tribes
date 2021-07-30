@@ -47,7 +47,7 @@ impl<'s> System<'s> for EndOfGameSystem {
 
         let mut win = true;
         for (k, v) in &count_match {
-            let pc = player_count.get(&k).unwrap_or(&9999);
+            let pc = player_count.get(k).unwrap_or(&9999);
             let expected = pc * pc;
 
             if v != &expected {

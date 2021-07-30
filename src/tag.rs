@@ -2,7 +2,7 @@ use crate::{components::PowerUp, level::SpriteRequest};
 
 #[derive(Copy, Clone, Debug)]
 pub enum Tag {
-    NPC { is_enemy: bool },
+    NonPlayerCharacter { is_enemy: bool },
     Player(usize),
     Collision,
     Floor,
@@ -44,7 +44,7 @@ impl Tag {
             SpriteRequest::Player(id) => Self::Player(id),
             SpriteRequest::Door => Self::Trigger(TriggerType::Door),
             SpriteRequest::PowerUpSprite(t) => Self::Trigger(TriggerType::Powerup(t)),
-            Orc => NPC { is_enemy: true },
+            Orc => NonPlayerCharacter { is_enemy: true },
             Axe => Weapon,
             Blank | Shrubbery | DarkShrubbery => Floor,
             _ => Collision,

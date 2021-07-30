@@ -1,7 +1,5 @@
 use crate::{components::tile_transform::TileTransform, tag::TriggerType};
-use amethyst::core::ecs::{Component, DefaultVecStorage, Entity};
-use std::collections::HashMap;
-use amethyst::renderer::palette::chromatic_adaptation::AdaptInto;
+use amethyst::core::ecs::{Component, DefaultVecStorage};
 
 ///Component to mark an entity as a collider
 #[derive(Debug)]
@@ -37,7 +35,6 @@ pub struct ColliderList {
     colls: Vec<TileTransform>,
     ///List of all Triggers
     triggers: Vec<(TileTransform, TriggerType)>,
-
 }
 impl ColliderList {
     ///Constructor for ColliderList

@@ -4,11 +4,11 @@ pub enum WinStateEnum {
     ///The game is over
     End { won: bool },
     ///The game is still being played
-    TBD,
+    ToBeDecided,
 }
 impl Default for WinStateEnum {
     fn default() -> Self {
-        Self::TBD
+        Self::ToBeDecided
     }
 }
 ///Struct to hold the Win State Enum
@@ -39,7 +39,7 @@ impl GameWinState {
     pub fn new(won_opt: Option<bool>, level_from: usize, level_timer_len: i32) -> Self {
         match won_opt {
             None => Self {
-                ws: WinStateEnum::TBD,
+                ws: WinStateEnum::ToBeDecided,
                 level_from,
                 level_no_of_moves: level_timer_len,
             },
@@ -55,7 +55,7 @@ impl GameWinState {
     pub fn new_ref(won_opt: Option<&bool>, level_from: usize) -> Self {
         match won_opt {
             None => Self {
-                ws: WinStateEnum::TBD,
+                ws: WinStateEnum::ToBeDecided,
                 level_from,
                 level_no_of_moves: 0,
             },

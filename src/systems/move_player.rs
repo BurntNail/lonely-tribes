@@ -1,6 +1,5 @@
 use crate::{
-    components::{ColliderList, GameWinState, Player, PowerUpHolder, PowerUp, TileTransform},
-    tag::TriggerType,
+    components::{ColliderList, GameWinState, Player, PowerUp, PowerUpHolder, TileTransform},
     Flags, HEIGHT, WIDTH,
 };
 use amethyst::{
@@ -9,7 +8,6 @@ use amethyst::{
     ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-use rand::{thread_rng, Rng};
 use structopt::StructOpt;
 
 ///System for capturing player movement, and collision
@@ -56,12 +54,12 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, Time>,
         Write<'s, GameWinState>,
         Write<'s, PowerUpHolder>,
-        Entities<'s>
+        Entities<'s>,
     );
 
     fn run(
         &mut self,
-        (mut tiles, players, input, list, time, mut gws, mut powers, mut entities): Self::SystemData,
+        (mut tiles, players, input, list, time, mut gws, mut powers, entities): Self::SystemData,
     ) {
         //TODO: This works, but it would be nice if it was all in one if statement
 
@@ -91,7 +89,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                         actual_movement = true;
                     }
 
-                    let mut works = tile_is_bad(proposed_tile, &collision_tiles);
+                    let works = tile_is_bad(proposed_tile, &collision_tiles);
 
                     for (trigger, tt) in &trigger_tiles {
                         if &proposed_tile == trigger {
@@ -99,7 +97,12 @@ impl<'s> System<'s> for MovePlayerSystem {
                             if PowerUp::trigger_id_range().contains(id) {
                                 let ent = powers.remove_pu_entity(trigger);
                                 if let Some(ent) = ent {
-                                    entities.delete(ent);
+                                    entities.delete(ent).unwrap_or_else(|err| {
+                                        log::warn!(
+                                            "Error deleting powerup entity after collision: {}",
+                                            err
+                                        )
+                                    })
                                 }
 
                                 powers.add_powerup(PowerUp::from_trigger_id(id));
@@ -140,7 +143,26 @@ impl<'s> System<'s> for MovePlayerSystem {
                     actual_movement = true;
                 }
 
-                let mut works = tile_is_bad(proposed_tile.clone(), &collision_tiles);
+                let works = tile_is_bad(proposed_tile, &collision_tiles);
+
+                for (trigger, tt) in &trigger_tiles {
+                    if &proposed_tile == trigger {
+                        let id = &tt.get_id();
+                        if PowerUp::trigger_id_range().contains(id) {
+                            let ent = powers.remove_pu_entity(trigger);
+                            if let Some(ent) = ent {
+                                entities.delete(ent).unwrap_or_else(|err| {
+                                    log::warn!(
+                                        "Error deleting powerup entity after collision: {}",
+                                        err
+                                    )
+                                })
+                            }
+
+                            powers.add_powerup(PowerUp::from_trigger_id(id));
+                        }
+                    }
+                }
 
                 if works && can_move && actual_movement {
                     tile.set(proposed_tile);
@@ -157,7 +179,7 @@ impl<'s> System<'s> for MovePlayerSystem {
     }
 }
 
-pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &Vec<TileTransform>) -> bool {
+pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &[TileTransform]) -> bool {
     let mut works = true;
     for possibility in collision_tiles {
         if &proposed_tile == possibility {

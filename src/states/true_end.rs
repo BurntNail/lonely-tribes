@@ -27,11 +27,9 @@ impl SimpleState for TrueEnd {
     ) -> SimpleTrans {
         let mut back_to_mm = false;
         match event {
-            StateEvent::Input(event) => {
-                if let InputEvent::KeyPressed { key_code, .. } = event {
-                    if key_code == VirtualKeyCode::Return || key_code == VirtualKeyCode::Space {
-                        back_to_mm = true;
-                    }
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
+                if key_code == VirtualKeyCode::Return || key_code == VirtualKeyCode::Space {
+                    back_to_mm = true;
                 }
             }
             StateEvent::Ui(event) => {

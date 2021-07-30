@@ -8,7 +8,7 @@ mod tile_transform;
 mod win_state;
 
 pub use colliders::{Collider, ColliderList};
-pub use npc::NPC;
+pub use npc::NonPlayerCharacter;
 pub use player::Player;
 pub use power_up::*;
 pub use score::Score;

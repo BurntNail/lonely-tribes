@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        Collider, ColliderList, GameWinState, PowerUpHolder, Score,
-        TileTransform, WinStateEnum, NPC,
+        Collider, ColliderList, GameWinState, NonPlayerCharacter, PowerUpHolder, Score,
+        TileTransform, WinStateEnum,
     },
     level::Room,
     states::{
@@ -23,9 +23,6 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
-use std::ops::Deref;
-use amethyst::core::shred::FetchMut;
-use crate::components::PowerUp;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -34,11 +31,8 @@ lazy_static! {
 
         let mut out = (1..=6).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect();
 
-        if cfg!(debug_assertions) {
-            if opts.debug && opts.debug_level {
+        if cfg!(debug_assertions) && opts.debug && opts.debug_level{
                 out = vec!["test-room-one.png".to_string()];
-            }
-
         }
 
         out
@@ -98,7 +92,6 @@ impl SimpleState for PuzzleState {
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
-
         let this_level = LEVELS
             .get(self.level_index)
             .unwrap_or(&"test-room-one.png".to_string())
@@ -106,10 +99,9 @@ impl SimpleState for PuzzleState {
             .to_string();
         let holder = load_level(world, handle, this_level);
 
-        world.register::<crate::components::NPC>();
+        world.register::<crate::components::NonPlayerCharacter>();
         world.insert(GameWinState::new(None, self.level_index, 0));
         world.insert(holder);
-
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
 
@@ -185,7 +177,7 @@ impl SimpleState for PuzzleState {
                     Trans::Switch(Box::new(PostGameState::new()))
                 }
             }
-            WinStateEnum::TBD => Trans::None,
+            WinStateEnum::ToBeDecided => Trans::None,
         }
     }
 }
@@ -230,7 +222,11 @@ fn get_no_of_moves(world: &World) -> i32 {
 ///  - **world** is the current game World from Specs
 ///  - **sprites_handle** is a handle to the spritesheet
 ///  - **path** is the Path to the level eg. *"lvl-01.png"*
-fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: String) -> PowerUpHolder {
+fn load_level(
+    world: &mut World,
+    sprites_handle: Handle<SpriteSheet>,
+    path: String,
+) -> PowerUpHolder {
     let lvl = Room::new(path.as_str()); //TODO: Just use the map straight away
     let mut holder = PowerUpHolder::new();
 
@@ -267,13 +263,13 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .build();
                     holder.add_entity(ent);
                 }
-                Tag::NPC { is_enemy } => {
+                Tag::NonPlayerCharacter { is_enemy } => {
                     world
                         .create_entity()
                         .with(spr)
                         .with(tt)
                         .with(Transform::default())
-                        .with(NPC::new(is_enemy))
+                        .with(NonPlayerCharacter::new(is_enemy))
                         .with(Collider::default())
                         .build();
                 }
@@ -286,29 +282,27 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: Stri
                         .with(Collider::default())
                         .build();
                 }
-                Tag::Trigger(trigger_type) => {
-                    match trigger_type {
-                        TriggerType::Powerup(_) => {
-                            let e = world
-                                .create_entity()
-                                .with(spr)
-                                .with(tt)
-                                .with(Transform::default())
-                                .with(Collider::new(trigger_type))
-                                .build();
-                            holder.add_pu_entity(tt, e);
-                        }
-                        _ => {
-                            world
-                                .create_entity()
-                                .with(spr)
-                                .with(tt)
-                                .with(Transform::default())
-                                .with(Collider::new(trigger_type))
-                                .build();
-                        }
+                Tag::Trigger(trigger_type) => match trigger_type {
+                    TriggerType::Powerup(_) => {
+                        let e = world
+                            .create_entity()
+                            .with(spr)
+                            .with(tt)
+                            .with(Transform::default())
+                            .with(Collider::new(trigger_type))
+                            .build();
+                        holder.add_pu_entity(tt, e);
                     }
-                }
+                    _ => {
+                        world
+                            .create_entity()
+                            .with(spr)
+                            .with(tt)
+                            .with(Transform::default())
+                            .with(Collider::new(trigger_type))
+                            .build();
+                    }
+                },
                 _ => {
                     world
                         .create_entity()
