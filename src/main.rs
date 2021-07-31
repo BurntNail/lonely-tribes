@@ -37,7 +37,6 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let opts = Flags::from_args();
-    log::info!("Options: {:?}", opts);
 
     let app_root = application_root_dir()?;
 
