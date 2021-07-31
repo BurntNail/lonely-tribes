@@ -1,3 +1,4 @@
+mod animator;
 mod colliders;
 mod npc;
 mod player;
@@ -7,6 +8,7 @@ mod text_wobble;
 mod tile_transform;
 mod win_state;
 
+pub use animator::Animator;
 pub use colliders::{Collider, ColliderList};
 pub use npc::NonPlayerCharacter;
 pub use player::Player;

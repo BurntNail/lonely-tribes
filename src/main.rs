@@ -133,11 +133,13 @@ pub struct Flags {
 
 //todos
 
-//TODO: With Sprites, make sure to account for Screen Scaling
-
 //TODO: post-processing
 //eg. make it clear where the players are
 //maybe sprites that go on top?
+
+//TODO: Tweening
+
+//TODO: With Sprites, make sure to account for Screen Scaling
 
 //TODO: Export some options to conf file
 
