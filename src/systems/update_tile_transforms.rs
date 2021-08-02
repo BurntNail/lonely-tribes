@@ -1,10 +1,6 @@
 use crate::{components::tile_transform::TileTransform, HEIGHT};
 use amethyst::{
-    core::{
-        ecs::{Entities, Read},
-        transform::Transform,
-        Time,
-    },
+    core::transform::Transform,
     derive::SystemDesc,
     ecs::{Join, ReadStorage, System, SystemData, WriteStorage},
 };
@@ -16,37 +12,15 @@ pub const TILE_WIDTH: f32 = 8.0 / 2.0;
 pub const TILE_HEIGHT: f32 = 8.0 / 2.0;
 
 impl<'s> System<'s> for UpdateTileTransforms {
-    type SystemData = (
-        ReadStorage<'s, TileTransform>,
-        WriteStorage<'s, Transform>,
-        WriteStorage<'s, Animator>,
-        Read<'s, Time>,
-    );
+    type SystemData = (ReadStorage<'s, TileTransform>, WriteStorage<'s, Transform>);
 
-    fn run(&mut self, (tiles, mut transforms, mut animators, time): Self::SystemData) {
+    fn run(&mut self, (tiles, mut transforms): Self::SystemData) {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
             let x = tile.x as f32 * 8.0 + TILE_WIDTH;
             let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
 
             trans.set_translation_xyz(x, y, old_z);
-        }
-
-        for (tile, trans, anim) in (&tiles, &mut transforms, &mut animators).join() {
-            let old_z = trans.translation().z;
-            let mut x = tile.x as f32 * 8.0 + TILE_WIDTH;
-            let mut y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
-
-            anim.time_elapsed += time.delta_real_seconds();
-            let point_reached = anim.total_time / anim.time_elapsed;
-
-            let addition = (
-                (anim.difference.x as f32) * point_reached,
-                (anim.difference.y as f32) * point_reached,
-            );
-            let addition = Self::tile_xy_f32s_to_xy(addition);
-
-            trans.set_translation_xyz(x + addition.0, y + addition.1, old_z);
         }
     }
 }
