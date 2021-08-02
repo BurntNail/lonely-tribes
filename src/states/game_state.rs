@@ -3,7 +3,8 @@ use crate::{
         Collider, ColliderList, GameWinState, NonPlayerCharacter, PowerUpHolder, Score,
         TileTransform, WinStateEnum,
     },
-    level::Room,
+    level::{Room, SpriteRequest},
+    quick_save_load::{LevelState, SaveType},
     states::{
         level_select::LevelSelectState,
         states_util::{init_camera, load_font, load_sprite_sheet},
@@ -24,7 +25,6 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
-use crate::quick_save_load::{LevelState, SaveType};
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -51,6 +51,8 @@ pub struct PuzzleState {
     actions: HashMap<VirtualKeyCode, usize>,
     ///Option variable to hold the Score text
     score_button: Option<Entity>,
+    ///Option variable to hold loaded level
+    level_state: Option<LevelState>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
@@ -68,6 +70,7 @@ impl Default for PuzzleState {
         Self {
             ws: WinStateEnum::default(),
             level_index,
+            level_state: None,
             actions: HashMap::new(),
             score_button: None,
         }
@@ -75,11 +78,17 @@ impl Default for PuzzleState {
 }
 impl PuzzleState {
     ///Constructor for PuzzleState
-    ///
-    ///  - **level_index** is the level index for *LEVELS*
     pub fn new(level_index: usize) -> Self {
         PuzzleState {
             level_index,
+            ..Default::default()
+        }
+    }
+    ///Constructor for PuzzleState for use with a loaded save
+    pub fn new_levelstate(level_index: usize, level_state: Option<LevelState>) -> Self {
+        PuzzleState {
+            level_index,
+            level_state,
             ..Default::default()
         }
     }
@@ -99,10 +108,17 @@ impl SimpleState for PuzzleState {
             .unwrap_or(&"test-room-one.png".to_string())
             .as_str()
             .to_string();
-        let holder = load_level(world, handle, this_level);
+
+        let holder = if let Some(state) = self.level_state.clone() {
+            world.insert(GameWinState::new(None, self.level_index, state.score));
+            load_level_with_(world, handle, this_level, state)
+        } else {
+            world.insert(GameWinState::new(None, self.level_index, 0));
+            load_level(world, handle, this_level)
+        };
 
         world.register::<crate::components::NonPlayerCharacter>();
-        world.insert(GameWinState::new(None, self.level_index, 0));
+
         world.insert(holder);
         world.insert(LevelState::default());
 
@@ -133,37 +149,39 @@ impl SimpleState for PuzzleState {
         let mut t = Trans::None;
 
         match event {
-            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                match key_code {
-                    VirtualKeyCode::Space => {
-                        if let Some(btn) = self.score_button {
-                            let mut hiddens = data.world.write_storage::<Hidden>();
-                            if hiddens.contains(btn) {
-                                hiddens.remove(btn);
-                            } else {
-                                hiddens.insert(btn, Hidden).unwrap_or_else(|e| {
-                                    log::error!("Unable to insert btn into hiddens - {}", e);
-                                    None
-                                });
-                            }
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => match key_code {
+                VirtualKeyCode::Space => {
+                    if let Some(btn) = self.score_button {
+                        let mut hiddens = data.world.write_storage::<Hidden>();
+                        if hiddens.contains(btn) {
+                            hiddens.remove(btn);
+                        } else {
+                            hiddens.insert(btn, Hidden).unwrap_or_else(|e| {
+                                log::error!("Unable to insert btn into hiddens - {}", e);
+                                None
+                            });
                         }
-                    },
-                    VirtualKeyCode::L => t = Trans::Switch(Box::new(LevelSelectState::default())),
-                    VirtualKeyCode::F5 | VirtualKeyCode::F6 => data.world.read_resource::<LevelState>().save(SaveType::QuickSave, self.level_index),
-                    VirtualKeyCode::F9 => {
-                        let save = LevelState::load_most_recent(None, self.level_index);
-                        log::info!("{:?}", save.unwrap_or_default());
-                        //TODO: make new constructor that takes in LevelState
-                        //TODO: new load_level with LevelState option
                     }
-
-                    _ => self.actions.iter().for_each(|(k, v)| {
-                        if &key_code == k {
-                            t = Trans::Switch(Box::new(PuzzleState::new(*v)));
-                        }
-                    })
                 }
-            }
+                VirtualKeyCode::L => t = Trans::Switch(Box::new(LevelSelectState::default())),
+                VirtualKeyCode::F5 | VirtualKeyCode::F6 => data
+                    .world
+                    .read_resource::<LevelState>()
+                    .save(SaveType::QuickSave, self.level_index),
+                VirtualKeyCode::F9 => {
+                    let save = LevelState::load_most_recent(None, self.level_index);
+                    t = Trans::Switch(Box::new(PuzzleState::new_levelstate(
+                        self.level_index,
+                        save,
+                    )));
+                }
+
+                _ => self.actions.iter().for_each(|(k, v)| {
+                    if &key_code == k {
+                        t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                    }
+                }),
+            },
             StateEvent::Window(Event::WindowEvent { event, .. }) => match event {
                 WindowEvent::CloseRequested | WindowEvent::Destroyed => {
                     let mut gws = data.world.write_resource::<GameWinState>();
@@ -305,6 +323,113 @@ fn load_level(
                             .with(Collider::new(trigger_type))
                             .build();
                         holder.add_pu_entity(tt, e);
+                    }
+                    _ => {
+                        world
+                            .create_entity()
+                            .with(spr)
+                            .with(tt)
+                            .with(Transform::default())
+                            .with(Collider::new(trigger_type))
+                            .build();
+                    }
+                },
+                _ => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(UpdateTileTransforms::tile_to_transform(tt))
+                        .build();
+                }
+            }
+        }
+    }
+
+    holder
+}
+
+///Loads in a level given a path and a levelState
+fn load_level_with_(
+    world: &mut World,
+    sprites_handle: Handle<SpriteSheet>,
+    path: String,
+    level: LevelState,
+) -> PowerUpHolder {
+    let lvl = Room::new(path.as_str()); //TODO: Just use the map straight away
+    let mut holder = PowerUpHolder::new();
+
+    level.players.into_iter().for_each(|(p, tt)| {
+        let mut trans = Transform::default();
+        trans.set_translation_z(0.5);
+        let ent = world
+            .create_entity()
+            .with(SpriteRender::new(
+                sprites_handle.clone(),
+                SpriteRequest::Player(p.id).get_spritesheet_index(),
+            ))
+            .with(tt)
+            .with(trans)
+            .with(Collider::new(TriggerType::from_id(&p.id)))
+            .with(p)
+            .build();
+        holder.add_entity(ent);
+    });
+    level.powerups.into_iter().for_each(|(p, tt)| {
+        let e = world
+            .create_entity()
+            .with(SpriteRender::new(
+                sprites_handle.clone(),
+                SpriteRequest::PowerUpSprite(p).get_spritesheet_index(),
+            ))
+            .with(tt)
+            .with(Transform::default())
+            .with(Collider::new(TriggerType::Powerup(p)))
+            .build();
+        holder.add_pu_entity(tt, e);
+    });
+
+    if lvl.data.is_empty() {
+        return holder;
+    }
+
+    for x in 0..lvl.data.len() {
+        for y in 0..lvl.data[0].len() {
+            let spr_index = lvl.data[x][y].get_spritesheet_index();
+
+            if spr_index == 9999 {
+                continue;
+            }
+
+            let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
+            let tag = Tag::from_spr(lvl.data[x][y]);
+            let tt = TileTransform::new(x as i32, y as i32);
+
+            match tag {
+                Tag::Player(_) => {
+                    //do nothing
+                }
+                Tag::NonPlayerCharacter { is_enemy } => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(Transform::default())
+                        .with(NonPlayerCharacter::new(is_enemy))
+                        .with(Collider::default())
+                        .build();
+                }
+                Tag::Collision => {
+                    world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(Transform::default())
+                        .with(Collider::default())
+                        .build();
+                }
+                Tag::Trigger(trigger_type) => match trigger_type {
+                    TriggerType::Powerup(_) => {
+                        //do nothing
                     }
                     _ => {
                         world

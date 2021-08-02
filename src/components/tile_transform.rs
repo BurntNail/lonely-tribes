@@ -1,5 +1,5 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 ///Component for transforms which align to the tile grid
 /// Much easier to manipulate than amethyst Transforms

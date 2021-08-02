@@ -1,7 +1,7 @@
 use crate::{components::TileTransform, tag::TriggerType};
 use amethyst::core::ecs::Entity;
+use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, ops::Range};
-use serde::{Serialize, Deserialize};
 
 ///The type of PowerUp
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]

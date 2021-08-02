@@ -1,5 +1,5 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 ///Struct for Player
 #[derive(Default, Copy, Clone, Debug, Serialize, Deserialize)]

@@ -7,8 +7,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Save/Load in from File&#10;&#10;Now, I just need to make new constructors">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add shell script for new releases">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rustfmt.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rustfmt.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/states" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/new_release.sh" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -85,7 +93,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Shell Script.New Release">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -316,7 +324,7 @@
       <workItem from="1627677853347" duration="443000" />
       <workItem from="1627849179564" duration="4027000" />
       <workItem from="1627894203537" duration="1043000" />
-      <workItem from="1627895257313" duration="2567000" />
+      <workItem from="1627895257313" duration="3589000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -528,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627898178372</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Add shell script for new releases">
+      <created>1627898598885</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1627898598885</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,7 +565,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Movement" />
     <MESSAGE value="Add Docu-Comments" />
     <MESSAGE value="StructOpt" />
     <MESSAGE value="Add high scores p2" />
@@ -575,6 +589,7 @@
     <MESSAGE value="Fix move_player.rs" />
     <MESSAGE value="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in." />
     <MESSAGE value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
+    <MESSAGE value="Add shell script for new releases" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add shell script for new releases" />
   </component>
 </project>

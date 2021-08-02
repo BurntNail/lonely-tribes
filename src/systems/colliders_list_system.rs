@@ -1,11 +1,12 @@
-use crate::components::{Collider, ColliderList, TileTransform, Player, GameWinState};
+use crate::{
+    components::{Collider, ColliderList, GameWinState, Player, TileTransform},
+    quick_save_load::LevelState,
+    tag::TriggerType,
+};
 use amethyst::{
+    core::ecs::Read,
     ecs::{Join, ReadStorage, System, Write},
 };
-use crate::quick_save_load::LevelState;
-use crate::tag::TriggerType;
-use amethyst::core::ecs::Read;
-
 
 ///System to update ColliderList, and LevelState
 pub struct ListSystem;
@@ -39,7 +40,9 @@ impl<'s> System<'s> for ListSystem {
             }
         }
 
-        (&tiles, &players).join().for_each(|(t, p)| player_list.push((*p, *t)));
+        (&tiles, &players)
+            .join()
+            .for_each(|(t, p)| player_list.push((*p, *t)));
 
         list.set(colliders_list);
         list.set_triggers(triggers_list);

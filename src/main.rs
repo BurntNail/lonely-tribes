@@ -1,5 +1,5 @@
 use crate::systems::{
-    ListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, PowerUpSystem,
+    EndOfGameSystem, FpsPrinterSystem, ListSystem, MovePlayerSystem, PowerUpSystem,
     ScoreUpdaterSystem, TextWobbleSystem, UpdateTileTransforms,
 };
 use amethyst::{
@@ -26,10 +26,10 @@ extern crate lazy_static;
 mod components;
 mod high_scores;
 mod level;
+mod quick_save_load;
 mod states;
 mod systems;
 mod tag;
-mod quick_save_load;
 
 pub const WIDTH: u32 = 64;
 pub const HEIGHT: u32 = 36;
