@@ -40,9 +40,11 @@ impl<'s> System<'s> for UpdateTileTransforms {
             anim.time_elapsed += time.delta_real_seconds();
             let point_reached = anim.total_time / anim.time_elapsed;
 
-            let addition = ((anim.difference.x as f32) * point_reached, (anim.difference.y as f32) * point_reached);
+            let addition = (
+                (anim.difference.x as f32) * point_reached,
+                (anim.difference.y as f32) * point_reached,
+            );
             let addition = Self::tile_xy_f32s_to_xy(addition);
-
 
             trans.set_translation_xyz(x + addition.0, y + addition.1, old_z);
         }

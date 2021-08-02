@@ -44,7 +44,7 @@ impl TileTransform {
     }
 
     ///Minuses self from another tiletransform to make a new tiletransform
-    pub fn minus_from_self (&self, t: TileTransform) -> Self {
+    pub fn minus_from_self(&self, t: TileTransform) -> Self {
         if self.get_magnitude() > t.get_magnitude() {
             Self {
                 x: self.x - t.x,
@@ -53,13 +53,14 @@ impl TileTransform {
         } else {
             Self {
                 x: t.x - self.x,
-                y: t.y - self.y
+                y: t.y - self.y,
             }
         }
     }
 
     ///Gets magnitude of self
-    pub fn get_magnitude(&self) -> f32 { //TODO: Store this in persistent variable to optimise
+    pub fn get_magnitude(&self) -> f32 {
+        //TODO: Store this in persistent variable to optimise
         let x = (self.x * self.x) as f32;
         let y = (self.y * self.y) as f32;
         (x + y).sqrt()

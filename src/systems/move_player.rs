@@ -1,7 +1,10 @@
 use crate::{
     components::{
-        colliders::ColliderList, player::Player, power_up::PowerUpHolder,
-        tile_transform::TileTransform, win_state::GameWinState,
+        colliders::ColliderList,
+        player::Player,
+        power_up::{PowerUp, PowerUpHolder},
+        tile_transform::TileTransform,
+        win_state::GameWinState,
     },
     Flags, HEIGHT, WIDTH,
 };
@@ -12,7 +15,6 @@ use amethyst::{
     input::{InputHandler, StringBindings},
 };
 use structopt::StructOpt;
-use crate::components::power_up::PowerUp;
 
 ///System for capturing player movement, and collision
 #[derive(SystemDesc)]

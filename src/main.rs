@@ -1,3 +1,12 @@
+use crate::{
+    states::welcome_state::StartGameState,
+    systems::{
+        colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
+        move_player::MovePlayerSystem, powerup_system::PowerUpSystem,
+        txt_wobble_system::TextWobbleSystem, update_score::ScoreUpdaterSystem,
+        update_tile_transforms::UpdateTileTransforms, win_system::EndOfGameSystem,
+    },
+};
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -13,15 +22,6 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
-use crate::systems::update_tile_transforms::UpdateTileTransforms;
-use crate::systems::colliders_list_system::ListSystem;
-use crate::systems::move_player::MovePlayerSystem;
-use crate::systems::win_system::EndOfGameSystem;
-use crate::systems::txt_wobble_system::TextWobbleSystem;
-use crate::systems::update_score::ScoreUpdaterSystem;
-use crate::systems::powerup_system::PowerUpSystem;
-use crate::systems::fps_counter::FpsPrinterSystem;
-use crate::states::welcome_state::StartGameState;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
