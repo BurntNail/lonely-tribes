@@ -24,6 +24,7 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
+use crate::quick_save_load::{LevelState, SaveType};
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -103,6 +104,7 @@ impl SimpleState for PuzzleState {
         world.register::<crate::components::NonPlayerCharacter>();
         world.insert(GameWinState::new(None, self.level_index, 0));
         world.insert(holder);
+        world.insert(LevelState::default());
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
 
@@ -132,27 +134,34 @@ impl SimpleState for PuzzleState {
 
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                self.actions.iter().for_each(|(k, v)| {
-                    if &key_code == k {
-                        t = Trans::Switch(Box::new(PuzzleState::new(*v)));
-                    }
-                });
-
-                if key_code == VirtualKeyCode::Space {
-                    if let Some(btn) = self.score_button {
-                        let mut hiddens = data.world.write_storage::<Hidden>();
-                        if hiddens.contains(btn) {
-                            hiddens.remove(btn);
-                        } else {
-                            hiddens.insert(btn, Hidden).unwrap_or_else(|e| {
-                                log::error!("Unable to insert btn into hiddens - {}", e);
-                                None
-                            });
+                match key_code {
+                    VirtualKeyCode::Space => {
+                        if let Some(btn) = self.score_button {
+                            let mut hiddens = data.world.write_storage::<Hidden>();
+                            if hiddens.contains(btn) {
+                                hiddens.remove(btn);
+                            } else {
+                                hiddens.insert(btn, Hidden).unwrap_or_else(|e| {
+                                    log::error!("Unable to insert btn into hiddens - {}", e);
+                                    None
+                                });
+                            }
                         }
+                    },
+                    VirtualKeyCode::L => t = Trans::Switch(Box::new(LevelSelectState::default())),
+                    VirtualKeyCode::F5 | VirtualKeyCode::F6 => data.world.read_resource::<LevelState>().save(SaveType::QuickSave, self.level_index),
+                    VirtualKeyCode::F9 => {
+                        let save = LevelState::load_most_recent(None, self.level_index);
+                        log::info!("{:?}", save.unwrap_or_default());
+                        //TODO: make new constructor that takes in LevelState
+                        //TODO: new load_level with LevelState option
                     }
-                }
-                if key_code == VirtualKeyCode::L {
-                    t = Trans::Switch(Box::new(LevelSelectState::default()));
+
+                    _ => self.actions.iter().for_each(|(k, v)| {
+                        if &key_code == k {
+                            t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                        }
+                    })
                 }
             }
             StateEvent::Window(Event::WindowEvent { event, .. }) => match event {

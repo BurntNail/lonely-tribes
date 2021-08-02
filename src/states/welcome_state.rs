@@ -58,7 +58,7 @@ impl SimpleState for StartGameState {
                                         t = SimpleTrans::Switch(Box::new(HelpState::default()));
                                     }
                                 }
-                                UiEventType::HoverStart => txt.color = [1.0, 1.0, 1.0, 0.5],
+                                UiEventType::HoverStart => txt.color = [1.0, 0.5, 0.75, 1.0],
                                 UiEventType::HoverStop => txt.color = [1.0; 4],
                                 _ => {}
                             };
@@ -115,7 +115,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
     let start_btn_txt = UiText::new(
         font_handle.clone(),
         String::from("Click here to Start."),
-        [1.0, 1.0, 1.0, 0.5],
+        [1.0; 4],
         50.0,
         LineMode::Single,
         Anchor::Middle,
@@ -141,7 +141,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
     let help_btn_txt = UiText::new(
         font_handle,
         String::from("Click here to get Help."),
-        [1.0, 1.0, 1.0, 0.5],
+        [1.0; 4],
         50.0,
         LineMode::Single,
         Anchor::Middle,

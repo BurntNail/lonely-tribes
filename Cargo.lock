@@ -1874,6 +1874,7 @@ name = "making-friends"
 version = "0.5.1"
 dependencies = [
  "amethyst",
+ "chrono",
  "image 0.23.14",
  "lazy_static",
  "log",

@@ -1,9 +1,10 @@
 use crate::{components::TileTransform, tag::TriggerType};
 use amethyst::core::ecs::Entity;
 use std::{collections::HashMap, ops::Range};
+use serde::{Serialize, Deserialize};
 
 ///The type of PowerUp
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum PowerUp {
     ///Randomises the position of each player (including those already merged)
     Portal,

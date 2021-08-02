@@ -1,7 +1,8 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
+use serde::{Serialize, Deserialize};
 
 ///Struct for Player
-#[derive(Default)]
+#[derive(Default, Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct Player {
     ///Holds the player ID for win-checking.
     ///Should be identical to the trigger id on that entity.

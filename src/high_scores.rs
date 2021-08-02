@@ -9,7 +9,7 @@ use std::{
 ///The path to the high scores
 const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";
 ///The data dir
-const DATA_DIR: &str = "assets/data";
+pub const DATA_DIR: &str = "assets/data";
 
 ///Struct to score High Scores
 #[derive(Clone, Debug, Serialize, Deserialize)]

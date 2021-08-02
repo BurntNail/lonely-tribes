@@ -6,10 +6,10 @@ use crate::{
 use amethyst::core::ecs::{Entities, Join, Read, ReadStorage, System, Write, WriteStorage};
 use rand::Rng;
 
+///System to handle powerups
 pub struct PowerUpSystem;
 
 impl<'s> System<'s> for PowerUpSystem {
-    #[allow(clippy::type_complexity)]
     type SystemData = (
         Write<'s, PowerUpHolder>,
         Write<'s, GameWinState>,

@@ -7,7 +7,7 @@ mod update_score;
 mod update_tile_transforms;
 mod win_system;
 
-pub use colliders_list_system::CollidersListSystem;
+pub use colliders_list_system::ListSystem;
 pub use fps_counter::FpsPrinterSystem;
 pub use move_player::MovePlayerSystem;
 pub use powerup_system::PowerUpSystem;

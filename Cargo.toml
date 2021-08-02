@@ -13,6 +13,7 @@ serde = { version = "1", features = ["derive"] }
 ron = "0.6.4"
 structopt = "0.3"
 rand = "0.8.4"
+chrono = "0.4.19"
 
 [dependencies.amethyst]
 version = "0.15.3"

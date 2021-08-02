@@ -1,5 +1,5 @@
 use crate::systems::{
-    CollidersListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, PowerUpSystem,
+    ListSystem, EndOfGameSystem, FpsPrinterSystem, MovePlayerSystem, PowerUpSystem,
     ScoreUpdaterSystem, TextWobbleSystem, UpdateTileTransforms,
 };
 use amethyst::{
@@ -21,12 +21,15 @@ use structopt::StructOpt;
 #[macro_use]
 extern crate lazy_static;
 
+// #[warn(clippy::missing_docs_in_private_items)]
+
 mod components;
 mod high_scores;
 mod level;
 mod states;
 mod systems;
 mod tag;
+mod quick_save_load;
 
 pub const WIDTH: u32 = 64;
 pub const HEIGHT: u32 = 36;
@@ -59,7 +62,7 @@ fn main() -> amethyst::Result<()> {
                 .with_plugin(RenderFlat2D::default()),
         )?
         .with(UpdateTileTransforms, "update_tile_transforms", &[])
-        .with(CollidersListSystem, "collider_list", &[])
+        .with(ListSystem, "collider_list", &[])
         .with(
             MovePlayerSystem::default(),
             "move_player",
@@ -133,15 +136,16 @@ pub struct Flags {
 
 //todos
 
+//TODO: Quick save/load
+
 //TODO: With Sprites, make sure to account for Screen Scaling
 
 //TODO: post-processing
-//eg. make it clear where the players are
-//maybe sprites that go on top?
 
 //TODO: Export some options to conf file
 
-//TODO: Enemies (does it fit?)
-//TODO: Combat
-
 //TODO: Music/SFX
+
+//TODO: Story
+//TODO: Steamworks
+//TODO: Steam Page

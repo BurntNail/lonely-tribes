@@ -1,8 +1,9 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
+use serde::{Serialize, Deserialize};
 
 ///Component for transforms which align to the tile grid
 /// Much easier to manipulate than amethyst Transforms
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct TileTransform {
     ///X position - Horizontal
     pub x: i32,
