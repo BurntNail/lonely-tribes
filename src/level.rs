@@ -3,7 +3,7 @@ use image::{DynamicImage, GenericImageView, Rgba};
 use std::collections::HashMap;
 
 #[allow(dead_code)]
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum SpriteRequest {
     BackWall,
     BackWallLeftCorner,
@@ -71,6 +71,16 @@ lazy_static! {
 
         map
     };
+
+    static ref REVERSED_SPRITESHEET_SWATCH_HASHMAP: HashMap<SpriteRequest, Rgba<u8>> = {
+        let mut map = HashMap::new();
+
+        SPRITESHEET_SWATCH_HASHMAP.clone().into_iter().for_each(|(v, k)| {
+            map.insert(k, v);
+        });
+
+        map
+    };
 }
 
 impl SpriteRequest {
@@ -124,7 +134,7 @@ impl SpriteRequest {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq, Default)]
 pub struct Room {
     pub data: Vec<Vec<SpriteRequest>>,
 }

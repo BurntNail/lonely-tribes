@@ -33,16 +33,16 @@ use structopt::StructOpt;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
-    pub static ref LEVELS: Vec<String> = { //TODO: Make this read through the data dir
+    pub static ref LEVELS: Vec<String> = {
         let opts: Flags = Flags::from_args();
 
-        let mut out = (1..=7).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect();
-
-        if cfg!(debug_assertions) && opts.debug && opts.debug_level{
-            out = vec!["test-room-one.png".to_string()];
+        if cfg!(debug_assertions) && opts.debug && opts.debug_level {
+            vec!["test-room-one.png".to_string()]
+        } else {
+            let mut out: Vec<String> = LevelState::list_file_names_in_dir("assets/maps").into_iter().filter(|nom| nom.contains("lvl-") && nom.contains(".png")).map(|el| el.replace("\"", "")).collect();
+            out.sort();
+            out
         }
-
-        out
     };
 }
 

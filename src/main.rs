@@ -144,6 +144,10 @@ pub struct Flags {
 
 //todos
 
+//TODO: Level Editor
+//TODO: Export some options to conf file
+//TODO: Conf Editor
+
 //TODO: Music/SFX
 
 //TODO: With Sprites, make sure to account for Screen Scaling
@@ -151,10 +155,6 @@ pub struct Flags {
 //TODO: post-processing
 
 //TODO: Tweening
-
-//TODO: With Sprites, make sure to account for Screen Scaling
-
-//TODO: Export some options to conf file
 
 //TODO: Steamworks
 //TODO: Story

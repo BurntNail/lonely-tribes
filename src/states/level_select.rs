@@ -71,7 +71,7 @@ impl SimpleState for LevelSelectState {
                             UiEventType::ClickStop => {
                                 t = SimpleTrans::Switch(Box::new(PuzzleState::new(target_index)))
                             }
-                            UiEventType::HoverStart => txt.color = [1.0, 1.0, 1.0, 0.5],
+                            UiEventType::HoverStart => txt.color = [1.0, 0.5, 0.75, 1.0],
                             UiEventType::HoverStop => txt.color = [1.0; 4],
                             _ => {}
                         }

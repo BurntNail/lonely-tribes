@@ -44,6 +44,7 @@ impl TileTransform {
     }
 
     ///Minuses self from another tiletransform to make a new tiletransform
+    #[allow(dead_code)]
     pub fn minus_from_self(&self, t: TileTransform) -> Self {
         if self.get_magnitude() > t.get_magnitude() {
             Self {
@@ -59,6 +60,7 @@ impl TileTransform {
     }
 
     ///Gets magnitude of self
+    #[allow(dead_code)]
     pub fn get_magnitude(&self) -> f32 {
         //TODO: Store this in persistent variable to optimise
         let x = (self.x * self.x) as f32;

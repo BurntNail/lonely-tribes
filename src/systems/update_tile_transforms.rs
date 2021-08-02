@@ -40,7 +40,9 @@ impl UpdateTileTransforms {
         let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
         (x, y, z)
     }
+
     ///Convert a TileTransform X and Y (but as floats in a tuple) to an X and a Y for an on-screen Transform
+    #[allow(dead_code)]
     pub fn tile_xy_f32s_to_xy(xy: (f32, f32)) -> (f32, f32) {
         let x = xy.0 * 8.0 + TILE_WIDTH;
         let y = (HEIGHT as f32 - xy.1) * 8.0 - TILE_HEIGHT;

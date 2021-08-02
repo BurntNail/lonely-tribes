@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use std::{
     fmt::{Display, Formatter},
     fs::{create_dir, read_dir, read_to_string, write},
+    path::Path,
 };
 
 ///Struct to store state of a level for quick-save/loading
@@ -77,24 +78,21 @@ impl LevelState {
     ///Load the most recent save (of a given type, or any type if given is null) for a level. Returns None if there isn't a save or there's an error with it, and Some with the level state
     pub fn load_most_recent(save_type: Option<SaveType>, level: usize) -> Option<Self> {
         let mut save_file_name = None;
-        if let Ok(read) = read_dir(DATA_DIR) {
-            let mut list = Vec::new();
-            read.for_each(|el| {
-                if let Ok(el) = el {
-                    let current_file = format!("{:?}", el.file_name());
-                    if current_file.contains(&format!("{:02}", level)) {
-                        if let Some(save_type) = save_type {
-                            if current_file.contains(&save_type.to_string()) {
-                                list.push(current_file);
-                            }
-                        } else {
+        let full_list = Self::list_file_names_in_dir(DATA_DIR);
+        let mut list = Vec::new();
+        if !full_list.is_empty() {
+            full_list.into_iter().for_each(|current_file| {
+                if current_file.contains(&format!("{:02}", level)) {
+                    if let Some(save_type) = save_type {
+                        if current_file.contains(&save_type.to_string()) {
                             list.push(current_file);
                         }
+                    } else {
+                        list.push(current_file);
                     }
                 }
             });
 
-            list.sort();
             let level = list.last();
             if let Some(level) = level {
                 let initial_name = format!("{}/{}", DATA_DIR, level);
@@ -115,7 +113,26 @@ impl LevelState {
 
         res
     }
+
+    ///Gets file names inside a directory
+    pub fn list_file_names_in_dir<P: AsRef<Path>>(path: P) -> Vec<String> {
+        let mut list = Vec::new();
+        if let Ok(read) = read_dir(path) {
+            read.for_each(|el| {
+                if let Ok(el) = el {
+                    let current_file = format!("{:?}", el.file_name());
+                    list.push(current_file);
+                }
+            });
+
+            list.sort();
+            list.reverse();
+        }
+
+        list
+    }
 }
+
 impl Default for LevelState {
     fn default() -> Self {
         Self {
