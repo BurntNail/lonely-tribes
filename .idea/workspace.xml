@@ -7,17 +7,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Re-fix merging">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state">
+      <change beforePath="$PROJECT_DIR$/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/true_end.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -603,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627931656788</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state">
+      <created>1627935824999</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1627935824999</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -625,7 +623,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add hiding Scores" />
     <MESSAGE value="Change hide key to Space" />
     <MESSAGE value="Realise that this should be v3" />
     <MESSAGE value="Fix High Score Saving" />
@@ -650,6 +647,7 @@
     <MESSAGE value="Start on Steamworks - I need to wait for the license to come through" />
     <MESSAGE value="Cargo fmt" />
     <MESSAGE value="Re-fix merging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Re-fix merging" />
+    <MESSAGE value="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state" />
   </component>
 </project>
