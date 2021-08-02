@@ -35,6 +35,7 @@ impl TileTransform {
         Self { x: t.x, y: t.y }
     }
 
+    ///For adding self and another transform, giving the result in a new TileTransform
     pub fn add_into_new(&self, t: TileTransform) -> Self {
         Self {
             x: self.x + t.x,

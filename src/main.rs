@@ -21,8 +21,6 @@ use structopt::StructOpt;
 #[macro_use]
 extern crate lazy_static;
 
-// #[warn(clippy::missing_docs_in_private_items)]
-
 mod components;
 mod high_scores;
 mod level;
@@ -135,8 +133,6 @@ pub struct Flags {
 }
 
 //todos
-
-//TODO: Quick save/load
 
 //TODO: With Sprites, make sure to account for Screen Scaling
 

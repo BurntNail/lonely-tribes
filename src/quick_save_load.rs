@@ -10,6 +10,7 @@ use std::{
     fs::{create_dir, read_dir, read_to_string, write},
 };
 
+///Struct to store state of a level for quick-save/loading
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct LevelState {
     pub players: Vec<(Player, TileTransform)>,
@@ -17,9 +18,13 @@ pub struct LevelState {
     pub score: i32,
 }
 
+///The type of save
 #[derive(Copy, Clone, Debug)]
 pub enum SaveType {
+    ///Quick saves - only one stored at a time - each new save overrides the old one
     QuickSave,
+    ///Manual saves - many at a time
+    #[allow(dead_code)]
     ManualSave,
 }
 impl Display for SaveType {
@@ -32,17 +37,19 @@ impl Display for SaveType {
 }
 
 impl LevelState {
+    ///Replaces current data with new data
     pub fn replace(
         &mut self,
         players: Vec<(Player, TileTransform)>,
         powerups: Vec<(PowerUp, TileTransform)>,
         score: i32,
-    ) {
+    ) { //TODO: Optimise - checking for deltas etc.
         self.players = players;
         self.powerups = powerups;
         self.score = score;
     }
 
+    ///Save the current level_state into a file
     pub fn save(&self, save_type: SaveType, level: usize) {
         let text = to_string(&self).unwrap_or_else(|err| {
             log::error!("Error serialising LevelState: {:?}", err);
@@ -66,6 +73,7 @@ impl LevelState {
         })
     }
 
+    ///Load the most recent save (of a given type, or any type if given is null) for a level. Returns None if there isn't a save or there's an error with it, and Some with the level state
     pub fn load_most_recent(save_type: Option<SaveType>, level: usize) -> Option<Self> {
         let mut save_file_name = None;
         if let Ok(read) = read_dir(DATA_DIR) {

@@ -2,7 +2,10 @@
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum WinStateEnum {
     ///The game is over
-    End { won: bool },
+    End {
+        ///Whether the game was won or not
+        won: bool
+    },
     ///The game is still being played
     ToBeDecided,
 }
