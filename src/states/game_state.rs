@@ -28,7 +28,7 @@ use structopt::StructOpt;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
-    pub static ref LEVELS: Vec<String> = {
+    pub static ref LEVELS: Vec<String> = { //TODO: Make this read through the data dir
         let opts: Flags = Flags::from_args();
 
         let mut out = (1..=7).into_iter().map(|n| format!("lvl-{:02}.png", n)).collect();

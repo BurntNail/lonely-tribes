@@ -17,6 +17,7 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
+// use steamworks::{Client, FriendFlags};
 
 #[macro_use]
 extern crate lazy_static;
@@ -45,6 +46,8 @@ fn main() -> amethyst::Result<()> {
     let display_config = app_root.join("config/display.ron");
     let input_bundle = InputBundle::<StringBindings>::new()
         .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
+
+
 
     let mut game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
@@ -75,6 +78,7 @@ fn main() -> amethyst::Result<()> {
             &["collider_list", "update_tile_transforms", "move_player"],
         );
 
+
     if !opts.console {
         log::set_max_level(LevelFilter::Error);
     } else if opts.fps {
@@ -84,6 +88,11 @@ fn main() -> amethyst::Result<()> {
             &["fps"],
         );
     }
+
+    // let (client, single) = Client::init().unwrap();
+    // println!("{:?}", client.friends().get_friends(FriendFlags::IMMEDIATE));
+
+
 
     let mut game = Application::new(resources, states::StartGameState::default(), game_data)?;
     game.run();
@@ -134,14 +143,14 @@ pub struct Flags {
 
 //todos
 
+//TODO: Music/SFX
+
 //TODO: With Sprites, make sure to account for Screen Scaling
 
 //TODO: post-processing
 
 //TODO: Export some options to conf file
 
-//TODO: Music/SFX
-
-//TODO: Story
 //TODO: Steamworks
+//TODO: Story
 //TODO: Steam Page

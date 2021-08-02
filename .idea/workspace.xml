@@ -7,13 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Facilities to actually load the save">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add docucomments">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +90,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -100,7 +100,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -116,7 +118,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -132,7 +136,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -148,7 +154,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -164,7 +172,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -180,7 +190,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -196,7 +208,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -212,7 +226,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -231,7 +247,9 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="EXECUTE_IN_TERMINAL" value="true" />
       <option name="EXECUTE_SCRIPT_FILE" value="true" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+      </envs>
       <method v="2" />
     </configuration>
     <list>
@@ -247,9 +265,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
-        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build release" />
       </list>
     </recent_temporary>
@@ -321,7 +339,10 @@
       <workItem from="1627677853347" duration="443000" />
       <workItem from="1627849179564" duration="4027000" />
       <workItem from="1627894203537" duration="1043000" />
-      <workItem from="1627895257313" duration="4156000" />
+      <workItem from="1627895257313" duration="4165000" />
+      <workItem from="1627909226973" duration="219000" />
+      <workItem from="1627909677451" duration="1044000" />
+      <workItem from="1627911140601" duration="2696000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -547,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627899622821</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Add docucomments">
+      <created>1627900116439</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1627900116439</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,7 +597,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="StructOpt" />
     <MESSAGE value="Add high scores p2" />
     <MESSAGE value="Add high scores" />
     <MESSAGE value="Add Score Text for High Scores" />
@@ -594,6 +621,18 @@
     <MESSAGE value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
     <MESSAGE value="Add shell script for new releases" />
     <MESSAGE value="Facilities to actually load the save" />
-    <option name="LAST_COMMIT_MESSAGE" value="Facilities to actually load the save" />
+    <MESSAGE value="Add docucomments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add docucomments" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/states/game_state.rs</url>
+          <line>63</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
