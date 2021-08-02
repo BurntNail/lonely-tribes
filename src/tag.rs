@@ -1,4 +1,4 @@
-use crate::{components::PowerUp, level::SpriteRequest};
+use crate::{components::power_up::PowerUp, level::SpriteRequest};
 
 #[derive(Copy, Clone, Debug)]
 pub enum Tag {

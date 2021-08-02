@@ -1,5 +1,5 @@
 use crate::{
-    components::{Player, PowerUp, TileTransform},
+    components::{player::Player, power_up::PowerUp, tile_transform::TileTransform},
     high_scores::DATA_DIR,
 };
 use chrono::Local;
@@ -43,7 +43,8 @@ impl LevelState {
         players: Vec<(Player, TileTransform)>,
         powerups: Vec<(PowerUp, TileTransform)>,
         score: i32,
-    ) { //TODO: Optimise - checking for deltas etc.
+    ) {
+        //TODO: Optimise - checking for deltas etc.
         self.players = players;
         self.powerups = powerups;
         self.score = score;

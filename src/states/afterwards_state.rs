@@ -1,7 +1,11 @@
 use crate::{
-    components::{GameWinState, WinStateEnum},
+    components::win_state::{GameWinState, WinStateEnum},
     high_scores::HighScores,
-    states::{level_select::LevelSelectState, states_util::load_font, PuzzleState, LEVELS},
+    states::{
+        game_state::{PuzzleState, LEVELS},
+        level_select::LevelSelectState,
+        states_util::load_font,
+    },
     Flags,
 };
 use amethyst::{

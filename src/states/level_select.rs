@@ -1,6 +1,6 @@
 use crate::{
     high_scores::HighScores,
-    states::{states_util::load_font, PuzzleState, LEVELS},
+    states::{game_state::{PuzzleState, LEVELS}, states_util::load_font},
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},

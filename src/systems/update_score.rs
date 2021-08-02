@@ -1,4 +1,4 @@
-use crate::components::{GameWinState, Score};
+use crate::components::{score::Score, win_state::GameWinState};
 use amethyst::{
     core::ecs::{Join, Read, ReadStorage, System, WriteStorage},
     ui::UiText,

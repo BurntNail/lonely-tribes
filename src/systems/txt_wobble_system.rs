@@ -1,4 +1,4 @@
-use crate::components::TextWobble;
+use crate::components::text_wobble::TextWobble;
 use amethyst::{
     core::{
         ecs::{Join, Read, System, WriteStorage},

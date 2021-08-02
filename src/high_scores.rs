@@ -1,4 +1,4 @@
-use crate::states::LEVELS;
+use crate::states::game_state::LEVELS;
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
 use std::{

@@ -1,4 +1,4 @@
-use crate::states::{states_util::load_font, StartGameState};
+use crate::states::{states_util::load_font, welcome_state::StartGameState};
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},

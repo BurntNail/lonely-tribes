@@ -1,7 +1,3 @@
-use crate::systems::{
-    EndOfGameSystem, FpsPrinterSystem, ListSystem, MovePlayerSystem, PowerUpSystem,
-    ScoreUpdaterSystem, TextWobbleSystem, UpdateTileTransforms,
-};
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -17,6 +13,15 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
+use crate::systems::update_tile_transforms::UpdateTileTransforms;
+use crate::systems::colliders_list_system::ListSystem;
+use crate::systems::move_player::MovePlayerSystem;
+use crate::systems::win_system::EndOfGameSystem;
+use crate::systems::txt_wobble_system::TextWobbleSystem;
+use crate::systems::update_score::ScoreUpdaterSystem;
+use crate::systems::powerup_system::PowerUpSystem;
+use crate::systems::fps_counter::FpsPrinterSystem;
+use crate::states::welcome_state::StartGameState;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
@@ -25,6 +30,7 @@ extern crate lazy_static;
 mod components;
 mod high_scores;
 mod level;
+mod level_editor;
 mod quick_save_load;
 mod states;
 mod systems;
@@ -46,8 +52,6 @@ fn main() -> amethyst::Result<()> {
     let display_config = app_root.join("config/display.ron");
     let input_bundle = InputBundle::<StringBindings>::new()
         .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
-
-
 
     let mut game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
@@ -78,7 +82,6 @@ fn main() -> amethyst::Result<()> {
             &["collider_list", "update_tile_transforms", "move_player"],
         );
 
-
     if !opts.console {
         log::set_max_level(LevelFilter::Error);
     } else if opts.fps {
@@ -92,15 +95,13 @@ fn main() -> amethyst::Result<()> {
     // let (client, single) = Client::init().unwrap();
     // println!("{:?}", client.friends().get_friends(FriendFlags::IMMEDIATE));
 
-
-
-    let mut game = Application::new(resources, states::StartGameState::default(), game_data)?;
+    let mut game = Application::new(resources, StartGameState::default(), game_data)?;
     game.run();
 
     Ok(())
 }
 
-fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
+pub fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     let (r, g, b, a) = Srgba::new(r_a / 255., g_a / 255., b_a / 255., 1.0)
         .into_linear()
         .into_components();

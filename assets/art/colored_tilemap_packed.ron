@@ -1,5 +1,5 @@
 /*!
-    @import /amethyst_rendy/src/sprite/mod.rs#Sprites
+    @import /amethyst_rendy/src/sprite/level_editor#Sprites
     Sprites
 */
 

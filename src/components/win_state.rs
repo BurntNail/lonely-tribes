@@ -4,7 +4,7 @@ pub enum WinStateEnum {
     ///The game is over
     End {
         ///Whether the game was won or not
-        won: bool
+        won: bool,
     },
     ///The game is still being played
     ToBeDecided,

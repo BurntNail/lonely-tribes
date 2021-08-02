@@ -1,4 +1,4 @@
-use crate::{components::TileTransform, tag::TriggerType};
+use crate::{components::tile_transform::TileTransform, tag::TriggerType};
 use amethyst::core::ecs::Entity;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, ops::Range};

@@ -1,5 +1,10 @@
 use crate::{
-    components::{Collider, ColliderList, GameWinState, Player, TileTransform},
+    components::{
+        colliders::{Collider, ColliderList},
+        player::Player,
+        tile_transform::TileTransform,
+        win_state::GameWinState,
+    },
     quick_save_load::LevelState,
     tag::TriggerType,
 };

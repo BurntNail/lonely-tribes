@@ -1,5 +1,11 @@
 use crate::{
-    components::{ColliderList, GameWinState, Player, PowerUp, PowerUpHolder, TileTransform},
+    components::{
+        colliders::ColliderList,
+        player::Player,
+        power_up::{PowerUp, PowerUpHolder},
+        tile_transform::TileTransform,
+        win_state::GameWinState,
+    },
     systems::move_player::tile_is_bad,
     HEIGHT, WIDTH,
 };

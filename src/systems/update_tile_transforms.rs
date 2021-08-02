@@ -1,4 +1,4 @@
-use crate::{components::TileTransform, HEIGHT};
+use crate::{components::tile_transform::TileTransform, HEIGHT};
 use amethyst::{
     core::transform::Transform,
     derive::SystemDesc,

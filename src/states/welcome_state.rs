@@ -1,6 +1,7 @@
 use crate::{
-    components::TextWobble,
-    states::{level_select::LevelSelectState, states_util::load_font, HelpState},
+    components::text_wobble::TextWobble,
+    level_editor::LevelEditorLevelSelectState,
+    states::{help_state::HelpState, level_select::LevelSelectState, states_util::load_font},
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
@@ -11,8 +12,9 @@ use amethyst::{
 ///State for welcoming the player to the game
 #[derive(Default)]
 pub struct StartGameState {
-    ///Stores the Entity for the Button as an option for easier initialisation
+    ///Stores the Entity for the Start Button as an option for easier initialisation
     start_btn: Option<Entity>,
+    ///Stores the Entity for the Help Button as an option for easier initialisation
     help_btn: Option<Entity>,
 }
 
@@ -24,7 +26,7 @@ impl SimpleState for StartGameState {
         world.register::<Interactable>();
         world.register::<UiImage>();
 
-        let (s, h) = init_menu(world);
+        let (s, h, l) = init_menu(world);
         self.start_btn = Some(s);
         self.help_btn = Some(h);
     }
@@ -77,6 +79,9 @@ impl SimpleState for StartGameState {
 /// Returns an Entity with the Start Button, and one with the Help Button
 fn init_menu(world: &mut World) -> (Entity, Entity) {
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
+    let font_handle = load_font(world, "ZxSpectrum");
+
+    //region welcome
     let welcome_trans = UiTransform::new(
         String::from("welcome_txt"),
         Anchor::Middle,
@@ -100,8 +105,9 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
         .with(welcome_trans)
         .with(welcome_txt)
         .build();
+    //endregion
 
-    let font_handle = load_font(world, "ZxSpectrum");
+    //region start
     let start_btn_trans = UiTransform::new(
         String::from("start_btn"),
         Anchor::Middle,
@@ -127,7 +133,9 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
         .with(TextWobble::new(10.0, -85.0, 2.5))
         .with(Interactable)
         .build();
+    //endregion
 
+    //region help
     let help_btn_trans = UiTransform::new(
         String::from("help_btn"),
         Anchor::Middle,
@@ -139,7 +147,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity) {
         40.0,
     );
     let help_btn_txt = UiText::new(
-        font_handle,
+        font_handle.clone(),
         String::from("Click here to get Help."),
         [1.0; 4],
         50.0,

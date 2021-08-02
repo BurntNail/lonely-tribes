@@ -1,16 +1,21 @@
 use crate::{
     components::{
-        Collider, ColliderList, GameWinState, NonPlayerCharacter, PowerUpHolder, Score,
-        TileTransform, WinStateEnum,
+        colliders::{Collider, ColliderList},
+        npc::NonPlayerCharacter,
+        power_up::PowerUpHolder,
+        score::Score,
+        tile_transform::TileTransform,
+        win_state::{GameWinState, WinStateEnum},
     },
     level::{Room, SpriteRequest},
     quick_save_load::{LevelState, SaveType},
     states::{
+        afterwards_state::PostGameState,
         level_select::LevelSelectState,
         states_util::{init_camera, load_font, load_sprite_sheet},
-        PostGameState, TrueEnd,
+        true_end::TrueEnd,
     },
-    systems::UpdateTileTransforms,
+    systems::update_tile_transforms::UpdateTileTransforms,
     tag::{Tag, TriggerType},
     Flags, ARENA_HEIGHT, ARENA_WIDTH,
 };
@@ -117,7 +122,7 @@ impl SimpleState for PuzzleState {
             load_level(world, handle, this_level)
         };
 
-        world.register::<crate::components::NonPlayerCharacter>();
+        world.register::<NonPlayerCharacter>();
 
         world.insert(holder);
         world.insert(LevelState::default());
@@ -290,7 +295,7 @@ fn load_level(
                         .with(tt)
                         .with(trans)
                         .with(Collider::new(TriggerType::from_id(&id)))
-                        .with(crate::components::Player::new(id))
+                        .with(crate::components::player::Player::new(id))
                         .build();
                     holder.add_entity(ent);
                 }
