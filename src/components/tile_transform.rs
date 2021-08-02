@@ -25,7 +25,7 @@ impl TileTransform {
         Self { x, y }
     }
 
-    /// Sets the current x and y using coordinates from another TileTransform (arg **t**)
+    /// Sets the current x and y using coordinates from another TileTransform
     pub fn set(&mut self, t: TileTransform) {
         self.x = t.x;
         self.y = t.y;
@@ -41,5 +41,27 @@ impl TileTransform {
             x: self.x + t.x,
             y: self.y + t.y,
         }
+    }
+
+    ///Minuses self from another tiletransform to make a new tiletransform
+    pub fn minus_from_self (&self, t: TileTransform) -> Self {
+        if self.get_magnitude() > t.get_magnitude() {
+            Self {
+                x: self.x - t.x,
+                y: self.y - t.y,
+            }
+        } else {
+            Self {
+                x: t.x - self.x,
+                y: t.y - self.y
+            }
+        }
+    }
+
+    ///Gets magnitude of self
+    pub fn get_magnitude(&self) -> f32 { //TODO: Store this in persistent variable to optimise
+        let x = (self.x * self.x) as f32;
+        let y = (self.y * self.y) as f32;
+        (x + y).sqrt()
     }
 }

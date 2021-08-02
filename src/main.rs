@@ -150,6 +150,10 @@ pub struct Flags {
 
 //TODO: post-processing
 
+//TODO: Tweening
+
+//TODO: With Sprites, make sure to account for Screen Scaling
+
 //TODO: Export some options to conf file
 
 //TODO: Steamworks
