@@ -7,28 +7,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Start of Animating">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Save/Load in from File&#10;&#10;Now, I just need to make new constructors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-04.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-04.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-05.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-05.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rustfmt.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rustfmt.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +85,7 @@
       <command value="cargo check" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Shell Script.New Release">
     <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -234,6 +214,21 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="New Release" type="ShConfigurationType">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/new_release.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.run (with fps)" />
@@ -243,6 +238,7 @@
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.clippy" />
+      <item itemvalue="Shell Script.New Release" />
     </list>
     <recent_temporary>
       <list>
@@ -320,7 +316,7 @@
       <workItem from="1627677853347" duration="443000" />
       <workItem from="1627849179564" duration="4027000" />
       <workItem from="1627894203537" duration="1043000" />
-      <workItem from="1627895257313" duration="2168000" />
+      <workItem from="1627895257313" duration="2567000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -525,11 +521,21 @@
       <option name="project" value="LOCAL" />
       <updated>1627671493222</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Save/Load in from File&#10;&#10;Now, I just need to make new constructors">
+      <created>1627898178372</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1627898178372</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="makefile" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -544,7 +550,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Level 3&#10;Fix switching between PostGameState and TrueEnd&#10;Change from 32x18 to 64x36" />
     <MESSAGE value="Fix Movement" />
     <MESSAGE value="Add Docu-Comments" />
     <MESSAGE value="StructOpt" />
@@ -569,6 +574,7 @@
     <MESSAGE value="Clippy+Fmt For Powerups/General Technical Debt" />
     <MESSAGE value="Fix move_player.rs" />
     <MESSAGE value="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in." />
+    <MESSAGE value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
   </component>
 </project>
