@@ -34,16 +34,23 @@ use structopt::StructOpt;
 lazy_static! {
     ///List of strings holding the file paths to all levels
     pub static ref LEVELS: Vec<String> = {
-        let opts: Flags = Flags::from_args();
-
-        if cfg!(debug_assertions) && opts.debug && opts.debug_level {
-            vec!["test-room-one.png".to_string()]
-        } else {
-            let mut out: Vec<String> = LevelState::list_file_names_in_dir("assets/maps").into_iter().filter(|nom| nom.contains("lvl-") && nom.contains(".png")).map(|el| el.replace("\"", "")).collect();
-            out.sort();
-            out
-        }
+        get_levels()
     };
+}
+pub fn get_levels() -> Vec<String> {
+    let opts: Flags = Flags::from_args();
+
+    if cfg!(debug_assertions) && opts.debug && opts.debug_level {
+        vec!["test-room-one.png".to_string()]
+    } else {
+        let mut out: Vec<String> = LevelState::list_file_names_in_dir("assets/maps")
+            .into_iter()
+            .filter(|nom| nom.contains("lvl-") && nom.contains(".png"))
+            .map(|el| el.replace("\"", ""))
+            .collect();
+        out.sort();
+        out
+    }
 }
 
 ///State for when the User is in a puzzle
@@ -263,23 +270,23 @@ fn load_level(
     sprites_handle: Handle<SpriteSheet>,
     path: String,
 ) -> PowerUpHolder {
-    let lvl = Room::new(path.as_str()); //TODO: Just use the map straight away
+    let lvl = Room::new(path.as_str());
     let mut holder = PowerUpHolder::new();
 
-    if lvl.data.is_empty() {
+    if lvl.is_empty() {
         return holder;
     }
 
-    for x in 0..lvl.data.len() {
-        for y in 0..lvl.data[0].len() {
-            let spr_index = lvl.data[x][y].get_spritesheet_index();
+    for x in 0..lvl.len() {
+        for y in 0..lvl[0].len() {
+            let spr_index = lvl[x][y].get_spritesheet_index();
 
             if spr_index == 9999 {
                 continue;
             }
 
             let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
-            let tag = Tag::from_spr(lvl.data[x][y]);
+            let tag = Tag::from_spr(lvl[x][y]);
             let tt = TileTransform::new(x as i32, y as i32);
 
             world.insert(ColliderList::new());
@@ -393,20 +400,20 @@ fn load_level_with_(
         holder.add_pu_entity(tt, e);
     });
 
-    if lvl.data.is_empty() {
+    if lvl.is_empty() {
         return holder;
     }
 
-    for x in 0..lvl.data.len() {
-        for y in 0..lvl.data[0].len() {
-            let spr_index = lvl.data[x][y].get_spritesheet_index();
+    for x in 0..lvl.len() {
+        for y in 0..lvl[0].len() {
+            let spr_index = lvl[x][y].get_spritesheet_index();
 
             if spr_index == 9999 {
                 continue;
             }
 
             let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
-            let tag = Tag::from_spr(lvl.data[x][y]);
+            let tag = Tag::from_spr(lvl[x][y]);
             let tt = TileTransform::new(x as i32, y as i32);
 
             match tag {

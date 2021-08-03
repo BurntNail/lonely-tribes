@@ -1,5 +1,6 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 ///Component for transforms which align to the tile grid
 /// Much easier to manipulate than amethyst Transforms
@@ -16,6 +17,11 @@ impl Component for TileTransform {
 impl Default for TileTransform {
     fn default() -> Self {
         Self { x: 0, y: 0 }
+    }
+}
+impl Display for TileTransform {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
     }
 }
 impl TileTransform {

@@ -12,6 +12,7 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
+use crate::states::welcome_state::StartGameState;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -46,8 +47,11 @@ impl SimpleState for LevelSelectState {
 
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                if key_code == VirtualKeyCode::Return || key_code == VirtualKeyCode::Space {
-                    t = Trans::Switch(Box::new(PuzzleState::new(self.next_level)));
+                use VirtualKeyCode::*;
+                match key_code {
+                    Return | Space => t = Trans::Switch(Box::new(PuzzleState::new(self.next_level))),
+                    Escape | Delete => t = Trans::Switch(Box::new(StartGameState::default())),
+                    _ => {}
                 }
             }
             StateEvent::Ui(event) => {

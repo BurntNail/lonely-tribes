@@ -1,6 +1,9 @@
 use crate::{components::power_up::PowerUp, HEIGHT, WIDTH};
 use image::{DynamicImage, GenericImageView, Rgba};
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    ops::{Deref, DerefMut},
+};
 
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
@@ -30,6 +33,11 @@ pub enum SpriteRequest {
     Tree,
     WarpedTree,
     PowerUpSprite(PowerUp),
+}
+impl Default for SpriteRequest {
+    fn default() -> Self {
+        Self::Blank
+    }
 }
 
 lazy_static! {
@@ -72,7 +80,7 @@ lazy_static! {
         map
     };
 
-    static ref REVERSED_SPRITESHEET_SWATCH_HASHMAP: HashMap<SpriteRequest, Rgba<u8>> = {
+    pub static ref REVERSED_SPRITESHEET_SWATCH_HASHMAP: HashMap<SpriteRequest, Rgba<u8>> = {
         let mut map = HashMap::new();
 
         SPRITESHEET_SWATCH_HASHMAP.clone().into_iter().for_each(|(v, k)| {
@@ -80,6 +88,42 @@ lazy_static! {
         });
 
         map
+    };
+
+    pub static ref LIST_OF_ALL_SPRITEREQUESTS: Vec<SpriteRequest> = {
+        use SpriteRequest::*;
+        use PowerUp::*;
+        vec![BackWall,
+            BackWallLeftCorner,
+            BackWallRightCorner,
+            LeftWall,
+            RightWall,
+            FrontWall,
+            FrontWallLeftCorner,
+            FrontWallRightCorner,
+            LeftWallDown,
+            RightWallDown,
+            LeftWallUp,
+            RightWallUp,
+            TUpDownLeft,
+            TUpDownRight,
+            Player(0),
+            Player(1),
+            Player(2),
+            Player(3),
+            Orc,
+            FullHeart,
+            Axe,
+            Door,
+            Blank,
+            Shrubbery,
+            DarkShrubbery,
+            Tree,
+            WarpedTree,
+            PowerUpSprite(Portal),
+            PowerUpSprite(Reaper),
+            PowerUpSprite(ScoreChanger),
+        ]
     };
 }
 
@@ -134,9 +178,29 @@ impl SpriteRequest {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Default)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Room {
     pub data: Vec<Vec<SpriteRequest>>,
+}
+impl Default for Room {
+    fn default() -> Self {
+        Self {
+            data: vec![vec![SpriteRequest::Blank; WIDTH as usize]; HEIGHT as usize],
+        }
+    }
+}
+
+impl Deref for Room {
+    type Target = Vec<Vec<SpriteRequest>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.data
+    }
+}
+impl DerefMut for Room {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.data
+    }
 }
 
 impl Room {

@@ -1,8 +1,15 @@
-use crate::states::{game_state::LEVELS, states_util::load_font};
-use amethyst::{core::ecs::{Builder, Entity, World, WorldExt}, ui::{Anchor, Interactable, LineMode, UiText, UiTransform}, GameData, SimpleState, StateData, StateEvent, SimpleTrans};
+use crate::{
+    level_editor::level_editor_state::LevelEditorState,
+    states::{game_state::LEVELS, states_util::load_font},
+};
+use amethyst::{
+    core::ecs::{Builder, Entity, World, WorldExt},
+    ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
+    GameData, SimpleState, SimpleTrans, StateData, StateEvent,
+};
 use std::collections::HashMap;
-use amethyst::ui::UiEventType;
-use crate::level_editor::level_editor_state::LevelEditorState;
+use amethyst::input::{InputEvent, VirtualKeyCode};
+use crate::states::welcome_state::StartGameState;
 
 #[derive(Default)]
 pub struct LevelEditorLevelSelectState {
@@ -16,34 +23,48 @@ impl SimpleState for LevelEditorLevelSelectState {
         self.buttons = init_menu(world);
     }
 
-    fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
+    fn handle_event(
+        &mut self,
+        data: StateData<'_, GameData<'_, '_>>,
+        event: StateEvent,
+    ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
 
-        if let StateEvent::Ui(event) = event {
-            let my_target = {
-                let mut target = None;
-                self.buttons.iter().for_each(|(index, ent)| {
-                    if ent == &event.target {
-                        target = Some((ent, index));
-                    }
-                });
-                target
-            };
-
-            let mut texts = data.world.write_component::<UiText>();
-
-            if let Some(txt) = texts.get_mut(event.target) {
-                match event.event_type {
-                    UiEventType::HoverStart => txt.color = [1.0, 0.5, 0.75, 1.0],
-                    UiEventType::HoverStop => txt.color = [1.0; 4],
-                    UiEventType::ClickStop => {
-                        if let Some(targ) = my_target {
-                            t = SimpleTrans::Switch(Box::new(LevelEditorState::new(targ.1)));
+        match event {
+            StateEvent::Ui(event) => {
+                let my_target = {
+                    let mut target = None;
+                    self.buttons.iter().for_each(|(index, ent)| {
+                        if ent == &event.target {
+                            target = Some((ent, index));
                         }
+                    });
+                    target
+                };
+
+                let mut texts = data.world.write_component::<UiText>();
+
+                if let Some(txt) = texts.get_mut(event.target) {
+                    match event.event_type {
+                        UiEventType::HoverStart => txt.color = [1.0, 0.5, 0.75, 1.0],
+                        UiEventType::HoverStop => txt.color = [1.0; 4],
+                        UiEventType::ClickStop => {
+                            if let Some(targ) = my_target {
+                                t = SimpleTrans::Switch(Box::new(LevelEditorState::new(targ.1)));
+                            }
+                        }
+                        _ => {}
                     }
-                    _ => {}
                 }
+            },
+            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+                use VirtualKeyCode::*;
+                match key_code {
+                    Escape | Delete => t = SimpleTrans::Switch(Box::new(StartGameState::default())),
+                    _ => {}
+                };
             }
+            _ => {}
         }
 
         t

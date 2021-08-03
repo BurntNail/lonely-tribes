@@ -144,11 +144,10 @@ pub struct Flags {
 
 //todos
 
-//TODO: Level Editor
+//TODO: Music/SFX
+
 //TODO: Export some options to conf file
 //TODO: Conf Editor
-
-//TODO: Music/SFX
 
 //TODO: With Sprites, make sure to account for Screen Scaling
 

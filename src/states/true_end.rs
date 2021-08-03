@@ -33,7 +33,6 @@ impl SimpleState for TrueEnd {
                 }
             }
             StateEvent::Ui(event) => {
-                // let is_target = event.target == self.btn.unwrap();
                 let is_target = if let Some(my_target) = self.btn {
                     event.target == my_target
                 } else {

@@ -1,6 +1,6 @@
 use crate::{
     components::text_wobble::TextWobble,
-    level_editor::LevelEditorLevelSelectState,
+    level_editor::editor_select_state::LevelEditorLevelSelectState,
     states::{help_state::HelpState, level_select::LevelSelectState, states_util::load_font},
 };
 use amethyst::{
