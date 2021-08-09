@@ -104,7 +104,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
     );
     let welcome_txt = UiText::new(
         bold_font_handle,
-        String::from("Welcome to Making Friends!"),
+        String::from("Welcome to Lonely Tribes!"),
         [1.0, 1.0, 1.0, 0.5],
         75.0,
         LineMode::Wrap,

@@ -108,7 +108,7 @@ pub fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
     [r, g, b, a]
 }
 
-///Flags for Making Friends
+///Flags for Lonely Tribes
 #[derive(StructOpt, Debug)]
 pub struct Flags {
     ///Enable an FPS counter in the console

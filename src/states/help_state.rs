@@ -7,7 +7,7 @@ use amethyst::{
 };
 
 ///Text displayed in HelpState
-pub const HELP_TXT: &str = "Welcome to Making Friends!
+pub const HELP_TXT: &str = "Welcome to Lonely Tribes!
 \n
 \n - In each level, there are different tribes of people who have gotten lost, who gain power over the other tribes by merging. Try to merge.wav all of the members of each tribe, but don't let non-tribe members touch.\
 \n\n - Use WASD to move, Space to toggle showing the score, and R to restart if you get to a hard spot.\
