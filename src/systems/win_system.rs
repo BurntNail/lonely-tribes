@@ -4,13 +4,10 @@ use crate::components::{
     tile_transform::TileTransform,
     win_state::{GameWinState, WinStateEnum},
 };
-use amethyst::{
-    derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, Write},
-};
+use amethyst::ecs::{Join, Read, ReadStorage, System, Write};
 use std::collections::HashMap;
 
-#[derive(SystemDesc)]
+///System for checking when the game is won
 pub struct EndOfGameSystem;
 
 impl<'s> System<'s> for EndOfGameSystem {
@@ -49,6 +46,9 @@ impl<'s> System<'s> for EndOfGameSystem {
             gws.ws = WinStateEnum::End { won: false };
             return;
         }
+        if count_match.is_empty() { //Due to animations, (and I have no idea why), the list is sometimes empty which confuses it
+            return;
+        }
 
         let mut win = true;
         for (k, v) in &count_match {
@@ -59,6 +59,8 @@ impl<'s> System<'s> for EndOfGameSystem {
                 win = false;
             }
         }
+
+
         if win {
             gws.ws = WinStateEnum::End { won: true };
         }

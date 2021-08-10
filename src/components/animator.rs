@@ -61,23 +61,22 @@ impl Animator {
     }
 
     ///Sets the data to none when it is finished
-    pub fn finish (&mut self) {
+    pub fn finish(&mut self) {
         self.animation_data = None;
     }
 
     ///Sets the animation data
-    pub fn replace_data (&mut self, data: AnimationData) {
+    pub fn replace_data(&mut self, data: AnimationData) {
         self.animation_data = Some(data);
     }
 
     ///Whether or not the animation is done - returns false if the current data is none
-    pub fn anim_is_done (&self) -> bool {
+    pub fn anim_is_done(&self) -> bool {
         if let Some(a) = self.animation_data {
             a.is_done()
         } else {
             false
         }
-
     }
 }
 

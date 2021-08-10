@@ -33,7 +33,6 @@ impl<'s> System<'s> for UpdateTileTransforms {
         }
 
         for (trans, anim_cmp, tt) in (&mut transforms, &mut animators, &mut tiles).join() {
-
             let z = trans.translation().z;
             let mut x = tt.x as f32 * 8.0 + TILE_WIDTH;
             let mut y = (HEIGHT - tt.y as u32) as f32 * 8.0 - TILE_HEIGHT;
@@ -50,7 +49,6 @@ impl<'s> System<'s> for UpdateTileTransforms {
             }
 
             trans.set_translation_xyz(x, y, z);
-
         }
     }
 }

@@ -12,14 +12,12 @@ use crate::{
 };
 use amethyst::{
     core::{ecs::Entities, Time},
-    derive::SystemDesc,
-    ecs::{Join, Read, ReadStorage, System, SystemData, Write, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
 use structopt::StructOpt;
 
 ///System for capturing player movement, and collision
-#[derive(SystemDesc)]
 pub struct MovePlayerSystem {
     ///For new movement system
     ///
@@ -112,9 +110,9 @@ impl<'s> System<'s> for MovePlayerSystem {
         };
         let mut set_tt = |from: &mut TileTransform, to: TileTransform, anim: &mut Animator| {
             let nu_data = AnimationData::new(*from, to, 0.05);
-            from.set(to);
-
             anim.replace_data(nu_data);
+
+            from.set(to);
             check_powerups(&to);
         };
 
@@ -128,7 +126,6 @@ impl<'s> System<'s> for MovePlayerSystem {
 
                     let works =
                         tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
-
 
                     if works && actual_movement {
                         set_tt(tile, proposed_tile, anim);
