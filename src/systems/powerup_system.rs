@@ -1,9 +1,9 @@
 use crate::{
     components::{
         colliders::ColliderList, data_holder::EntityHolder, player::Player, power_up::PowerUp,
-        tile_transform::TileTransform, win_state::GameWinState,
+        tile_transform::TileTransform, win_state::GameWinState, animator::Animator
     },
-    systems::move_player::tile_is_bad,
+    systems::move_player::{tile_is_bad, set_tiletransform_timed},
     HEIGHT, WIDTH,
 };
 use amethyst::core::ecs::{Entities, Join, Read, ReadStorage, System, Write, WriteStorage};
@@ -18,13 +18,14 @@ impl<'s> System<'s> for PowerUpSystem {
         Write<'s, GameWinState>,
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
+        WriteStorage<'s, Animator>,
         Read<'s, ColliderList>,
         Entities<'s>,
     );
 
     fn run(
         &mut self,
-        (mut powers, mut gws, mut tiles, players, collider_list, entities): Self::SystemData,
+        (mut powers, mut gws, mut tiles, players, mut animators, collider_list, entities): Self::SystemData,
     ) {
         let mut rng = rand::thread_rng();
 
@@ -32,7 +33,7 @@ impl<'s> System<'s> for PowerUpSystem {
             match p {
                 PowerUp::Portal => {
                     let colliders = collider_list.get();
-                    for (tile, _) in (&mut tiles, &players).join() {
+                    for (tile, _, anim_cmp) in (&mut tiles, &players, &mut animators).join() {
                         let nu_tile = loop {
                             let x = rng.gen_range(0..WIDTH as i32);
                             let y = rng.gen_range(0..HEIGHT as i32);
@@ -42,7 +43,8 @@ impl<'s> System<'s> for PowerUpSystem {
                                 break tile;
                             }
                         };
-                        tile.set(nu_tile);
+                        set_tiletransform_timed(tile, nu_tile, anim_cmp, 0.25);
+
                     }
                 }
                 PowerUp::Reaper => {

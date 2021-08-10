@@ -288,13 +288,12 @@ fn load_level(
             }
 
             let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
-            let tag = Tag::from_spr(lvl[x][y]);
             let tt = TileTransform::new(x as i32, y as i32);
 
             world.insert(ColliderList::new());
             world.insert(GameWinState::default());
 
-            match tag {
+            match Tag::from_spr(lvl[x][y]) {
                 Tag::Player(id) => {
                     let mut trans = Transform::default();
                     trans.set_translation_z(0.5);

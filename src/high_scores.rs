@@ -15,10 +15,10 @@ pub const DATA_DIR: &str = "assets/data";
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct HighScores {
     ///HashMap of high scores, with the key being the level index, and the i32 being the number of moves
-    pub scores: HashMap<usize, i32>,
+    pub scores: HashMap<usize, i32>, //TODO: Make it an array or a slice
 }
 impl Default for HighScores {
-    fn default() -> Self {
+    fn default() -> Self { //TODO: Make an acual default, and move this to a constructor
         let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
 
         let scores: HashMap<usize, i32> = from_str(file.as_str()).unwrap_or_default();

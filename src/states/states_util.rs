@@ -41,7 +41,6 @@ pub fn load_font(world: &mut World, path: &str) -> Handle<FontAsset> {
 ///
 /// Returns a handle to a spritesheet
 pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
-    log::info!("Loading sprite sheet: {}", path);
     let tex_handle = world.read_resource::<Loader>().load(
         format!("art/{}.png", path),
         ImageFormat::default(),

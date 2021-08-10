@@ -91,6 +91,7 @@ impl<'s> System<'s> for MovePlayerSystem {
 
             t
         };
+        
         let mut check_powerups = |proposed_tile: &TileTransform| {
             for (trigger, tt) in &trigger_tiles {
                 if proposed_tile == trigger {
@@ -108,13 +109,6 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
             }
         };
-        let mut set_tt = |from: &mut TileTransform, to: TileTransform, anim: &mut Animator| {
-            let nu_data = AnimationData::new(*from, to, 0.05);
-            anim.replace_data(nu_data);
-
-            from.set(to);
-            check_powerups(&to);
-        };
 
         if let Some((tim, int)) = self.movement_timer {
             let timdt = tim + time.delta_seconds();
@@ -128,7 +122,8 @@ impl<'s> System<'s> for MovePlayerSystem {
                         tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
                     if works && actual_movement {
-                        set_tt(tile, proposed_tile, anim);
+                        set_tiletransform(tile, proposed_tile, anim);
+                        check_powerups(&proposed_tile);
                     }
                 }
 
@@ -147,7 +142,8 @@ impl<'s> System<'s> for MovePlayerSystem {
                 let works = tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
                 if works && can_move && actual_movement {
-                    set_tt(tile, proposed_tile, anim);
+                    set_tiletransform(tile, proposed_tile, anim);
+                    check_powerups(&proposed_tile);
                     add_to_score = true;
                 }
             }
@@ -179,4 +175,14 @@ pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &[TileTransfor
     }
 
     res
+}
+
+pub fn set_tiletransform (from: &mut TileTransform, to: TileTransform, anim: &mut Animator) {
+    set_tiletransform_timed(from, to, anim, 0.1);
+}
+pub fn set_tiletransform_timed (from: &mut TileTransform, to: TileTransform, anim: &mut Animator, t: f32) {
+    let nu_data = AnimationData::new(*from, to, t);
+    anim.replace_data(nu_data);
+
+    from.set(to);
 }
