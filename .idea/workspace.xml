@@ -7,12 +7,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Animations baby!&#10;However, it did break the win system...">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +88,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Shell Script.New Release">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -284,10 +280,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
-        <item itemvalue="Cargo.build release" />
       </list>
     </recent_temporary>
   </component>
@@ -380,6 +376,7 @@
       <workItem from="1628537606345" duration="1217000" />
       <workItem from="1628539630069" duration="152000" />
       <workItem from="1628584158673" duration="1046000" />
+      <workItem from="1628587884176" duration="1334000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -689,7 +686,21 @@
       <option name="project" value="LOCAL" />
       <updated>1628584494704</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
+      <created>1628587925566</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1628587925566</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
+      <created>1628587938354</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1628587938354</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,7 +722,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change version" />
     <MESSAGE value="Fix Movement - once and for all!" />
     <MESSAGE value="Add option to load debug level" />
     <MESSAGE value="Spawn in PowerUps" />
@@ -736,6 +746,7 @@
     <MESSAGE value="Add steam marketing materials" />
     <MESSAGE value="Change names over in game ui-texts" />
     <MESSAGE value="Animations baby!&#10;However, it did break the win system..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Animations baby!&#10;However, it did break the win system..." />
+    <MESSAGE value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
   </component>
 </project>
