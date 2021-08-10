@@ -1,8 +1,9 @@
 use crate::{
     components::{
+        animator::Animator,
         colliders::{Collider, ColliderList},
+        data_holder::EntityHolder,
         npc::NonPlayerCharacter,
-        power_up::PowerUpHolder,
         score::Score,
         tile_transform::TileTransform,
         win_state::{GameWinState, WinStateEnum},
@@ -159,10 +160,11 @@ impl SimpleState for PuzzleState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = Trans::None;
+        use VirtualKeyCode::*;
 
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => match key_code {
-                VirtualKeyCode::Space => {
+                Space => {
                     if let Some(btn) = self.score_button {
                         let mut hiddens = data.world.write_storage::<Hidden>();
                         if hiddens.contains(btn) {
@@ -175,12 +177,12 @@ impl SimpleState for PuzzleState {
                         }
                     }
                 }
-                VirtualKeyCode::L => t = Trans::Switch(Box::new(LevelSelectState::default())),
-                VirtualKeyCode::F5 | VirtualKeyCode::F6 => data
+                L | Escape => t = Trans::Switch(Box::new(LevelSelectState::default())),
+                F5 | VirtualKeyCode::F6 => data
                     .world
                     .read_resource::<LevelState>()
                     .save(SaveType::QuickSave, self.level_index),
-                VirtualKeyCode::F9 => {
+                F9 => {
                     let save = LevelState::load_most_recent(None, self.level_index);
                     t = Trans::Switch(Box::new(PuzzleState::new_levelstate(
                         self.level_index,
@@ -269,9 +271,9 @@ fn load_level(
     world: &mut World,
     sprites_handle: Handle<SpriteSheet>,
     path: String,
-) -> PowerUpHolder {
+) -> EntityHolder {
     let lvl = Room::new(path.as_str());
-    let mut holder = PowerUpHolder::new();
+    let mut holder = EntityHolder::new();
 
     if lvl.is_empty() {
         return holder;
@@ -303,6 +305,7 @@ fn load_level(
                         .with(trans)
                         .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::player::Player::new(id))
+                        .with(Animator::new())
                         .build();
                     holder.add_entity(ent);
                 }
@@ -366,9 +369,9 @@ fn load_level_with_(
     sprites_handle: Handle<SpriteSheet>,
     path: String,
     level: LevelState,
-) -> PowerUpHolder {
+) -> EntityHolder {
     let lvl = Room::new(path.as_str()); //TODO: Just use the map straight away
-    let mut holder = PowerUpHolder::new();
+    let mut holder = EntityHolder::new();
 
     level.players.into_iter().for_each(|(p, tt)| {
         let mut trans = Transform::default();
@@ -383,6 +386,7 @@ fn load_level_with_(
             .with(trans)
             .with(Collider::new(TriggerType::from_id(&p.id)))
             .with(p)
+            .with(Animator::new())
             .build();
         holder.add_entity(ent);
     });
@@ -418,7 +422,7 @@ fn load_level_with_(
 
             match tag {
                 Tag::Player(_) => {
-                    //do nothing
+                    //do nothing because they get created earlier
                 }
                 Tag::NonPlayerCharacter { is_enemy } => {
                     world
@@ -441,7 +445,7 @@ fn load_level_with_(
                 }
                 Tag::Trigger(trigger_type) => match trigger_type {
                     TriggerType::Powerup(_) => {
-                        //do nothing
+                        //do nothing because they get created earlier
                     }
                     _ => {
                         world

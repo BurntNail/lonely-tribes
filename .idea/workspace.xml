@@ -7,7 +7,21 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Save and Load Level Editor" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change names over in game ui-texts">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/power_up.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Rust File" />
         <option value="RON File" />
+        <option value="Rust File" />
       </list>
     </option>
   </component>
@@ -49,7 +63,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Sims/helping-ben" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Graphics-Experiments/wgpu-tutorial" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -61,6 +75,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/states" />
       <recent name="$PROJECT_DIR$/src/systems" />
     </key>
@@ -77,14 +92,30 @@
       <command value="cargo fmt" />
       <command value="cargo clean" />
       <command value="cargo run --release" />
-      <command value="cargo run" />
       <command value="cargo doc --open" />
       <command value="cargo clippy" />
       <command value="cargo build --release" />
       <command value="cargo check" />
+      <command value="cargo run" />
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
+    <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -95,7 +126,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -113,7 +144,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -131,7 +162,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -149,7 +180,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -167,7 +198,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -185,7 +216,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -203,7 +234,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -211,8 +242,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run -- -c -t 0.05" />
+    <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run -- -t 0.05 -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -221,7 +252,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/sdk" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -251,17 +282,18 @@
       <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.debug level" />
       <item itemvalue="Cargo.build" />
+      <item itemvalue="Cargo.run" />
+      <item itemvalue="Cargo.Run normal" />
       <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
-      <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.clippy" />
       <item itemvalue="Shell Script.New Release" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build release" />
       </list>
     </recent_temporary>
@@ -344,6 +376,17 @@
       <workItem from="1627981742679" duration="14378000" />
       <workItem from="1628013466101" duration="25000" />
       <workItem from="1628014982579" duration="2849000" />
+      <workItem from="1628068028467" duration="11000" />
+      <workItem from="1628072779035" duration="1203000" />
+      <workItem from="1628188395114" duration="1318000" />
+      <workItem from="1628362948673" duration="10000" />
+      <workItem from="1628415140880" duration="1501000" />
+      <workItem from="1628438084095" duration="10000" />
+      <workItem from="1628444466150" duration="1192000" />
+      <workItem from="1628527804160" duration="5412000" />
+      <workItem from="1628537606345" duration="1217000" />
+      <workItem from="1628539630069" duration="152000" />
+      <workItem from="1628584158673" duration="235000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -618,7 +661,35 @@
       <option name="project" value="LOCAL" />
       <updated>1628019495503</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Add script to automate new release">
+      <created>1628531163319</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1628531163319</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Add steam marketing materials">
+      <created>1628531183461</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1628531183461</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Add steam marketing materials">
+      <created>1628531189133</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1628531189133</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Change names over in game ui-texts">
+      <created>1628531270894</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1628531270894</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -640,9 +711,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Help State" />
-    <MESSAGE value="clippy" />
-    <MESSAGE value="Add Debug Mode" />
     <MESSAGE value="Add More Levels" />
     <MESSAGE value="change version" />
     <MESSAGE value="Fix Movement - once and for all!" />
@@ -665,6 +733,9 @@
     <MESSAGE value="Fix todo on unwrap" />
     <MESSAGE value="Open up level editor and edit levels.&#10;&#10;Just now need to save levels" />
     <MESSAGE value="Save and Load Level Editor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Save and Load Level Editor" />
+    <MESSAGE value="Add script to automate new release" />
+    <MESSAGE value="Add steam marketing materials" />
+    <MESSAGE value="Change names over in game ui-texts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change names over in game ui-texts" />
   </component>
 </project>

@@ -1,15 +1,14 @@
 use crate::{
     level_editor::level_editor_state::LevelEditorState,
-    states::{game_state::LEVELS, states_util::load_font},
+    states::{game_state::LEVELS, states_util::load_font, welcome_state::StartGameState},
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
+    input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use std::collections::HashMap;
-use amethyst::input::{InputEvent, VirtualKeyCode};
-use crate::states::welcome_state::StartGameState;
 
 #[derive(Default)]
 pub struct LevelEditorLevelSelectState {
@@ -56,8 +55,8 @@ impl SimpleState for LevelEditorLevelSelectState {
                         _ => {}
                     }
                 }
-            },
-            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+            }
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
                 use VirtualKeyCode::*;
                 match key_code {
                     Escape | Delete => t = SimpleTrans::Switch(Box::new(StartGameState::default())),

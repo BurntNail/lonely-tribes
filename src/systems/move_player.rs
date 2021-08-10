@@ -1,8 +1,10 @@
 use crate::{
     components::{
+        animator::{AnimationData, Animator},
         colliders::ColliderList,
+        data_holder::EntityHolder,
         player::Player,
-        power_up::{PowerUp, PowerUpHolder},
+        power_up::PowerUp,
         tile_transform::TileTransform,
         win_state::GameWinState,
     },
@@ -22,8 +24,9 @@ pub struct MovePlayerSystem {
     ///For new movement system
     ///
     /// If none, we assume to use the legacy.
-    /// If the legacy is also none, then we don't move, cos I messed up
+    /// If the legacy is also none, then we don't move
     can_move: Option<bool>,
+
     ///For legacy system
     ///
     ///Tuple with current time, timer length
@@ -58,13 +61,14 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, ColliderList>,
         Read<'s, Time>,
         Write<'s, GameWinState>,
-        Write<'s, PowerUpHolder>,
+        Write<'s, EntityHolder>,
+        WriteStorage<'s, Animator>,
         Entities<'s>,
     );
 
     fn run(
         &mut self,
-        (mut tiles, players, input, list, time, mut gws, mut powers, entities): Self::SystemData,
+        (mut tiles, players, input, list, time, mut gws, mut powers, mut animators, entities): Self::SystemData,
     ) {
         let mut actual_movement = false;
         let mut add_to_score = false;
@@ -106,20 +110,28 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
             }
         };
+        let mut set_tt = |from: &mut TileTransform, to: TileTransform, anim: &mut Animator| {
+            let nu_data = AnimationData::new(*from, to, 0.05);
+            from.set(to);
+
+            anim.replace_data(nu_data);
+            check_powerups(&to);
+        };
 
         if let Some((tim, int)) = self.movement_timer {
             let timdt = tim + time.delta_seconds();
             self.movement_timer = Some((timdt, int));
 
             if timdt > int {
-                for (tile, _) in (&mut tiles, &players).join() {
+                for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
-                    let works = tile_is_bad(proposed_tile, &collision_tiles);
-                    check_powerups(&proposed_tile);
+                    let works =
+                        tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
-                    if works {
-                        tile.set(proposed_tile);
+
+                    if works && actual_movement {
+                        set_tt(tile, proposed_tile, anim);
                     }
                 }
 
@@ -132,14 +144,13 @@ impl<'s> System<'s> for MovePlayerSystem {
         }
 
         if let Some(can_move) = self.can_move {
-            for (tile, _) in (&mut tiles, &players).join() {
+            for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                 let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
-                let works = tile_is_bad(proposed_tile, &collision_tiles);
-                check_powerups(&proposed_tile);
+                let works = tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
                 if works && can_move && actual_movement {
-                    tile.set(proposed_tile);
+                    set_tt(tile, proposed_tile, anim);
                     add_to_score = true;
                 }
             }

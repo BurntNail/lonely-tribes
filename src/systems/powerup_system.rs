@@ -1,10 +1,7 @@
 use crate::{
     components::{
-        colliders::ColliderList,
-        player::Player,
-        power_up::{PowerUp, PowerUpHolder},
-        tile_transform::TileTransform,
-        win_state::GameWinState,
+        colliders::ColliderList, data_holder::EntityHolder, player::Player, power_up::PowerUp,
+        tile_transform::TileTransform, win_state::GameWinState,
     },
     systems::move_player::tile_is_bad,
     HEIGHT, WIDTH,
@@ -17,7 +14,7 @@ pub struct PowerUpSystem;
 
 impl<'s> System<'s> for PowerUpSystem {
     type SystemData = (
-        Write<'s, PowerUpHolder>,
+        Write<'s, EntityHolder>,
         Write<'s, GameWinState>,
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,

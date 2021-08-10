@@ -3,6 +3,7 @@ use crate::{
     states::{
         game_state::{PuzzleState, LEVELS},
         states_util::load_font,
+        welcome_state::StartGameState,
     },
 };
 use amethyst::{
@@ -12,7 +13,6 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
-use crate::states::welcome_state::StartGameState;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -49,7 +49,9 @@ impl SimpleState for LevelSelectState {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
                 use VirtualKeyCode::*;
                 match key_code {
-                    Return | Space => t = Trans::Switch(Box::new(PuzzleState::new(self.next_level))),
+                    Return | Space => {
+                        t = Trans::Switch(Box::new(PuzzleState::new(self.next_level)))
+                    }
                     Escape | Delete => t = Trans::Switch(Box::new(StartGameState::default())),
                     _ => {}
                 }
