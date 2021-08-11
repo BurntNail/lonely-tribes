@@ -19,22 +19,26 @@ use amethyst::{
 use structopt::StructOpt;
 
 ///System for capturing player movement, and collision
-pub struct MovePlayerSystem {
+#[derive(Default)]
+pub struct MovePlayerSystem;
+
+///Struct for the current movement type
+pub struct MovementType {
     ///For new movement system
     ///
     /// If none, we assume to use the legacy.
     /// If the legacy is also none, then we don't move
-    can_move: Option<bool>,
+    pub can_move: Option<bool>,
 
     ///For legacy system
     ///
     ///Tuple with current time, timer length
     ///
     /// If none, we assume the new system.
-    movement_timer: Option<(f32, f32)>,
+    pub movement_timer: Option<(f32, f32)>,
 }
 
-impl Default for MovePlayerSystem {
+impl Default for MovementType {
     fn default() -> Self {
         let opts: Flags = Flags::from_args();
 
@@ -63,6 +67,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         Write<'s, EntityHolder>,
         Read<'s, MovementDisabler>,
         WriteStorage<'s, Animator>,
+        Write<'s, MovementType>,
         Entities<'s>,
     );
 
@@ -78,6 +83,7 @@ impl<'s> System<'s> for MovePlayerSystem {
             mut powers,
             movement_disabler,
             mut animators,
+            mut movement,
             entities,
         ): Self::SystemData,
     ) {
@@ -122,9 +128,9 @@ impl<'s> System<'s> for MovePlayerSystem {
             }
         };
 
-        if let Some((tim, int)) = self.movement_timer {
+        if let Some((tim, int)) = movement.movement_timer {
             let timdt = tim + time.delta_seconds();
-            self.movement_timer = Some((timdt, int));
+            movement.movement_timer = Some((timdt, int));
 
             if timdt > int && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
@@ -143,11 +149,11 @@ impl<'s> System<'s> for MovePlayerSystem {
                     add_to_score = true;
                 }
 
-                self.movement_timer = Some((0.0, int));
+                movement.movement_timer = Some((0.0, int));
             }
         }
 
-        if let Some(can_move) = self.can_move {
+        if let Some(can_move) = movement.can_move {
             if !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
@@ -162,7 +168,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     }
                 }
 
-                self.can_move = Some(!actual_movement);
+                movement.can_move = Some(!actual_movement);
             }
         }
 

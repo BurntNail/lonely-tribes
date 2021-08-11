@@ -1,7 +1,4 @@
-use crate::{
-    level_editor::level_editor_state::LevelEditorState,
-    states::{game_state::LEVELS, states_util::load_font, welcome_state::StartGameState},
-};
+use crate::{level_editor::level_editor_state::LevelEditorState, states::{game_state::LEVELS, states_util::load_font, welcome_state::StartGameState}, HOVER_COLOUR};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
@@ -45,7 +42,7 @@ impl SimpleState for LevelEditorLevelSelectState {
 
                 if let Some(txt) = texts.get_mut(event.target) {
                     match event.event_type {
-                        UiEventType::HoverStart => txt.color = [1.0, 0.5, 0.75, 1.0],
+                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
                         UiEventType::HoverStop => txt.color = [1.0; 4],
                         UiEventType::ClickStop => {
                             if let Some(targ) = my_target {

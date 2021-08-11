@@ -190,7 +190,7 @@ impl SimpleState for PuzzleState {
                         save,
                     )));
                 }
-                Escape => t = Trans::Push(Box::new(PausedState)),
+                Escape => t = Trans::Push(Box::new(PausedState::default())),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));

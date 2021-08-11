@@ -36,10 +36,16 @@ mod states;
 mod systems;
 mod tag;
 
+///The width of the grid of tiless
 pub const WIDTH: u32 = 64;
+///The height of the grid of tiles
 pub const HEIGHT: u32 = 36;
+///The width of the grid of tiles in px relative to the spritesheet
 pub const ARENA_WIDTH: u32 = 8 * WIDTH;
+///The height of the grid of tiles in px relative to the spritesheet
 pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
+///The colour when a txt is hovered over
+pub const HOVER_COLOUR: [f32; 4] = [1.0, 0.5, 0.75, 1.0];
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
