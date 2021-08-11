@@ -7,8 +7,17 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix winning (i hope)">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add a basic pause state that hides all game entities when paused, and later unhides them.">
+      <change afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.ron" beforeDir="false" afterPath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.ron" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/data_holder.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +61,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Graphics-Experiments/wgpu-tutorial" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/art" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -64,6 +73,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/art" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/states" />
       <recent name="$PROJECT_DIR$/src/systems" />
@@ -89,7 +99,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
-    <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -105,7 +115,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false" temporary="true">
       <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -123,7 +133,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="build" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -141,7 +151,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="clippy" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <configuration name="clippy" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false" temporary="true">
       <option name="command" value="clippy" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="STABLE" />
@@ -159,7 +169,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c -d --debug-level -t 0.05" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -171,6 +181,22 @@
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="docs" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
+      <option name="command" value="doc --open" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -195,7 +221,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="run (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c -f -t 0.05" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -213,7 +239,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run release (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="run release (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run --release -- -c -f -t 0.05" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -231,7 +257,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run --release -- -t 0.05 -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -247,7 +273,7 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -t 0.05 -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -288,6 +314,7 @@
       <item itemvalue="Cargo.debug level" />
       <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.run" />
+      <item itemvalue="Cargo.docs" />
       <item itemvalue="Cargo.run release" />
       <item itemvalue="Cargo.Run normal" />
       <item itemvalue="Cargo.build release" />
@@ -397,14 +424,7 @@
       <workItem from="1628667762040" duration="9000" />
       <workItem from="1628667892598" duration="1214000" />
       <workItem from="1628669119888" duration="1250000" />
-      <workItem from="1628703279310" duration="1725000" />
-    </task>
-    <task id="LOCAL-00002" summary="Add End Of Game">
-      <created>1627333487242</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1627333487242</updated>
+      <workItem from="1628703279310" duration="6567000" />
     </task>
     <task id="LOCAL-00003" summary="Fix Warnings&#10;Clean up Imports (useless, but makes me feel better)">
       <created>1627334574503</created>
@@ -742,7 +762,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628706301072</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="optimise win_system.rs to not have to use colliderlist">
+      <created>1628706481564</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1628706481564</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -764,8 +791,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Get powerups to show, add their effect to a global list, and go away on use." />
-    <MESSAGE value="Powerups working hell yeah" />
     <MESSAGE value="Clippy+Fmt For Powerups/General Technical Debt" />
     <MESSAGE value="Fix move_player.rs" />
     <MESSAGE value="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in." />
@@ -789,6 +814,8 @@
     <MESSAGE value="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins" />
     <MESSAGE value="I broke smth, so i fixed it" />
     <MESSAGE value="fix winning (i hope)" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix winning (i hope)" />
+    <MESSAGE value="optimise win_system.rs to not have to use colliderlist" />
+    <MESSAGE value="Add a basic pause state that hides all game entities when paused, and later unhides them." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add a basic pause state that hides all game entities when paused, and later unhides them." />
   </component>
 </project>

@@ -1,8 +1,3 @@
-/*!
-    @import /amethyst_rendy/src/sprite/level_editor#Sprites
-    Sprites
-*/
-
 #![enable(implicit_some)]
 
 Grid((

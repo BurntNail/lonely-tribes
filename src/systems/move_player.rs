@@ -8,6 +8,7 @@ use crate::{
         tile_transform::TileTransform,
         win_state::GameWinState,
     },
+    states::paused_state::MovementDisabler,
     Flags, HEIGHT, WIDTH,
 };
 use amethyst::{
@@ -60,36 +61,47 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, Time>,
         Write<'s, GameWinState>,
         Write<'s, EntityHolder>,
+        Read<'s, MovementDisabler>,
         WriteStorage<'s, Animator>,
         Entities<'s>,
     );
 
     fn run(
         &mut self,
-        (mut tiles, players, input, list, time, mut gws, mut powers, mut animators, entities): Self::SystemData,
+        (
+            mut tiles,
+            players,
+            input,
+            list,
+            time,
+            mut gws,
+            mut powers,
+            movement_disabler,
+            mut animators,
+            entities,
+        ): Self::SystemData,
     ) {
-        let mut actual_movement = false;
         let mut add_to_score = false;
         let collision_tiles = list.get();
         let trigger_tiles = list.get_triggers();
 
-        let proposed_tile_addition = {
+        let (proposed_tile_addition, actual_movement) = {
             let mut t = TileTransform::default();
+            let mut movement = true;
+
             if input.action_is_down("Up").unwrap_or(false) {
                 t.y -= 1;
-                actual_movement = true;
             } else if input.action_is_down("Down").unwrap_or(false) {
                 t.y += 1;
-                actual_movement = true;
             } else if input.action_is_down("Left").unwrap_or(false) {
                 t.x -= 1;
-                actual_movement = true;
             } else if input.action_is_down("Right").unwrap_or(false) {
                 t.x += 1;
-                actual_movement = true;
+            } else {
+                movement = false;
             }
 
-            t
+            (t, movement)
         };
 
         let mut check_powerups = |proposed_tile: &TileTransform| {
@@ -114,7 +126,7 @@ impl<'s> System<'s> for MovePlayerSystem {
             let timdt = tim + time.delta_seconds();
             self.movement_timer = Some((timdt, int));
 
-            if timdt > int {
+            if timdt > int && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
@@ -136,19 +148,22 @@ impl<'s> System<'s> for MovePlayerSystem {
         }
 
         if let Some(can_move) = self.can_move {
-            for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                let proposed_tile = tile.add_into_new(proposed_tile_addition);
+            if !movement_disabler.enabled {
+                for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
+                    let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
-                let works = tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile;
+                    let works =
+                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
-                if works && can_move && actual_movement {
-                    set_tiletransform(tile, proposed_tile, anim);
-                    check_powerups(&proposed_tile);
-                    add_to_score = true;
+                    if works && can_move && actual_movement {
+                        set_tiletransform(tile, proposed_tile, anim);
+                        check_powerups(&proposed_tile);
+                        add_to_score = true;
+                    }
                 }
-            }
 
-            self.can_move = Some(!actual_movement);
+                self.can_move = Some(!actual_movement);
+            }
         }
 
         if add_to_score {

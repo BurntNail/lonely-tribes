@@ -13,6 +13,7 @@ use crate::{
     states::{
         afterwards_state::PostGameState,
         level_select::LevelSelectState,
+        paused_state::PausedState,
         states_util::{init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
@@ -177,7 +178,7 @@ impl SimpleState for PuzzleState {
                         }
                     }
                 }
-                L | Escape => t = Trans::Switch(Box::new(LevelSelectState::default())),
+                L => t = Trans::Switch(Box::new(LevelSelectState::default())),
                 F5 | VirtualKeyCode::F6 => data
                     .world
                     .read_resource::<LevelState>()
@@ -189,7 +190,7 @@ impl SimpleState for PuzzleState {
                         save,
                     )));
                 }
-
+                Escape => t = Trans::Push(Box::new(PausedState)),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -306,7 +307,7 @@ fn load_level(
                         .with(crate::components::player::Player::new(id))
                         .with(Animator::new())
                         .build();
-                    holder.add_entity(ent);
+                    holder.add_player_entity(ent);
                 }
                 Tag::NonPlayerCharacter { is_enemy } => {
                     world
@@ -319,13 +320,14 @@ fn load_level(
                         .build();
                 }
                 Tag::Collision => {
-                    world
+                    let ent = world
                         .create_entity()
                         .with(spr)
                         .with(tt)
                         .with(Transform::default())
                         .with(Collider::default())
                         .build();
+                    holder.add_tile(ent);
                 }
                 Tag::Trigger(trigger_type) => match trigger_type {
                     TriggerType::Powerup(_) => {
@@ -339,21 +341,23 @@ fn load_level(
                         holder.add_pu_entity(tt, e);
                     }
                     _ => {
-                        world
+                        let ent = world
                             .create_entity()
                             .with(spr)
                             .with(tt)
                             .with(Transform::default())
                             .with(Collider::new(trigger_type))
                             .build();
+                        holder.add_tile(ent);
                     }
                 },
                 _ => {
-                    world
+                    let ent = world
                         .create_entity()
                         .with(spr)
                         .with(UpdateTileTransforms::tile_to_transform(tt))
                         .build();
+                    holder.add_tile(ent);
                 }
             }
         }
@@ -387,7 +391,7 @@ fn load_level_with_(
             .with(p)
             .with(Animator::new())
             .build();
-        holder.add_entity(ent);
+        holder.add_player_entity(ent);
     });
     level.powerups.into_iter().for_each(|(p, tt)| {
         let e = world
@@ -434,34 +438,37 @@ fn load_level_with_(
                         .build();
                 }
                 Tag::Collision => {
-                    world
+                    let ent = world
                         .create_entity()
                         .with(spr)
                         .with(tt)
                         .with(Transform::default())
                         .with(Collider::default())
                         .build();
+                    holder.add_tile(ent);
                 }
                 Tag::Trigger(trigger_type) => match trigger_type {
                     TriggerType::Powerup(_) => {
                         //do nothing because they get created earlier
                     }
                     _ => {
-                        world
+                        let ent = world
                             .create_entity()
                             .with(spr)
                             .with(tt)
                             .with(Transform::default())
                             .with(Collider::new(trigger_type))
                             .build();
+                        holder.add_tile(ent);
                     }
                 },
                 _ => {
-                    world
+                    let ent = world
                         .create_entity()
                         .with(spr)
                         .with(UpdateTileTransforms::tile_to_transform(tt))
                         .build();
+                    holder.add_tile(ent);
                 }
             }
         }

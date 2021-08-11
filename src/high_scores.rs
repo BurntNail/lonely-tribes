@@ -1,9 +1,7 @@
-use crate::states::game_state::{LEVELS, get_levels};
+use crate::states::game_state::{get_levels, LEVELS};
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
-use std::{
-    fs::{create_dir, read_to_string, write},
-};
+use std::fs::{create_dir, read_to_string, write};
 
 ///The path to the high scores
 const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";
@@ -14,17 +12,17 @@ pub const DATA_DIR: &str = "assets/data";
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct HighScores {
     ///HashMap of high scores, with the key being the level index, and the i32 being the number of moves
-    pub scores: Vec<i32>
+    pub scores: Vec<i32>,
 }
 impl Default for HighScores {
     fn default() -> Self {
         Self {
-            scores: Vec::with_capacity(get_levels().len())
+            scores: Vec::with_capacity(get_levels().len()),
         }
     }
 }
 impl HighScores {
-    pub fn new () -> Self {
+    pub fn new() -> Self {
         let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
 
         let scores: Vec<i32> = from_str(file.as_str()).unwrap_or_default();
@@ -40,7 +38,8 @@ impl HighScores {
     pub fn add_score_and_write(&mut self, index: usize, score: i32) -> Option<i32> {
         let mut new_high_score = false;
         let current = {
-            if self.scores.len() > index { //to avoid panicking on overflow
+            if self.scores.len() > index {
+                //to avoid panicking on overflow
                 self.scores.remove(index)
             } else {
                 i32::MAX

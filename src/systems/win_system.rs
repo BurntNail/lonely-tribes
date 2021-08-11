@@ -17,7 +17,6 @@ impl<'s> System<'s> for EndOfGameSystem {
     );
 
     fn run(&mut self, (tiles, players, mut gws): Self::SystemData) {
-
         let mut count_match = HashMap::new();
         let mut count_bad = 0;
         let mut player_count = HashMap::new();
@@ -48,7 +47,10 @@ impl<'s> System<'s> for EndOfGameSystem {
             gws.ws = WinStateEnum::End { won: false };
             return;
         }
-        if count_match.is_empty() || player_count.is_empty() || count_match.len() != player_count.len(){
+        if count_match.is_empty()
+            || player_count.is_empty()
+            || count_match.len() != player_count.len()
+        {
             return;
         }
         //endregion

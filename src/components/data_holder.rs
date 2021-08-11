@@ -3,6 +3,7 @@ use amethyst::core::ecs::Entity;
 use std::collections::HashMap;
 
 ///Resource to hold all entity related data
+#[derive(Default)]
 pub struct EntityHolder {
     ///Map of tiletransforms to entities for eventual deletion
     pub powerup_entities: HashMap<TileTransform, Entity>,
@@ -12,14 +13,15 @@ pub struct EntityHolder {
 
     ///Vector of Powerups to be Done
     pub powerups: Vec<PowerUp>,
+
+    ///Vector of tiles
+    pub tiles: Vec<Entity>,
 }
 impl EntityHolder {
     ///Constructor to initialise all lists with empty hashmaps/vectors
     pub fn new() -> Self {
-        EntityHolder {
-            powerup_entities: HashMap::new(),
-            players: Vec::new(),
-            powerups: Vec::new(),
+        Self {
+            ..Default::default()
         }
     }
 
@@ -33,9 +35,10 @@ impl EntityHolder {
     }
 
     ///Add a player to the entity list
-    pub fn add_entity(&mut self, player: Entity) {
+    pub fn add_player_entity(&mut self, player: Entity) {
         self.players.push(player);
     }
+
     ///Add a powerup to the list
     ///
     /// If the powerup is already in the list, it does nothing
@@ -43,6 +46,11 @@ impl EntityHolder {
         if !self.powerups.contains(&p) {
             self.powerups.push(p);
         }
+    }
+
+    ///Add a non-actor to the list
+    pub fn add_tile(&mut self, e: Entity) {
+        self.tiles.push(e);
     }
 
     ///Clears out the powerups list, and returns it.
@@ -53,9 +61,17 @@ impl EntityHolder {
         }
         vec
     }
-}
-impl Default for EntityHolder {
-    fn default() -> Self {
-        Self::new()
+
+    ///Gets a list of ALL Entities
+    pub fn get_all_entities(&self) -> Vec<Entity> {
+        let mut list = Vec::new();
+        self.tiles.iter().for_each(|e| list.push(*e));
+        self.players.iter().for_each(|e| list.push(*e));
+        self.powerup_entities
+            .values()
+            .into_iter()
+            .for_each(|e| list.push(*e));
+
+        list
     }
 }

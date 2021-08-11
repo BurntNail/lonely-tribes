@@ -144,14 +144,19 @@ pub struct Flags {
 
 //todos
 
-//TODO: With Text, make sure to account for Screen Scaling
-
-//TODO: Story
-
 //TODO: Export some options (eg. movement) to conf file
 //TODO: Conf Editor (maybe pause screen and toggles - switch the image of a uiimage on click)
 
+//TODO: With Text, make sure to account for Screen Scaling
+
+//TODO: Story
+//TODO: Unique Mechanics - USP
 //TODO: Music/SFX
+
+//USP Ideas (PRIVATE - Don't look here)
+//Toggle to enter the 'ethereal plane' where you can budge around stuff
+//Depending on how and when you merge players, change score differently - to discourage merging all into one, and moving that dude to be inaccessible
+//**NEEDS** to be related to Story.
 
 //TODO: Steamworks
 //TODO: Steam Page
