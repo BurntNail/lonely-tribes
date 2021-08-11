@@ -1,10 +1,9 @@
 use crate::components::{
-    colliders::ColliderList,
     player::Player,
     tile_transform::TileTransform,
     win_state::{GameWinState, WinStateEnum},
 };
-use amethyst::ecs::{Join, Read, ReadStorage, System, Write};
+use amethyst::ecs::{Join, ReadStorage, System, Write};
 use std::collections::HashMap;
 
 ///System for checking when the game is won
@@ -14,12 +13,10 @@ impl<'s> System<'s> for EndOfGameSystem {
     type SystemData = (
         ReadStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
-        Read<'s, ColliderList>,
         Write<'s, GameWinState>,
     );
 
-    fn run(&mut self, (tiles, players, list, mut gws): Self::SystemData) {
-        let trigger_tiles = list.get_triggers();
+    fn run(&mut self, (tiles, players, mut gws): Self::SystemData) {
 
         let mut count_match = HashMap::new();
         let mut count_bad = 0;
@@ -33,14 +30,12 @@ impl<'s> System<'s> for EndOfGameSystem {
             //endregion
 
             //region check for whether or not the current player is on top of another player
-            for (trigger_tile, trigger_type) in &trigger_tiles {
-                let trigger_id = &trigger_type.get_id();
-                if player_tile == trigger_tile {
-                    if &id == trigger_id {
+            for (check_tile, check_player) in (&tiles, &players).join() {
+                if player_tile == check_tile {
+                    if id == check_player.id {
                         let match_no = count_match.remove(&id).unwrap_or(0);
                         count_match.insert(id, match_no + 1);
-                    } else if trigger_id <= &3 {
-                        //4 players, starting from ind 0
+                    } else {
                         count_bad += 1;
                     }
                 }
@@ -48,6 +43,7 @@ impl<'s> System<'s> for EndOfGameSystem {
             //endregion
         }
 
+        //region check for a loss or tbd
         if count_bad > 0 {
             gws.ws = WinStateEnum::End { won: false };
             return;
@@ -55,6 +51,7 @@ impl<'s> System<'s> for EndOfGameSystem {
         if count_match.is_empty() || player_count.is_empty() || count_match.len() != player_count.len(){
             return;
         }
+        //endregion
 
         for (k, v) in &count_match {
             let pc = player_count.get(k).unwrap_or(&9999);
@@ -65,7 +62,6 @@ impl<'s> System<'s> for EndOfGameSystem {
             }
         }
 
-        log::info!("WIN - Match: {:?}, PC: {:?}", count_match, player_count);
         gws.ws = WinStateEnum::End { won: true };
     }
 }

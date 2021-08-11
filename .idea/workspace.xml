@@ -7,9 +7,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="I broke smth, so i fixed it">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix winning (i hope)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +88,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -398,14 +397,7 @@
       <workItem from="1628667762040" duration="9000" />
       <workItem from="1628667892598" duration="1214000" />
       <workItem from="1628669119888" duration="1250000" />
-      <workItem from="1628703279310" duration="1513000" />
-    </task>
-    <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
-      <created>1627332004500</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1627332004500</updated>
+      <workItem from="1628703279310" duration="1725000" />
     </task>
     <task id="LOCAL-00002" summary="Add End Of Game">
       <created>1627333487242</created>
@@ -743,7 +735,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628670080098</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="fix winning (i hope)">
+      <created>1628706301071</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1628706301072</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -765,7 +764,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!" />
     <MESSAGE value="Get powerups to show, add their effect to a global list, and go away on use." />
     <MESSAGE value="Powerups working hell yeah" />
     <MESSAGE value="Clippy+Fmt For Powerups/General Technical Debt" />
@@ -790,6 +788,7 @@
     <MESSAGE value="Fix powerups spawning in colliders and OOB" />
     <MESSAGE value="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins" />
     <MESSAGE value="I broke smth, so i fixed it" />
-    <option name="LAST_COMMIT_MESSAGE" value="I broke smth, so i fixed it" />
+    <MESSAGE value="fix winning (i hope)" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix winning (i hope)" />
   </component>
 </project>
