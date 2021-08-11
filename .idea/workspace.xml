@@ -8,12 +8,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change tilemap to have a transparent bg for easier tinting">
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -88,7 +96,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.fmt">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -414,14 +422,7 @@
       <workItem from="1628667762040" duration="9000" />
       <workItem from="1628667892598" duration="1214000" />
       <workItem from="1628669119888" duration="1250000" />
-      <workItem from="1628703279310" duration="6630000" />
-    </task>
-    <task id="LOCAL-00005" summary="Fix Movement">
-      <created>1627377009693</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1627377009693</updated>
+      <workItem from="1628703279310" duration="7082000" />
     </task>
     <task id="LOCAL-00006" summary="Add Docu-Comments">
       <created>1627388003610</created>
@@ -759,7 +760,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628711868383</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Change tilemap to have a transparent bg for easier tinting">
+      <created>1628711901862</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1628711901862</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -773,7 +781,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="BEK_SORT_TYPE" value="1" />
+            </State>
           </value>
         </entry>
       </map>
@@ -781,7 +791,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix move_player.rs" />
     <MESSAGE value="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in." />
     <MESSAGE value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
     <MESSAGE value="Add shell script for new releases" />
@@ -805,6 +814,7 @@
     <MESSAGE value="fix winning (i hope)" />
     <MESSAGE value="optimise win_system.rs to not have to use colliderlist" />
     <MESSAGE value="Add a basic pause state that hides all game entities when paused, and later unhides them." />
+    <MESSAGE value="Make note to self regarding old colours" />
     <MESSAGE value="Change tilemap to have a transparent bg for easier tinting" />
     <option name="LAST_COMMIT_MESSAGE" value="Change tilemap to have a transparent bg for easier tinting" />
   </component>
