@@ -38,7 +38,7 @@ impl SimpleState for PostGameState {
         let world = data.world;
 
         let (level_from, is_last_level, won, score) = get_stuff(world);
-        let mut high_score = HighScores::default();
+        let mut high_score = HighScores::new();
 
         let opts: Flags = Flags::from_args();
 

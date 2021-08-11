@@ -159,8 +159,6 @@ impl SimpleState for LevelEditorState {
                             tt.set(working_version);
                         }
                     }
-
-                    //TODO: leaving
                 }
                 InputEvent::MouseWheelMoved(dir) => {
                     let (x, y) = (

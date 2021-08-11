@@ -149,7 +149,7 @@ pub struct Flags {
 //TODO: Export some options to conf file
 //TODO: Conf Editor
 
-//TODO: With Sprites, make sure to account for Screen Scaling
+//TODO: With Text, make sure to account for Screen Scaling
 
 //TODO: post-processing
 

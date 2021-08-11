@@ -7,11 +7,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fmt">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix powerups spawning in colliders and OOB">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -380,7 +385,8 @@
       <workItem from="1628584158673" duration="1046000" />
       <workItem from="1628587884176" duration="1334000" />
       <workItem from="1628667762040" duration="9000" />
-      <workItem from="1628667892598" duration="1027000" />
+      <workItem from="1628667892598" duration="1214000" />
+      <workItem from="1628669119888" duration="636000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -704,7 +710,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628587938354</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Fix powerups spawning in colliders and OOB">
+      <created>1628668969119</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1628668969119</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -726,7 +739,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Movement - once and for all!" />
     <MESSAGE value="Add option to load debug level" />
     <MESSAGE value="Spawn in PowerUps" />
     <MESSAGE value="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!" />
@@ -751,6 +763,7 @@
     <MESSAGE value="Change names over in game ui-texts" />
     <MESSAGE value="Animations baby!&#10;However, it did break the win system..." />
     <MESSAGE value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
+    <MESSAGE value="Fix powerups spawning in colliders and OOB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix powerups spawning in colliders and OOB" />
   </component>
 </project>

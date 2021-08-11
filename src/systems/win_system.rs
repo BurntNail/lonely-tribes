@@ -47,7 +47,6 @@ impl<'s> System<'s> for EndOfGameSystem {
             return;
         }
         if count_match.is_empty() {
-            //Due to animations, (and I have no idea why), the list is sometimes empty which confuses it
             return;
         }
 
@@ -61,7 +60,7 @@ impl<'s> System<'s> for EndOfGameSystem {
             }
         }
 
-        if win {
+        if win { //TODO: Fix win - it sometimes 'wins' randomly
             gws.ws = WinStateEnum::End { won: true };
         }
     }
