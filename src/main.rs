@@ -101,8 +101,8 @@ fn main() -> amethyst::Result<()> {
     Ok(())
 }
 
-pub fn get_colours(r_a: f32, g_a: f32, b_a: f32) -> [f32; 4] {
-    let (r, g, b, a) = Srgba::new(r_a / 255., g_a / 255., b_a / 255., 1.0)
+pub fn get_colours(r: f32, g: f32, b: f32) -> [f32; 4] {
+    let (r, g, b, a) = Srgba::new(r / 255.0, g / 255.0, b / 255.0, 1.0)
         .into_linear()
         .into_components();
     [r, g, b, a]
@@ -144,15 +144,14 @@ pub struct Flags {
 
 //todos
 
-//TODO: Music/SFX
-
-//TODO: Export some options to conf file
-//TODO: Conf Editor
-
 //TODO: With Text, make sure to account for Screen Scaling
 
-//TODO: post-processing
+//TODO: Story
+
+//TODO: Export some options (eg. movement) to conf file
+//TODO: Conf Editor (maybe pause screen and toggles - switch the image of a uiimage on click)
+
+//TODO: Music/SFX
 
 //TODO: Steamworks
-//TODO: Story
 //TODO: Steam Page

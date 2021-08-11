@@ -26,42 +26,46 @@ impl<'s> System<'s> for EndOfGameSystem {
         let mut player_count = HashMap::new();
 
         for (player_tile, player) in (&tiles, &players).join() {
+            //region add current player to list
             let id = player.id;
-            player_count.insert(id, player_count.get(&id).unwrap_or(&0) + 1);
+            let current_count = player_count.remove(&id).unwrap_or(0);
+            player_count.insert(id, current_count + 1);
+            //endregion
 
-            for (trigger_tile, trigger_id) in &trigger_tiles {
-                let t_id = &trigger_id.get_id();
+            //region check for whether or not the current player is on top of another player
+            for (trigger_tile, trigger_type) in &trigger_tiles {
+                let trigger_id = &trigger_type.get_id();
                 if player_tile == trigger_tile {
-                    if &id == t_id {
-                        count_match.insert(id, count_match.get(&id).unwrap_or(&0) + 1);
-                    } else if t_id <= &3 {
+                    if &id == trigger_id {
+                        let match_no = count_match.remove(&id).unwrap_or(0);
+                        count_match.insert(id, match_no + 1);
+                    } else if trigger_id <= &3 {
                         //4 players, starting from ind 0
                         count_bad += 1;
                     }
                 }
             }
+            //endregion
         }
 
         if count_bad > 0 {
             gws.ws = WinStateEnum::End { won: false };
             return;
         }
-        if count_match.is_empty() {
+        if count_match.is_empty() || player_count.is_empty() || count_match.len() != player_count.len(){
             return;
         }
 
-        let mut win = true;
         for (k, v) in &count_match {
             let pc = player_count.get(k).unwrap_or(&9999);
             let expected = pc * pc;
 
             if v != &expected {
-                win = false;
+                return;
             }
         }
 
-        if win { //TODO: Fix win - it sometimes 'wins' randomly
-            gws.ws = WinStateEnum::End { won: true };
-        }
+        log::info!("WIN - Match: {:?}, PC: {:?}", count_match, player_count);
+        gws.ws = WinStateEnum::End { won: true };
     }
 }

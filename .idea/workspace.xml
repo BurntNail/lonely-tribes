@@ -7,15 +7,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix powerups spawning in colliders and OOB">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="I broke smth, so i fixed it">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +89,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -238,6 +232,22 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --release -- -t 0.05 -c" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run -- -t 0.05 -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -279,6 +289,7 @@
       <item itemvalue="Cargo.debug level" />
       <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.run" />
+      <item itemvalue="Cargo.run release" />
       <item itemvalue="Cargo.Run normal" />
       <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
@@ -287,9 +298,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.build release" />
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
       </list>
     </recent_temporary>
@@ -386,7 +397,8 @@
       <workItem from="1628587884176" duration="1334000" />
       <workItem from="1628667762040" duration="9000" />
       <workItem from="1628667892598" duration="1214000" />
-      <workItem from="1628669119888" duration="636000" />
+      <workItem from="1628669119888" duration="1250000" />
+      <workItem from="1628703279310" duration="1513000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>
@@ -717,7 +729,21 @@
       <option name="project" value="LOCAL" />
       <updated>1628668969119</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins">
+      <created>1628669824548</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1628669824548</updated>
+    </task>
+    <task id="LOCAL-00049" summary="I broke smth, so i fixed it">
+      <created>1628670080098</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1628670080098</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -739,8 +765,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add option to load debug level" />
-    <MESSAGE value="Spawn in PowerUps" />
     <MESSAGE value="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!" />
     <MESSAGE value="Get powerups to show, add their effect to a global list, and go away on use." />
     <MESSAGE value="Powerups working hell yeah" />
@@ -764,6 +788,8 @@
     <MESSAGE value="Animations baby!&#10;However, it did break the win system..." />
     <MESSAGE value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
     <MESSAGE value="Fix powerups spawning in colliders and OOB" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix powerups spawning in colliders and OOB" />
+    <MESSAGE value="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins" />
+    <MESSAGE value="I broke smth, so i fixed it" />
+    <option name="LAST_COMMIT_MESSAGE" value="I broke smth, so i fixed it" />
   </component>
 </project>
