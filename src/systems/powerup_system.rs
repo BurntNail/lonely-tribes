@@ -1,9 +1,9 @@
 use crate::{
     components::{
-        colliders::ColliderList, data_holder::EntityHolder, player::Player, power_up::PowerUp,
-        tile_transform::TileTransform, win_state::GameWinState, animator::Animator
+        animator::Animator, colliders::ColliderList, data_holder::EntityHolder, player::Player,
+        power_up::PowerUp, tile_transform::TileTransform, win_state::GameWinState,
     },
-    systems::move_player::{tile_is_bad, set_tiletransform_timed},
+    systems::move_player::{set_tiletransform_timed, tile_works},
     HEIGHT, WIDTH,
 };
 use amethyst::core::ecs::{Entities, Join, Read, ReadStorage, System, Write, WriteStorage};
@@ -39,12 +39,11 @@ impl<'s> System<'s> for PowerUpSystem {
                             let y = rng.gen_range(0..HEIGHT as i32);
                             let tile = TileTransform::new(x, y);
 
-                            if !tile_is_bad(tile, &colliders) {
+                            if tile_works(tile, &colliders) {
                                 break tile;
                             }
                         };
                         set_tiletransform_timed(tile, nu_tile, anim_cmp, 0.25);
-
                     }
                 }
                 PowerUp::Reaper => {
@@ -62,11 +61,13 @@ impl<'s> System<'s> for PowerUpSystem {
                     powers.players = new_list;
                 }
                 PowerUp::ScoreChanger => {
-                    let factor = rng.gen_range(2..=5);
+                    let factor = rng.gen_range(1.1..=5.0);
                     if rng.gen() {
-                        gws.level_no_of_moves *= factor;
+                        let nu_moves = gws.level_no_of_moves as f32 * factor;
+                        gws.level_no_of_moves = nu_moves.round() as i32;
                     } else {
-                        gws.level_no_of_moves /= factor;
+                        let nu_moves = gws.level_no_of_moves as f32 / factor;
+                        gws.level_no_of_moves = nu_moves.round() as i32;
                     }
                 }
             }

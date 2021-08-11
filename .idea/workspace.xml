@@ -7,9 +7,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fmt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +90,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Shell Script.New Release">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -280,8 +282,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.run" />
       </list>
@@ -377,6 +379,8 @@
       <workItem from="1628539630069" duration="152000" />
       <workItem from="1628584158673" duration="1046000" />
       <workItem from="1628587884176" duration="1334000" />
+      <workItem from="1628667762040" duration="9000" />
+      <workItem from="1628667892598" duration="1027000" />
     </task>
     <task id="LOCAL-00001" summary="Add next-level capability&#10;Go back to StringBindings to fix UI input">
       <created>1627332004500</created>

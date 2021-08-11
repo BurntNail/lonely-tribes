@@ -91,7 +91,7 @@ impl<'s> System<'s> for MovePlayerSystem {
 
             t
         };
-        
+
         let mut check_powerups = |proposed_tile: &TileTransform| {
             for (trigger, tt) in &trigger_tiles {
                 if proposed_tile == trigger {
@@ -119,7 +119,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                     let works =
-                        tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
+                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
@@ -139,7 +139,7 @@ impl<'s> System<'s> for MovePlayerSystem {
             for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                 let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
-                let works = tile_is_bad(proposed_tile, &collision_tiles) && &proposed_tile != tile;
+                let works = tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile;
 
                 if works && can_move && actual_movement {
                     set_tiletransform(tile, proposed_tile, anim);
@@ -157,7 +157,8 @@ impl<'s> System<'s> for MovePlayerSystem {
     }
 }
 
-pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &[TileTransform]) -> bool {
+///Checks whether a proposed TileTransform is in a valid position, given tiles it needs to avoid, using the consts in main.rs for OOB detection.
+pub fn tile_works(proposed_tile: TileTransform, collision_tiles: &[TileTransform]) -> bool {
     let mut res = true;
 
     if proposed_tile.x < 0
@@ -177,10 +178,18 @@ pub fn tile_is_bad(proposed_tile: TileTransform, collision_tiles: &[TileTransfor
     res
 }
 
-pub fn set_tiletransform (from: &mut TileTransform, to: TileTransform, anim: &mut Animator) {
-    set_tiletransform_timed(from, to, anim, 0.1);
+///Uses set_tiletransform_timed with a specific delay of 0.05
+pub fn set_tiletransform(from: &mut TileTransform, to: TileTransform, anim: &mut Animator) {
+    set_tiletransform_timed(from, to, anim, 0.05);
 }
-pub fn set_tiletransform_timed (from: &mut TileTransform, to: TileTransform, anim: &mut Animator, t: f32) {
+
+///Sets one tiletransform equal to another with the animator, and a given duration
+pub fn set_tiletransform_timed(
+    from: &mut TileTransform,
+    to: TileTransform,
+    anim: &mut Animator,
+    t: f32,
+) {
     let nu_data = AnimationData::new(*from, to, t);
     anim.replace_data(nu_data);
 

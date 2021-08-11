@@ -18,7 +18,8 @@ pub struct HighScores {
     pub scores: HashMap<usize, i32>, //TODO: Make it an array or a slice
 }
 impl Default for HighScores {
-    fn default() -> Self { //TODO: Make an acual default, and move this to a constructor
+    fn default() -> Self {
+        //TODO: Make an acual default, and move this to a constructor
         let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
 
         let scores: HashMap<usize, i32> = from_str(file.as_str()).unwrap_or_default();
