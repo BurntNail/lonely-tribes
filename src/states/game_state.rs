@@ -376,7 +376,7 @@ fn load_level_with_(
     let lvl = Room::new(path.as_str());
     let mut holder = EntityHolder::new();
 
-    level.into_iter().for_each(|(p, tt)| {
+    level.players.into_iter().for_each(|(p, tt)| {
         let mut trans = Transform::default();
         trans.set_translation_z(0.5);
         let ent = world
