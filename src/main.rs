@@ -61,7 +61,7 @@ fn main() -> amethyst::Result<()> {
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
                     RenderToWindow::from_config_path(display_config)?
-                        .with_clear(get_colours(34.0, 35.0, 35.0)),
+                        .with_clear(get_colours(34.0, 35.0, 35.0)), //In Hex: 222223
                 )
                 .with_plugin(RenderUi::default())
                 .with_plugin(RenderFlat2D::default()),
