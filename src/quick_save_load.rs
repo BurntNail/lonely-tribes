@@ -45,7 +45,6 @@ impl LevelState {
         powerups: Vec<(PowerUp, TileTransform)>,
         score: i32,
     ) {
-        //TODO: Optimise - checking for deltas etc.
         self.players = players;
         self.powerups = powerups;
         self.score = score;

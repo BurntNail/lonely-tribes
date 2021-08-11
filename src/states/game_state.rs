@@ -323,7 +323,7 @@ fn load_level(
                         .create_entity()
                         .with(spr)
                         .with(tt)
-                        .with(Transform::default()) //TODO: Work out way to optimise for static obj
+                        .with(Transform::default())
                         .with(Collider::default())
                         .build();
                 }
@@ -369,10 +369,10 @@ fn load_level_with_(
     path: String,
     level: LevelState,
 ) -> EntityHolder {
-    let lvl = Room::new(path.as_str()); //TODO: Just use the map straight away
+    let lvl = Room::new(path.as_str());
     let mut holder = EntityHolder::new();
 
-    level.players.into_iter().for_each(|(p, tt)| {
+    level.into_iter().for_each(|(p, tt)| {
         let mut trans = Transform::default();
         trans.set_translation_z(0.5);
         let ent = world

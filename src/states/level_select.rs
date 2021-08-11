@@ -97,7 +97,7 @@ impl SimpleState for LevelSelectState {
 fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
     let mut map = HashMap::new();
     let font_handle = load_font(world, "ZxSpectrum");
-    let high_scores = HighScores::default();
+    let high_scores = HighScores::new();
 
     let level_txt_height = {
         let no_levels = LEVELS.len() as i32;
@@ -137,7 +137,7 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
 
     let next_level = high_scores.find_next_level();
     for (i, level) in LEVELS.iter().enumerate() {
-        let high_score = high_scores.get_high_score(&i);
+        let high_score = high_scores.get_high_score(i);
         #[allow(clippy::collapsible_else_if)]
         let (text, colour, can_be_played) = if let Some(score) = high_score {
             (

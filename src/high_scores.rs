@@ -1,8 +1,7 @@
-use crate::states::game_state::LEVELS;
+use crate::states::game_state::{LEVELS, get_levels};
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::HashMap,
     fs::{create_dir, read_to_string, write},
 };
 
@@ -15,19 +14,24 @@ pub const DATA_DIR: &str = "assets/data";
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct HighScores {
     ///HashMap of high scores, with the key being the level index, and the i32 being the number of moves
-    pub scores: HashMap<usize, i32>, //TODO: Make it an array or a slice
+    pub scores: Vec<i32>
 }
 impl Default for HighScores {
     fn default() -> Self {
-        //TODO: Make an acual default, and move this to a constructor
-        let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
-
-        let scores: HashMap<usize, i32> = from_str(file.as_str()).unwrap_or_default();
-
-        Self { scores }
+        Self {
+            scores: Vec::with_capacity(get_levels().len())
+        }
     }
 }
 impl HighScores {
+    pub fn new () -> Self {
+        let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
+
+        let scores: Vec<i32> = from_str(file.as_str()).unwrap_or_default();
+
+        Self { scores }
+    }
+
     ///Function to add a score, check whether it is better than the written down one, and if so write it to a file
     ///
     /// Returns an option
@@ -35,7 +39,13 @@ impl HighScores {
     /// If Some, then the i32 is the old high score
     pub fn add_score_and_write(&mut self, index: usize, score: i32) -> Option<i32> {
         let mut new_high_score = false;
-        let current = self.scores.remove(&index).unwrap_or(i32::MAX);
+        let current = {
+            if self.scores.len() > index { //to avoid panicking on overflow
+                self.scores.remove(index)
+            } else {
+                i32::MAX
+            }
+        };
         if score < current {
             new_high_score = true;
             self.scores.insert(index, score);
@@ -55,7 +65,7 @@ impl HighScores {
     ///Function to check whether or not a level has been beaten yet
     ///
     /// Simple function, but better for reading code later
-    pub fn get_high_score(&self, level: &usize) -> Option<i32> {
+    pub fn get_high_score(&self, level: usize) -> Option<i32> {
         self.scores.get(level).copied()
     }
 
@@ -64,7 +74,7 @@ impl HighScores {
         let mut i = 0;
         let mut an_unfinished_level_exists = false;
         for level in 0..LEVELS.len() {
-            if self.get_high_score(&level).is_some() {
+            if self.get_high_score(level).is_some() {
                 i = level + 1;
             } else {
                 an_unfinished_level_exists = true;
