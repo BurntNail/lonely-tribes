@@ -61,30 +61,29 @@ impl SimpleState for PausedState {
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
         match event {
-            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => match key_code {
-                VirtualKeyCode::Escape => {
-                    t = SimpleTrans::Pop;
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
+                    if key_code == VirtualKeyCode::Escape {
+                        t = SimpleTrans::Pop;
 
-                    let world = data.world;
-                    world.insert(MovementDisabler::default());
-                    for (k, _) in self.buttons.clone().into_iter() {
-                        world.delete_entity(k);
-                    }
-                    if let Some(t) = self.title {
-                        world.delete_entity(t);
-                    }
+                        let world = data.world;
+                        world.insert(MovementDisabler::default());
+                        for (k, _) in self.buttons.clone().into_iter() {
+                            world.delete_entity(k).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
+                        }
+                        if let Some(t) = self.title {
+                            world.delete_entity(t).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
+                        }
 
-                    let entities = world.read_resource::<EntityHolder>().get_all_entities();
-                    show_entities(world, entities);
-                },
-                _ => {}
+                        let entities = world.read_resource::<EntityHolder>().get_all_entities();
+                        show_entities(world, entities);
+                    }
             },
             StateEvent::Ui(UiEvent {event_type, target}) => {
                 let action = {
                     let mut res = None;
-                    'working_out_target: for (k, v) in &self.buttons {
-                        if &target == k {
-                            res = Some(*v);
+                    'working_out_target: for (k, v) in self.buttons.clone() {
+                        if target == k {
+                            res = Some(v);
                             break 'working_out_target;
                         }
                     }
@@ -102,6 +101,7 @@ impl SimpleState for PausedState {
                                     let mut current_state = world.write_resource::<MovementType>();
 
                                     let stepped_movement = current_state.can_move.is_some();
+
                                     if stepped_movement {
                                         current_state.can_move = None;
                                         current_state.movement_timer = Some((0.0, 0.05));
@@ -201,12 +201,13 @@ pub fn get_pause_buttons (world: &mut World) -> (HashMap<Entity, PausedStateMenu
 
         let actual_txt =
             if world.read_resource::<MovementType>().can_move.is_some() {
-                "Toggle Movement type to Stepped.".to_string()
-            } else {
                 "Toggle Movement type to Held.".to_string()
+            } else {
+                "Toggle Movement type to Stepped.".to_string()
             };
 
 
+        #[allow(clippy::redundant_clone)]
         let toggle_btn_txt = UiText::new(
             font_handle.clone(),
             actual_txt,

@@ -7,14 +7,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Farm out hiding and showing to different methods.">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Basic Movement toggler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +95,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -426,14 +421,9 @@
       <workItem from="1628667762040" duration="9000" />
       <workItem from="1628667892598" duration="1214000" />
       <workItem from="1628669119888" duration="1250000" />
-      <workItem from="1628703279310" duration="9703000" />
-    </task>
-    <task id="LOCAL-00008" summary="Add high scores">
-      <created>1627395042108</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1627395042108</updated>
+      <workItem from="1628703279310" duration="9787000" />
+      <workItem from="1628717588509" duration="202000" />
+      <workItem from="1628756385178" duration="406000" />
     </task>
     <task id="LOCAL-00009" summary="Add high scores">
       <created>1627395052469</created>
@@ -771,7 +761,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628712409970</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Basic Movement toggler">
+      <created>1628715038096</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1628715038096</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -795,7 +792,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add shell script for new releases" />
     <MESSAGE value="Facilities to actually load the save" />
     <MESSAGE value="Add docucomments" />
     <MESSAGE value="Start on Steamworks - I need to wait for the license to come through" />
@@ -820,6 +816,7 @@
     <MESSAGE value="Change tilemap to have a transparent bg for easier tinting" />
     <MESSAGE value="fix old problem with loading saves" />
     <MESSAGE value="Farm out hiding and showing to different methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="Farm out hiding and showing to different methods." />
+    <MESSAGE value="Basic Movement toggler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic Movement toggler" />
   </component>
 </project>
