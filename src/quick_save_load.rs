@@ -66,10 +66,10 @@ impl LevelState {
             ),
         };
 
-        write(file_name.clone(), text.clone()).unwrap_or_else(|_| {
+        write(&file_name, &text).unwrap_or_else(|_| {
             create_dir(DATA_DIR)
                 .unwrap_or_else(|err| log::error!("Unable to create data directory: {}", err));
-            write(file_name, text.clone())
+            write(&file_name, &text)
                 .unwrap_or_else(|err| log::error!("Unable to {:?}: {}", save_type, err));
         })
     }

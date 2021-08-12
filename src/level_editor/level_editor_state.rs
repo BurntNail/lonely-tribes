@@ -81,11 +81,12 @@ impl SimpleState for LevelEditorState {
         init_camera(world, (ARENA_WIDTH as f32, ARENA_HEIGHT as f32));
 
         self.sprite_sheet = Some(load_sprite_sheet(world, "colored_tilemap_packed"));
-        if let Some(s) = self.sprite_sheet.clone() {
-            self.entities = load_level(world, s, &self.data);
+        self.entities = if let Some(s) = self.sprite_sheet.clone() {
+            load_level(world, s, &self.data)
         } else {
-            unreachable!();
-        }
+            Vec::new()
+        };
+
         let high = {
             let spr = SpriteRender::new(load_sprite_sheet(world, "highlighter"), 0);
             let tt = TileTransform::new(0, 0);

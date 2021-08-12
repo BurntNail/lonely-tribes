@@ -90,10 +90,10 @@ impl HighScores {
     fn write_self_to_file(&self) {
         let text = to_string(&self.scores);
         if let Ok(text) = text {
-            write(HIGH_SCORES_PATH, text.clone()).unwrap_or_else(|_| {
+            write(HIGH_SCORES_PATH, &text).unwrap_or_else(|_| {
                 create_dir(DATA_DIR)
                     .unwrap_or_else(|err| log::error!("Unable to create data directory: {}", err));
-                write(HIGH_SCORES_PATH, text)
+                write(HIGH_SCORES_PATH, &text)
                     .unwrap_or_else(|err| log::error!("Unable to write high scores: {}", err));
             });
         }

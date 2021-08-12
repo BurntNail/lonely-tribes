@@ -39,7 +39,7 @@ impl<'s> System<'s> for PowerUpSystem {
                             let y = rng.gen_range(0..HEIGHT as i32);
                             let tile = TileTransform::new(x, y);
 
-                            if tile_works(tile, &colliders) {
+                            if tile_works(tile, colliders) {
                                 break tile;
                             }
                         };
@@ -49,11 +49,11 @@ impl<'s> System<'s> for PowerUpSystem {
                 PowerUp::Reaper => {
                     let mut new_list = Vec::new();
 
-                    powers.players.clone().into_iter().for_each(|e| {
+                    powers.players.iter().for_each(|e| {
                         if rng.gen() {
-                            new_list.push(e);
+                            new_list.push(*e);
                         } else {
-                            entities.delete(e).unwrap_or_else(|err| {
+                            entities.delete(*e).unwrap_or_else(|err| {
                                 log::warn!("Error deleting entity with Reaper Powerup: {}", err)
                             });
                         }

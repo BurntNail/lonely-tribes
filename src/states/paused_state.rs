@@ -67,8 +67,9 @@ impl SimpleState for PausedState {
 
                         let world = data.world;
                         world.insert(MovementDisabler::default());
-                        for (k, _) in self.buttons.clone().into_iter() {
-                            world.delete_entity(k).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
+
+                        for (k, _) in self.buttons.iter() {
+                            world.delete_entity(*k).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
                         }
                         if let Some(t) = self.title {
                             world.delete_entity(t).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
@@ -81,9 +82,9 @@ impl SimpleState for PausedState {
             StateEvent::Ui(UiEvent {event_type, target}) => {
                 let action = {
                     let mut res = None;
-                    'working_out_target: for (k, v) in self.buttons.clone() {
-                        if target == k {
-                            res = Some(v);
+                    'working_out_target: for (k, v) in self.buttons.iter() {
+                        if &target == k {
+                            res = Some(*v);
                             break 'working_out_target;
                         }
                     }
@@ -115,7 +116,7 @@ impl SimpleState for PausedState {
                                 }
                             },
                             UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                            UiEventType::HoverStop => txt.color = HOVER_COLOUR,
+                            UiEventType::HoverStop => txt.color = [1.0; 4],
                             _ => {}
                         }
                     }

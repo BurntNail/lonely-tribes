@@ -111,7 +111,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         };
 
         let mut check_powerups = |proposed_tile: &TileTransform| {
-            for (trigger, tt) in &trigger_tiles {
+            for (trigger, tt) in trigger_tiles {
                 if proposed_tile == trigger {
                     let id = &tt.get_id();
                     if PowerUp::trigger_id_range().contains(id) {
@@ -137,7 +137,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                     let works =
-                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile;
+                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile;
 
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
@@ -156,7 +156,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                     let works =
-                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile;
+                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile;
 
                     if works && can_move && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);

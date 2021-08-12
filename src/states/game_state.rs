@@ -117,15 +117,19 @@ impl SimpleState for PuzzleState {
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
-        let this_level = LEVELS
-            .get(self.level_index)
-            .unwrap_or(&"test-room-one.png".to_string())
-            .as_str()
-            .to_string();
+        let level_default = "test-room-one.png".to_string();
+        let this_level = {
 
-        let holder = if let Some(state) = self.level_state.clone() {
+            let this_level = LEVELS
+                .get(self.level_index)
+                .unwrap_or(&level_default);
+
+            this_level.as_str()
+        };
+
+        let holder = if let Some(state) = self.level_state.take() {
             world.insert(GameWinState::new(None, self.level_index, state.score));
-            load_level_with_(world, handle, this_level, state)
+            load_level_with_state(world, handle, this_level, state)
         } else {
             world.insert(GameWinState::new(None, self.level_index, 0));
             load_level(world, handle, this_level)
@@ -271,9 +275,9 @@ fn get_no_of_moves(world: &World) -> i32 {
 fn load_level(
     world: &mut World,
     sprites_handle: Handle<SpriteSheet>,
-    path: String,
+    path: &str,
 ) -> EntityHolder {
-    let lvl = Room::new(path.as_str());
+    let lvl = Room::new(path);
     let mut holder = EntityHolder::new();
 
     if lvl.is_empty() {
@@ -367,13 +371,13 @@ fn load_level(
 }
 
 ///Loads in a level given a path and a levelState
-fn load_level_with_(
+fn load_level_with_state(
     world: &mut World,
     sprites_handle: Handle<SpriteSheet>,
-    path: String,
+    path: &str,
     level: LevelState,
 ) -> EntityHolder {
-    let lvl = Room::new(path.as_str());
+    let lvl = Room::new(path);
     let mut holder = EntityHolder::new();
 
     level.players.into_iter().for_each(|(p, tt)| {

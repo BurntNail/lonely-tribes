@@ -7,10 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Basic Movement toggler">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Remove clones">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +98,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -423,28 +426,7 @@
       <workItem from="1628669119888" duration="1250000" />
       <workItem from="1628703279310" duration="9787000" />
       <workItem from="1628717588509" duration="202000" />
-      <workItem from="1628756385178" duration="406000" />
-    </task>
-    <task id="LOCAL-00009" summary="Add high scores">
-      <created>1627395052469</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1627395052469</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Add Score Text for High Scores">
-      <created>1627406967109</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1627406967109</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Add hiding Scores">
-      <created>1627407614702</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1627407614702</updated>
+      <workItem from="1628756385178" duration="2639000" />
     </task>
     <task id="LOCAL-00012" summary="Change hide key to Space">
       <created>1627407640334</created>
@@ -768,7 +750,28 @@
       <option name="project" value="LOCAL" />
       <updated>1628715038096</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Fix clippy warnings for pause">
+      <created>1628756852515</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1628756852516</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Make it so that score is only incremented, when it actually moves.">
+      <created>1628756878951</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1628756878951</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Remove clones">
+      <created>1628757227526</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1628757227527</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -792,9 +795,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Facilities to actually load the save" />
-    <MESSAGE value="Add docucomments" />
-    <MESSAGE value="Start on Steamworks - I need to wait for the license to come through" />
     <MESSAGE value="Cargo fmt" />
     <MESSAGE value="Re-fix merging" />
     <MESSAGE value="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state" />
@@ -817,6 +817,9 @@
     <MESSAGE value="fix old problem with loading saves" />
     <MESSAGE value="Farm out hiding and showing to different methods." />
     <MESSAGE value="Basic Movement toggler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic Movement toggler" />
+    <MESSAGE value="Fix clippy warnings for pause" />
+    <MESSAGE value="Make it so that score is only incremented, when it actually moves." />
+    <MESSAGE value="Remove clones" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove clones" />
   </component>
 </project>
