@@ -142,11 +142,8 @@ impl<'s> System<'s> for MovePlayerSystem {
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
                         check_powerups(&proposed_tile);
+                        add_to_score = true;
                     }
-                }
-
-                if actual_movement {
-                    add_to_score = true;
                 }
 
                 movement.movement_timer = Some((0.0, int));
