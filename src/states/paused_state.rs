@@ -1,19 +1,13 @@
 use crate::{
-    components::{data_holder::EntityHolder, tile_transform::TileTransform},
-    states::states_util::load_font,
-    systems::{
-        move_player::MovementType,
-        update_tile_transforms::{TILE_HEIGHT, TILE_WIDTH},
-    },
-    HOVER_COLOUR,
+    components::data_holder::EntityHolder, states::states_util::load_font,
+    systems::move_player::MovementType, HOVER_COLOUR,
 };
 use amethyst::{
     core::{
         ecs::{Builder, Entity, World, WorldExt},
-        Hidden, Transform,
+        Hidden,
     },
     input::{InputEvent, VirtualKeyCode},
-    renderer::{palette::Srgba, resources::Tint, SpriteRender},
     ui::{Anchor, Interactable, LineMode, UiEvent, UiEventType, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
@@ -68,79 +62,24 @@ impl SimpleState for PausedState {
         let world = data.world;
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                match key_code {
-                    VirtualKeyCode::Escape => {
-                        t = SimpleTrans::Pop;
+                if key_code == VirtualKeyCode::Space {
+                    t = SimpleTrans::Pop;
 
-                        world.insert(MovementDisabler::default());
+                    world.insert(MovementDisabler::default());
 
-                        for (k, _) in self.buttons.iter() {
-                            world.delete_entity(*k).unwrap_or_else(|err| {
-                                log::warn!("Unable to delete pause menu button: {}", err)
-                            });
-                        }
-                        if let Some(t) = self.title {
-                            world.delete_entity(t).unwrap_or_else(|err| {
-                                log::warn!("Unable to delete pause menu button: {}", err)
-                            });
-                        }
-
-                        let entities = world.read_resource::<EntityHolder>().get_all_entities();
-                        show_entities(world, entities);
+                    for (k, _) in self.buttons.iter() {
+                        world.delete_entity(*k).unwrap_or_else(|err| {
+                            log::warn!("Unable to delete pause menu button: {}", err)
+                        });
                     }
-                    VirtualKeyCode::Return => {
-                        //'hacking' effect
-
-                        let mut entities_to_make = Vec::new();
-
-                        {
-                            let sprite_renderers = world.read_storage::<SpriteRender>();
-                            let tiletransforms = world.read_storage::<TileTransform>();
-
-                            for e in &world.read_resource::<EntityHolder>().tiles {
-                                if let Some(spr) = sprite_renderers.get(*e) {
-                                    if let Some(tt) = tiletransforms.get(*e) {
-
-                                        let (tt1, tt2) = {
-                                            let mut tt1 = tt.clone();
-                                            let mut tt2 = tt.clone();
-
-                                            // let tw = TILE_WIDTH as i32 / 2;
-                                            // let th = TILE_HEIGHT as i32 / 2;
-                                            let tw = 1;
-                                            let th = 1;
-
-                                            tt1.set_offsets((tw, th));
-                                            tt2.set_offsets((-tw, -th));
-
-                                            (tt1, tt2)
-                                        };
-
-                                        let ti1 = Tint(Srgba::new(1.0, 0.25, 0.25, 0.75));
-                                        let ti2 = Tint(Srgba::new(0.25, 0.25, 1.0, 0.75));
-
-                                        let spr = spr.clone();
-
-                                        entities_to_make.push((spr.clone(), tt1, ti1));
-                                        entities_to_make.push((spr.clone(), tt2, ti2));
-                                    }
-                                }
-                            }
-                        }
-
-                        for (s, tt, ti) in entities_to_make {
-                            let mut trans = Transform::default();
-                            trans.set_translation_z(0.25);
-                            world
-                                .create_entity()
-                                .with(s)
-                                .with(tt)
-                                .with(ti)
-                                .with(trans)
-                                .build();
-                        }
+                    if let Some(t) = self.title {
+                        world.delete_entity(t).unwrap_or_else(|err| {
+                            log::warn!("Unable to delete pause menu button: {}", err)
+                        });
                     }
-                    _ => {}
+
+                    let entities = world.read_resource::<EntityHolder>().get_all_entities();
+                    show_entities(world, entities);
                 }
             }
             StateEvent::Ui(UiEvent { event_type, target }) => {

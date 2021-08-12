@@ -1,12 +1,12 @@
 use crate::{
     components::{
-		animator::{AnimationData, Animator},
-		colliders::ColliderList,
-		data_holder::EntityHolder,
-		player::Player,
-		power_up::PowerUp,
-		tile_transform::TileTransform,
-		win_state::GameState,
+        animator::{AnimationData, Animator},
+        colliders::ColliderList,
+        data_holder::EntityHolder,
+        player::Player,
+        power_up::PowerUp,
+        tile_transform::TileTransform,
+        win_state::GameState,
     },
     states::paused_state::MovementDisabler,
     Flags, HEIGHT, WIDTH,
@@ -17,6 +17,7 @@ use amethyst::{
     input::{InputHandler, StringBindings},
 };
 use structopt::StructOpt;
+use crate::components::win_state::{GameStateEnum, GamePlayingMode};
 
 ///System for capturing player movement, and collision
 #[derive(Default)]
@@ -58,17 +59,17 @@ impl Default for MovementType {
 
 impl<'s> System<'s> for MovePlayerSystem {
     type SystemData = (
-		WriteStorage<'s, TileTransform>,
-		ReadStorage<'s, Player>,
-		Read<'s, InputHandler<StringBindings>>,
-		Read<'s, ColliderList>,
-		Read<'s, Time>,
-		Write<'s, GameState>,
-		Write<'s, EntityHolder>,
-		Read<'s, MovementDisabler>,
-		WriteStorage<'s, Animator>,
-		Write<'s, MovementType>,
-		Entities<'s>,
+        WriteStorage<'s, TileTransform>,
+        ReadStorage<'s, Player>,
+        Read<'s, InputHandler<StringBindings>>,
+        Read<'s, ColliderList>,
+        Read<'s, Time>,
+        Write<'s, GameState>,
+        Write<'s, EntityHolder>,
+        Read<'s, MovementDisabler>,
+        WriteStorage<'s, Animator>,
+        Write<'s, MovementType>,
+        Entities<'s>,
     );
 
     fn run(
@@ -88,6 +89,12 @@ impl<'s> System<'s> for MovePlayerSystem {
         ): Self::SystemData,
     ) {
         let mut add_to_score = false;
+        let mode = if let GameStateEnum::ToBeDecided(g) = gws.ws {
+            g
+        } else {
+            GamePlayingMode::Normal
+        };
+
         let collision_tiles = list.get();
         let trigger_tiles = list.get_triggers();
 
@@ -137,7 +144,11 @@ impl<'s> System<'s> for MovePlayerSystem {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                     let works =
-                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile;
+                            if mode == GamePlayingMode::Nudger {
+                                true
+                            } else {
+                                tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
+                            };
 
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
@@ -156,7 +167,11 @@ impl<'s> System<'s> for MovePlayerSystem {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
                     let works =
-                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile;
+                        if mode == GamePlayingMode::Nudger {
+                            true
+                        } else {
+                            tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
+                        };
 
                     if works && can_move && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);

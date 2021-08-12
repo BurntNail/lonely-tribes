@@ -6,7 +6,7 @@ use crate::{
         npc::NonPlayerCharacter,
         score::Score,
         tile_transform::TileTransform,
-        win_state::{GameState, GameStateEnum},
+        win_state::{GamePlayingMode, GameState, GameStateEnum},
     },
     level::{Room, SpriteRequest},
     quick_save_load::{LevelState, SaveType},
@@ -26,7 +26,7 @@ use amethyst::{
     core::{ecs::Entity, transform::Transform, Hidden},
     input::{InputEvent, VirtualKeyCode},
     prelude::*,
-    renderer::{SpriteRender, SpriteSheet},
+    renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet},
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
     winit::{Event, WindowEvent},
 };
@@ -67,6 +67,8 @@ pub struct PuzzleState {
     score_button: Option<Entity>,
     ///Option variable to hold loaded level
     level_state: Option<LevelState>,
+    ///Vec to hold entities for temporary mode effects (eg. nudger)
+    tmp_fx_entities: Vec<Entity>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
@@ -87,6 +89,7 @@ impl Default for PuzzleState {
             level_state: None,
             actions: HashMap::new(),
             score_button: None,
+            tmp_fx_entities: Vec::new(),
         }
     }
 }
@@ -162,13 +165,14 @@ impl SimpleState for PuzzleState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = Trans::None;
+        let world = data.world;
         use VirtualKeyCode::*;
 
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => match key_code {
                 Space => {
                     if let Some(btn) = self.score_button {
-                        let mut hiddens = data.world.write_storage::<Hidden>();
+                        let mut hiddens = world.write_storage::<Hidden>();
                         if hiddens.contains(btn) {
                             hiddens.remove(btn);
                         } else {
@@ -180,8 +184,7 @@ impl SimpleState for PuzzleState {
                     }
                 }
                 L => t = Trans::Switch(Box::new(LevelSelectState::default())),
-                F5 | VirtualKeyCode::F6 => data
-                    .world
+                F5 | VirtualKeyCode::F6 => world
                     .read_resource::<LevelState>()
                     .save(SaveType::QuickSave, self.level_index),
                 F9 => {
@@ -192,6 +195,79 @@ impl SimpleState for PuzzleState {
                     )));
                 }
                 Escape => t = Trans::Push(Box::new(PausedState::default())),
+                N => {
+                    let ws = {
+                        let gs = world.read_resource::<GameState>();
+                        gs.ws
+                    };
+                    if GameStateEnum::ToBeDecided(GamePlayingMode::Normal) == ws {
+                        let mut entities_to_make = Vec::new();
+
+                        {
+                            let sprite_renderers = world.read_storage::<SpriteRender>();
+                            let tiletransforms = world.read_storage::<TileTransform>();
+
+                            for e in &world.read_resource::<EntityHolder>().tiles {
+                                if let Some(spr) = sprite_renderers.get(*e) {
+                                    if let Some(tt) = tiletransforms.get(*e) {
+                                        let (tt1, tt2) = {
+                                            // let tw = TILE_WIDTH as i32 / 2;
+                                            // let th = TILE_HEIGHT as i32 / 2;
+                                            let tw = 1;
+                                            let th = 1;
+
+                                            let mut tt1 = *tt;
+                                            let mut tt2 = *tt;
+
+                                            tt1.set_offsets((tw, th));
+                                            tt2.set_offsets((-tw, -th));
+
+                                            (tt1, tt2)
+                                        };
+
+                                        let ti1 = Tint(Srgba::new(1.0, 0.25, 0.25, 0.75));
+                                        let ti2 = Tint(Srgba::new(0.25, 0.25, 1.0, 0.75));
+
+                                        let spr = spr.clone();
+
+                                        entities_to_make.push((spr.clone(), tt1, ti1));
+                                        entities_to_make.push((spr.clone(), tt2, ti2));
+                                    }
+                                }
+                            }
+                        }
+
+                        for (s, tt, ti) in entities_to_make {
+                            let mut trans = Transform::default();
+                            trans.set_translation_z(0.25);
+                            let ent = world
+                                .create_entity()
+                                .with(s)
+                                .with(tt)
+                                .with(ti)
+                                .with(trans)
+                                .build();
+                            self.tmp_fx_entities.push(ent);
+                        }
+
+                        {
+                            let mut gs = world.write_resource::<GameState>();
+                            gs.ws = GameStateEnum::ToBeDecided(GamePlayingMode::Nudger);
+                        }
+                    } else {
+                        for e in &self.tmp_fx_entities {
+                            world.delete_entity(*e).unwrap_or_else(|err| {
+                                log::warn!("Unable to delete tmp fx entitity: {}", err)
+                            });
+                        }
+
+                        self.tmp_fx_entities.clear();
+                        {
+                            let mut gs = world.write_resource::<GameState>();
+                            gs.ws = GameStateEnum::ToBeDecided(GamePlayingMode::Normal);
+                        }
+                    }
+                }
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -200,7 +276,7 @@ impl SimpleState for PuzzleState {
             },
             StateEvent::Window(Event::WindowEvent { event, .. }) => match event {
                 WindowEvent::CloseRequested | WindowEvent::Destroyed => {
-                    let mut gws = data.world.write_resource::<GameState>();
+                    let mut gws = world.write_resource::<GameState>();
                     gws.ws = GameStateEnum::End { won: false };
                 }
                 _ => {}

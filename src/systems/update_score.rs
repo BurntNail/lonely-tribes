@@ -9,9 +9,9 @@ pub struct ScoreUpdaterSystem;
 
 impl<'s> System<'s> for ScoreUpdaterSystem {
     type SystemData = (
-		Read<'s, GameState>,
-		ReadStorage<'s, Score>,
-		WriteStorage<'s, UiText>,
+        Read<'s, GameState>,
+        ReadStorage<'s, Score>,
+        WriteStorage<'s, UiText>,
     );
 
     fn run(&mut self, (gws, scores, mut texts): Self::SystemData) {

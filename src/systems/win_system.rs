@@ -11,9 +11,9 @@ pub struct EndOfGameSystem;
 
 impl<'s> System<'s> for EndOfGameSystem {
     type SystemData = (
-		ReadStorage<'s, TileTransform>,
-		ReadStorage<'s, Player>,
-		Write<'s, GameState>,
+        ReadStorage<'s, TileTransform>,
+        ReadStorage<'s, Player>,
+        Write<'s, GameState>,
     );
 
     fn run(&mut self, (tiles, players, mut gws): Self::SystemData) {

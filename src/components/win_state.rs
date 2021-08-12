@@ -11,11 +11,12 @@ pub enum GameStateEnum {
 }
 
 ///The mode for gameplay - not the game state or the win state, but the mode of gameplay
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum GamePlayingMode {
     ///One move - all moves
     Normal,
     ///Collisions are ignored (inc OOB)
-    Nudger
+    Nudger,
 }
 
 impl Default for GameStateEnum {
@@ -32,7 +33,6 @@ pub struct GameState {
     pub level_from: usize,
     ///Amount of time the level has taken
     pub level_no_of_moves: i32,
-
 }
 impl Default for GameState {
     fn default() -> Self {
