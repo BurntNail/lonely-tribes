@@ -6,7 +6,7 @@ use crate::{
         npc::NonPlayerCharacter,
         score::Score,
         tile_transform::TileTransform,
-        win_state::{GameWinState, WinStateEnum},
+        win_state::{GameState, GameStateEnum},
     },
     level::{Room, SpriteRequest},
     quick_save_load::{LevelState, SaveType},
@@ -58,7 +58,7 @@ pub fn get_levels() -> Vec<String> {
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
     ///Holding the current WinState
-    ws: WinStateEnum,
+    ws: GameStateEnum,
     ///The index of the current level in *LEVELS*
     level_index: usize,
     ///Holding a HashMap of which keys lead to which indicies of *LEVELS*
@@ -82,7 +82,7 @@ impl Default for PuzzleState {
         }
 
         Self {
-            ws: WinStateEnum::default(),
+            ws: GameStateEnum::default(),
             level_index,
             level_state: None,
             actions: HashMap::new(),
@@ -119,19 +119,16 @@ impl SimpleState for PuzzleState {
 
         let level_default = "test-room-one.png".to_string();
         let this_level = {
-
-            let this_level = LEVELS
-                .get(self.level_index)
-                .unwrap_or(&level_default);
+            let this_level = LEVELS.get(self.level_index).unwrap_or(&level_default);
 
             this_level.as_str()
         };
 
         let holder = if let Some(state) = self.level_state.take() {
-            world.insert(GameWinState::new(None, self.level_index, state.score));
+            world.insert(GameState::new(None, self.level_index, state.score));
             load_level_with_state(world, handle, this_level, state)
         } else {
-            world.insert(GameWinState::new(None, self.level_index, 0));
+            world.insert(GameState::new(None, self.level_index, 0));
             load_level(world, handle, this_level)
         };
 
@@ -150,8 +147,8 @@ impl SimpleState for PuzzleState {
 
         world.delete_all();
 
-        if let WinStateEnum::End { won } = self.ws {
-            world.insert(GameWinState::new(
+        if let GameStateEnum::End { won } = self.ws {
+            world.insert(GameState::new(
                 Some(won),
                 self.level_index,
                 get_no_of_moves(world),
@@ -203,8 +200,8 @@ impl SimpleState for PuzzleState {
             },
             StateEvent::Window(Event::WindowEvent { event, .. }) => match event {
                 WindowEvent::CloseRequested | WindowEvent::Destroyed => {
-                    let mut gws = data.world.write_resource::<GameWinState>();
-                    gws.ws = WinStateEnum::End { won: false };
+                    let mut gws = data.world.write_resource::<GameState>();
+                    gws.ws = GameStateEnum::End { won: false };
                 }
                 _ => {}
             },
@@ -215,19 +212,19 @@ impl SimpleState for PuzzleState {
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        let game_state = data.world.read_resource::<GameWinState>();
+        let game_state = data.world.read_resource::<GameState>();
         let ws = game_state.ws;
         self.ws = ws;
 
         match ws {
-            WinStateEnum::End { won } => {
+            GameStateEnum::End { won } => {
                 if self.level_index >= LEVELS.len() - 1 && won {
                     Trans::Switch(Box::new(TrueEnd::default()))
                 } else {
                     Trans::Switch(Box::new(PostGameState::new()))
                 }
             }
-            WinStateEnum::ToBeDecided => Trans::None,
+            GameStateEnum::ToBeDecided(_) => Trans::None,
         }
     }
 }
@@ -263,7 +260,7 @@ fn add_score(world: &mut World) -> Entity {
 
 ///Function to get the number of moves from this round
 fn get_no_of_moves(world: &World) -> i32 {
-    let gws = world.read_resource::<GameWinState>();
+    let gws = world.read_resource::<GameState>();
     gws.level_no_of_moves
 }
 
@@ -272,11 +269,7 @@ fn get_no_of_moves(world: &World) -> i32 {
 ///  - **world** is the current game World from Specs
 ///  - **sprites_handle** is a handle to the spritesheet
 ///  - **path** is the Path to the level eg. *"lvl-01.png"*
-fn load_level(
-    world: &mut World,
-    sprites_handle: Handle<SpriteSheet>,
-    path: &str,
-) -> EntityHolder {
+fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) -> EntityHolder {
     let lvl = Room::new(path);
     let mut holder = EntityHolder::new();
 
@@ -296,7 +289,7 @@ fn load_level(
             let tt = TileTransform::new(x as i32, y as i32);
 
             world.insert(ColliderList::new());
-            world.insert(GameWinState::default());
+            world.insert(GameState::default());
 
             match Tag::from_spr(lvl[x][y]) {
                 Tag::Player(id) => {

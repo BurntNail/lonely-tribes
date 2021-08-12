@@ -1,4 +1,9 @@
-use crate::{components::text_wobble::TextWobble, level_editor::editor_select_state::LevelEditorLevelSelectState, states::{help_state::HelpState, level_select::LevelSelectState, states_util::load_font}, HOVER_COLOUR};
+use crate::{
+    components::text_wobble::TextWobble,
+    level_editor::editor_select_state::LevelEditorLevelSelectState,
+    states::{help_state::HelpState, level_select::LevelSelectState, states_util::load_font},
+    HOVER_COLOUR,
+};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},

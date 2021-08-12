@@ -10,13 +10,23 @@ pub struct TileTransform {
     pub x: i32,
     ///Y Position - Vertical
     pub y: i32,
+
+    ///X offset - measured in camera px, rather than grid
+    pub x_offset: i32,
+    ///Y offset - measured in camera px, rather than grid
+    pub y_offset: i32,
 }
 impl Component for TileTransform {
     type Storage = DefaultVecStorage<Self>;
 }
 impl Default for TileTransform {
     fn default() -> Self {
-        Self { x: 0, y: 0 }
+        Self {
+            x: 0,
+            y: 0,
+            x_offset: 0,
+            y_offset: 0,
+        }
     }
 }
 impl Display for TileTransform {
@@ -28,7 +38,11 @@ impl TileTransform {
     ///Constructor for TileTransform
     /// Takes in an x and a y
     pub fn new(x: i32, y: i32) -> Self {
-        Self { x, y }
+        Self {
+            x,
+            y,
+            ..Default::default()
+        }
     }
 
     /// Sets the current x and y using coordinates from another TileTransform
@@ -36,9 +50,11 @@ impl TileTransform {
         self.x = t.x;
         self.y = t.y;
     }
-    ///The same as **tile.set()**, but it takes in a reference
-    pub fn from_ref(t: &Self) -> Self {
-        Self { x: t.x, y: t.y }
+
+    /// Sets the current x and y offsets using another TileTransform
+    pub fn set_offsets(&mut self, offsets: (i32, i32)) {
+        self.x_offset = offsets.0;
+        self.y_offset = offsets.1;
     }
 
     ///For adding self and another transform, giving the result in a new TileTransform
@@ -46,6 +62,8 @@ impl TileTransform {
         Self {
             x: self.x + t.x,
             y: self.y + t.y,
+            x_offset: self.x_offset + t.x_offset,
+            y_offset: self.y_offset + t.y_offset,
         }
     }
 
@@ -55,6 +73,8 @@ impl TileTransform {
         Self {
             x: self.x - t.x,
             y: self.y - t.y,
+            x_offset: self.x_offset - t.x_offset,
+            y_offset: self.y_offset - t.x_offset,
         }
     }
 
@@ -64,14 +84,17 @@ impl TileTransform {
         Self {
             x: t.x.abs(),
             y: t.y.abs(),
+            x_offset: t.x_offset.abs(),
+            y_offset: t.y_offset.abs(),
         }
     }
 
     ///Gets magnitude of self
     #[allow(dead_code)]
     pub fn get_magnitude(&self) -> f32 {
-        let x = (self.x * self.x) as f32;
-        let y = (self.y * self.y) as f32;
-        (x + y).sqrt()
+        let x = (self.x * 8 + self.x_offset) as f32;
+        let y = (self.y * 8 + self.y_offset) as f32;
+
+        (x * x + y * y).sqrt()
     }
 }

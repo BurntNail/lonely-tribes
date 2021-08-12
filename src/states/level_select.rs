@@ -1,8 +1,12 @@
-use crate::{high_scores::HighScores, states::{
-    game_state::{PuzzleState, LEVELS},
-    states_util::load_font,
-    welcome_state::StartGameState,
-}, HOVER_COLOUR};
+use crate::{
+    high_scores::HighScores,
+    states::{
+        game_state::{PuzzleState, LEVELS},
+        states_util::load_font,
+        welcome_state::StartGameState,
+    },
+    HOVER_COLOUR,
+};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},

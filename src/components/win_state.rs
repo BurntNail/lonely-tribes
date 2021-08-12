@@ -1,39 +1,49 @@
 ///Enumeration for the current state of the game
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub enum WinStateEnum {
+pub enum GameStateEnum {
     ///The game is over
     End {
         ///Whether the game was won or not
         won: bool,
     },
     ///The game is still being played
-    ToBeDecided,
+    ToBeDecided(GamePlayingMode),
 }
-impl Default for WinStateEnum {
+
+///The mode for gameplay - not the game state or the win state, but the mode of gameplay
+pub enum GamePlayingMode {
+    ///One move - all moves
+    Normal,
+    ///Collisions are ignored (inc OOB)
+    Nudger
+}
+
+impl Default for GameStateEnum {
     fn default() -> Self {
-        Self::ToBeDecided
+        Self::ToBeDecided(GamePlayingMode::Normal)
     }
 }
 ///Struct to hold the Win State Enum
 #[derive(Clone, Debug)]
-pub struct GameWinState {
-    ///Current Win State
-    pub ws: WinStateEnum,
+pub struct GameState {
+    ///Current Game Win State
+    pub ws: GameStateEnum,
     ///The level for which *ws* refers to
     pub level_from: usize,
     ///Amount of time the level has taken
     pub level_no_of_moves: i32,
+
 }
-impl Default for GameWinState {
+impl Default for GameState {
     fn default() -> Self {
-        GameWinState {
-            ws: WinStateEnum::default(),
+        GameState {
+            ws: GameStateEnum::default(),
             level_from: 0,
             level_no_of_moves: 0,
         }
     }
 }
-impl GameWinState {
+impl GameState {
     ///Constructor for GameState with custom arguments
     ///
     ///  - **won_opt** is an option for whether or not the game has been won. If it is None, the game is still being played, or is being started, and if it is Some, then whether the game has been won is the bool
@@ -42,37 +52,15 @@ impl GameWinState {
     pub fn new(won_opt: Option<bool>, level_from: usize, level_timer_len: i32) -> Self {
         match won_opt {
             None => Self {
-                ws: WinStateEnum::ToBeDecided,
+                ws: GameStateEnum::default(),
                 level_from,
                 level_no_of_moves: level_timer_len,
             },
             Some(won) => Self {
-                ws: WinStateEnum::End { won },
+                ws: GameStateEnum::End { won },
                 level_from,
                 level_no_of_moves: level_timer_len,
             },
-        }
-    }
-    ///Exactly the same as *GameWinState::new*, but the won_opt is a reference to a boolean
-    #[allow(dead_code)]
-    pub fn new_ref(won_opt: Option<&bool>, level_from: usize) -> Self {
-        match won_opt {
-            None => Self {
-                ws: WinStateEnum::ToBeDecided,
-                level_from,
-                level_no_of_moves: 0,
-            },
-            Some(won_ref) => {
-                let mut won = false;
-                if won_ref == &true {
-                    won = true;
-                }
-                Self {
-                    ws: WinStateEnum::End { won },
-                    level_from,
-                    level_no_of_moves: 0,
-                }
-            }
         }
     }
 }

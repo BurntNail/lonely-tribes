@@ -1,4 +1,4 @@
-use crate::components::{score::Score, win_state::GameWinState};
+use crate::components::{score::Score, win_state::GameState};
 use amethyst::{
     core::ecs::{Join, Read, ReadStorage, System, WriteStorage},
     ui::UiText,
@@ -9,9 +9,9 @@ pub struct ScoreUpdaterSystem;
 
 impl<'s> System<'s> for ScoreUpdaterSystem {
     type SystemData = (
-        Read<'s, GameWinState>,
-        ReadStorage<'s, Score>,
-        WriteStorage<'s, UiText>,
+		Read<'s, GameState>,
+		ReadStorage<'s, Score>,
+		WriteStorage<'s, UiText>,
     );
 
     fn run(&mut self, (gws, scores, mut texts): Self::SystemData) {

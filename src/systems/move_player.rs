@@ -1,12 +1,12 @@
 use crate::{
     components::{
-        animator::{AnimationData, Animator},
-        colliders::ColliderList,
-        data_holder::EntityHolder,
-        player::Player,
-        power_up::PowerUp,
-        tile_transform::TileTransform,
-        win_state::GameWinState,
+		animator::{AnimationData, Animator},
+		colliders::ColliderList,
+		data_holder::EntityHolder,
+		player::Player,
+		power_up::PowerUp,
+		tile_transform::TileTransform,
+		win_state::GameState,
     },
     states::paused_state::MovementDisabler,
     Flags, HEIGHT, WIDTH,
@@ -58,17 +58,17 @@ impl Default for MovementType {
 
 impl<'s> System<'s> for MovePlayerSystem {
     type SystemData = (
-        WriteStorage<'s, TileTransform>,
-        ReadStorage<'s, Player>,
-        Read<'s, InputHandler<StringBindings>>,
-        Read<'s, ColliderList>,
-        Read<'s, Time>,
-        Write<'s, GameWinState>,
-        Write<'s, EntityHolder>,
-        Read<'s, MovementDisabler>,
-        WriteStorage<'s, Animator>,
-        Write<'s, MovementType>,
-        Entities<'s>,
+		WriteStorage<'s, TileTransform>,
+		ReadStorage<'s, Player>,
+		Read<'s, InputHandler<StringBindings>>,
+		Read<'s, ColliderList>,
+		Read<'s, Time>,
+		Write<'s, GameState>,
+		Write<'s, EntityHolder>,
+		Read<'s, MovementDisabler>,
+		WriteStorage<'s, Animator>,
+		Write<'s, MovementType>,
+		Entities<'s>,
     );
 
     fn run(

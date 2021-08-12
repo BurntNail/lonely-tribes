@@ -1,7 +1,7 @@
 use crate::{
     components::{
         animator::Animator, colliders::ColliderList, data_holder::EntityHolder, player::Player,
-        power_up::PowerUp, tile_transform::TileTransform, win_state::GameWinState,
+        power_up::PowerUp, tile_transform::TileTransform, win_state::GameState,
     },
     systems::move_player::{set_tiletransform_timed, tile_works},
     HEIGHT, WIDTH,
@@ -15,7 +15,7 @@ pub struct PowerUpSystem;
 impl<'s> System<'s> for PowerUpSystem {
     type SystemData = (
         Write<'s, EntityHolder>,
-        Write<'s, GameWinState>,
+        Write<'s, GameState>,
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
         WriteStorage<'s, Animator>,

@@ -7,13 +7,22 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Remove clones">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Start of Differing GameModes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/powerup_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,8 +333,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.run" />
       </list>
@@ -426,21 +435,7 @@
       <workItem from="1628669119888" duration="1250000" />
       <workItem from="1628703279310" duration="9787000" />
       <workItem from="1628717588509" duration="202000" />
-      <workItem from="1628756385178" duration="2639000" />
-    </task>
-    <task id="LOCAL-00012" summary="Change hide key to Space">
-      <created>1627407640334</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1627407640334</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Change hide key to Space">
-      <created>1627407644154</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1627407644154</updated>
+      <workItem from="1628756385178" duration="7754000" />
     </task>
     <task id="LOCAL-00014" summary="Realise that this should be v3">
       <created>1627408825624</created>
@@ -771,7 +766,21 @@
       <option name="project" value="LOCAL" />
       <updated>1628757227527</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Remove clones">
+      <created>1628759067458</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1628759067458</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Add sprites that might be used in the future for the pause menu">
+      <created>1628759152275</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1628759152275</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -787,6 +796,17 @@
           <value>
             <State>
               <option name="BEK_SORT_TYPE" value="1" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="hacking-usp-1" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
             </State>
           </value>
         </entry>
@@ -795,8 +815,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cargo fmt" />
-    <MESSAGE value="Re-fix merging" />
     <MESSAGE value="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state" />
     <MESSAGE value="Fix todo on unwrap" />
     <MESSAGE value="Open up level editor and edit levels.&#10;&#10;Just now need to save levels" />
@@ -820,6 +838,8 @@
     <MESSAGE value="Fix clippy warnings for pause" />
     <MESSAGE value="Make it so that score is only incremented, when it actually moves." />
     <MESSAGE value="Remove clones" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove clones" />
+    <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
+    <MESSAGE value="Start of Differing GameModes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start of Differing GameModes" />
   </component>
 </project>

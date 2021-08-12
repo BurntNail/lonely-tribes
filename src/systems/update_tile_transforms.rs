@@ -26,16 +26,16 @@ impl<'s> System<'s> for UpdateTileTransforms {
     fn run(&mut self, (mut tiles, mut transforms, mut animators, time): Self::SystemData) {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
-            let x = tile.x as f32 * 8.0 + TILE_WIDTH;
-            let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
+            let x = tile.x as f32 * 8.0 + TILE_WIDTH + tile.x_offset as f32;
+            let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT - tile.y_offset as f32;
 
             trans.set_translation_xyz(x, y, old_z);
         }
 
         for (trans, anim_cmp, tt) in (&mut transforms, &mut animators, &mut tiles).join() {
             let z = trans.translation().z;
-            let mut x = tt.x as f32 * 8.0 + TILE_WIDTH;
-            let mut y = (HEIGHT - tt.y as u32) as f32 * 8.0 - TILE_HEIGHT;
+            let mut x = tt.x as f32 * 8.0 + TILE_WIDTH + tt.x_offset as f32;
+            let mut y = (HEIGHT - tt.y as u32) as f32 * 8.0 - TILE_HEIGHT - tt.y_offset as f32;
 
             if anim_cmp.anim_is_done() {
                 anim_cmp.finish();

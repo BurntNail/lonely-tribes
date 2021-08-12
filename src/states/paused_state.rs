@@ -1,18 +1,23 @@
-use crate::components::data_holder::EntityHolder;
+use crate::{
+    components::{data_holder::EntityHolder, tile_transform::TileTransform},
+    states::states_util::load_font,
+    systems::{
+        move_player::MovementType,
+        update_tile_transforms::{TILE_HEIGHT, TILE_WIDTH},
+    },
+    HOVER_COLOUR,
+};
 use amethyst::{
     core::{
-        ecs::{Entity, World, WorldExt},
-        Hidden,
+        ecs::{Builder, Entity, World, WorldExt},
+        Hidden, Transform,
     },
     input::{InputEvent, VirtualKeyCode},
+    renderer::{palette::Srgba, resources::Tint, SpriteRender},
+    ui::{Anchor, Interactable, LineMode, UiEvent, UiEventType, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use std::collections::HashMap;
-use amethyst::ui::{UiEvent, UiEventType, UiText, UiTransform, Anchor, LineMode, Interactable};
-use crate::HOVER_COLOUR;
-use crate::systems::move_player::MovementType;
-use crate::states::states_util::load_font;
-use amethyst::core::ecs::Builder;
 
 ///Resource to optionally disable movement - unless it is true, we assume false as the default is false
 pub struct MovementDisabler {
@@ -37,7 +42,7 @@ pub struct PausedState {
     ///All of the toggle-ale buttons
     buttons: HashMap<Entity, PausedStateMenuAction>,
     ///The title entity
-    title: Option<Entity>
+    title: Option<Entity>,
 }
 
 impl SimpleState for PausedState {
@@ -60,26 +65,85 @@ impl SimpleState for PausedState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
+        let world = data.world;
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                    if key_code == VirtualKeyCode::Escape {
+                match key_code {
+                    VirtualKeyCode::Escape => {
                         t = SimpleTrans::Pop;
 
-                        let world = data.world;
                         world.insert(MovementDisabler::default());
 
                         for (k, _) in self.buttons.iter() {
-                            world.delete_entity(*k).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
+                            world.delete_entity(*k).unwrap_or_else(|err| {
+                                log::warn!("Unable to delete pause menu button: {}", err)
+                            });
                         }
                         if let Some(t) = self.title {
-                            world.delete_entity(t).unwrap_or_else(|err| log::warn!("Unable to delete pause menu button: {}", err));
+                            world.delete_entity(t).unwrap_or_else(|err| {
+                                log::warn!("Unable to delete pause menu button: {}", err)
+                            });
                         }
 
                         let entities = world.read_resource::<EntityHolder>().get_all_entities();
                         show_entities(world, entities);
                     }
-            },
-            StateEvent::Ui(UiEvent {event_type, target}) => {
+                    VirtualKeyCode::Return => {
+                        //'hacking' effect
+
+                        let mut entities_to_make = Vec::new();
+
+                        {
+                            let sprite_renderers = world.read_storage::<SpriteRender>();
+                            let tiletransforms = world.read_storage::<TileTransform>();
+
+                            for e in &world.read_resource::<EntityHolder>().tiles {
+                                if let Some(spr) = sprite_renderers.get(*e) {
+                                    if let Some(tt) = tiletransforms.get(*e) {
+
+                                        let (tt1, tt2) = {
+                                            let mut tt1 = tt.clone();
+                                            let mut tt2 = tt.clone();
+
+                                            // let tw = TILE_WIDTH as i32 / 2;
+                                            // let th = TILE_HEIGHT as i32 / 2;
+                                            let tw = 1;
+                                            let th = 1;
+
+                                            tt1.set_offsets((tw, th));
+                                            tt2.set_offsets((-tw, -th));
+
+                                            (tt1, tt2)
+                                        };
+
+                                        let ti1 = Tint(Srgba::new(1.0, 0.25, 0.25, 0.75));
+                                        let ti2 = Tint(Srgba::new(0.25, 0.25, 1.0, 0.75));
+
+                                        let spr = spr.clone();
+
+                                        entities_to_make.push((spr.clone(), tt1, ti1));
+                                        entities_to_make.push((spr.clone(), tt2, ti2));
+                                    }
+                                }
+                            }
+                        }
+
+                        for (s, tt, ti) in entities_to_make {
+                            let mut trans = Transform::default();
+                            trans.set_translation_z(0.25);
+                            world
+                                .create_entity()
+                                .with(s)
+                                .with(tt)
+                                .with(ti)
+                                .with(trans)
+                                .build();
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            StateEvent::Ui(UiEvent { event_type, target }) => {
                 let action = {
                     let mut res = None;
                     'working_out_target: for (k, v) in self.buttons.iter() {
@@ -92,7 +156,6 @@ impl SimpleState for PausedState {
                 };
 
                 if let Some(action) = action {
-                    let world = data.world;
                     let mut texts = world.write_storage::<UiText>();
 
                     if let Some(txt) = texts.get_mut(target) {
@@ -112,7 +175,6 @@ impl SimpleState for PausedState {
                                         current_state.movement_timer = None;
                                         txt.text = "Toggle Movement type to Held.".to_string();
                                     }
-
                                 }
                             },
                             UiEventType::HoverStart => txt.color = HOVER_COLOUR,
@@ -121,7 +183,7 @@ impl SimpleState for PausedState {
                         }
                     }
                 }
-            },
+            }
             _ => {}
         }
 
@@ -158,7 +220,7 @@ pub fn show_entities(world: &mut World, entities: Vec<Entity>) {
 ///Inserts the Pause Menu Buttons and the title
 ///
 /// Returns a HashMap of all the buttons, and the title
-pub fn get_pause_buttons (world: &mut World) -> (HashMap<Entity, PausedStateMenuAction>, Entity) {
+pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuAction>, Entity) {
     let mut map = HashMap::new();
 
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
@@ -200,13 +262,11 @@ pub fn get_pause_buttons (world: &mut World) -> (HashMap<Entity, PausedStateMenu
             40.0,
         );
 
-        let actual_txt =
-            if world.read_resource::<MovementType>().can_move.is_some() {
-                "Toggle Movement type to Held.".to_string()
-            } else {
-                "Toggle Movement type to Stepped.".to_string()
-            };
-
+        let actual_txt = if world.read_resource::<MovementType>().can_move.is_some() {
+            "Toggle Movement type to Held.".to_string()
+        } else {
+            "Toggle Movement type to Stepped.".to_string()
+        };
 
         #[allow(clippy::redundant_clone)]
         let toggle_btn_txt = UiText::new(
@@ -252,8 +312,6 @@ pub fn get_pause_buttons (world: &mut World) -> (HashMap<Entity, PausedStateMenu
         .with(Interactable)
         .build();
         */
-
-
 
     (map, top)
 }

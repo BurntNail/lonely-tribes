@@ -1,4 +1,8 @@
-use crate::{level_editor::level_editor_state::LevelEditorState, states::{game_state::LEVELS, states_util::load_font, welcome_state::StartGameState}, HOVER_COLOUR};
+use crate::{
+    level_editor::level_editor_state::LevelEditorState,
+    states::{game_state::LEVELS, states_util::load_font, welcome_state::StartGameState},
+    HOVER_COLOUR,
+};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
