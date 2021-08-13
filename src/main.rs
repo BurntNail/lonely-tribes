@@ -1,3 +1,4 @@
+#[deny(nonstandard-style)]
 use crate::{
     states::welcome_state::StartGameState,
     systems::{

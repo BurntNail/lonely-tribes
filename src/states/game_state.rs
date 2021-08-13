@@ -6,7 +6,7 @@ use crate::{
         npc::NonPlayerCharacter,
         score::Score,
         tile_transform::TileTransform,
-        win_state::{GamePlayingMode, GameState, GameStateEnum},
+        win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
     },
     level::{Room, SpriteRequest},
     quick_save_load::{LevelState, SaveType},
@@ -109,6 +109,20 @@ impl PuzzleState {
             ..Default::default()
         }
     }
+
+    ///Sets the mode to normal, and deletes all the fx entities
+    pub fn reset_fx_entities(&mut self, world: &mut World) {
+        if self.tmp_fx_entities.is_empty() {
+            return;
+        }
+        log::info!("reseto spaghetto");
+
+        for e in std::mem::take(&mut self.tmp_fx_entities) {
+            world
+                .delete_entity(e)
+                .unwrap_or_else(|err| log::warn!("Unable to delete tmp fx entitity: {}", err));
+        }
+    }
 }
 
 impl SimpleState for PuzzleState {
@@ -139,6 +153,7 @@ impl SimpleState for PuzzleState {
 
         world.insert(holder);
         world.insert(LevelState::default());
+        world.insert(GameModeManager::new(10));
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
 
@@ -196,11 +211,11 @@ impl SimpleState for PuzzleState {
                 }
                 Escape => t = Trans::Push(Box::new(PausedState::default())),
                 N => {
-                    let ws = {
-                        let gs = world.read_resource::<GameState>();
-                        gs.ws
+                    let can_nudge = {
+                        let mut mode = world.write_resource::<GameModeManager>();
+                        mode.set_mode(GamePlayingMode::Nudger)
                     };
-                    if GameStateEnum::ToBeDecided(GamePlayingMode::Normal) == ws {
+                    if can_nudge {
                         let mut entities_to_make = Vec::new();
 
                         {
@@ -249,23 +264,8 @@ impl SimpleState for PuzzleState {
                                 .build();
                             self.tmp_fx_entities.push(ent);
                         }
-
-                        {
-                            let mut gs = world.write_resource::<GameState>();
-                            gs.ws = GameStateEnum::ToBeDecided(GamePlayingMode::Nudger);
-                        }
                     } else {
-                        for e in &self.tmp_fx_entities {
-                            world.delete_entity(*e).unwrap_or_else(|err| {
-                                log::warn!("Unable to delete tmp fx entitity: {}", err)
-                            });
-                        }
-
-                        self.tmp_fx_entities.clear();
-                        {
-                            let mut gs = world.write_resource::<GameState>();
-                            gs.ws = GameStateEnum::ToBeDecided(GamePlayingMode::Normal);
-                        }
+                        self.reset_fx_entities(world);
                     }
                 }
                 _ => self.actions.iter().for_each(|(k, v)| {
@@ -288,20 +288,29 @@ impl SimpleState for PuzzleState {
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        let game_state = data.world.read_resource::<GameState>();
-        let ws = game_state.ws;
-        self.ws = ws;
+        let mut t = Trans::None;
 
-        match ws {
+            if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Normal {
+                self.reset_fx_entities(data.world);
+            }
+
+        {
+            let game_state = data.world.read_resource::<GameState>();
+            self.ws = game_state.ws;
+        }
+
+        match self.ws {
             GameStateEnum::End { won } => {
                 if self.level_index >= LEVELS.len() - 1 && won {
-                    Trans::Switch(Box::new(TrueEnd::default()))
+                    t = Trans::Switch(Box::new(TrueEnd::default()));
                 } else {
-                    Trans::Switch(Box::new(PostGameState::new()))
+                    t = Trans::Switch(Box::new(PostGameState::new()));
                 }
             }
-            GameStateEnum::ToBeDecided(_) => Trans::None,
+            _ => {}
         }
+
+        t
     }
 }
 

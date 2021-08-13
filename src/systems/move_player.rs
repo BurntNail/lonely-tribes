@@ -6,7 +6,7 @@ use crate::{
         player::Player,
         power_up::PowerUp,
         tile_transform::TileTransform,
-        win_state::GameState,
+        win_state::{GameModeManager, GamePlayingMode, GameState},
     },
     states::paused_state::MovementDisabler,
     Flags, HEIGHT, WIDTH,
@@ -17,7 +17,6 @@ use amethyst::{
     input::{InputHandler, StringBindings},
 };
 use structopt::StructOpt;
-use crate::components::win_state::{GameStateEnum, GamePlayingMode};
 
 ///System for capturing player movement, and collision
 #[derive(Default)]
@@ -69,6 +68,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, MovementDisabler>,
         WriteStorage<'s, Animator>,
         Write<'s, MovementType>,
+        Write<'s, GameModeManager>,
         Entities<'s>,
     );
 
@@ -85,15 +85,12 @@ impl<'s> System<'s> for MovePlayerSystem {
             movement_disabler,
             mut animators,
             mut movement,
+            mut gm,
             entities,
         ): Self::SystemData,
     ) {
         let mut add_to_score = false;
-        let mode = if let GameStateEnum::ToBeDecided(g) = gws.ws {
-            g
-        } else {
-            GamePlayingMode::Normal
-        };
+        let mode = gm.current_mode;
 
         let collision_tiles = list.get();
         let trigger_tiles = list.get_triggers();
@@ -143,12 +140,11 @@ impl<'s> System<'s> for MovePlayerSystem {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
-                    let works =
-                            if mode == GamePlayingMode::Nudger {
-                                true
-                            } else {
-                                tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
-                            };
+                    let works = if mode == GamePlayingMode::Nudger {
+                        true
+                    } else {
+                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
+                    };
 
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
@@ -166,12 +162,11 @@ impl<'s> System<'s> for MovePlayerSystem {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                     let proposed_tile = tile.add_into_new(proposed_tile_addition);
 
-                    let works =
-                        if mode == GamePlayingMode::Nudger {
-                            true
-                        } else {
-                            tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
-                        };
+                    let works = if mode == GamePlayingMode::Nudger {
+                        true
+                    } else {
+                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
+                    };
 
                     if works && can_move && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
@@ -186,6 +181,7 @@ impl<'s> System<'s> for MovePlayerSystem {
 
         if add_to_score {
             gws.level_no_of_moves += 1;
+            gm.do_move();
         }
     }
 }

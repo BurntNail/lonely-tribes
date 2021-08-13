@@ -7,14 +7,14 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Start of Differing GameModes">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change tilemap to have a transparent bg for easier tinting">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +70,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/rouguelike-rpg/assets/maps/test.ron.rs" value="true" />
-    <property name="settings.editor.selected.configurable" value="actions.on.save" />
+    <property name="settings.editor.selected.configurable" value="language.rust" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -107,7 +107,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -123,7 +122,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -141,7 +139,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -159,7 +156,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -177,7 +173,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -195,7 +190,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -211,7 +205,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -229,7 +222,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -247,7 +239,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -265,7 +256,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -281,7 +271,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -325,15 +314,15 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.run" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -428,6 +417,8 @@
       <workItem from="1628703279310" duration="9787000" />
       <workItem from="1628717588509" duration="202000" />
       <workItem from="1628756385178" duration="9596000" />
+      <workItem from="1628850537381" duration="45000" />
+      <workItem from="1628870276893" duration="3395000" />
     </task>
     <task id="LOCAL-00015" summary="Fix High Score Saving">
       <created>1627415551140</created>
@@ -833,5 +824,9 @@
     <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
     <MESSAGE value="Start of Differing GameModes" />
     <option name="LAST_COMMIT_MESSAGE" value="Start of Differing GameModes" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
