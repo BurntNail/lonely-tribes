@@ -7,14 +7,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change tilemap to have a transparent bg for easier tinting">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Timing how long the 'special' moves last, and tinting depending on how many left.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,9 +94,20 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.Run normal">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run" />
+      <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -418,21 +424,7 @@
       <workItem from="1628717588509" duration="202000" />
       <workItem from="1628756385178" duration="9596000" />
       <workItem from="1628850537381" duration="45000" />
-      <workItem from="1628870276893" duration="3395000" />
-    </task>
-    <task id="LOCAL-00015" summary="Fix High Score Saving">
-      <created>1627415551140</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1627415551140</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Fix High Score Saving">
-      <created>1627416398965</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1627416398965</updated>
+      <workItem from="1628870276893" duration="9179000" />
     </task>
     <task id="LOCAL-00017" summary="Help State">
       <created>1627416597140</created>
@@ -763,7 +755,21 @@
       <option name="project" value="LOCAL" />
       <updated>1628790825521</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Start of timed movement.">
+      <created>1628873732321</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1628873732321</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Timing how long the 'special' moves last, and tinting depending on how many left.">
+      <created>1628887972376</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1628887972376</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -798,8 +804,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state" />
-    <MESSAGE value="Fix todo on unwrap" />
     <MESSAGE value="Open up level editor and edit levels.&#10;&#10;Just now need to save levels" />
     <MESSAGE value="Save and Load Level Editor" />
     <MESSAGE value="Add script to automate new release" />
@@ -823,7 +827,9 @@
     <MESSAGE value="Remove clones" />
     <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
     <MESSAGE value="Start of Differing GameModes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start of Differing GameModes" />
+    <MESSAGE value="Start of timed movement." />
+    <MESSAGE value="Timing how long the 'special' moves last, and tinting depending on how many left." />
+    <option name="LAST_COMMIT_MESSAGE" value="Timing how long the 'special' moves last, and tinting depending on how many left." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

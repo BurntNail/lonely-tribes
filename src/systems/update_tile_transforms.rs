@@ -55,18 +55,17 @@ impl<'s> System<'s> for UpdateTileTransforms {
 
 impl UpdateTileTransforms {
     ///Convert a TileTransform to a Transform on Screen
-    pub fn tile_to_transform(tile: TileTransform) -> Transform {
+    pub fn tile_to_transform(tile: TileTransform, z: f32) -> Transform {
         let mut trans = Transform::default();
-        let (x, y, z) = Self::tile_to_xyz(tile);
+        let (x, y) = Self::tile_to_xyz(tile);
         trans.set_translation_xyz(x, y, z);
         trans
     }
     ///Convert a TileTransform to an XYZ for a Transform on Screen
-    pub fn tile_to_xyz(tile: TileTransform) -> (f32, f32, f32) {
-        let z = 0.0;
+    pub fn tile_to_xyz(tile: TileTransform) -> (f32, f32) {
         let x = tile.x as f32 * 8.0 + TILE_WIDTH;
         let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
-        (x, y, z)
+        (x, y)
     }
 
     ///Convert a TileTransform X and Y (but as floats in a tuple) to an X and a Y for an on-screen Transform

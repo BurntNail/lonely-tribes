@@ -213,7 +213,11 @@ impl SimpleState for PuzzleState {
                 N => {
                     let can_nudge = {
                         let mut mode = world.write_resource::<GameModeManager>();
-                        mode.set_mode(GamePlayingMode::Nudger)
+                        if mode.current_mode != GamePlayingMode::Nudger {
+                            mode.set_mode(GamePlayingMode::Nudger)
+                        } else {
+                            false
+                        }
                     };
                     if can_nudge {
                         let mut entities_to_make = Vec::new();
@@ -240,8 +244,8 @@ impl SimpleState for PuzzleState {
                                             (tt1, tt2)
                                         };
 
-                                        let ti1 = Tint(Srgba::new(1.0, 0.25, 0.25, 0.75));
-                                        let ti2 = Tint(Srgba::new(0.25, 0.25, 1.0, 0.75));
+                                        let ti1 = Tint(Srgba::new(1.0, 0.0, 0.0, 0.5));
+                                        let ti2 = Tint(Srgba::new(0.25, 0.0, 1.0, 0.5));
 
                                         let spr = spr.clone();
 
@@ -254,7 +258,9 @@ impl SimpleState for PuzzleState {
 
                         for (s, tt, ti) in entities_to_make {
                             let mut trans = Transform::default();
-                            trans.set_translation_z(0.25);
+
+                            trans.set_translation_z(0.15);
+
                             let ent = world
                                 .create_entity()
                                 .with(s)
@@ -265,7 +271,9 @@ impl SimpleState for PuzzleState {
                             self.tmp_fx_entities.push(ent);
                         }
                     } else {
+                        world.write_resource::<GameModeManager>().set_mode(GamePlayingMode::Normal);
                         self.reset_fx_entities(world);
+                        log::info!("Normal?");
                     }
                 }
                 _ => self.actions.iter().for_each(|(k, v)| {
@@ -290,9 +298,9 @@ impl SimpleState for PuzzleState {
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let mut t = Trans::None;
 
-            if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Normal {
-                self.reset_fx_entities(data.world);
-            }
+        if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Normal {
+            self.reset_fx_entities(data.world);
+        }
 
         {
             let game_state = data.world.read_resource::<GameState>();
@@ -376,10 +384,13 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
             world.insert(ColliderList::new());
             world.insert(GameState::default());
 
+            let mut trans = Transform::default();
+            trans.set_translation_z(0.1);
+
             match Tag::from_spr(lvl[x][y]) {
                 Tag::Player(id) => {
-                    let mut trans = Transform::default();
-                    trans.set_translation_z(0.5);
+                    trans.set_translation_z(0.2);
+
                     let ent = world
                         .create_entity()
                         .with(spr)
@@ -396,7 +407,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .create_entity()
                         .with(spr)
                         .with(tt)
-                        .with(Transform::default())
+                        .with(trans)
                         .with(NonPlayerCharacter::new(is_enemy))
                         .with(Collider::default())
                         .build();
@@ -406,7 +417,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .create_entity()
                         .with(spr)
                         .with(tt)
-                        .with(Transform::default())
+                        .with(trans)
                         .with(Collider::default())
                         .build();
                     holder.add_tile(ent);
@@ -417,7 +428,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                             .create_entity()
                             .with(spr)
                             .with(tt)
-                            .with(Transform::default())
+                            .with(trans)
                             .with(Collider::new(trigger_type))
                             .build();
                         holder.add_pu_entity(tt, e);
@@ -427,7 +438,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                             .create_entity()
                             .with(spr)
                             .with(tt)
-                            .with(Transform::default())
+                            .with(trans)
                             .with(Collider::new(trigger_type))
                             .build();
                         holder.add_tile(ent);
@@ -437,7 +448,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                     let ent = world
                         .create_entity()
                         .with(spr)
-                        .with(UpdateTileTransforms::tile_to_transform(tt))
+                        .with(UpdateTileTransforms::tile_to_transform(tt, 0.1))
                         .build();
                     holder.add_tile(ent);
                 }
@@ -460,7 +471,7 @@ fn load_level_with_state(
 
     level.players.into_iter().for_each(|(p, tt)| {
         let mut trans = Transform::default();
-        trans.set_translation_z(0.5);
+        trans.set_translation_z(0.2);
         let ent = world
             .create_entity()
             .with(SpriteRender::new(
@@ -476,6 +487,8 @@ fn load_level_with_state(
         holder.add_player_entity(ent);
     });
     level.powerups.into_iter().for_each(|(p, tt)| {
+        let mut trans = Transform::default();
+        trans.set_translation_z(0.2);
         let e = world
             .create_entity()
             .with(SpriteRender::new(
@@ -505,6 +518,9 @@ fn load_level_with_state(
             let tag = Tag::from_spr(lvl[x][y]);
             let tt = TileTransform::new(x as i32, y as i32);
 
+            let mut trans = Transform::default();
+            trans.set_translation_z(0.1);
+
             match tag {
                 Tag::Player(_) => {
                     //do nothing because they get created earlier
@@ -514,7 +530,7 @@ fn load_level_with_state(
                         .create_entity()
                         .with(spr)
                         .with(tt)
-                        .with(Transform::default())
+                        .with(trans)
                         .with(NonPlayerCharacter::new(is_enemy))
                         .with(Collider::default())
                         .build();
@@ -524,7 +540,7 @@ fn load_level_with_state(
                         .create_entity()
                         .with(spr)
                         .with(tt)
-                        .with(Transform::default())
+                        .with(trans)
                         .with(Collider::default())
                         .build();
                     holder.add_tile(ent);
@@ -538,7 +554,7 @@ fn load_level_with_state(
                             .create_entity()
                             .with(spr)
                             .with(tt)
-                            .with(Transform::default())
+                            .with(trans)
                             .with(Collider::new(trigger_type))
                             .build();
                         holder.add_tile(ent);
@@ -548,7 +564,7 @@ fn load_level_with_state(
                     let ent = world
                         .create_entity()
                         .with(spr)
-                        .with(UpdateTileTransforms::tile_to_transform(tt))
+                        .with(UpdateTileTransforms::tile_to_transform(tt, 0.1))
                         .build();
                     holder.add_tile(ent);
                 }

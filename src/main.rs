@@ -1,4 +1,3 @@
-#[deny(nonstandard-style)]
 use crate::{
     states::welcome_state::StartGameState,
     systems::{
@@ -23,6 +22,7 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
+use crate::systems::mode_tinter_system::GameModeTinterSystem;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
@@ -87,7 +87,8 @@ fn main() -> amethyst::Result<()> {
             PowerUpSystem,
             "powerups",
             &["collider_list", "update_tile_transforms", "move_player"],
-        );
+        )
+        .with(GameModeTinterSystem, "tinter", &[]);
 
     if !opts.console {
         log::set_max_level(LevelFilter::Error);

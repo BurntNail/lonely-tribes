@@ -62,7 +62,7 @@ impl SimpleState for PausedState {
         let world = data.world;
         match event {
             StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                if key_code == VirtualKeyCode::Space {
+                if key_code == VirtualKeyCode::Escape {
                     t = SimpleTrans::Pop;
 
                     world.insert(MovementDisabler::default());
