@@ -1,18 +1,14 @@
-use crate::components::{win_state::GameModeManager};
+use crate::components::win_state::GameModeManager;
 use amethyst::{
-    core::ecs::{Join, Read, System},
+    core::ecs::{Join, Read, System, WriteStorage},
     renderer::resources::Tint,
 };
-use amethyst::core::ecs::{WriteStorage};
 
 ///System to change tint on FX entities dependent on how many moves are left
 pub struct GameModeTinterSystem;
 
 impl<'s> System<'s> for GameModeTinterSystem {
-    type SystemData = (
-        Read<'s, GameModeManager>,
-        WriteStorage<'s, Tint>,
-    );
+    type SystemData = (Read<'s, GameModeManager>, WriteStorage<'s, Tint>);
 
     fn run(&mut self, (gm, mut tints): Self::SystemData) {
         let t = (((1.0 - gm.moves_left as f32 / gm.total_moves as f32) * 100.0).log10()) - 1.0;

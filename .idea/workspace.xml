@@ -9,7 +9,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Timing how long the 'special' moves last, and tinting depending on how many left.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +100,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run normal">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -320,8 +326,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.run" />
       </list>
@@ -425,13 +431,9 @@
       <workItem from="1628756385178" duration="9596000" />
       <workItem from="1628850537381" duration="45000" />
       <workItem from="1628870276893" duration="9179000" />
-    </task>
-    <task id="LOCAL-00017" summary="Help State">
-      <created>1627416597140</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1627416597140</updated>
+      <workItem from="1628937326268" duration="875000" />
+      <workItem from="1629231089632" duration="1135000" />
+      <workItem from="1629273598569" duration="1060000" />
     </task>
     <task id="LOCAL-00018" summary="clippy">
       <created>1627416908017</created>
@@ -769,7 +771,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628887972376</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Timing how long the 'special' moves last, and tinting depending on how many left.">
+      <created>1628937371605</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1628937371606</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

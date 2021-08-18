@@ -2,9 +2,10 @@ use crate::{
     states::welcome_state::StartGameState,
     systems::{
         colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
-        move_player::MovePlayerSystem, powerup_system::PowerUpSystem,
-        txt_wobble_system::TextWobbleSystem, update_score::ScoreUpdaterSystem,
-        update_tile_transforms::UpdateTileTransforms, win_system::EndOfGameSystem,
+        mode_tinter_system::GameModeTinterSystem, move_player::MovePlayerSystem,
+        powerup_system::PowerUpSystem, txt_wobble_system::TextWobbleSystem,
+        update_score::ScoreUpdaterSystem, update_tile_transforms::UpdateTileTransforms,
+        win_system::EndOfGameSystem,
     },
 };
 use amethyst::{
@@ -22,7 +23,6 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
-use crate::systems::mode_tinter_system::GameModeTinterSystem;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
@@ -36,6 +36,7 @@ mod quick_save_load;
 mod states;
 mod systems;
 mod tag;
+mod audio;
 
 ///The width of the grid of tiless
 pub const WIDTH: u32 = 64;
@@ -152,19 +153,12 @@ pub struct Flags {
 
 //todos
 
-//TODO: Export some options (eg. movement) to conf file
-//TODO: Conf Editor (maybe pause screen and toggles - switch the image of a uiimage on click)
+//TODO: Unique Mechanics - USP
+//TODO: Story
 
 //TODO: With Text, make sure to account for Screen Scaling
 
-//TODO: Story
-//TODO: Unique Mechanics - USP
 //TODO: Music/SFX
-
-//USP Ideas (PRIVATE - Don't look here)
-//Toggle to enter the 'ethereal plane' where you can budge around stuff
-//Depending on how and when you merge players, change score differently - to discourage merging all into one, and moving that dude to be inaccessible
-//**NEEDS** to be related to Story.
 
 //TODO: Steamworks
 //TODO: Steam Page

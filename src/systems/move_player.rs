@@ -18,6 +18,8 @@ use amethyst::{
 };
 use structopt::StructOpt;
 
+pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.25;
+
 ///System for capturing player movement, and collision
 #[derive(Default)]
 pub struct MovePlayerSystem;
@@ -209,7 +211,7 @@ pub fn tile_works(proposed_tile: TileTransform, collision_tiles: &[TileTransform
 
 ///Uses set_tiletransform_timed with a specific delay of 0.05
 pub fn set_tiletransform(from: &mut TileTransform, to: TileTransform, anim: &mut Animator) {
-    set_tiletransform_timed(from, to, anim, 0.05);
+    set_tiletransform_timed(from, to, anim, PLAYER_MOVEMENT_ANIM_LEN);
 }
 
 ///Sets one tiletransform equal to another with the animator, and a given duration
