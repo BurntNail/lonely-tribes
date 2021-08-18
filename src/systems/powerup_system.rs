@@ -1,7 +1,7 @@
 use crate::{
     components::{
         animator::Animator, colliders::ColliderList, data_holder::EntityHolder, player::Player,
-        power_up::PowerUp, tile_transform::TileTransform, win_state::GameWinState,
+        power_up::PowerUp, tile_transform::TileTransform, win_state::GameState,
     },
     systems::move_player::{set_tiletransform_timed, tile_works},
     HEIGHT, WIDTH,
@@ -15,7 +15,7 @@ pub struct PowerUpSystem;
 impl<'s> System<'s> for PowerUpSystem {
     type SystemData = (
         Write<'s, EntityHolder>,
-        Write<'s, GameWinState>,
+        Write<'s, GameState>,
         WriteStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
         WriteStorage<'s, Animator>,
@@ -39,7 +39,7 @@ impl<'s> System<'s> for PowerUpSystem {
                             let y = rng.gen_range(0..HEIGHT as i32);
                             let tile = TileTransform::new(x, y);
 
-                            if tile_works(tile, &colliders) {
+                            if tile_works(tile, colliders) {
                                 break tile;
                             }
                         };
@@ -49,11 +49,11 @@ impl<'s> System<'s> for PowerUpSystem {
                 PowerUp::Reaper => {
                     let mut new_list = Vec::new();
 
-                    powers.players.clone().into_iter().for_each(|e| {
+                    powers.players.iter().for_each(|e| {
                         if rng.gen() {
-                            new_list.push(e);
+                            new_list.push(*e);
                         } else {
-                            entities.delete(e).unwrap_or_else(|err| {
+                            entities.delete(*e).unwrap_or_else(|err| {
                                 log::warn!("Error deleting entity with Reaper Powerup: {}", err)
                             });
                         }

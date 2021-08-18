@@ -14,7 +14,7 @@ use amethyst::{
 ///  - **wh** is a tuple containing the width and the height in f32s
 pub fn init_camera(world: &mut World, wh: (f32, f32)) {
     let mut transform = Transform::default();
-    transform.set_translation_xyz(wh.0 * 0.5, wh.1 * 0.5, 1.0);
+    transform.set_translation_xyz(wh.0 * 0.5, wh.1 * 0.5, 100.0);
 
     world
         .create_entity()

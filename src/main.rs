@@ -2,9 +2,10 @@ use crate::{
     states::welcome_state::StartGameState,
     systems::{
         colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
-        move_player::MovePlayerSystem, powerup_system::PowerUpSystem,
-        txt_wobble_system::TextWobbleSystem, update_score::ScoreUpdaterSystem,
-        update_tile_transforms::UpdateTileTransforms, win_system::EndOfGameSystem,
+        mode_tinter_system::GameModeTinterSystem, move_player::MovePlayerSystem,
+        powerup_system::PowerUpSystem, txt_wobble_system::TextWobbleSystem,
+        update_score::ScoreUpdaterSystem, update_tile_transforms::UpdateTileTransforms,
+        win_system::EndOfGameSystem,
     },
 };
 use amethyst::{
@@ -35,11 +36,18 @@ mod quick_save_load;
 mod states;
 mod systems;
 mod tag;
+mod audio;
 
+///The width of the grid of tiless
 pub const WIDTH: u32 = 64;
+///The height of the grid of tiles
 pub const HEIGHT: u32 = 36;
+///The width of the grid of tiles in px relative to the spritesheet
 pub const ARENA_WIDTH: u32 = 8 * WIDTH;
+///The height of the grid of tiles in px relative to the spritesheet
 pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
+///The colour when a txt is hovered over
+pub const HOVER_COLOUR: [f32; 4] = [1.0, 0.5, 0.75, 1.0];
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
@@ -80,7 +88,8 @@ fn main() -> amethyst::Result<()> {
             PowerUpSystem,
             "powerups",
             &["collider_list", "update_tile_transforms", "move_player"],
-        );
+        )
+        .with(GameModeTinterSystem, "tinter", &[]);
 
     if !opts.console {
         log::set_max_level(LevelFilter::Error);
@@ -144,19 +153,12 @@ pub struct Flags {
 
 //todos
 
-//TODO: Export some options (eg. movement) to conf file
-//TODO: Conf Editor (maybe pause screen and toggles - switch the image of a uiimage on click)
+//TODO: Unique Mechanics - USP
+//TODO: Story
 
 //TODO: With Text, make sure to account for Screen Scaling
 
-//TODO: Story
-//TODO: Unique Mechanics - USP
 //TODO: Music/SFX
-
-//USP Ideas (PRIVATE - Don't look here)
-//Toggle to enter the 'ethereal plane' where you can budge around stuff
-//Depending on how and when you merge players, change score differently - to discourage merging all into one, and moving that dude to be inaccessible
-//**NEEDS** to be related to Story.
 
 //TODO: Steamworks
 //TODO: Steam Page

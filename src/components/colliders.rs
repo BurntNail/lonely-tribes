@@ -56,12 +56,12 @@ impl ColliderList {
     }
 
     ///Gets a clone of the list of colliders
-    pub fn get(&self) -> Vec<TileTransform> {
-        self.colls.clone()
+    pub fn get(&self) -> &Vec<TileTransform> {
+        &self.colls
     }
     ///Gets a clone of the list of triggers
-    pub fn get_triggers(&self) -> Vec<(TileTransform, TriggerType)> {
-        self.triggers.clone()
+    pub fn get_triggers(&self) -> &Vec<(TileTransform, TriggerType)> {
+        &self.triggers
     }
 }
 impl Default for ColliderList {

@@ -3,7 +3,7 @@ use crate::{
         colliders::{Collider, ColliderList},
         player::Player,
         tile_transform::TileTransform,
-        win_state::GameWinState,
+        win_state::GameState,
     },
     quick_save_load::LevelState,
     tag::TriggerType,
@@ -22,7 +22,7 @@ impl<'s> System<'s> for ListSystem {
         ReadStorage<'s, Collider>,
         ReadStorage<'s, Player>,
         Write<'s, ColliderList>,
-        Read<'s, GameWinState>,
+        Read<'s, GameState>,
         Write<'s, LevelState>,
     );
 
@@ -34,7 +34,7 @@ impl<'s> System<'s> for ListSystem {
         let mut player_list = Vec::new();
 
         for (t, c) in (&tiles, &colliders).join() {
-            let tt = TileTransform::from_ref(t);
+            let tt = *t;
             if let Some(t) = c.trigger {
                 triggers_list.push((tt, t));
                 if let TriggerType::Powerup(p) = t {

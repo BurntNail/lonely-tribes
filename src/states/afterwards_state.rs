@@ -1,5 +1,5 @@
 use crate::{
-    components::win_state::{GameWinState, WinStateEnum},
+    components::win_state::{GameState, GameStateEnum},
     high_scores::HighScores,
     states::{
         game_state::{PuzzleState, LEVELS},
@@ -108,12 +108,12 @@ impl SimpleState for PostGameState {
 ///  - Another bool - whether or not the previous level was won
 ///  - An f32 - the score from the previous level
 pub fn get_stuff(world: &World) -> (usize, bool, bool, i32) {
-    let gws = world.read_resource::<GameWinState>();
+    let gws = world.read_resource::<GameState>();
 
     let level_from = gws.level_from;
     let is_last_level = level_from >= LEVELS.len() - 1;
     let won = match gws.ws {
-        WinStateEnum::End { won } => won,
+        GameStateEnum::End { won } => won,
         _ => false,
     };
     let score = gws.level_no_of_moves;

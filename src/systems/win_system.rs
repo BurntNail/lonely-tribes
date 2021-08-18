@@ -1,7 +1,7 @@
 use crate::components::{
     player::Player,
     tile_transform::TileTransform,
-    win_state::{GameWinState, WinStateEnum},
+    win_state::{GameState, GameStateEnum},
 };
 use amethyst::ecs::{Join, ReadStorage, System, Write};
 use std::collections::HashMap;
@@ -13,7 +13,7 @@ impl<'s> System<'s> for EndOfGameSystem {
     type SystemData = (
         ReadStorage<'s, TileTransform>,
         ReadStorage<'s, Player>,
-        Write<'s, GameWinState>,
+        Write<'s, GameState>,
     );
 
     fn run(&mut self, (tiles, players, mut gws): Self::SystemData) {
@@ -44,7 +44,7 @@ impl<'s> System<'s> for EndOfGameSystem {
 
         //region check for a loss or tbd
         if count_bad > 0 {
-            gws.ws = WinStateEnum::End { won: false };
+            gws.ws = GameStateEnum::End { won: false };
             return;
         }
         if count_match.is_empty()
@@ -64,6 +64,6 @@ impl<'s> System<'s> for EndOfGameSystem {
             }
         }
 
-        gws.ws = WinStateEnum::End { won: true };
+        gws.ws = GameStateEnum::End { won: true };
     }
 }

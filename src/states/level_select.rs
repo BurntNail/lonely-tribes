@@ -5,6 +5,7 @@ use crate::{
         states_util::load_font,
         welcome_state::StartGameState,
     },
+    HOVER_COLOUR,
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
@@ -77,7 +78,7 @@ impl SimpleState for LevelSelectState {
                             UiEventType::ClickStop => {
                                 t = SimpleTrans::Switch(Box::new(PuzzleState::new(target_index)))
                             }
-                            UiEventType::HoverStart => txt.color = [1.0, 0.5, 0.75, 1.0],
+                            UiEventType::HoverStart => txt.color = HOVER_COLOUR,
                             UiEventType::HoverStop => txt.color = [1.0; 4],
                             _ => {}
                         }

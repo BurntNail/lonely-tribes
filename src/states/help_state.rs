@@ -11,7 +11,7 @@ pub const HELP_TXT: &str = "Welcome to Lonely Tribes!
 \n
 \n - In each level, there are different tribes of people who have gotten lost, who gain power over the other tribes by merging. Try to merge.wav all of the members of each tribe, but don't let non-tribe members touch.\
 \n\n - Use WASD to move, Space to toggle showing the score, and R to restart if you get to a hard spot.\
-\n\n - Powerups - The guy who looks like he will trick you will randomly increase or decrease your score, the ghost/cross will kill half of all of the players (Thanos Snap), and the portal will teleport all of your players into random places (including walls and trees muah-ha-ha-ha-ha)\
+\n\n - Powerups - The guy who looks like he will trick you will randomly increase or decrease your score, the ghost/cross will kill half of all of the players (Thanos Snap), and the portal will teleport all of your players into random places.\
 \n\n
 \nHave fun!\
 \n

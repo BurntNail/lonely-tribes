@@ -7,13 +7,25 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change tilemap to have a transparent bg for easier tinting">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Timing how long the 'special' moves last, and tinting depending on how many left.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -59,7 +71,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/rouguelike-rpg/assets/maps/test.ron.rs" value="true" />
-    <property name="settings.editor.selected.configurable" value="actions.on.save" />
+    <property name="settings.editor.selected.configurable" value="language.rust" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -88,15 +100,25 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.fmt">
+  <component name="RunManager" selected="Cargo.clippy">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run" />
+      <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -112,7 +134,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -130,7 +151,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -148,7 +168,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -166,7 +185,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -184,7 +202,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -200,7 +217,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -218,7 +234,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -236,7 +251,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -254,7 +268,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -270,7 +283,6 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -314,15 +326,15 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.run" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -414,98 +426,14 @@
       <workItem from="1628667762040" duration="9000" />
       <workItem from="1628667892598" duration="1214000" />
       <workItem from="1628669119888" duration="1250000" />
-      <workItem from="1628703279310" duration="6630000" />
-    </task>
-    <task id="LOCAL-00005" summary="Fix Movement">
-      <created>1627377009693</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1627377009693</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Add Docu-Comments">
-      <created>1627388003610</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1627388003610</updated>
-    </task>
-    <task id="LOCAL-00007" summary="StructOpt">
-      <created>1627390052282</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1627390052282</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Add high scores">
-      <created>1627395042108</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1627395042108</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Add high scores">
-      <created>1627395052469</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1627395052469</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Add Score Text for High Scores">
-      <created>1627406967109</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1627406967109</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Add hiding Scores">
-      <created>1627407614702</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1627407614702</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Change hide key to Space">
-      <created>1627407640334</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1627407640334</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Change hide key to Space">
-      <created>1627407644154</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1627407644154</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Realise that this should be v3">
-      <created>1627408825624</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1627408825624</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Fix High Score Saving">
-      <created>1627415551140</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1627415551140</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Fix High Score Saving">
-      <created>1627416398965</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1627416398965</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Help State">
-      <created>1627416597140</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1627416597140</updated>
+      <workItem from="1628703279310" duration="9787000" />
+      <workItem from="1628717588509" duration="202000" />
+      <workItem from="1628756385178" duration="9596000" />
+      <workItem from="1628850537381" duration="45000" />
+      <workItem from="1628870276893" duration="9179000" />
+      <workItem from="1628937326268" duration="875000" />
+      <workItem from="1629231089632" duration="1135000" />
+      <workItem from="1629273598569" duration="1060000" />
     </task>
     <task id="LOCAL-00018" summary="clippy">
       <created>1627416908017</created>
@@ -759,7 +687,98 @@
       <option name="project" value="LOCAL" />
       <updated>1628711868383</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Change tilemap to have a transparent bg for easier tinting">
+      <created>1628711901862</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1628711901862</updated>
+    </task>
+    <task id="LOCAL-00055" summary="fix old problem with loading saves">
+      <created>1628712390940</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1628712390940</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Farm out hiding and showing to different methods.">
+      <created>1628712409970</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1628712409970</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Basic Movement toggler">
+      <created>1628715038096</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1628715038096</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Fix clippy warnings for pause">
+      <created>1628756852515</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1628756852516</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Make it so that score is only incremented, when it actually moves.">
+      <created>1628756878951</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1628756878951</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Remove clones">
+      <created>1628757227526</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1628757227527</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Remove clones">
+      <created>1628759067458</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1628759067458</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Add sprites that might be used in the future for the pause menu">
+      <created>1628759152275</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1628759152275</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Start of Differing GameModes">
+      <created>1628790825521</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1628790825521</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Start of timed movement.">
+      <created>1628873732321</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1628873732321</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Timing how long the 'special' moves last, and tinting depending on how many left.">
+      <created>1628887972376</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1628887972376</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Timing how long the 'special' moves last, and tinting depending on how many left.">
+      <created>1628937371605</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1628937371606</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -773,7 +792,20 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="BEK_SORT_TYPE" value="1" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="hacking-usp-1" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -781,17 +813,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix move_player.rs" />
-    <MESSAGE value="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in." />
-    <MESSAGE value="Save/Load in from File&#10;&#10;Now, I just need to make new constructors" />
-    <MESSAGE value="Add shell script for new releases" />
-    <MESSAGE value="Facilities to actually load the save" />
-    <MESSAGE value="Add docucomments" />
-    <MESSAGE value="Start on Steamworks - I need to wait for the license to come through" />
-    <MESSAGE value="Cargo fmt" />
-    <MESSAGE value="Re-fix merging" />
-    <MESSAGE value="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state" />
-    <MESSAGE value="Fix todo on unwrap" />
     <MESSAGE value="Open up level editor and edit levels.&#10;&#10;Just now need to save levels" />
     <MESSAGE value="Save and Load Level Editor" />
     <MESSAGE value="Add script to automate new release" />
@@ -805,7 +826,22 @@
     <MESSAGE value="fix winning (i hope)" />
     <MESSAGE value="optimise win_system.rs to not have to use colliderlist" />
     <MESSAGE value="Add a basic pause state that hides all game entities when paused, and later unhides them." />
+    <MESSAGE value="Make note to self regarding old colours" />
     <MESSAGE value="Change tilemap to have a transparent bg for easier tinting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change tilemap to have a transparent bg for easier tinting" />
+    <MESSAGE value="fix old problem with loading saves" />
+    <MESSAGE value="Farm out hiding and showing to different methods." />
+    <MESSAGE value="Basic Movement toggler" />
+    <MESSAGE value="Fix clippy warnings for pause" />
+    <MESSAGE value="Make it so that score is only incremented, when it actually moves." />
+    <MESSAGE value="Remove clones" />
+    <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
+    <MESSAGE value="Start of Differing GameModes" />
+    <MESSAGE value="Start of timed movement." />
+    <MESSAGE value="Timing how long the 'special' moves last, and tinting depending on how many left." />
+    <option name="LAST_COMMIT_MESSAGE" value="Timing how long the 'special' moves last, and tinting depending on how many left." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
