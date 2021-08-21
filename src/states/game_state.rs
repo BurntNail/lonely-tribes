@@ -231,6 +231,7 @@ impl SimpleState for PuzzleState {
                         }
                     };
                     if can_nudge {
+                        self.make_fx_entities(world);
                     } else {
                         world
                             .write_resource::<GameModeManager>()
@@ -288,35 +289,36 @@ impl SimpleState for PuzzleState {
 impl PuzzleState {
     fn make_fx_entities(&mut self, world: &mut World) {
         let mut entities_to_make = Vec::new();
+        {
+            let sprite_renderers = world.read_storage::<SpriteRender>();
+            let tiletransforms = world.read_storage::<TileTransform>();
 
-        let sprite_renderers = world.read_storage::<SpriteRender>();
-        let tiletransforms = world.read_storage::<TileTransform>();
+            for e in &world.read_resource::<EntityHolder>().tiles {
+                if let Some(spr) = sprite_renderers.get(*e) {
+                    if let Some(tt) = tiletransforms.get(*e) {
+                        let (tt1, tt2) = {
+                            // let tw = TILE_WIDTH as i32 / 2;
+                            // let th = TILE_HEIGHT as i32 / 2;
+                            let tw = 1;
+                            let th = 1;
 
-        for e in &world.read_resource::<EntityHolder>().tiles {
-            if let Some(spr) = sprite_renderers.get(*e) {
-                if let Some(tt) = tiletransforms.get(*e) {
-                    let (tt1, tt2) = {
-                        // let tw = TILE_WIDTH as i32 / 2;
-                        // let th = TILE_HEIGHT as i32 / 2;
-                        let tw = 1;
-                        let th = 1;
+                            let mut tt1 = *tt;
+                            let mut tt2 = *tt;
 
-                        let mut tt1 = *tt;
-                        let mut tt2 = *tt;
+                            tt1.set_offsets((tw, th));
+                            tt2.set_offsets((-tw, -th));
 
-                        tt1.set_offsets((tw, th));
-                        tt2.set_offsets((-tw, -th));
+                            (tt1, tt2)
+                        };
 
-                        (tt1, tt2)
-                    };
+                        let ti1 = Tint(Srgba::new(1.0, 0.0, 0.0, 0.5));
+                        let ti2 = Tint(Srgba::new(0.25, 0.0, 1.0, 0.5));
 
-                    let ti1 = Tint(Srgba::new(1.0, 0.0, 0.0, 0.5));
-                    let ti2 = Tint(Srgba::new(0.25, 0.0, 1.0, 0.5));
+                        let spr = spr.clone();
 
-                    let spr = spr.clone();
-
-                    entities_to_make.push((spr.clone(), tt1, ti1));
-                    entities_to_make.push((spr.clone(), tt2, ti2));
+                        entities_to_make.push((spr.clone(), tt1, ti1));
+                        entities_to_make.push((spr.clone(), tt2, ti2));
+                    }
                 }
             }
         }
