@@ -23,7 +23,7 @@ impl<'s> System<'s> for UpdateTileTransforms {
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (mut tiles, mut transforms, mut animators, time): Self::SystemData) {
+    fn run(&mut self, (tiles, mut transforms, mut animators, time): Self::SystemData) {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
             let x = tile.x as f32 * 8.0 + TILE_WIDTH + tile.x_offset as f32;
@@ -32,23 +32,31 @@ impl<'s> System<'s> for UpdateTileTransforms {
             trans.set_translation_xyz(x, y, old_z);
         }
 
-        for (trans, anim_cmp, tt) in (&mut transforms, &mut animators, &mut tiles).join() {
-            let z = trans.translation().z;
-            let mut x = tt.x as f32 * 8.0 + TILE_WIDTH + tt.x_offset as f32;
-            let mut y = (HEIGHT - tt.y as u32) as f32 * 8.0 - TILE_HEIGHT - tt.y_offset as f32;
-
+        for (trans, anim_cmp) in (&mut transforms, &mut animators).join() {
             if anim_cmp.anim_is_done() {
                 anim_cmp.finish();
             } else if let Some(anim) = &mut anim_cmp.animation_data {
-                let start = anim.start;
-
-                x = ((start.x as f32) - anim.x_offset()) * 8.0 + TILE_WIDTH;
-                y = ((HEIGHT as f32 - start.y as f32) + anim.y_offset()) * 8.0 - TILE_HEIGHT;
-
                 anim.add_time(time.delta_seconds());
-            }
 
-            trans.set_translation_xyz(x, y, z);
+                //Translation
+                let start = anim.start;
+                let xo = anim.x_offset();
+
+                let x = ((start.x as f32) - xo) * 8.0 + TILE_WIDTH;
+                let y = ((HEIGHT as f32 - start.y as f32) + anim.y_offset()) * 8.0 - TILE_HEIGHT;
+                let z = trans.translation().z;
+
+                trans.set_translation_xyz(x, y, z);
+
+                //Rotation
+                if xo != 0.0 {
+                    let rotation = (anim.get_offset_multiplier() * 180.0).to_radians().sin() / 2.0;
+                    let mult = if xo > 0.0 {1.0} else {-1.0};
+                    trans.set_rotation_2d(mult * rotation);
+                } else {
+                    trans.set_rotation_2d(0.0);
+                }
+            }
         }
     }
 }

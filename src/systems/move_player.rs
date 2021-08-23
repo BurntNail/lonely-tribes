@@ -206,8 +206,6 @@ pub fn set_tiletransform_timed(
     anim: &mut Animator,
     t: f32,
 ) {
-    let nu_data = AnimationData::new(*from, to, t);
-    anim.replace_data(nu_data);
-
+    anim.replace_data(AnimationData::new(from.clone(), to, t));
     from.set(to);
 }

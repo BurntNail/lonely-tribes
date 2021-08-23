@@ -203,6 +203,7 @@ impl SimpleState for PuzzleState {
                 N => self.set_gameplay_mode(GamePlayingMode::Nudger, world),
                 T => self.set_gameplay_mode(GamePlayingMode::TradeOff, world),
                 C => self.set_gameplay_mode(GamePlayingMode::Crazy, world),
+                B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -225,7 +226,7 @@ impl SimpleState for PuzzleState {
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let mut t = Trans::None;
 
-        if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Normal {
+        if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Boring {
             self.reset_fx_entities(data.world);
         }
 
@@ -261,7 +262,7 @@ impl PuzzleState {
         } else {
             world
                 .write_resource::<GameModeManager>()
-                .set_mode(GamePlayingMode::Normal);
+                .set_mode(GamePlayingMode::Boring);
             self.reset_fx_entities(world);
         }
     }

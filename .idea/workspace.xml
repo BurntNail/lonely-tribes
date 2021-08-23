@@ -7,11 +7,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="cargo fmt">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add 2 new gameplay modes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-04.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-04.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-05.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-05.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-07.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-07.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +101,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.run release (with fps)">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -431,14 +436,7 @@
       <workItem from="1629231089632" duration="1135000" />
       <workItem from="1629273598569" duration="1060000" />
       <workItem from="1629568312058" duration="35000" />
-      <workItem from="1629694032341" duration="5849000" />
-    </task>
-    <task id="LOCAL-00024" summary="Spawn in PowerUps">
-      <created>1627551368317</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1627551368317</updated>
+      <workItem from="1629694032341" duration="7289000" />
     </task>
     <task id="LOCAL-00025" summary="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!">
       <created>1627551599795</created>
@@ -776,7 +774,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629698745195</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
+      <created>1629699968118</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1629699968118</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -811,7 +816,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix powerups spawning in colliders and OOB" />
     <MESSAGE value="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins" />
     <MESSAGE value="I broke smth, so i fixed it" />
     <MESSAGE value="fix winning (i hope)" />
@@ -836,7 +840,8 @@
     <MESSAGE value="Remove powerups system - it just doesn't feel good now that I have the movement types system" />
     <MESSAGE value="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff." />
     <MESSAGE value="cargo fmt" />
-    <option name="LAST_COMMIT_MESSAGE" value="cargo fmt" />
+    <MESSAGE value="Add 2 new gameplay modes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add 2 new gameplay modes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

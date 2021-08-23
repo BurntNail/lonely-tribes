@@ -20,7 +20,7 @@ impl Default for GameStateEnum {
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum GamePlayingMode {
     ///One move - all moves
-    Normal,
+    Boring,
     ///Collisions are ignored
     Nudger,
     ///All movements go in a random direction, but are free
@@ -30,13 +30,13 @@ pub enum GamePlayingMode {
 }
 impl Default for GamePlayingMode {
     fn default() -> Self {
-        Self::Normal
+        Self::Boring
     }
 }
 impl GamePlayingMode {
     pub fn get_no_moves(&self) -> i32 {
         match self {
-            Self::Normal => 0,
+            Self::Boring => 0,
             Self::Nudger => 1,
             Self::TradeOff => 0,
             Self::Crazy => 2,
@@ -64,7 +64,7 @@ impl GameModeManager {
         Self {
             total_moves: moves,
             moves_left: moves,
-            current_mode: GamePlayingMode::Normal,
+            current_mode: GamePlayingMode::Boring,
         }
     }
 
@@ -85,7 +85,7 @@ impl GameModeManager {
 
     pub fn get_and_update_mode(&mut self) -> GamePlayingMode {
         if self.moves_left <= 0 {
-            self.current_mode = GamePlayingMode::Normal;
+            self.current_mode = GamePlayingMode::Boring;
         }
         self.current_mode
     }

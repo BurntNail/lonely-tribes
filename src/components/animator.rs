@@ -40,15 +40,15 @@ impl AnimationData {
 
     ///Gets x offset
     pub fn x_offset(&self) -> f32 {
-        self.get_time_for_offset() * ((self.start.x - self.end.x) as f32)
+        self.get_offset_multiplier() * ((self.start.x - self.end.x) as f32)
     }
     ///Gets y offset
     pub fn y_offset(&self) -> f32 {
-        self.get_time_for_offset() * ((self.start.y - self.end.y) as f32)
+        self.get_offset_multiplier() * ((self.start.y - self.end.y) as f32)
     }
 
-    ///Get time to multiply for offset
-    fn get_time_for_offset(&self) -> f32 {
+    ///Get offset multiplier based on time
+    pub fn get_offset_multiplier(&self) -> f32 {
         let base = self.time_elapsed / self.total_time;
 
         let val = match self.interpolation {
