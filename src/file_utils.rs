@@ -1,5 +1,4 @@
-use std::path::Path;
-use std::fs::read_dir;
+use std::{fs::read_dir, path::Path};
 
 ///Gets file names inside a directory
 pub fn list_file_names_in_dir<P: AsRef<Path>>(path: P) -> Vec<String> {

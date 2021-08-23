@@ -1,13 +1,9 @@
-use crate::{
-    components::{
-        colliders::{Collider, ColliderList},
-        player::Player,
-        tile_transform::TileTransform,
-    },
+use crate::components::{
+    colliders::{Collider, ColliderList},
+    player::Player,
+    tile_transform::TileTransform,
 };
-use amethyst::{
-    ecs::{Join, ReadStorage, System, Write},
-};
+use amethyst::ecs::{Join, ReadStorage, System, Write};
 
 ///System to update ColliderList, and LevelState
 pub struct ListSystem;

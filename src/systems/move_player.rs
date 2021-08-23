@@ -10,7 +10,7 @@ use crate::{
     Flags, HEIGHT, WIDTH,
 };
 use amethyst::{
-    core::{Time},
+    core::Time,
     ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };

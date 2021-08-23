@@ -8,7 +8,8 @@ use crate::{
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
     },
-    level::{Room},
+    file_utils::list_file_names_in_dir,
+    level::Room,
     states::{
         afterwards_state::PostGameState,
         level_select::LevelSelectState,
@@ -31,7 +32,6 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
-use crate::file_utils::list_file_names_in_dir;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
