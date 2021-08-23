@@ -16,7 +16,7 @@ impl Default for AnimInterpolation {
 }
 
 ///Component to animate a tiletransform horizontally or vertically
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug)]
 pub struct AnimationData {
     pub start: TileTransform,
     pub end: TileTransform,
@@ -25,6 +25,20 @@ pub struct AnimationData {
     pub time_elapsed: f32,
 
     pub interpolation: AnimInterpolation,
+    pub rotates: bool
+}
+impl Default for AnimationData {
+    fn default() -> Self {
+        Self {
+            rotates: true,
+
+            start: TileTransform::default(),
+            end: TileTransform::default(),
+            total_time: 0.0,
+            time_elapsed: 0.0,
+            interpolation: AnimInterpolation::default()
+        }
+    }
 }
 
 impl AnimationData {
@@ -34,6 +48,15 @@ impl AnimationData {
             start,
             end,
             total_time,
+            ..Default::default()
+        }
+    }
+    pub fn new_no_rotate (start: TileTransform, end: TileTransform, total_time: f32) -> Self {
+        Self {
+            start,
+            end,
+            total_time,
+            rotates: false,
             ..Default::default()
         }
     }
@@ -74,6 +97,7 @@ impl AnimationData {
 }
 
 ///Component on all players to hold an animator
+#[derive(Copy, Clone, Debug, Default)]
 pub struct Animator {
     pub animation_data: Option<AnimationData>,
 }

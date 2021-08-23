@@ -7,13 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add 2 new gameplay modes">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add rotations to animations">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-04.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-04.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-05.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-05.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-07.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-07.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
@@ -99,20 +99,11 @@
       <command value="cargo build --release" />
       <command value="cargo check" />
       <command value="cargo run" />
+      <command value="cargo locate-project" />
+      <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run release (with fps)">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Cargo.build release">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -327,10 +318,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
-        <item itemvalue="Cargo.build release" />
-        <item itemvalue="Cargo.run" />
       </list>
     </recent_temporary>
   </component>
@@ -436,21 +426,9 @@
       <workItem from="1629231089632" duration="1135000" />
       <workItem from="1629273598569" duration="1060000" />
       <workItem from="1629568312058" duration="35000" />
-      <workItem from="1629694032341" duration="7289000" />
-    </task>
-    <task id="LOCAL-00025" summary="Fix rustfmt.toml to organise imports by crate for me.&#10;Yay!">
-      <created>1627551599795</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1627551599795</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Get powerups to show, add their effect to a global list, and go away on use.">
-      <created>1627594954551</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1627594954551</updated>
+      <workItem from="1629694032341" duration="8819000" />
+      <workItem from="1629730017204" duration="1550000" />
+      <workItem from="1629734544090" duration="135000" />
     </task>
     <task id="LOCAL-00027" summary="Powerups working hell yeah">
       <created>1627668888491</created>
@@ -781,7 +759,21 @@
       <option name="project" value="LOCAL" />
       <updated>1629699968118</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Clean old levels to remove powerups">
+      <created>1629701400799</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1629701400799</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Add rotations to animations">
+      <created>1629701461806</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1629701461806</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -816,8 +808,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins" />
-    <MESSAGE value="I broke smth, so i fixed it" />
     <MESSAGE value="fix winning (i hope)" />
     <MESSAGE value="optimise win_system.rs to not have to use colliderlist" />
     <MESSAGE value="Add a basic pause state that hides all game entities when paused, and later unhides them." />
@@ -841,7 +831,9 @@
     <MESSAGE value="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff." />
     <MESSAGE value="cargo fmt" />
     <MESSAGE value="Add 2 new gameplay modes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add 2 new gameplay modes" />
+    <MESSAGE value="Clean old levels to remove powerups" />
+    <MESSAGE value="Add rotations to animations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add rotations to animations" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -89,9 +89,18 @@ impl<'s> System<'s> for MovePlayerSystem {
         let mut add_to_score = false;
         let mode = gm.current_mode;
 
-        let collision_tiles = list.get();
-        #[allow(unused_variables)] //triggers for later in dev
-        let trigger_tiles = list.get_triggers();
+        #[allow(unused_variables)]
+        let (collision_tiles, trigger_tiles) = {
+            let mut collisions = list.get().clone();
+            let triggers = list.get_triggers();
+
+            if mode == GamePlayingMode::AllTheColliders {
+                triggers.iter().for_each(|(tt, _)| collisions.push(*tt));
+            }
+
+            (collisions, triggers)
+        };
+
 
         let (proposed_tile_addition, actual_movement) = {
             let mut t = TileTransform::default();
@@ -112,32 +121,37 @@ impl<'s> System<'s> for MovePlayerSystem {
             (t, movement)
         };
 
+        let proposed_tile_closure = |tile: TileTransform| {
+            let mut rng = rand::thread_rng();
+            match mode {
+                GamePlayingMode::TradeOff => {
+                    tile + TileTransform::new(rng.gen_range(-1..=1), rng.gen_range(-1..=1))
+                }
+                GamePlayingMode::Crazy => TileTransform::new(
+                    rng.gen_range(0..WIDTH as i32),
+                    rng.gen_range(0..HEIGHT as i32),
+                ),
+                _ => tile + proposed_tile_addition,
+            }
+        };
+
         if let Some((timer, interval)) = &mut movement.movement_timer {
             *timer += time.delta_seconds();
 
             if timer > interval && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let mut rng = rand::thread_rng();
-                    let proposed_tile = match mode {
-                        GamePlayingMode::TradeOff => {
-                            *tile + TileTransform::new(rng.gen_range(-1..=1), rng.gen_range(-1..=1))
-                        }
-                        GamePlayingMode::Crazy => TileTransform::new(
-                            rng.gen_range(0..WIDTH as i32),
-                            rng.gen_range(0..HEIGHT as i32),
-                        ),
-                        _ => *tile + proposed_tile_addition,
-                    };
-
+                    let proposed_tile = proposed_tile_closure(*tile);
                     let works = if mode == GamePlayingMode::Nudger {
                         true
                     } else {
-                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
+                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile
                     };
 
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
-                        add_to_score = true;
+                        if mode.adds_to_score() {
+                            add_to_score = true;
+                        }
                     }
                 }
 
@@ -148,12 +162,11 @@ impl<'s> System<'s> for MovePlayerSystem {
         if let Some(can_move) = movement.can_move {
             if !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let proposed_tile = *tile + proposed_tile_addition;
-
+                    let proposed_tile = proposed_tile_closure(*tile);
                     let works = if mode == GamePlayingMode::Nudger {
                         true
                     } else {
-                        tile_works(proposed_tile, collision_tiles) && &proposed_tile != tile
+                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile
                     };
 
                     if works && can_move && actual_movement {

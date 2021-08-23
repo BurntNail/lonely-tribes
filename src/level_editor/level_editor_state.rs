@@ -19,6 +19,8 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use image::{ImageBuffer, Rgba};
+use crate::components::animator::{Animator, AnimationData};
+use crate::systems::move_player::PLAYER_MOVEMENT_ANIM_LEN;
 
 #[derive(Clone, Default)]
 pub struct LevelEditorState {
@@ -94,7 +96,7 @@ impl SimpleState for LevelEditorState {
             let mut trans = Transform::default();
             trans.set_translation_z(0.8);
 
-            world.create_entity().with(spr).with(tt).with(trans).build()
+            world.create_entity().with(spr).with(tt).with(trans).with(Animator::default()).build()
         };
         self.highlighter = Some(high);
     }
@@ -152,10 +154,16 @@ impl SimpleState for LevelEditorState {
                         working_version.y = y_limit;
                     }
 
+                    let old = self.current_editing.clone();
                     self.current_editing = working_version;
 
                     let mut tiletransforms = world.write_component::<TileTransform>();
+                    let mut animators = world.write_component::<Animator>();
                     if let Some(high) = self.highlighter {
+                        if let Some(an) = animators.get_mut(high) {
+                            let data = AnimationData::new_no_rotate(old, working_version, PLAYER_MOVEMENT_ANIM_LEN);
+                            an.replace_data(data);
+                        }
                         if let Some(tt) = tiletransforms.get_mut(high) {
                             tt.set(working_version);
                         }

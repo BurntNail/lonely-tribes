@@ -203,6 +203,7 @@ impl SimpleState for PuzzleState {
                 N => self.set_gameplay_mode(GamePlayingMode::Nudger, world),
                 T => self.set_gameplay_mode(GamePlayingMode::TradeOff, world),
                 C => self.set_gameplay_mode(GamePlayingMode::Crazy, world),
+                K => self.set_gameplay_mode(GamePlayingMode::AllTheColliders, world),
                 B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {

@@ -27,7 +27,7 @@ impl<'s> System<'s> for UpdateTileTransforms {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
             let x = tile.x as f32 * 8.0 + TILE_WIDTH + tile.x_offset as f32;
-            let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT - tile.y_offset as f32;
+            let y = (HEIGHT as f32 - tile.y as f32) * 8.0 - TILE_HEIGHT - tile.y_offset as f32;
 
             trans.set_translation_xyz(x, y, old_z);
         }
@@ -49,7 +49,7 @@ impl<'s> System<'s> for UpdateTileTransforms {
                 trans.set_translation_xyz(x, y, z);
 
                 //Rotation
-                if xo != 0.0 {
+                if xo != 0.0 && anim.rotates {
                     let rotation = (anim.get_offset_multiplier() * 180.0).to_radians().sin() / 2.0;
                     let mult = if xo > 0.0 {1.0} else {-1.0};
                     trans.set_rotation_2d(mult * rotation);

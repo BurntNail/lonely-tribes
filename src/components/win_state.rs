@@ -27,6 +27,8 @@ pub enum GamePlayingMode {
     TradeOff,
     ///All movements go to a random place
     Crazy,
+    ///Everything is a collider
+    AllTheColliders
 }
 impl Default for GamePlayingMode {
     fn default() -> Self {
@@ -40,7 +42,11 @@ impl GamePlayingMode {
             Self::Nudger => 1,
             Self::TradeOff => 0,
             Self::Crazy => 2,
+            Self::AllTheColliders => 5,
         }
+    }
+    pub fn adds_to_score (&self) -> bool {
+        !(self == &Self::TradeOff)
     }
 }
 
