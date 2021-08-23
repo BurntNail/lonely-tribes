@@ -7,21 +7,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add options for Animator for different interpolation types">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Remove powerups system - it just doesn't feel good now that I have the movement types system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/data_holder.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +98,17 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -430,14 +432,7 @@
       <workItem from="1629231089632" duration="1135000" />
       <workItem from="1629273598569" duration="1060000" />
       <workItem from="1629568312058" duration="35000" />
-      <workItem from="1629694032341" duration="4038000" />
-    </task>
-    <task id="LOCAL-00021" summary="change version">
-      <created>1627419557298</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1627419557298</updated>
+      <workItem from="1629694032341" duration="4539000" />
     </task>
     <task id="LOCAL-00022" summary="Fix Movement - once and for all!">
       <created>1627458564981</created>
@@ -775,7 +770,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629697356480</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Remove powerups system - it just doesn't feel good now that I have the movement types system">
+      <created>1629698191197</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1629698191197</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -810,7 +812,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change names over in game ui-texts" />
     <MESSAGE value="Animations baby!&#10;However, it did break the win system..." />
     <MESSAGE value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
     <MESSAGE value="Fix powerups spawning in colliders and OOB" />
@@ -835,7 +836,8 @@
     <MESSAGE value="General bug fixes inc:&#10;&#10; - Changing add_to_new into impl Add for TileTransform&#10; - Strict float comparison errors&#10; - Using Results&#10; - Changing single-case-matches to if lets&#10; - Fixing Animations to actually move from start to end, rather than end to start" />
     <MESSAGE value="Fun with impl Into for TileTransform" />
     <MESSAGE value="Add options for Animator for different interpolation types" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add options for Animator for different interpolation types" />
+    <MESSAGE value="Remove powerups system - it just doesn't feel good now that I have the movement types system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove powerups system - it just doesn't feel good now that I have the movement types system" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -8,8 +8,7 @@ use crate::{
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
     },
-    level::{Room, SpriteRequest},
-    quick_save_load::{LevelState, SaveType},
+    level::{Room},
     states::{
         afterwards_state::PostGameState,
         level_select::LevelSelectState,
@@ -32,6 +31,7 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
+use crate::file_utils::list_file_names_in_dir;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -45,7 +45,7 @@ pub fn get_levels() -> Vec<String> {
     if cfg!(debug_assertions) && opts.debug && opts.debug_level {
         vec!["test-room-one.png".to_string()]
     } else {
-        let mut out: Vec<String> = LevelState::list_file_names_in_dir("assets/maps")
+        let mut out: Vec<String> = list_file_names_in_dir("assets/maps")
             .into_iter()
             .filter(|nom| nom.contains("lvl-") && nom.contains(".png"))
             .map(|el| el.replace("\"", ""))
@@ -65,8 +65,6 @@ pub struct PuzzleState {
     actions: HashMap<VirtualKeyCode, usize>,
     ///Option variable to hold the Score text
     score_button: Option<Entity>,
-    ///Option variable to hold loaded level
-    level_state: Option<LevelState>,
     ///Vec to hold entities for temporary mode effects (eg. nudger)
     tmp_fx_entities: Vec<Entity>,
 }
@@ -86,7 +84,6 @@ impl Default for PuzzleState {
         Self {
             ws: GameStateEnum::default(),
             level_index,
-            level_state: None,
             actions: HashMap::new(),
             score_button: None,
             tmp_fx_entities: Vec::new(),
@@ -98,14 +95,6 @@ impl PuzzleState {
     pub fn new(level_index: usize) -> Self {
         PuzzleState {
             level_index,
-            ..Default::default()
-        }
-    }
-    ///Constructor for PuzzleState for use with a loaded save
-    pub fn new_levelstate(level_index: usize, level_state: Option<LevelState>) -> Self {
-        PuzzleState {
-            level_index,
-            level_state,
             ..Default::default()
         }
     }
@@ -137,17 +126,11 @@ impl SimpleState for PuzzleState {
         let level_default = "test-room-one.png".to_string();
         let this_level = {
             let this_level = LEVELS.get(self.level_index).unwrap_or(&level_default);
-
             this_level.as_str()
         };
 
-        let holder = if let Some(state) = self.level_state.take() {
-            world.insert(GameState::new(None, self.level_index, state.score));
-            load_level_with_state(world, handle, this_level, state)
-        } else {
-            world.insert(GameState::new(None, self.level_index, 0));
-            load_level(world, handle, this_level)
-        };
+        world.insert(GameState::new(None, self.level_index, 0));
+        let holder = load_level(world, handle, this_level);
 
         world.register::<NonPlayerCharacter>();
 
@@ -204,16 +187,6 @@ impl SimpleState for PuzzleState {
                     }
                 }
                 L => t = Trans::Switch(Box::new(LevelSelectState::default())),
-                F5 | VirtualKeyCode::F6 => world
-                    .read_resource::<LevelState>()
-                    .save(SaveType::QuickSave, self.level_index),
-                F9 => {
-                    let save = LevelState::load_most_recent(None, self.level_index);
-                    t = Trans::Switch(Box::new(PuzzleState::new_levelstate(
-                        self.level_index,
-                        save,
-                    )));
-                }
                 Escape => {
                     if let Some(btn) = self.score_button {
                         world
@@ -453,103 +426,6 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .build();
                     holder.add_tile(ent);
                 }
-                _ => {
-                    let ent = world
-                        .create_entity()
-                        .with(spr)
-                        .with(UpdateTileTransforms::tile_to_transform(tt, 0.1))
-                        .build();
-                    holder.add_tile(ent);
-                }
-            }
-        }
-    }
-
-    holder
-}
-
-///Loads in a level given a path and a levelState
-fn load_level_with_state(
-    world: &mut World,
-    sprites_handle: Handle<SpriteSheet>,
-    path: &str,
-    level: LevelState,
-) -> EntityHolder {
-    let lvl = Room::new(path);
-    let mut holder = EntityHolder::new();
-
-    level.players.into_iter().for_each(|(p, tt)| {
-        let mut trans = Transform::default();
-        trans.set_translation_z(0.2);
-        let ent = world
-            .create_entity()
-            .with(SpriteRender::new(
-                sprites_handle.clone(),
-                SpriteRequest::Player(p.id).get_spritesheet_index(),
-            ))
-            .with(tt)
-            .with(trans)
-            .with(Collider::new(TriggerType::from_id(&p.id)))
-            .with(p)
-            .with(Animator::new())
-            .build();
-        holder.add_player_entity(ent);
-    });
-
-    if lvl.is_empty() {
-        return holder;
-    }
-
-    for x in 0..lvl.len() {
-        for y in 0..lvl[0].len() {
-            let spr_index = lvl[x][y].get_spritesheet_index();
-
-            if spr_index == 9999 {
-                continue;
-            }
-
-            let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
-            let tag = Tag::from_spr(lvl[x][y]);
-            let tt = TileTransform::new(x as i32, y as i32);
-
-            let mut trans = Transform::default();
-            trans.set_translation_z(0.1);
-
-            match tag {
-                Tag::Player(_) => {
-                    //do nothing because they get created earlier
-                }
-                Tag::NonPlayerCharacter { is_enemy } => {
-                    world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(NonPlayerCharacter::new(is_enemy))
-                        .with(Collider::default())
-                        .build();
-                }
-                Tag::Collision => {
-                    let ent = world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(Collider::default())
-                        .build();
-                    holder.add_tile(ent);
-                }
-                Tag::Trigger(trigger_type) =>
-                    {
-                        let ent = world
-                            .create_entity()
-                            .with(spr)
-                            .with(tt)
-                            .with(trans)
-                            .with(Collider::new(trigger_type))
-                            .build();
-                        holder.add_tile(ent);
-                    },
                 _ => {
                     let ent = world
                         .create_entity()

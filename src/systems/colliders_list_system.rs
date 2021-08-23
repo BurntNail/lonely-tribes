@@ -3,12 +3,9 @@ use crate::{
         colliders::{Collider, ColliderList},
         player::Player,
         tile_transform::TileTransform,
-        win_state::GameState,
     },
-    quick_save_load::LevelState,
 };
 use amethyst::{
-    core::ecs::Read,
     ecs::{Join, ReadStorage, System, Write},
 };
 
@@ -21,11 +18,9 @@ impl<'s> System<'s> for ListSystem {
         ReadStorage<'s, Collider>,
         ReadStorage<'s, Player>,
         Write<'s, ColliderList>,
-        Read<'s, GameState>,
-        Write<'s, LevelState>,
     );
 
-    fn run(&mut self, (tiles, colliders, players, mut list, gws, mut level): Self::SystemData) {
+    fn run(&mut self, (tiles, colliders, players, mut list): Self::SystemData) {
         let mut colliders_list = Vec::new();
         let mut triggers_list = Vec::new();
         let mut player_list = Vec::new();
@@ -45,7 +40,5 @@ impl<'s> System<'s> for ListSystem {
 
         list.set(colliders_list);
         list.set_triggers(triggers_list);
-
-        level.replace(player_list, gws.level_no_of_moves);
     }
 }
