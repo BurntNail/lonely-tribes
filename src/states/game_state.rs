@@ -443,28 +443,16 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .build();
                     holder.add_tile(ent);
                 }
-                Tag::Trigger(trigger_type) => match trigger_type {
-                    TriggerType::Powerup(_) => {
-                        let e = world
-                            .create_entity()
-                            .with(spr)
-                            .with(tt)
-                            .with(trans)
-                            .with(Collider::new(trigger_type))
-                            .build();
-                        holder.add_pu_entity(tt, e);
-                    }
-                    _ => {
-                        let ent = world
-                            .create_entity()
-                            .with(spr)
-                            .with(tt)
-                            .with(trans)
-                            .with(Collider::new(trigger_type))
-                            .build();
-                        holder.add_tile(ent);
-                    }
-                },
+                Tag::Trigger(trigger_type) => {
+                    let ent = world
+                        .create_entity()
+                        .with(spr)
+                        .with(tt)
+                        .with(trans)
+                        .with(Collider::new(trigger_type))
+                        .build();
+                    holder.add_tile(ent);
+                }
                 _ => {
                     let ent = world
                         .create_entity()
@@ -506,21 +494,6 @@ fn load_level_with_state(
             .with(Animator::new())
             .build();
         holder.add_player_entity(ent);
-    });
-    level.powerups.into_iter().for_each(|(p, tt)| {
-        let mut trans = Transform::default();
-        trans.set_translation_z(0.2);
-        let e = world
-            .create_entity()
-            .with(SpriteRender::new(
-                sprites_handle.clone(),
-                SpriteRequest::PowerUpSprite(p).get_spritesheet_index(),
-            ))
-            .with(tt)
-            .with(Transform::default())
-            .with(Collider::new(TriggerType::Powerup(p)))
-            .build();
-        holder.add_pu_entity(tt, e);
     });
 
     if lvl.is_empty() {
@@ -566,11 +539,8 @@ fn load_level_with_state(
                         .build();
                     holder.add_tile(ent);
                 }
-                Tag::Trigger(trigger_type) => match trigger_type {
-                    TriggerType::Powerup(_) => {
-                        //do nothing because they get created earlier
-                    }
-                    _ => {
+                Tag::Trigger(trigger_type) =>
+                    {
                         let ent = world
                             .create_entity()
                             .with(spr)
@@ -579,8 +549,7 @@ fn load_level_with_state(
                             .with(Collider::new(trigger_type))
                             .build();
                         holder.add_tile(ent);
-                    }
-                },
+                    },
                 _ => {
                     let ent = world
                         .create_entity()

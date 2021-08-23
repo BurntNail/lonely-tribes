@@ -1,5 +1,5 @@
 use crate::{
-    components::{player::Player, power_up::PowerUp, tile_transform::TileTransform},
+    components::{player::Player, tile_transform::TileTransform},
     high_scores::DATA_DIR,
 };
 use chrono::Local;
@@ -15,7 +15,6 @@ use std::{
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct LevelState {
     pub players: Vec<(Player, TileTransform)>,
-    pub powerups: Vec<(PowerUp, TileTransform)>,
     pub score: i32,
 }
 
@@ -39,14 +38,8 @@ impl Display for SaveType {
 
 impl LevelState {
     ///Replaces current data with new data
-    pub fn replace(
-        &mut self,
-        players: Vec<(Player, TileTransform)>,
-        powerups: Vec<(PowerUp, TileTransform)>,
-        score: i32,
-    ) {
+    pub fn replace(&mut self, players: Vec<(Player, TileTransform)>, score: i32) {
         self.players = players;
-        self.powerups = powerups;
         self.score = score;
     }
 
@@ -136,7 +129,6 @@ impl Default for LevelState {
     fn default() -> Self {
         Self {
             players: Vec::new(),
-            powerups: Vec::new(),
             score: 0,
         }
     }

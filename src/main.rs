@@ -3,9 +3,8 @@ use crate::{
     systems::{
         colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
         mode_tinter_system::GameModeTinterSystem, move_player::MovePlayerSystem,
-        powerup_system::PowerUpSystem, txt_wobble_system::TextWobbleSystem,
-        update_score::ScoreUpdaterSystem, update_tile_transforms::UpdateTileTransforms,
-        win_system::EndOfGameSystem,
+        txt_wobble_system::TextWobbleSystem, update_score::ScoreUpdaterSystem,
+        update_tile_transforms::UpdateTileTransforms, win_system::EndOfGameSystem,
     },
 };
 use amethyst::{
@@ -83,11 +82,6 @@ fn main() -> amethyst::Result<()> {
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
-        .with(
-            PowerUpSystem,
-            "powerups",
-            &["collider_list", "update_tile_transforms", "move_player"],
-        )
         .with(GameModeTinterSystem, "tinter", &[]);
 
     if !opts.console {

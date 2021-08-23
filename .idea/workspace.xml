@@ -7,13 +7,21 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fun with impl Into for TileTransform">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add options for Animator for different interpolation types">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/data_holder.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/power_up.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/quick_save_load.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/quick_save_load.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/colliders_list_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/powerup_system.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -422,14 +430,7 @@
       <workItem from="1629231089632" duration="1135000" />
       <workItem from="1629273598569" duration="1060000" />
       <workItem from="1629568312058" duration="35000" />
-      <workItem from="1629694032341" duration="3226000" />
-    </task>
-    <task id="LOCAL-00020" summary="Add More Levels">
-      <created>1627419380824</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1627419380824</updated>
+      <workItem from="1629694032341" duration="4038000" />
     </task>
     <task id="LOCAL-00021" summary="change version">
       <created>1627419557298</created>
@@ -767,7 +768,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629696453730</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Add options for Animator for different interpolation types">
+      <created>1629697356480</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1629697356480</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -802,7 +810,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add steam marketing materials" />
     <MESSAGE value="Change names over in game ui-texts" />
     <MESSAGE value="Animations baby!&#10;However, it did break the win system..." />
     <MESSAGE value="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win." />
@@ -827,7 +834,8 @@
     <MESSAGE value="Change FX Entities to be made in a func rather than in the event loop" />
     <MESSAGE value="General bug fixes inc:&#10;&#10; - Changing add_to_new into impl Add for TileTransform&#10; - Strict float comparison errors&#10; - Using Results&#10; - Changing single-case-matches to if lets&#10; - Fixing Animations to actually move from start to end, rather than end to start" />
     <MESSAGE value="Fun with impl Into for TileTransform" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fun with impl Into for TileTransform" />
+    <MESSAGE value="Add options for Animator for different interpolation types" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add options for Animator for different interpolation types" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

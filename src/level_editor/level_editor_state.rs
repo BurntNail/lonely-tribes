@@ -64,7 +64,7 @@ impl LevelEditorState {
         for (x, y, px) in img.enumerate_pixels_mut() {
             let res = *REVERSED_SPRITESHEET_SWATCH_HASHMAP
                 .get(&self.data[x as usize][y as usize])
-                .unwrap_or(&Rgba::from([0, 0, 0, 0]));
+                .unwrap_or(&Rgba::from([0; 4]));
 
             *px = res;
         }

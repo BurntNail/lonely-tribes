@@ -2,9 +2,7 @@ use crate::{
     components::{
         animator::{AnimationData, Animator},
         colliders::ColliderList,
-        data_holder::EntityHolder,
         player::Player,
-        power_up::PowerUp,
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState},
     },
@@ -12,13 +10,13 @@ use crate::{
     Flags, HEIGHT, WIDTH,
 };
 use amethyst::{
-    core::{ecs::Entities, Time},
+    core::{Time},
     ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
 use structopt::StructOpt;
 
-pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.25;
+pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.125;
 
 ///System for capturing player movement, and collision
 #[derive(Default)]
@@ -66,12 +64,10 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, ColliderList>,
         Read<'s, Time>,
         Write<'s, GameState>,
-        Write<'s, EntityHolder>,
         Read<'s, MovementDisabler>,
         WriteStorage<'s, Animator>,
         Write<'s, MovementType>,
         Write<'s, GameModeManager>,
-        Entities<'s>,
     );
 
     fn run(
@@ -83,18 +79,17 @@ impl<'s> System<'s> for MovePlayerSystem {
             list,
             time,
             mut gws,
-            mut powers,
             movement_disabler,
             mut animators,
             mut movement,
             mut gm,
-            entities,
         ): Self::SystemData,
     ) {
         let mut add_to_score = false;
         let mode = gm.current_mode;
 
         let collision_tiles = list.get();
+        #[allow(unused_variables)] //triggers for later in dev
         let trigger_tiles = list.get_triggers();
 
         let (proposed_tile_addition, actual_movement) = {
@@ -116,24 +111,6 @@ impl<'s> System<'s> for MovePlayerSystem {
             (t, movement)
         };
 
-        let mut check_powerups = |proposed_tile: &TileTransform| {
-            for (trigger, tt) in trigger_tiles {
-                if proposed_tile == trigger {
-                    let id = &tt.get_id();
-                    if PowerUp::trigger_id_range().contains(id) {
-                        let ent = powers.remove_pu_entity(trigger);
-                        if let Some(ent) = ent {
-                            entities.delete(ent).unwrap_or_else(|err| {
-                                log::warn!("Error deleting powerup entity after collision: {}", err)
-                            })
-                        }
-
-                        powers.add_powerup(PowerUp::from_trigger_id(id));
-                    }
-                }
-            }
-        };
-
         if let Some((tim, int)) = movement.movement_timer {
             let timdt = tim + time.delta_seconds();
             movement.movement_timer = Some((timdt, int));
@@ -150,7 +127,6 @@ impl<'s> System<'s> for MovePlayerSystem {
 
                     if works && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
-                        check_powerups(&proposed_tile);
                         add_to_score = true;
                     }
                 }
@@ -172,7 +148,6 @@ impl<'s> System<'s> for MovePlayerSystem {
 
                     if works && can_move && actual_movement {
                         set_tiletransform(tile, proposed_tile, anim);
-                        check_powerups(&proposed_tile);
                         add_to_score = true;
                     }
                 }
