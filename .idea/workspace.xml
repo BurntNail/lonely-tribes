@@ -7,15 +7,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Timing how long the 'special' moves last, and tinting depending on how many left.">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Change FX Entities to be made in a func rather than in the event loop">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,18 +100,7 @@
       <command value="cargo run" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -434,6 +423,8 @@
       <workItem from="1628937326268" duration="875000" />
       <workItem from="1629231089632" duration="1135000" />
       <workItem from="1629273598569" duration="1060000" />
+      <workItem from="1629568312058" duration="35000" />
+      <workItem from="1629694032341" duration="2327000" />
     </task>
     <task id="LOCAL-00018" summary="clippy">
       <created>1627416908017</created>
@@ -813,7 +804,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Open up level editor and edit levels.&#10;&#10;Just now need to save levels" />
     <MESSAGE value="Save and Load Level Editor" />
     <MESSAGE value="Add script to automate new release" />
     <MESSAGE value="Add steam marketing materials" />
@@ -838,7 +828,8 @@
     <MESSAGE value="Start of Differing GameModes" />
     <MESSAGE value="Start of timed movement." />
     <MESSAGE value="Timing how long the 'special' moves last, and tinting depending on how many left." />
-    <option name="LAST_COMMIT_MESSAGE" value="Timing how long the 'special' moves last, and tinting depending on how many left." />
+    <MESSAGE value="Change FX Entities to be made in a func rather than in the event loop" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change FX Entities to be made in a func rather than in the event loop" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

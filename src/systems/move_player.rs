@@ -140,7 +140,7 @@ impl<'s> System<'s> for MovePlayerSystem {
 
             if timdt > int && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let proposed_tile = tile.add_into_new(proposed_tile_addition);
+                    let proposed_tile = *tile + proposed_tile_addition;
 
                     let works = if mode == GamePlayingMode::Nudger {
                         true
@@ -162,7 +162,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         if let Some(can_move) = movement.can_move {
             if !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let proposed_tile = tile.add_into_new(proposed_tile_addition);
+                    let proposed_tile = *tile + proposed_tile_addition;
 
                     let works = if mode == GamePlayingMode::Nudger {
                         true

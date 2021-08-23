@@ -36,7 +36,6 @@ mod quick_save_load;
 mod states;
 mod systems;
 mod tag;
-mod audio;
 
 ///The width of the grid of tiless
 pub const WIDTH: u32 = 64;

@@ -216,7 +216,10 @@ impl SimpleState for PuzzleState {
                 }
                 Escape => {
                     if let Some(btn) = self.score_button {
-                        world.write_storage::<Hidden>().insert(btn, Hidden);
+                        world.write_storage::<Hidden>().insert(btn, Hidden).unwrap_or_else(|err| {
+                            log::warn!("Error hiding things for pausing: {}", err);
+                            None
+                        });
                     }
 
                     t = Trans::Push(Box::new(PausedState::default()));
@@ -271,15 +274,12 @@ impl SimpleState for PuzzleState {
             self.ws = game_state.ws;
         }
 
-        match self.ws {
-            GameStateEnum::End { won } => {
-                if self.level_index >= LEVELS.len() - 1 && won {
-                    t = Trans::Switch(Box::new(TrueEnd::default()));
-                } else {
-                    t = Trans::Switch(Box::new(PostGameState::new()));
-                }
+        if let GameStateEnum::End { won } = self.ws {
+            if self.level_index >= LEVELS.len() - 1 && won {
+                t = Trans::Switch(Box::new(TrueEnd::default()));
+            } else {
+                t = Trans::Switch(Box::new(PostGameState::new()));
             }
-            _ => {}
         }
 
         t

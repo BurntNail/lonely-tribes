@@ -1,6 +1,7 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+use std::ops::{Add, Sub};
 
 ///Component for transforms which align to the tile grid
 ///Much easier to manipulate than amethyst Transforms
@@ -57,44 +58,38 @@ impl TileTransform {
         self.y_offset = offsets.1;
     }
 
-    ///For adding self and another transform, giving the result in a new TileTransform
-    pub fn add_into_new(&self, t: Self) -> Self {
-        Self {
-            x: self.x + t.x,
-            y: self.y + t.y,
-            x_offset: self.x_offset + t.x_offset,
-            y_offset: self.y_offset + t.y_offset,
-        }
-    }
-
-    ///Minuses self from another tiletransform to make a new tiletransform
-    #[allow(dead_code)]
-    pub fn minus_from_self(&self, t: Self) -> Self {
-        Self {
-            x: self.x - t.x,
-            y: self.y - t.y,
-            x_offset: self.x_offset - t.x_offset,
-            y_offset: self.y_offset - t.x_offset,
-        }
-    }
-
-    ///Turns all values positive
-    #[allow(dead_code)]
-    pub fn abs(t: Self) -> Self {
-        Self {
-            x: t.x.abs(),
-            y: t.y.abs(),
-            x_offset: t.x_offset.abs(),
-            y_offset: t.y_offset.abs(),
-        }
-    }
-
-    ///Gets magnitude of self
+    ///Gets magnitude of self using pythagoras
     #[allow(dead_code)]
     pub fn get_magnitude(&self) -> f32 {
         let x = (self.x * 8 + self.x_offset) as f32;
         let y = (self.y * 8 + self.y_offset) as f32;
 
         (x * x + y * y).sqrt()
+    }
+
+}
+
+impl Add for TileTransform {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+            x_offset: self.x_offset + rhs.x_offset,
+            y_offset: self.y_offset + rhs.x_offset,
+        }
+    }
+}
+impl Sub for TileTransform {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+            x_offset: self.x_offset - rhs.x_offset,
+            y_offset: self.y_offset - rhs.x_offset,
+        }
     }
 }

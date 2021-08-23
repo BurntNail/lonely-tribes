@@ -40,10 +40,10 @@ impl<'s> System<'s> for UpdateTileTransforms {
             if anim_cmp.anim_is_done() {
                 anim_cmp.finish();
             } else if let Some(anim) = &mut anim_cmp.animation_data {
-                let end = anim.end;
+                let start = anim.start;
 
-                x = ((end.x as f32) - anim.x_offset()) * 8.0 + TILE_WIDTH;
-                y = ((HEIGHT as f32 - end.y as f32) - anim.y_offset()) * 8.0 - TILE_HEIGHT;
+                x = ((start.x as f32) - anim.x_offset()) * 8.0 + TILE_WIDTH;
+                y = ((HEIGHT as f32 - start.y as f32) + anim.y_offset()) * 8.0 - TILE_HEIGHT;
 
                 anim.add_time(time.delta_seconds());
             }

@@ -22,21 +22,16 @@ impl AnimationData {
             ..Default::default()
         }
     }
-    ///Gets the offset from the other tiletransform
-    #[allow(dead_code)]
-    pub fn get_offset(&self) -> f32 {
-        (self.total_time - self.time_elapsed)
-            * (self.start.minus_from_self(self.end).get_magnitude())
-    }
 
     ///Gets x offset
     pub fn x_offset(&self) -> f32 {
-        (self.total_time - self.time_elapsed) * ((self.start.x - self.end.x) as f32)
+        (self.time_elapsed / self.total_time) * ((self.start.x - self.end.x) as f32)
     }
     ///Gets y offset
     pub fn y_offset(&self) -> f32 {
-        (self.total_time - self.time_elapsed) * ((self.start.y - self.end.y) as f32)
+        (self.time_elapsed / self.total_time) * ((self.start.y - self.end.y) as f32)
     }
+
 
     ///Whether or not the animator is finished
     pub fn is_done(&self) -> bool {
