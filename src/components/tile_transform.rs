@@ -1,7 +1,9 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
-use std::ops::{Add, Sub};
+use std::{
+    fmt::{Display, Formatter},
+    ops::{Add, Sub},
+};
 
 ///Component for transforms which align to the tile grid
 ///Much easier to manipulate than amethyst Transforms
@@ -66,7 +68,6 @@ impl TileTransform {
 
         (x * x + y * y).sqrt()
     }
-
 }
 
 impl Add for TileTransform {

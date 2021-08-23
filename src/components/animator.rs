@@ -2,6 +2,19 @@ use crate::components::tile_transform::TileTransform;
 use amethyst::core::ecs::{Component, DenseVecStorage};
 use std::ops::{Deref, DerefMut};
 
+///Type of Interpolation for Animation
+#[derive(Copy, Clone, Debug)]
+pub enum AnimInterpolation {
+    Log10,
+    #[allow(dead_code)]
+    Linear,
+}
+impl Default for AnimInterpolation {
+    fn default() -> Self {
+        Self::Log10
+    }
+}
+
 ///Component to animate a tiletransform horizontally or vertically
 #[derive(Copy, Clone, Debug, Default)]
 pub struct AnimationData {
@@ -10,6 +23,8 @@ pub struct AnimationData {
 
     pub total_time: f32,
     pub time_elapsed: f32,
+
+    pub interpolation: AnimInterpolation,
 }
 
 impl AnimationData {
@@ -25,13 +40,28 @@ impl AnimationData {
 
     ///Gets x offset
     pub fn x_offset(&self) -> f32 {
-        (self.time_elapsed / self.total_time) * ((self.start.x - self.end.x) as f32)
+        self.get_time_for_offset() * ((self.start.x - self.end.x) as f32)
     }
     ///Gets y offset
     pub fn y_offset(&self) -> f32 {
-        (self.time_elapsed / self.total_time) * ((self.start.y - self.end.y) as f32)
+        self.get_time_for_offset() * ((self.start.y - self.end.y) as f32)
     }
 
+    ///Get time to multiply for offset
+    fn get_time_for_offset(&self) -> f32 {
+        let base = self.time_elapsed / self.total_time;
+
+        let val = match self.interpolation {
+            AnimInterpolation::Log10 => (base * 10.0).log10(),
+            AnimInterpolation::Linear => base,
+        };
+
+        if val <= 0.0 {
+            0.0
+        } else {
+            val
+        }
+    }
 
     ///Whether or not the animator is finished
     pub fn is_done(&self) -> bool {

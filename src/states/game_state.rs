@@ -216,10 +216,13 @@ impl SimpleState for PuzzleState {
                 }
                 Escape => {
                     if let Some(btn) = self.score_button {
-                        world.write_storage::<Hidden>().insert(btn, Hidden).unwrap_or_else(|err| {
-                            log::warn!("Error hiding things for pausing: {}", err);
-                            None
-                        });
+                        world
+                            .write_storage::<Hidden>()
+                            .insert(btn, Hidden)
+                            .unwrap_or_else(|err| {
+                                log::warn!("Error hiding things for pausing: {}", err);
+                                None
+                            });
                     }
 
                     t = Trans::Push(Box::new(PausedState::default()));

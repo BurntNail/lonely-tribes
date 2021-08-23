@@ -11,11 +11,11 @@ impl<'s> System<'s> for GameModeTinterSystem {
     type SystemData = (Read<'s, GameModeManager>, WriteStorage<'s, Tint>);
 
     fn run(&mut self, (gm, mut tints): Self::SystemData) {
-
-        let t = (((1.0 - gm.moves_left as f32 / gm.total_moves as f32) * 100.0).log10()) - 1.0;
+        let t = ((1.0 - gm.moves_left as f32 / gm.total_moves as f32) * 10.0).log10();
 
         for tint in (&mut tints).join() {
-            if (tint.0.blue - 1.0).abs() < f32::EPSILON { //replaced "tint.0.blue == 1.0" with this to avoid float cmp errors
+            if (tint.0.blue - 1.0).abs() < f32::EPSILON {
+                //replaced "tint.0.blue == 1.0" with this to avoid float cmp errors
                 //this is the blue one
                 tint.0.red = t;
             } else {
