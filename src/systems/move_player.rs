@@ -14,6 +14,7 @@ use amethyst::{
     ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
 };
+use rand::Rng;
 use structopt::StructOpt;
 
 pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.125;
@@ -111,13 +112,22 @@ impl<'s> System<'s> for MovePlayerSystem {
             (t, movement)
         };
 
-        if let Some((tim, int)) = movement.movement_timer {
-            let timdt = tim + time.delta_seconds();
-            movement.movement_timer = Some((timdt, int));
+        if let Some((timer, interval)) = &mut movement.movement_timer {
+            *timer += time.delta_seconds();
 
-            if timdt > int && !movement_disabler.enabled {
+            if timer > interval && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let proposed_tile = *tile + proposed_tile_addition;
+                    let mut rng = rand::thread_rng();
+                    let proposed_tile = match mode {
+                        GamePlayingMode::TradeOff => {
+                            *tile + TileTransform::new(rng.gen_range(-1..=1), rng.gen_range(-1..=1))
+                        }
+                        GamePlayingMode::Crazy => TileTransform::new(
+                            rng.gen_range(0..WIDTH as i32),
+                            rng.gen_range(0..HEIGHT as i32),
+                        ),
+                        _ => *tile + proposed_tile_addition,
+                    };
 
                     let works = if mode == GamePlayingMode::Nudger {
                         true
@@ -131,7 +141,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     }
                 }
 
-                movement.movement_timer = Some((0.0, int));
+                *timer = 0.0;
             }
         }
 

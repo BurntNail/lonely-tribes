@@ -21,8 +21,12 @@ impl Default for GameStateEnum {
 pub enum GamePlayingMode {
     ///One move - all moves
     Normal,
-    ///Collisions are ignored (inc OOB muah-ha-ha-ha-ha)
+    ///Collisions are ignored
     Nudger,
+    ///All movements go in a random direction, but are free
+    TradeOff,
+    ///All movements go to a random place
+    Crazy,
 }
 impl Default for GamePlayingMode {
     fn default() -> Self {
@@ -34,6 +38,8 @@ impl GamePlayingMode {
         match self {
             Self::Normal => 0,
             Self::Nudger => 1,
+            Self::TradeOff => 0,
+            Self::Crazy => 2,
         }
     }
 }

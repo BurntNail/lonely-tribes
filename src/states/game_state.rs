@@ -135,7 +135,7 @@ impl SimpleState for PuzzleState {
         world.register::<NonPlayerCharacter>();
 
         world.insert(holder);
-        world.insert(GameModeManager::new(10));
+        world.insert(GameModeManager::new(50));
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
 
@@ -200,25 +200,9 @@ impl SimpleState for PuzzleState {
 
                     t = Trans::Push(Box::new(PausedState::default()));
                 }
-                N => {
-                    let can_nudge = {
-                        let mut mode = world.write_resource::<GameModeManager>();
-                        if mode.current_mode != GamePlayingMode::Nudger {
-                            mode.set_mode(GamePlayingMode::Nudger)
-                        } else {
-                            false
-                        }
-                    };
-                    if can_nudge {
-                        self.make_fx_entities(world);
-                    } else {
-                        world
-                            .write_resource::<GameModeManager>()
-                            .set_mode(GamePlayingMode::Normal);
-                        self.reset_fx_entities(world);
-                        log::info!("Normal?");
-                    }
-                }
+                N => self.set_gameplay_mode(GamePlayingMode::Nudger, world),
+                T => self.set_gameplay_mode(GamePlayingMode::TradeOff, world),
+                C => self.set_gameplay_mode(GamePlayingMode::Crazy, world),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -263,6 +247,25 @@ impl SimpleState for PuzzleState {
 }
 
 impl PuzzleState {
+    fn set_gameplay_mode(&mut self, new_mode: GamePlayingMode, world: &mut World) {
+        let can_change = {
+            let mut current_mode = world.write_resource::<GameModeManager>();
+            if current_mode.current_mode != new_mode {
+                current_mode.set_mode(new_mode)
+            } else {
+                false
+            }
+        };
+        if can_change {
+            self.make_fx_entities(world);
+        } else {
+            world
+                .write_resource::<GameModeManager>()
+                .set_mode(GamePlayingMode::Normal);
+            self.reset_fx_entities(world);
+        }
+    }
+
     fn make_fx_entities(&mut self, world: &mut World) {
         let mut entities_to_make = Vec::new();
         {
