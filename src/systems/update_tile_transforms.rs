@@ -51,7 +51,7 @@ impl<'s> System<'s> for UpdateTileTransforms {
                 //Rotation
                 if xo != 0.0 && anim.rotates {
                     let rotation = (anim.get_offset_multiplier() * 180.0).to_radians().sin() / 2.0;
-                    let mult = if xo > 0.0 {1.0} else {-1.0};
+                    let mult = if xo > 0.0 { 1.0 } else { -1.0 };
                     trans.set_rotation_2d(mult * rotation);
                 } else {
                     trans.set_rotation_2d(0.0);

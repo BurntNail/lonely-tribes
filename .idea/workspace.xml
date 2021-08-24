@@ -7,17 +7,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Add rotations to animations">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
-    </list>
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix Log10 mode" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +93,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.build release">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -429,27 +419,8 @@
       <workItem from="1629694032341" duration="8819000" />
       <workItem from="1629730017204" duration="1550000" />
       <workItem from="1629734544090" duration="135000" />
-    </task>
-    <task id="LOCAL-00027" summary="Powerups working hell yeah">
-      <created>1627668888491</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1627668888491</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Clippy+Fmt For Powerups/General Technical Debt">
-      <created>1627670125624</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1627670125624</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Fix move_player.rs&#10;&#10;Farm some stuff out to seperate methods so when I update code, I have fewer places to update it in.">
-      <created>1627671493222</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1627671493222</updated>
+      <workItem from="1629742417386" duration="559000" />
+      <workItem from="1629802333180" duration="3058000" />
     </task>
     <task id="LOCAL-00030" summary="Save/Load in from File&#10;&#10;Now, I just need to make new constructors">
       <created>1627898178372</created>
@@ -773,7 +744,28 @@
       <option name="project" value="LOCAL" />
       <updated>1629701461806</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Add final bits for steamworks">
+      <created>1629742471811</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1629742471811</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Add all-collider mode, and use animators for lvl editors.">
+      <created>1629742548687</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1629742548687</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Fix Log10 mode">
+      <created>1629820685753</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1629820685753</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,9 +800,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix winning (i hope)" />
-    <MESSAGE value="optimise win_system.rs to not have to use colliderlist" />
-    <MESSAGE value="Add a basic pause state that hides all game entities when paused, and later unhides them." />
     <MESSAGE value="Make note to self regarding old colours" />
     <MESSAGE value="Change tilemap to have a transparent bg for easier tinting" />
     <MESSAGE value="fix old problem with loading saves" />
@@ -833,7 +822,10 @@
     <MESSAGE value="Add 2 new gameplay modes" />
     <MESSAGE value="Clean old levels to remove powerups" />
     <MESSAGE value="Add rotations to animations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add rotations to animations" />
+    <MESSAGE value="Add final bits for steamworks" />
+    <MESSAGE value="Add all-collider mode, and use animators for lvl editors." />
+    <MESSAGE value="Fix Log10 mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Log10 mode" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

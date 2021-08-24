@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        animator::{AnimationData, Animator},
+        animator::{AnimInterpolation, AnimationData, Animator},
         colliders::ColliderList,
         player::Player,
         tile_transform::TileTransform,
@@ -92,15 +92,16 @@ impl<'s> System<'s> for MovePlayerSystem {
         #[allow(unused_variables)]
         let (collision_tiles, trigger_tiles) = {
             let mut collisions = list.get().clone();
-            let triggers = list.get_triggers();
+            let mut triggers = list.get_triggers().clone();
 
             if mode == GamePlayingMode::AllTheColliders {
-                triggers.iter().for_each(|(tt, _)| collisions.push(*tt));
+                std::mem::take(&mut triggers)
+                    .into_iter()
+                    .for_each(|(tt, _)| collisions.push(tt));
             }
 
             (collisions, triggers)
         };
-
 
         let (proposed_tile_addition, actual_movement) = {
             let mut t = TileTransform::default();
@@ -121,18 +122,26 @@ impl<'s> System<'s> for MovePlayerSystem {
             (t, movement)
         };
 
-        let proposed_tile_closure = |tile: TileTransform| {
+        let proposed_tile_closure = |tile: TileTransform, base_len: f32| {
             let mut rng = rand::thread_rng();
-            match mode {
+            let mut anim_len = base_len;
+            let mut interp = AnimInterpolation::Linear;
+
+            let t = match mode {
                 GamePlayingMode::TradeOff => {
                     tile + TileTransform::new(rng.gen_range(-1..=1), rng.gen_range(-1..=1))
                 }
-                GamePlayingMode::Crazy => TileTransform::new(
-                    rng.gen_range(0..WIDTH as i32),
-                    rng.gen_range(0..HEIGHT as i32),
-                ),
+                GamePlayingMode::Crazy => {
+                    anim_len *= 3.0;
+                    interp = AnimInterpolation::ReverseExponential;
+                    TileTransform::new(
+                        rng.gen_range(0..WIDTH as i32),
+                        rng.gen_range(0..HEIGHT as i32),
+                    )
+                }
                 _ => tile + proposed_tile_addition,
-            }
+            };
+            (t, anim_len, interp)
         };
 
         if let Some((timer, interval)) = &mut movement.movement_timer {
@@ -140,7 +149,8 @@ impl<'s> System<'s> for MovePlayerSystem {
 
             if timer > interval && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let proposed_tile = proposed_tile_closure(*tile);
+                    let (proposed_tile, anim_len, interp) =
+                        proposed_tile_closure(*tile, PLAYER_MOVEMENT_ANIM_LEN);
                     let works = if mode == GamePlayingMode::Nudger {
                         true
                     } else {
@@ -148,7 +158,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     };
 
                     if works && actual_movement {
-                        set_tiletransform(tile, proposed_tile, anim);
+                        set_tiletransform_with_anim(tile, proposed_tile, anim, anim_len, interp);
                         if mode.adds_to_score() {
                             add_to_score = true;
                         }
@@ -162,7 +172,8 @@ impl<'s> System<'s> for MovePlayerSystem {
         if let Some(can_move) = movement.can_move {
             if !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
-                    let proposed_tile = proposed_tile_closure(*tile);
+                    let (proposed_tile, anim_len, interp) =
+                        proposed_tile_closure(*tile, PLAYER_MOVEMENT_ANIM_LEN);
                     let works = if mode == GamePlayingMode::Nudger {
                         true
                     } else {
@@ -170,7 +181,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                     };
 
                     if works && can_move && actual_movement {
-                        set_tiletransform(tile, proposed_tile, anim);
+                        set_tiletransform_with_anim(tile, proposed_tile, anim, anim_len, interp);
                         add_to_score = true;
                     }
                 }
@@ -207,18 +218,14 @@ pub fn tile_works(proposed_tile: TileTransform, collision_tiles: &[TileTransform
     res
 }
 
-///Uses set_tiletransform_timed with a specific delay of 0.05
-pub fn set_tiletransform(from: &mut TileTransform, to: TileTransform, anim: &mut Animator) {
-    set_tiletransform_timed(from, to, anim, PLAYER_MOVEMENT_ANIM_LEN);
-}
-
 ///Sets one tiletransform equal to another with the animator, and a given duration
-pub fn set_tiletransform_timed(
+pub fn set_tiletransform_with_anim(
     from: &mut TileTransform,
     to: TileTransform,
     anim: &mut Animator,
     t: f32,
+    interp: AnimInterpolation,
 ) {
-    anim.replace_data(AnimationData::new(from.clone(), to, t));
+    anim.replace_data(AnimationData::new(from.clone(), to, t, interp));
     from.set(to);
 }

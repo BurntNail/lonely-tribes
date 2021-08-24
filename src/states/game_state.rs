@@ -258,6 +258,7 @@ impl PuzzleState {
                 false
             }
         };
+
         if can_change {
             self.make_fx_entities(world);
         } else {
