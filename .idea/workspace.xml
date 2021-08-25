@@ -7,17 +7,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fmt">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="general clippy fixes + new-startup state is help">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/info.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bindings.ron" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/latest version.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +98,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.build release">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -434,34 +428,8 @@
       <workItem from="1629802333180" duration="3058000" />
       <workItem from="1629820753019" duration="4857000" />
       <workItem from="1629832797361" duration="628000" />
-    </task>
-    <task id="LOCAL-00031" summary="Add shell script for new releases">
-      <created>1627898598885</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1627898598885</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Facilities to actually load the save">
-      <created>1627899622821</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1627899622821</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Add docucomments">
-      <created>1627900116439</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1627900116439</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Start on Steamworks - I need to wait for the license to come through">
-      <created>1627919158736</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1627919158736</updated>
+      <workItem from="1629888212041" duration="996000" />
+      <workItem from="1629901085541" duration="1645000" />
     </task>
     <task id="LOCAL-00035" summary="Cargo fmt">
       <created>1627931542356</created>
@@ -778,7 +746,35 @@
       <option name="project" value="LOCAL" />
       <updated>1629821160366</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="change help text to in a file, and with hyperlegible font">
+      <created>1629888901209</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1629888901224</updated>
+    </task>
+    <task id="LOCAL-00081" summary="fix anim log10">
+      <created>1629888944433</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1629888944433</updated>
+    </task>
+    <task id="LOCAL-00082" summary="let player use arrow keys + remove bindings.ron">
+      <created>1629889006207</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1629889006207</updated>
+    </task>
+    <task id="LOCAL-00083" summary="general clippy fixes + new-startup state is help">
+      <created>1629889076973</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1629889076973</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -813,10 +809,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change tilemap to have a transparent bg for easier tinting" />
-    <MESSAGE value="fix old problem with loading saves" />
-    <MESSAGE value="Farm out hiding and showing to different methods." />
-    <MESSAGE value="Basic Movement toggler" />
     <MESSAGE value="Fix clippy warnings for pause" />
     <MESSAGE value="Make it so that score is only incremented, when it actually moves." />
     <MESSAGE value="Remove clones" />
@@ -838,7 +830,11 @@
     <MESSAGE value="Add all-collider mode, and use animators for lvl editors." />
     <MESSAGE value="Fix Log10 mode" />
     <MESSAGE value="fmt" />
-    <option name="LAST_COMMIT_MESSAGE" value="fmt" />
+    <MESSAGE value="change help text to in a file, and with hyperlegible font" />
+    <MESSAGE value="fix anim log10" />
+    <MESSAGE value="let player use arrow keys + remove bindings.ron" />
+    <MESSAGE value="general clippy fixes + new-startup state is help" />
+    <option name="LAST_COMMIT_MESSAGE" value="general clippy fixes + new-startup state is help" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

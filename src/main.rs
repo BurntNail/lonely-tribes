@@ -37,6 +37,7 @@ mod level_editor;
 mod states;
 mod systems;
 mod tag;
+mod ui_input;
 
 ///The width of the grid of tiless
 pub const WIDTH: u32 = 64;
