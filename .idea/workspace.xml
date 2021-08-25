@@ -7,7 +7,18 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="Fix Log10 mode" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fmt">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fonts/info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bindings.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/latest version.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,11 +83,11 @@
       <recent name="$PROJECT_DIR$/src/systems" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\fonts" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/systems" />
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src/states" />
-      <recent name="$PROJECT_DIR$/assets/art" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -93,7 +104,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.build release">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -309,8 +320,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.build release" />
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
       </list>
     </recent_temporary>
   </component>
@@ -421,13 +432,8 @@
       <workItem from="1629734544090" duration="135000" />
       <workItem from="1629742417386" duration="559000" />
       <workItem from="1629802333180" duration="3058000" />
-    </task>
-    <task id="LOCAL-00030" summary="Save/Load in from File&#10;&#10;Now, I just need to make new constructors">
-      <created>1627898178372</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1627898178372</updated>
+      <workItem from="1629820753019" duration="4857000" />
+      <workItem from="1629832797361" duration="628000" />
     </task>
     <task id="LOCAL-00031" summary="Add shell script for new releases">
       <created>1627898598885</created>
@@ -765,7 +771,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629820685753</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="fmt">
+      <created>1629821160366</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1629821160366</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -786,7 +799,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="hacking-usp-1" />
+                        <option value="anikets-changes" />
                       </list>
                     </value>
                   </entry>
@@ -800,7 +813,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Make note to self regarding old colours" />
     <MESSAGE value="Change tilemap to have a transparent bg for easier tinting" />
     <MESSAGE value="fix old problem with loading saves" />
     <MESSAGE value="Farm out hiding and showing to different methods." />
@@ -825,7 +837,8 @@
     <MESSAGE value="Add final bits for steamworks" />
     <MESSAGE value="Add all-collider mode, and use animators for lvl editors." />
     <MESSAGE value="Fix Log10 mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Log10 mode" />
+    <MESSAGE value="fmt" />
+    <option name="LAST_COMMIT_MESSAGE" value="fmt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

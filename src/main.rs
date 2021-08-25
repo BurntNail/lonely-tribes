@@ -97,7 +97,15 @@ fn main() -> amethyst::Result<()> {
     // let (client, single) = Client::init().unwrap();
     // println!("{:?}", client.friends().get_friends(FriendFlags::IMMEDIATE));
 
-    let mut game = Application::new(resources, StartGameState::default(), game_data)?;
+    let mut game = {
+        if std::fs::read_dir(DATA_DIR).is_ok() {
+            Application::new(resources, StartGameState::default(), game_data)?
+        } else {
+            std::fs::create_dir(DATA_DIR).unwrap_or_else(|err| log::warn!("Unable to create data dir: {}", err));
+            Application::new(resources, HelpState, game_data)?
+        }
+
+    };
     game.run();
 
     Ok(())
@@ -146,12 +154,13 @@ pub struct Flags {
 
 //todos
 
-//TODO: Unique Mechanics - USP
+//TODO: Aniket's Fixes
+//TODO: With Text, make sure to account for Screen Scaling
+
 //TODO: Story
 
-//TODO: With Text, make sure to account for Screen Scaling
+//TODO: Keybindings able to change
 
 //TODO: Music/SFX
 
-//TODO: Steamworks
-//TODO: Steam Page
+//TODO: Steam Page/Steamworks
