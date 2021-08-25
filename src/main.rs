@@ -22,6 +22,8 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
+use crate::high_scores::DATA_DIR;
+use crate::states::help_state::HelpState;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
@@ -56,12 +58,10 @@ fn main() -> amethyst::Result<()> {
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display.ron");
-    let input_bundle = InputBundle::<StringBindings>::new()
-        .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
 
     let mut game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
-        .with_bundle(input_bundle)?
+        .with_bundle(InputBundle::<StringBindings>::new())?
         .with_bundle(UiBundle::<StringBindings>::new())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
