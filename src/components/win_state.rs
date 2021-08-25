@@ -1,10 +1,12 @@
+use crate::components::tile_transform::TileTransform;
+
 ///Enumeration for the current state of the game
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum GameStateEnum {
     ///The game is over
     End {
-        ///Whether the game was won or not
-        won: bool,
+        ///Which position the game was lost by - if None, then we won
+        lost_position: Option<TileTransform>,
     },
     ///The game is still being played
     ToBeDecided,
@@ -129,15 +131,21 @@ impl GameState {
     ///  - **won_opt** is an option for whether or not the game has been won. If it is None, the game is still being played, or is being started, and if it is Some, then whether the game has been won is the bool
     ///  - **level_from** is for the level that won_opt refers to
     ///  - **level_timer_len** refers to how long the level took
-    pub fn new(won_opt: Option<bool>, level_from: usize, level_timer_len: i32) -> Self {
-        match won_opt {
+    pub fn new(
+        lost_tile: Option<Option<TileTransform>>,
+        level_from: usize,
+        level_timer_len: i32,
+    ) -> Self {
+        match lost_tile {
             None => Self {
                 ws: GameStateEnum::default(),
                 level_from,
                 level_no_of_moves: level_timer_len,
             },
-            Some(won) => Self {
-                ws: GameStateEnum::End { won },
+            Some(tile) => Self {
+                ws: GameStateEnum::End {
+                    lost_position: tile,
+                },
                 level_from,
                 level_no_of_moves: level_timer_len,
             },

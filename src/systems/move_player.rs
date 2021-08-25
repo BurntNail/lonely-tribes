@@ -12,7 +12,7 @@ use crate::{
 use amethyst::{
     core::Time,
     ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
-    input::{InputHandler, StringBindings},
+    input::{InputHandler, StringBindings, VirtualKeyCode},
 };
 use rand::Rng;
 use structopt::StructOpt;
@@ -107,13 +107,14 @@ impl<'s> System<'s> for MovePlayerSystem {
             let mut t = TileTransform::default();
             let mut movement = true;
 
-            if input.action_is_down("Up").unwrap_or(false) {
+            use VirtualKeyCode::*;
+            if input.key_is_down(Up) || input.key_is_down(W) {
                 t.y -= 1;
-            } else if input.action_is_down("Down").unwrap_or(false) {
+            } else if input.key_is_down(Down) || input.key_is_down(S) {
                 t.y += 1;
-            } else if input.action_is_down("Left").unwrap_or(false) {
+            } else if input.key_is_down(Left) || input.key_is_down(A) {
                 t.x -= 1;
-            } else if input.action_is_down("Right").unwrap_or(false) {
+            } else if input.key_is_down(Right) || input.key_is_down(D) {
                 t.x += 1;
             } else {
                 movement = false;
@@ -226,6 +227,6 @@ pub fn set_tiletransform_with_anim(
     t: f32,
     interp: AnimInterpolation,
 ) {
-    anim.replace_data(AnimationData::new(from.clone(), to, t, interp));
+    anim.replace_data(AnimationData::new(*from, to, t, interp));
     from.set(to);
 }

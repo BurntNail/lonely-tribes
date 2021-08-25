@@ -23,7 +23,7 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::{ecs::Entity, transform::Transform, Hidden},
+    core::{ecs::Entity, transform::Transform, Hidden, Time},
     input::{InputEvent, VirtualKeyCode},
     prelude::*,
     renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet},
@@ -32,6 +32,8 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
+use crate::components::animator::AnimInterpolation;
+use amethyst::core::math::Vector3;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -67,6 +69,8 @@ pub struct PuzzleState {
     score_button: Option<Entity>,
     ///Vec to hold entities for temporary mode effects (eg. nudger)
     tmp_fx_entities: Vec<Entity>,
+    ///timer for when we lose containing (so far, duration, entity)
+    death_timer: Option<(f32, f32, Entity)>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
@@ -87,6 +91,7 @@ impl Default for PuzzleState {
             actions: HashMap::new(),
             score_button: None,
             tmp_fx_entities: Vec::new(),
+            death_timer: None,
         }
     }
 }
@@ -147,9 +152,9 @@ impl SimpleState for PuzzleState {
 
         world.delete_all();
 
-        if let GameStateEnum::End { won } = self.ws {
+        if let GameStateEnum::End { lost_position } = self.ws {
             world.insert(GameState::new(
-                Some(won),
+                Some(lost_position),
                 self.level_index,
                 get_no_of_moves(world),
             ));
@@ -214,7 +219,9 @@ impl SimpleState for PuzzleState {
             StateEvent::Window(Event::WindowEvent { event, .. }) => match event {
                 WindowEvent::CloseRequested | WindowEvent::Destroyed => {
                     let mut gws = world.write_resource::<GameState>();
-                    gws.ws = GameStateEnum::End { won: false };
+                    gws.ws = GameStateEnum::End {
+                        lost_position: Some(TileTransform::default()),
+                    };
                 }
                 _ => {}
             },
@@ -236,11 +243,46 @@ impl SimpleState for PuzzleState {
             self.ws = game_state.ws;
         }
 
-        if let GameStateEnum::End { won } = self.ws {
+        if let GameStateEnum::End { lost_position } = self.ws {
+            let won = lost_position.is_none();
+
             if self.level_index >= LEVELS.len() - 1 && won {
+                //we won the last level
                 t = Trans::Switch(Box::new(TrueEnd::default()));
-            } else {
+            } else if won {
+                //we won a level that has another after it
                 t = Trans::Switch(Box::new(PostGameState::new()));
+            } else {
+                //we lost
+
+                let (so_far, total, ent) = self.death_timer.take().unwrap_or_else(|| {
+                    let pos = lost_position.unwrap_or_default();
+                    let (x, y) = UpdateTileTransforms::tile_to_xyz(pos);
+
+                    let mut trans = Transform::default();
+                    trans.set_translation_xyz(x, y, 2.0);
+
+                    let spritesheet = load_sprite_sheet(data.world, "zoom-in-on-loss");
+
+                    let ent = data.world.create_entity().with(trans).with(SpriteRender::new(spritesheet, 0)).build();
+
+                    (0.0, 1.5, ent)
+                });
+
+                if so_far > total {
+                    //anim is done
+                    t = Trans::Switch(Box::new(PostGameState::new()));
+                } else {
+                    let so_far = so_far + data.world.read_resource::<Time>().delta_seconds();
+                    let scale_val = AnimInterpolation::ReverseExponential.get_val_from_pctg(so_far / total) * 4.0 + 1.0;
+
+                    if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
+                        let scale = Vector3::from([scale_val; 3]);
+                        trans.set_scale(scale);
+                    }
+
+                    self.death_timer = Some((so_far, total, ent));
+                }
             }
         }
 

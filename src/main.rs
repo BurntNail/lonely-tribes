@@ -1,5 +1,6 @@
 use crate::{
-    states::welcome_state::StartGameState,
+    high_scores::DATA_DIR,
+    states::{help_state::HelpState, welcome_state::StartGameState},
     systems::{
         colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
         mode_tinter_system::GameModeTinterSystem, move_player::MovePlayerSystem,
@@ -35,6 +36,7 @@ mod level_editor;
 mod states;
 mod systems;
 mod tag;
+mod ui_input;
 
 ///The width of the grid of tiless
 pub const WIDTH: u32 = 64;
@@ -56,12 +58,10 @@ fn main() -> amethyst::Result<()> {
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display.ron");
-    let input_bundle = InputBundle::<StringBindings>::new()
-        .with_bindings_from_file(app_root.join("config/bindings.ron"))?;
 
     let mut game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
-        .with_bundle(input_bundle)?
+        .with_bundle(InputBundle::<StringBindings>::new())?
         .with_bundle(UiBundle::<StringBindings>::new())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
@@ -97,7 +97,15 @@ fn main() -> amethyst::Result<()> {
     // let (client, single) = Client::init().unwrap();
     // println!("{:?}", client.friends().get_friends(FriendFlags::IMMEDIATE));
 
-    let mut game = Application::new(resources, StartGameState::default(), game_data)?;
+    let mut game = {
+        if std::fs::read_dir(DATA_DIR).is_ok() {
+            Application::new(resources, StartGameState::default(), game_data)?
+        } else {
+            std::fs::create_dir(DATA_DIR)
+                .unwrap_or_else(|err| log::warn!("Unable to create data dir: {}", err));
+            Application::new(resources, HelpState, game_data)?
+        }
+    };
     game.run();
 
     Ok(())
@@ -146,12 +154,13 @@ pub struct Flags {
 
 //todos
 
-//TODO: Unique Mechanics - USP
+//TODO: Aniket's Fixes
+//TODO: With Text, make sure to account for Screen Scaling
+
 //TODO: Story
 
-//TODO: With Text, make sure to account for Screen Scaling
+//TODO: Keybindings able to change
 
 //TODO: Music/SFX
 
-//TODO: Steamworks
-//TODO: Steam Page
+//TODO: Steam Page/Steamworks

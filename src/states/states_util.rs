@@ -23,12 +23,10 @@ pub fn init_camera(world: &mut World, wh: (f32, f32)) {
         .build();
 }
 
-///Helper function to load in a font, given the world, and a path (eg. *ZxSpectrum*)
-///
-/// Returns a handle to a fontasset
-pub fn load_font(world: &mut World, path: &str) -> Handle<FontAsset> {
+///Helper function to load in a font, given the world, and a path (eg. *ZxSpectrum* (no ttf or path required))
+pub fn load_font(world: &mut World, name: &str) -> Handle<FontAsset> {
     world.read_resource::<Loader>().load(
-        format!("fonts/{}.ttf", path),
+        format!("fonts/{}.ttf", name),
         TtfFormat,
         (),
         &world.read_resource(),

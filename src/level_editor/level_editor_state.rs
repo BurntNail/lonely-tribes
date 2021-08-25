@@ -162,7 +162,7 @@ impl SimpleState for LevelEditorState {
                         working_version.y = y_limit;
                     }
 
-                    let old = self.current_editing.clone();
+                    let old = self.current_editing;
                     self.current_editing = working_version;
 
                     let mut tiletransforms = world.write_component::<TileTransform>();

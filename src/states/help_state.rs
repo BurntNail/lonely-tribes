@@ -7,15 +7,7 @@ use amethyst::{
 };
 
 ///Text displayed in HelpState
-pub const HELP_TXT: &str = "Welcome to Lonely Tribes!
-\n
-\n - In each level, there are different tribes of people who have gotten lost, who gain power over the other tribes by merging. Try to merge.wav all of the members of each tribe, but don't let non-tribe members touch.\
-\n\n - Use WASD to move, Space to toggle showing the score, and R to restart if you get to a hard spot.\
-\n\n - Powerups - The guy who looks like he will trick you will randomly increase or decrease your score, the ghost/cross will kill half of all of the players (Thanos Snap), and the portal will teleport all of your players into random places.\
-\n\n
-\nHave fun!\
-\n
-\n(Press Space or Return to get back to the main menu)";
+pub const HELP_TXT: &str = include_str!("../help_text.txt");
 
 ///State to show Help
 #[derive(Default)]
@@ -60,10 +52,10 @@ fn get_help_txt(world: &mut World) {
         900.0,
     );
     let txt = UiText::new(
-        load_font(world, "ZxSpectrum"),
+        load_font(world, "Hyperlegible"),
         HELP_TXT.to_string(),
         [1.0; 4],
-        25.0,
+        50.0,
         LineMode::Wrap,
         Anchor::MiddleLeft,
     );

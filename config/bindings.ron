@@ -1,9 +1,0 @@
-(
-    axes: {},
-    actions: {
-        "Up": [[Key(W)]],
-        "Down": [[Key(S)]],
-        "Left": [[Key(A)]],
-        "Right": [[Key(D)]],
-    }
-)
