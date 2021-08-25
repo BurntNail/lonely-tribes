@@ -18,7 +18,7 @@ impl<'s> System<'s> for EndOfGameSystem {
 
     fn run(&mut self, (tiles, players, mut gws): Self::SystemData) {
         let mut count_match = HashMap::new();
-        let mut count_bad = 0;
+        let mut count_bad = Vec::new();
         let mut player_count = HashMap::new();
 
         for (player_tile, player) in (&tiles, &players).join() {
@@ -35,7 +35,7 @@ impl<'s> System<'s> for EndOfGameSystem {
                         let match_no = count_match.remove(&id).unwrap_or(0);
                         count_match.insert(id, match_no + 1);
                     } else {
-                        count_bad += 1;
+                        count_bad.push(*check_tile);
                     }
                 }
             }
@@ -43,8 +43,10 @@ impl<'s> System<'s> for EndOfGameSystem {
         }
 
         //region check for a loss or tbd
-        if count_bad > 0 {
-            gws.ws = GameStateEnum::End { won: false };
+        if !count_bad.is_empty() {
+            gws.ws = GameStateEnum::End {
+                lost_position: Some(count_bad[0]),
+            };
             return;
         }
         if count_match.is_empty()
@@ -64,6 +66,8 @@ impl<'s> System<'s> for EndOfGameSystem {
             }
         }
 
-        gws.ws = GameStateEnum::End { won: true };
+        gws.ws = GameStateEnum::End {
+            lost_position: None,
+        };
     }
 }

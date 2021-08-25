@@ -1,5 +1,6 @@
 use crate::{
-    states::welcome_state::StartGameState,
+    high_scores::DATA_DIR,
+    states::{help_state::HelpState, welcome_state::StartGameState},
     systems::{
         colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
         mode_tinter_system::GameModeTinterSystem, move_player::MovePlayerSystem,
@@ -22,8 +23,6 @@ use amethyst::{
 };
 use log::LevelFilter;
 use structopt::StructOpt;
-use crate::high_scores::DATA_DIR;
-use crate::states::help_state::HelpState;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
@@ -102,10 +101,10 @@ fn main() -> amethyst::Result<()> {
         if std::fs::read_dir(DATA_DIR).is_ok() {
             Application::new(resources, StartGameState::default(), game_data)?
         } else {
-            std::fs::create_dir(DATA_DIR).unwrap_or_else(|err| log::warn!("Unable to create data dir: {}", err));
+            std::fs::create_dir(DATA_DIR)
+                .unwrap_or_else(|err| log::warn!("Unable to create data dir: {}", err));
             Application::new(resources, HelpState, game_data)?
         }
-
     };
     game.run();
 

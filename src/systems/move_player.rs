@@ -12,11 +12,10 @@ use crate::{
 use amethyst::{
     core::Time,
     ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
-    input::{InputHandler, StringBindings},
+    input::{InputHandler, StringBindings, VirtualKeyCode},
 };
 use rand::Rng;
 use structopt::StructOpt;
-use amethyst::input::VirtualKeyCode;
 
 pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.125;
 

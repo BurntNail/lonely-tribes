@@ -113,7 +113,7 @@ pub fn get_stuff(world: &World) -> (usize, bool, bool, i32) {
     let level_from = gws.level_from;
     let is_last_level = level_from >= LEVELS.len() - 1;
     let won = match gws.ws {
-        GameStateEnum::End { won } => won,
+        GameStateEnum::End { lost_position } => lost_position.is_none(),
         _ => false,
     };
     let score = gws.level_no_of_moves;

@@ -7,11 +7,17 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="general clippy fixes + new-startup state is help">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="start of ui input class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/latest version.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui_input.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui_input.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +77,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
       <recent name="$PROJECT_DIR$/assets/art" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/states" />
@@ -99,6 +106,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -313,9 +333,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.build release" />
         <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.build release" />
       </list>
     </recent_temporary>
   </component>
@@ -429,14 +449,7 @@
       <workItem from="1629820753019" duration="4857000" />
       <workItem from="1629832797361" duration="628000" />
       <workItem from="1629888212041" duration="996000" />
-      <workItem from="1629901085541" duration="1645000" />
-    </task>
-    <task id="LOCAL-00035" summary="Cargo fmt">
-      <created>1627931542356</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1627931542356</updated>
+      <workItem from="1629901085541" duration="5056000" />
     </task>
     <task id="LOCAL-00036" summary="Re-fix merging">
       <created>1627931656788</created>
@@ -774,7 +787,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629889076973</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="start of ui input class">
+      <created>1629903378378</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1629903378378</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -809,7 +829,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix clippy warnings for pause" />
     <MESSAGE value="Make it so that score is only incremented, when it actually moves." />
     <MESSAGE value="Remove clones" />
     <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
@@ -834,7 +853,8 @@
     <MESSAGE value="fix anim log10" />
     <MESSAGE value="let player use arrow keys + remove bindings.ron" />
     <MESSAGE value="general clippy fixes + new-startup state is help" />
-    <option name="LAST_COMMIT_MESSAGE" value="general clippy fixes + new-startup state is help" />
+    <MESSAGE value="start of ui input class" />
+    <option name="LAST_COMMIT_MESSAGE" value="start of ui input class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

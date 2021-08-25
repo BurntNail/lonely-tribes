@@ -14,6 +14,20 @@ impl Default for AnimInterpolation {
         Self::ReverseExponential
     }
 }
+impl AnimInterpolation {
+    pub fn get_val_from_pctg (&self, pctg: f32) -> f32 {
+        match self {
+            AnimInterpolation::ReverseExponential => {
+                //worked out with desmos
+                //https://www.desmos.com/calculator/sbq8tbhr9d
+                const A: f32 = 2.0;
+                const B: f32 = -6.5;
+                (-1.0 * A.powf(B * pctg)) + 1.0
+            }
+            AnimInterpolation::Linear => pctg,
+        }
+    }
+}
 
 ///Component to animate a tiletransform horizontally or vertically
 #[derive(Copy, Clone, Debug)]
@@ -87,19 +101,9 @@ impl AnimationData {
         let base = self.time_elapsed / self.total_time;
 
         let val: f32 = {
-            let lots_o_digits = match self.interpolation {
-                AnimInterpolation::ReverseExponential => {
-                    //worked out with desmos
-                    //https://www.desmos.com/calculator/sbq8tbhr9d
-                    const A: f32 = 2.0;
-                    const B: f32 = -6.5;
-                    (-1.0 * A.powf(B * base)) + 1.0
-                },
-                AnimInterpolation::Linear => base,
-            };
-            let str_version = format!("{:03}", lots_o_digits); //get down to 3dp
+            let str_version = format!("{:03}", self.interpolation.get_val_from_pctg(base)); //get down to 3dp
             str_version.parse().unwrap_or_else(|err| {
-                log::warn!("Couldn't parse {} into str because: {}", lots_o_digits, err);
+                log::warn!("Couldn't parse into str because: {}", err);
                 1.0
             })
         };
