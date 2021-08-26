@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        animator::Animator,
+        animator::{AnimInterpolation, Animator},
         colliders::{Collider, ColliderList},
         data_holder::EntityHolder,
         npc::NonPlayerCharacter,
@@ -23,7 +23,7 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::{ecs::Entity, transform::Transform, Hidden, Time},
+    core::{ecs::Entity, math::Vector3, transform::Transform, Hidden, Time},
     input::{InputEvent, VirtualKeyCode},
     prelude::*,
     renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet},
@@ -32,8 +32,6 @@ use amethyst::{
 };
 use std::collections::HashMap;
 use structopt::StructOpt;
-use crate::components::animator::AnimInterpolation;
-use amethyst::core::math::Vector3;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -264,7 +262,12 @@ impl SimpleState for PuzzleState {
 
                     let spritesheet = load_sprite_sheet(data.world, "zoom-in-on-loss");
 
-                    let ent = data.world.create_entity().with(trans).with(SpriteRender::new(spritesheet, 0)).build();
+                    let ent = data
+                        .world
+                        .create_entity()
+                        .with(trans)
+                        .with(SpriteRender::new(spritesheet, 0))
+                        .build();
 
                     (0.0, 1.5, ent)
                 });
@@ -274,7 +277,10 @@ impl SimpleState for PuzzleState {
                     t = Trans::Switch(Box::new(PostGameState::new()));
                 } else {
                     let so_far = so_far + data.world.read_resource::<Time>().delta_seconds();
-                    let scale_val = AnimInterpolation::ReverseExponential.get_val_from_pctg(so_far / total) * 4.0 + 1.0;
+                    let scale_val = AnimInterpolation::ReverseExponential
+                        .get_val_from_pctg(so_far / total)
+                        * 4.0
+                        + 1.0;
 
                     if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
                         let scale = Vector3::from([scale_val; 3]);

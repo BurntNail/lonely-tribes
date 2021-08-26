@@ -7,17 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="start of ui input class">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="zoom into losing area on loss">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/latest version.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/data_holder.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/win_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui_input.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui_input.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,22 +101,20 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="Cargo.Test">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run -- -c" />
+      <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -134,7 +128,22 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false" temporary="true">
+    <configuration name="Test" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="build release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="build --release" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
@@ -325,6 +334,7 @@
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.docs" />
       <item itemvalue="Cargo.run release" />
+      <item itemvalue="Cargo.Test" />
       <item itemvalue="Cargo.Run normal" />
       <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
@@ -333,9 +343,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
-        <item itemvalue="Cargo.build release" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
@@ -449,14 +458,11 @@
       <workItem from="1629820753019" duration="4857000" />
       <workItem from="1629832797361" duration="628000" />
       <workItem from="1629888212041" duration="996000" />
-      <workItem from="1629901085541" duration="5056000" />
-    </task>
-    <task id="LOCAL-00036" summary="Re-fix merging">
-      <created>1627931656788</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1627931656788</updated>
+      <workItem from="1629901085541" duration="5386000" />
+      <workItem from="1629907817307" duration="2068000" />
+      <workItem from="1629910041999" duration="197000" />
+      <workItem from="1629914674057" duration="27000" />
+      <workItem from="1629919469392" duration="6827000" />
     </task>
     <task id="LOCAL-00037" summary="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state">
       <created>1627935824999</created>
@@ -794,7 +800,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629903378378</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="zoom into losing area on loss">
+      <created>1629906229088</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1629906229088</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -829,7 +842,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Make it so that score is only incremented, when it actually moves." />
     <MESSAGE value="Remove clones" />
     <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
     <MESSAGE value="Start of Differing GameModes" />
@@ -854,7 +866,8 @@
     <MESSAGE value="let player use arrow keys + remove bindings.ron" />
     <MESSAGE value="general clippy fixes + new-startup state is help" />
     <MESSAGE value="start of ui input class" />
-    <option name="LAST_COMMIT_MESSAGE" value="start of ui input class" />
+    <MESSAGE value="zoom into losing area on loss" />
+    <option name="LAST_COMMIT_MESSAGE" value="zoom into losing area on loss" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -61,10 +61,9 @@ impl TileTransform {
     }
 
     ///Gets magnitude of self using pythagoras
-    #[allow(dead_code)]
     pub fn get_magnitude(&self) -> f32 {
-        let x = (self.x * 8 + self.x_offset) as f32;
-        let y = (self.y * 8 + self.y_offset) as f32;
+        let x = (self.x as f32) + (self.x_offset as f32 / 8.0);
+        let y = (self.y as f32) + (self.y_offset as f32 / 8.0);
 
         (x * x + y * y).sqrt()
     }
@@ -78,7 +77,7 @@ impl Add for TileTransform {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
             x_offset: self.x_offset + rhs.x_offset,
-            y_offset: self.y_offset + rhs.x_offset,
+            y_offset: self.y_offset + rhs.y_offset,
         }
     }
 }
@@ -90,7 +89,48 @@ impl Sub for TileTransform {
             x: self.x - rhs.x,
             y: self.y - rhs.y,
             x_offset: self.x_offset - rhs.x_offset,
-            y_offset: self.y_offset - rhs.x_offset,
+            y_offset: self.y_offset - rhs.y_offset,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    pub fn add_and_subtract_normal_test () {
+        let t1: TileTransform = (5, 1).into();
+        let t2: TileTransform = (2, 5).into();
+
+        assert_eq!(t1 + t2, (7, 6).into());
+        assert_eq!(t1 - t2, (3, -4).into());
+    }
+    #[test]
+    pub fn add_and_subtract_offset_test () {
+        let mut t1: TileTransform = (0, 0).into();
+        t1.set_offsets((5, 2));
+        let mut t2: TileTransform = (0, 0).into();
+        t2.set_offsets((1, 5));
+
+        let mut add = TileTransform::default();
+        add.set_offsets((6, 7));
+        let mut sub = TileTransform::default();
+        sub.set_offsets((4, -3));
+
+        assert_eq!(t1 + t2, add);
+        assert_eq!(t1 - t2, sub);
+    }
+
+    #[test]
+    pub fn magnitude_normal_test () {
+        let t: TileTransform = (5, 2).into();
+        assert_eq!(t.get_magnitude(), 29.0_f32.sqrt());
+    }
+    #[test]
+    pub fn magnitude_offset_test () {
+        let mut t: TileTransform = (5, 2).into();
+        t.set_offsets((3, 4));
+        assert_eq!(t.get_magnitude(), 35.140625_f32.sqrt());
     }
 }

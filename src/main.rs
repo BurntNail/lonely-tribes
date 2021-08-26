@@ -20,6 +20,7 @@ use amethyst::{
     },
     ui::{RenderUi, UiBundle},
     utils::{application_root_dir, fps_counter::FpsCounterSystem},
+    LoggerConfig,
 };
 use log::LevelFilter;
 use structopt::StructOpt;
@@ -50,9 +51,17 @@ pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena wi
 pub const HOVER_COLOUR: [f32; 4] = [1.0, 0.5, 0.75, 1.0];
 
 fn main() -> amethyst::Result<()> {
-    amethyst::start_logger(Default::default());
-
     let opts = Flags::from_args();
+
+    amethyst::start_logger(if opts.console {
+        LoggerConfig::default()
+    } else {
+        let mut logger = LoggerConfig::default();
+        logger.level_filter = LevelFilter::Error;
+        logger.log_gfx_backend_level = Some(LevelFilter::Error);
+        logger.log_gfx_rendy_level = Some(LevelFilter::Error);
+        logger
+    });
 
     let app_root = application_root_dir()?;
 
@@ -84,9 +93,7 @@ fn main() -> amethyst::Result<()> {
         .with(ScoreUpdaterSystem, "score_updater", &[])
         .with(GameModeTinterSystem, "tinter", &[]);
 
-    if !opts.console {
-        log::set_max_level(LevelFilter::Error);
-    } else if opts.fps {
+    if opts.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
             FpsPrinterSystem,
             "fps_printer",
@@ -154,12 +161,12 @@ pub struct Flags {
 
 //todos
 
-//TODO: Aniket's Fixes
+//TODO: tests
+//TODO: rayon
+
 //TODO: With Text, make sure to account for Screen Scaling
 
 //TODO: Story
-
-//TODO: Keybindings able to change
 
 //TODO: Music/SFX
 

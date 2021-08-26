@@ -12,9 +12,7 @@ pub struct EntityHolder {
 impl EntityHolder {
     ///Constructor to initialise all lists with empty hashmaps/vectors
     pub fn new() -> Self {
-        Self {
-            ..Default::default()
-        }
+        Self::default()
     }
 
     ///Add a player to the entity list
@@ -34,5 +32,35 @@ impl EntityHolder {
         self.players.iter().for_each(|e| list.push(*e));
 
         list
+    }
+}
+
+#[cfg(test)]
+mod data_holder_tests {
+    use super::*;
+    use amethyst::core::ecs::{World, WorldExt, Builder};
+
+    #[test]
+    pub fn data_holder_test () {
+        let mut eh = EntityHolder::new();
+        let mut world = World::new();
+        let mut r = || world.create_entity().build();
+
+        let mut players = vec![r(), r(), r(), r(), r(), r()];
+        let mut tiles = vec![r(), r(), r(), r(), r(), r()];
+
+        players.iter().for_each(|e| eh.add_player_entity(e.clone()));
+        tiles.iter().for_each(|e| eh.add_tile(e.clone()));
+
+        assert_eq!(&players.sort(), &eh.players.sort());
+        assert_eq!(&tiles.sort(), &eh.tiles.sort());
+
+        let mut all = {
+            let mut v = Vec::new();
+            players.iter().for_each(|e| v.push(e.clone()));
+            tiles.iter().for_each(|e| v.push(e.clone()));
+            v
+        };
+        assert_eq!(all.sort(), eh.get_all_entities().sort());
     }
 }
