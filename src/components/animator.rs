@@ -177,31 +177,38 @@ impl DerefMut for Animator {
     }
 }
 
-
 #[cfg(test)]
 mod anim_tests {
     use super::*;
 
     ///returns a 1 second linear animatiom from (0,0) to (1,1)
-    fn get_anim () -> Animator {
+    fn get_anim() -> Animator {
         let mut a = Animator::new();
-        a.replace_data(AnimationData::new((0, 0).into(), (0, 1).into(), 1.0, AnimInterpolation::Linear));
+        a.replace_data(AnimationData::new(
+            (0, 0).into(),
+            (0, 1).into(),
+            1.0,
+            AnimInterpolation::Linear,
+        ));
         a
     }
 
     #[test]
-    pub fn new_animator_test () {
+    pub fn new_animator_test() {
         let mut t = Animator::new();
         assert!(t.animation_data.is_none());
 
         let data = AnimationData::new((0, 0).into(), (0, 1).into(), 1.0, AnimInterpolation::Linear);
         t.replace_data(data);
         assert!(t.animation_data.is_some());
-        assert_eq!(t.animation_data.unwrap().interpolation, AnimInterpolation::Linear);
+        assert_eq!(
+            t.animation_data.unwrap().interpolation,
+            AnimInterpolation::Linear
+        );
     }
 
     #[test]
-    pub fn timing_test () {
+    pub fn timing_test() {
         let mut a = get_anim();
 
         let mut t = 0.0;
@@ -211,18 +218,17 @@ mod anim_tests {
             }
             t += 0.1;
 
-
             if let Some(a) = &mut a.animation_data {
                 a.add_time(0.1);
 
-                assert!((a.get_offset_multiplier()-t).abs() <= f32::EPSILON);
+                assert!((a.get_offset_multiplier() - t).abs() <= f32::EPSILON);
             } else {
                 assert!(false)
             }
         }
         assert!(!a.anim_is_done());
 
-        if let Some(a) = &mut a.animation_data  {
+        if let Some(a) = &mut a.animation_data {
             a.add_time(0.1);
         } else {
             assert!(false);
@@ -232,7 +238,7 @@ mod anim_tests {
     }
 
     #[test]
-    pub fn ending_test_large () {
+    pub fn ending_test_large() {
         let mut a = get_anim();
 
         if let Some(a) = &mut a.animation_data {
@@ -246,7 +252,7 @@ mod anim_tests {
     }
 
     #[test]
-    pub fn ending_test_small () {
+    pub fn ending_test_small() {
         let mut a = get_anim();
 
         if let Some(a) = &mut a.animation_data {

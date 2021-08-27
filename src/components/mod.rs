@@ -3,6 +3,7 @@ pub mod colliders;
 pub mod data_holder;
 pub mod npc;
 pub mod player;
+pub mod point_light;
 pub mod score;
 pub mod text_wobble;
 pub mod tile_transform;

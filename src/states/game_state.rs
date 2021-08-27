@@ -4,6 +4,7 @@ use crate::{
         colliders::{Collider, ColliderList},
         data_holder::EntityHolder,
         npc::NonPlayerCharacter,
+        point_light::PointLight,
         score::Score,
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
@@ -428,6 +429,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
 
             let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
             let tt = TileTransform::new(x as i32, y as i32);
+            let tint = Tint(Srgba::new(1.0, 1.0, 1.0, 1.0));
 
             world.insert(ColliderList::new());
             world.insert(GameState::default());
@@ -447,6 +449,8 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::player::Player::new(id))
                         .with(Animator::new())
+                        .with(PointLight::new(5))
+                        .with(tint)
                         .build();
                     holder.add_player_entity(ent);
                 }
@@ -458,6 +462,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(trans)
                         .with(NonPlayerCharacter::new(is_enemy))
                         .with(Collider::default())
+                        .with(tint)
                         .build();
                 }
                 Tag::Collision => {
@@ -467,6 +472,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(Collider::default())
+                        .with(tint)
                         .build();
                     holder.add_tile(ent);
                 }
@@ -477,6 +483,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(Collider::new(trigger_type))
+                        .with(tint)
                         .build();
                     holder.add_tile(ent);
                 }
@@ -484,7 +491,9 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                     let ent = world
                         .create_entity()
                         .with(spr)
-                        .with(UpdateTileTransforms::tile_to_transform(tt, 0.1))
+                        .with(tt)
+                        .with(trans)
+                        .with(tint)
                         .build();
                     holder.add_tile(ent);
                 }

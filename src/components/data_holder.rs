@@ -38,10 +38,10 @@ impl EntityHolder {
 #[cfg(test)]
 mod data_holder_tests {
     use super::*;
-    use amethyst::core::ecs::{World, WorldExt, Builder};
+    use amethyst::core::ecs::{Builder, World, WorldExt};
 
     #[test]
-    pub fn data_holder_test () {
+    pub fn data_holder_test() {
         let mut eh = EntityHolder::new();
         let mut world = World::new();
         let mut r = || world.create_entity().build();

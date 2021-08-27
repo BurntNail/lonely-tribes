@@ -63,6 +63,7 @@ impl<'s> System<'s> for UpdateTileTransforms {
 
 impl UpdateTileTransforms {
     ///Convert a TileTransform to a Transform on Screen
+    #[allow(dead_code)]
     pub fn tile_to_transform(tile: TileTransform, z: f32) -> Transform {
         let mut trans = Transform::default();
         let (x, y) = Self::tile_to_xyz(tile);

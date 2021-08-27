@@ -1,11 +1,18 @@
+#![windows_subsystem = "windows"]
+
 use crate::{
     high_scores::DATA_DIR,
     states::{help_state::HelpState, welcome_state::StartGameState},
     systems::{
-        colliders_list_system::ListSystem, fps_counter::FpsPrinterSystem,
-        mode_tinter_system::GameModeTinterSystem, move_player::MovePlayerSystem,
-        txt_wobble_system::TextWobbleSystem, update_score::ScoreUpdaterSystem,
-        update_tile_transforms::UpdateTileTransforms, win_system::EndOfGameSystem,
+        colliders_list_system::ListSystem,
+        fog_of_war::{FogOfWarSystem, LightListSystem},
+        fps_counter::FpsPrinterSystem,
+        mode_tinter_system::GameModeTinterSystem,
+        move_player::MovePlayerSystem,
+        txt_wobble_system::TextWobbleSystem,
+        update_score::ScoreUpdaterSystem,
+        update_tile_transforms::UpdateTileTransforms,
+        win_system::EndOfGameSystem,
     },
 };
 use amethyst::{
@@ -56,11 +63,12 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(if opts.console {
         LoggerConfig::default()
     } else {
-        let mut logger = LoggerConfig::default();
-        logger.level_filter = LevelFilter::Error;
-        logger.log_gfx_backend_level = Some(LevelFilter::Error);
-        logger.log_gfx_rendy_level = Some(LevelFilter::Error);
-        logger
+        LoggerConfig {
+            level_filter: LevelFilter::Off,
+            log_gfx_backend_level: Some(LevelFilter::Off),
+            log_gfx_rendy_level: Some(LevelFilter::Off),
+            ..Default::default()
+        }
     });
 
     let app_root = application_root_dir()?;
@@ -91,7 +99,9 @@ fn main() -> amethyst::Result<()> {
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
-        .with(GameModeTinterSystem, "tinter", &[]);
+        .with(GameModeTinterSystem, "tinter", &[])
+        .with(LightListSystem, "light_list", &[])
+        .with(FogOfWarSystem, "fog_of_war", &["light_list"]);
 
     if opts.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
@@ -161,8 +171,7 @@ pub struct Flags {
 
 //todos
 
-//TODO: tests
-//TODO: rayon
+//TODO: Refactor lists to one generic type
 
 //TODO: With Text, make sure to account for Screen Scaling
 
