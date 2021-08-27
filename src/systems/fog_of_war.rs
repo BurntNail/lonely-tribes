@@ -1,4 +1,6 @@
-use crate::components::{point_light::PointLight, tile_transform::TileTransform};
+use crate::components::{
+    point_light::PointLight, tile_transform::TileTransform,
+};
 use amethyst::{
     core::ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
     renderer::resources::Tint,

@@ -7,15 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add tests">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fog of war">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/data_holder.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mode_tinter_system.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,17 +103,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -466,13 +453,7 @@
       <workItem from="1629910041999" duration="197000" />
       <workItem from="1629914674057" duration="27000" />
       <workItem from="1629919469392" duration="6827000" />
-    </task>
-    <task id="LOCAL-00037" summary="Start on Level Editor&#10;&#10; - Get/Show list of levels&#10; - Pass data of chosen level to new state">
-      <created>1627935824999</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1627935824999</updated>
+      <workItem from="1630077882437" duration="3866000" />
     </task>
     <task id="LOCAL-00038" summary="Fix todo on unwrap">
       <created>1627935908059</created>
@@ -810,7 +791,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629906229088</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="fog of war">
+      <created>1630057525507</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1630057525507</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -845,7 +833,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove clones" />
     <MESSAGE value="Add sprites that might be used in the future for the pause menu" />
     <MESSAGE value="Start of Differing GameModes" />
     <MESSAGE value="Start of timed movement." />
@@ -870,7 +857,8 @@
     <MESSAGE value="general clippy fixes + new-startup state is help" />
     <MESSAGE value="start of ui input class" />
     <MESSAGE value="zoom into losing area on loss" />
-    <option name="LAST_COMMIT_MESSAGE" value="zoom into losing area on loss" />
+    <MESSAGE value="fog of war" />
+    <option name="LAST_COMMIT_MESSAGE" value="fog of war" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -77,9 +77,3 @@ impl UpdateTileTransforms {
         (x, y)
     }
 }
-
-impl<T: Into<i32>> From<(T, T)> for TileTransform {
-    fn from((x, y): (T, T)) -> Self {
-        Self::new(x.into(), y.into())
-    }
-}

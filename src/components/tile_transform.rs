@@ -2,12 +2,12 @@ use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::{Display, Formatter},
-    ops::{Add, Sub},
+    ops::{Add, AddAssign, Mul, Sub},
 };
 
 ///Component for transforms which align to the tile grid
 ///Much easier to manipulate than amethyst Transforms
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct TileTransform {
     ///X position - Horizontal
     pub x: i32,
@@ -69,7 +69,12 @@ impl TileTransform {
     }
 
     pub fn distance(&self, other: &TileTransform) -> f32 {
-        (*self - *other).get_magnitude().abs()
+        (*self - *other).get_magnitude()
+    }
+    #[allow(dead_code)]
+    pub fn normalised(&self) -> (f32, f32) {
+        let mag = self.get_magnitude();
+        ((self.x as f32) / mag, (self.y as f32) / mag)
     }
 }
 
@@ -97,6 +102,40 @@ impl Sub for TileTransform {
         }
     }
 }
+impl AddAssign for TileTransform {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+        self.x_offset += rhs.x_offset;
+        self.y_offset += rhs.y_offset
+    }
+}
+
+impl From<(i32, i32)> for TileTransform {
+    fn from((x, y): (i32, i32)) -> Self {
+        Self::new(x, y)
+    }
+}
+impl From<(f32, f32)> for TileTransform {
+    fn from((x, y): (f32, f32)) -> Self {
+        (x as i32, y as i32).into()
+    }
+}
+impl Mul<i32> for TileTransform {
+    type Output = Self;
+
+    fn mul(self, rhs: i32) -> Self::Output {
+        let mut new = Self::new(self.x * rhs, self.y * rhs);
+        new.set_offsets((self.x_offset * rhs, self.y_offset * rhs));
+        new
+    }
+}
+impl PartialEq for TileTransform {
+    fn eq(&self, other: &Self) -> bool {
+        self.x == other.x && self.y == other.y
+    }
+}
+impl Eq for TileTransform {}
 
 #[cfg(test)]
 mod tests {
@@ -136,5 +175,14 @@ mod tests {
         let mut t: TileTransform = (5, 2).into();
         t.set_offsets((3, 4));
         assert_eq!(t.get_magnitude(), 35.140625_f32.sqrt());
+    }
+
+    #[test]
+    pub fn into_test() {
+        let base = TileTransform::new(0, 1);
+        let t1: TileTransform = (0, 1).into();
+        let t2: TileTransform = (0.9, 1.1).into();
+        assert_eq!(t1, base);
+        assert_eq!(t2, base);
     }
 }

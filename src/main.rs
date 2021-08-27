@@ -7,7 +7,6 @@ use crate::{
         colliders_list_system::ListSystem,
         fog_of_war::{FogOfWarSystem, LightListSystem},
         fps_counter::FpsPrinterSystem,
-        mode_tinter_system::GameModeTinterSystem,
         move_player::MovePlayerSystem,
         txt_wobble_system::TextWobbleSystem,
         update_score::ScoreUpdaterSystem,
@@ -99,7 +98,6 @@ fn main() -> amethyst::Result<()> {
         .with(EndOfGameSystem, "end_of_game", &["collider_list"])
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
-        .with(GameModeTinterSystem, "tinter", &[])
         .with(LightListSystem, "light_list", &[])
         .with(FogOfWarSystem, "fog_of_war", &["light_list"]);
 
