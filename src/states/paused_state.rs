@@ -1,6 +1,8 @@
 use crate::{
-    components::data_holder::EntityHolder, states::states_util::load_font,
-    systems::move_player::MovementType, HOVER_COLOUR,
+    components::data_holder::EntityHolder,
+    states::states_util::{get_scaling_factor, load_font},
+    systems::move_player::MovementType,
+    HOVER_COLOUR,
 };
 use amethyst::{
     core::{
@@ -160,6 +162,7 @@ pub fn show_entities(world: &mut World, entities: Vec<Entity>) {
 ///
 /// Returns a HashMap of all the buttons, and the title
 pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuAction>, Entity) {
+    let sf = get_scaling_factor();
     let mut map = HashMap::new();
 
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
@@ -170,16 +173,16 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        100.0,
+        sf * 100.0,
         0.0,
-        1000.0,
-        250.0,
+        sf * 1000.0,
+        sf * 250.0,
     );
     let welcome_txt = UiText::new(
         bold_font_handle,
         String::from("The Game is currently Paused."),
         [1.0, 1.0, 1.0, 0.5],
-        75.0,
+        sf * 75.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
@@ -195,10 +198,10 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            -85.0,
+            sf * -85.0,
             0.0,
-            1500.0,
-            40.0,
+            sf * 1500.0,
+            sf * 40.0,
         );
 
         let actual_txt = if world.read_resource::<MovementType>().can_move.is_some() {
@@ -212,7 +215,7 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             font_handle.clone(),
             actual_txt,
             [1.0; 4],
-            25.0,
+            sf * 25.0,
             LineMode::Single,
             Anchor::Middle,
         );
@@ -224,33 +227,6 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             .build()
     };
     map.insert(toggle, PausedStateMenuAction::ToggleMovement);
-
-    /*
-    let help_btn_trans = UiTransform::new(
-        String::from("help_btn"),
-        Anchor::Middle,
-        Anchor::Middle,
-        0.0,
-        -145.0,
-        0.0,
-        1000.0,
-        40.0,
-    );
-    let help_btn_txt = UiText::new(
-        font_handle.clone(),
-        String::from("Click here to get Help."),
-        [1.0; 4],
-        50.0,
-        LineMode::Single,
-        Anchor::Middle,
-    );
-    let help = world
-        .create_entity()
-        .with(help_btn_trans)
-        .with(help_btn_txt)
-        .with(Interactable)
-        .build();
-        */
 
     (map, top)
 }

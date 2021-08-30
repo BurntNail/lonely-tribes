@@ -6,8 +6,9 @@ use crate::{
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState},
     },
+    config::LTConfig,
     states::paused_state::MovementDisabler,
-    Flags, HEIGHT, WIDTH,
+    HEIGHT, WIDTH,
 };
 use amethyst::{
     core::Time,
@@ -15,7 +16,6 @@ use amethyst::{
     input::{InputHandler, StringBindings, VirtualKeyCode},
 };
 use rand::Rng;
-use structopt::StructOpt;
 
 pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.125;
 
@@ -41,7 +41,7 @@ pub struct MovementType {
 
 impl Default for MovementType {
     fn default() -> Self {
-        let opts: Flags = Flags::from_args();
+        let opts = LTConfig::new().flags;
 
         if let Some(interval) = opts.timed_movement {
             Self {

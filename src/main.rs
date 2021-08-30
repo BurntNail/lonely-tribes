@@ -1,6 +1,7 @@
-#![windows_subsystem = "windows"]
+#![windows_subsystem = "windows"] //removes console window
 
 use crate::{
+    config::LTConfig,
     high_scores::DATA_DIR,
     states::{help_state::HelpState, welcome_state::StartGameState},
     systems::{
@@ -26,16 +27,17 @@ use amethyst::{
     },
     ui::{RenderUi, UiBundle},
     utils::{application_root_dir, fps_counter::FpsCounterSystem},
+    window::DisplayConfig,
     LoggerConfig,
 };
 use log::LevelFilter;
-use structopt::StructOpt;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
 extern crate lazy_static;
 
 mod components;
+mod config;
 mod file_utils;
 mod high_scores;
 mod level;
@@ -57,9 +59,9 @@ pub const ARENA_HEIGHT: u32 = 8 * HEIGHT; //each sprite is 8px wide, so arena wi
 pub const HOVER_COLOUR: [f32; 4] = [1.0, 0.5, 0.75, 1.0];
 
 fn main() -> amethyst::Result<()> {
-    let opts = Flags::from_args();
+    let opts = LTConfig::new();
 
-    amethyst::start_logger(if opts.console {
+    amethyst::start_logger(if opts.flags.console {
         LoggerConfig::default()
     } else {
         LoggerConfig {
@@ -73,7 +75,13 @@ fn main() -> amethyst::Result<()> {
     let app_root = application_root_dir()?;
 
     let resources = app_root.join("assets");
-    let display_config = app_root.join("config/display.ron");
+    let display_config = DisplayConfig {
+        title: "Lonely Tribes".to_string(),
+        dimensions: Some(opts.conf.screen_dimensions),
+        maximized: opts.conf.maximised,
+        icon: Some(resources.join("art/logo.png")),
+        ..Default::default()
+    };
 
     let mut game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
@@ -82,7 +90,7 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
-                    RenderToWindow::from_config_path(display_config)?
+                    RenderToWindow::from_config(display_config)
                         .with_clear(get_colours(34.0, 35.0, 35.0)), //In Hex: 222223
                 )
                 .with_plugin(RenderUi::default())
@@ -101,7 +109,7 @@ fn main() -> amethyst::Result<()> {
         .with(LightListSystem, "light_list", &[])
         .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"]);
 
-    if opts.fps {
+    if opts.flags.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
             FpsPrinterSystem,
             "fps_printer",
@@ -133,43 +141,7 @@ pub fn get_colours(r: f32, g: f32, b: f32) -> [f32; 4] {
     [r, g, b, a]
 }
 
-///Flags for Lonely Tribes
-#[derive(StructOpt, Debug)]
-pub struct Flags {
-    ///Enable an FPS counter in the console
-    #[structopt(short, long)]
-    pub fps: bool,
-
-    ///Enable the console
-    #[structopt(short, long)]
-    pub console: bool,
-
-    ///Enable debug options (disables high scores)
-    ///Similar to Valve svcheats
-    #[structopt(short, long)]
-    pub debug: bool,
-
-    ///Starting level, requires debug mode
-    #[structopt(short, long)]
-    pub level: Option<usize>,
-
-    ///Option to enable legacy movement
-    #[structopt(short, long)]
-    pub timed_movement: Option<f32>,
-
-    ///Option to use the debug level, requires debug mode
-    #[cfg(debug_assertions)]
-    #[structopt(long)]
-    pub debug_level: bool,
-
-    #[cfg(not(debug_assertions))]
-    #[structopt(skip = false)]
-    pub debug_level: bool,
-}
-
 //todos
-
-//TODO: With Text, make sure to account for Screen Scaling
 
 //TODO: Story
 

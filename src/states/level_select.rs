@@ -2,7 +2,7 @@ use crate::{
     high_scores::HighScores,
     states::{
         game_state::{PuzzleState, LEVELS},
-        states_util::load_font,
+        states_util::{get_scaling_factor, load_font},
         welcome_state::StartGameState,
     },
     HOVER_COLOUR,
@@ -96,20 +96,21 @@ impl SimpleState for LevelSelectState {
 ///
 /// Returns an Hashmap with the Entities to the indicies of level paths in *LEVELS*, as well as the next level to play
 fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
+    let sf = get_scaling_factor();
     let mut map = HashMap::new();
     let font_handle = load_font(world, "ZxSpectrum");
     let high_scores = HighScores::new();
 
     let level_txt_height = {
         let no_levels = LEVELS.len() as i32;
-        let tot_height = 900;
-        let buffer_space = 200;
+        let tot_height = (sf * 900.0) as i32;
+        let buffer_space = (sf * 200.0) as i32;
 
         (tot_height - buffer_space) / no_levels
     };
     let get_height = |index: usize| {
         let pos = level_txt_height as f32 * (LEVELS.len() - 1 - index) as f32;
-        pos - 450.0 + 100.0
+        pos - (sf * 450.0) + (sf * 100.0)
     };
 
     let main_trans = UiTransform::new(
@@ -117,16 +118,16 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        350.0,
+        sf * 350.0,
         0.5,
-        1500.0,
-        100.0,
+        sf * 1500.0,
+        sf * 100.0,
     );
     let main_txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Welcome to the Level Select. Press [Space] Or [Return] to Automatically go to the next unlocked level (or the last level if you have finished the game)".to_string(),
         [1.0; 4],
-        33.3,
+        sf * 33.3,
         LineMode::Wrap,
         Anchor::Middle
     );
@@ -158,15 +159,15 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
             }
         };
 
-        let font_height = 50.0;
+        let font_height = sf * 50.0;
         let trans = UiTransform::new(
             format!("{}-text", level),
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            get_height(i),
+            get_height(i), //already multiplied by sf in func
             0.5,
-            1500.0,
+            sf * 1500.0,
             font_height,
         );
         let txt = UiText::new(

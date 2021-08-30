@@ -1,12 +1,12 @@
 use crate::{
     components::win_state::{GameState, GameStateEnum},
+    config::LTConfig,
     high_scores::HighScores,
     states::{
         game_state::{PuzzleState, LEVELS},
         level_select::LevelSelectState,
-        states_util::load_font,
+        states_util::{get_scaling_factor, load_font},
     },
-    Flags,
 };
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
@@ -15,7 +15,6 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
-use structopt::StructOpt;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
@@ -40,7 +39,7 @@ impl SimpleState for PostGameState {
         let (level_from, is_last_level, won, score) = get_stuff(world);
         let mut high_score = HighScores::new();
 
-        let opts: Flags = Flags::from_args();
+        let opts = LTConfig::new().flags;
 
         let mut nu_high_score = None;
 
@@ -126,6 +125,7 @@ pub fn get_stuff(world: &World) -> (usize, bool, bool, i32) {
 ///
 ///By default, it uses a non-bold sans-serif font called ZxSpectrum
 pub fn get_end_txt(world: &mut World, won_txt: String) {
+    let sf = get_scaling_factor();
     let trans = UiTransform::new(
         "won_txt".to_string(),
         Anchor::Middle,
@@ -133,14 +133,14 @@ pub fn get_end_txt(world: &mut World, won_txt: String) {
         0.0,
         0.0,
         0.5,
-        1000.0,
-        1000.0,
+        sf * 1000.0,
+        sf * 1000.0,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrum"),
         won_txt,
         [1.0; 4],
-        50.0,
+        sf * 50.0,
         LineMode::Wrap,
         Anchor::Middle,
     );

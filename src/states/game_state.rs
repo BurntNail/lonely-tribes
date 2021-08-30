@@ -9,18 +9,19 @@ use crate::{
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
     },
+    config::LTConfig,
     file_utils::list_file_names_in_dir,
     level::Room,
     states::{
         afterwards_state::PostGameState,
         level_select::LevelSelectState,
         paused_state::PausedState,
-        states_util::{init_camera, load_font, load_sprite_sheet},
+        states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
     systems::update_tile_transforms::UpdateTileTransforms,
     tag::{Tag, TriggerType},
-    Flags, ARENA_HEIGHT, ARENA_WIDTH,
+    ARENA_HEIGHT, ARENA_WIDTH,
 };
 use amethyst::{
     assets::Handle,
@@ -32,7 +33,6 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
-use structopt::StructOpt;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -41,7 +41,7 @@ lazy_static! {
     };
 }
 pub fn get_levels() -> Vec<String> {
-    let opts: Flags = Flags::from_args();
+    let opts = LTConfig::new().flags;
 
     if cfg!(debug_assertions) && opts.debug && opts.debug_level {
         vec!["test-room-one.png".to_string()]
@@ -73,7 +73,7 @@ pub struct PuzzleState {
 }
 impl Default for PuzzleState {
     fn default() -> Self {
-        let opts = Flags::from_args();
+        let opts = LTConfig::new().flags;
 
         let mut level_index = 0;
         if opts.debug {
@@ -373,21 +373,22 @@ impl PuzzleState {
 
 ///Adds an entity with UiText to mark the score to the player
 fn add_score(world: &mut World) -> Entity {
+    let sf = get_scaling_factor();
     let trans = UiTransform::new(
         "score_txt".to_string(),
         Anchor::Middle,
         Anchor::Middle,
-        -575.0,
-        400.0,
+        sf * -575.0,
+        sf * 400.0,
         0.5,
-        350.0,
-        1000.0,
+        sf * 350.0,
+        sf * 1000.0,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Current Score: 0".to_string(),
         [1.0, 1.0, 1.0, 0.5],
-        25.0,
+        sf * 25.0,
         LineMode::Wrap,
         Anchor::Middle,
     );

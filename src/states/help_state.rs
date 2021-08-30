@@ -1,4 +1,7 @@
-use crate::states::{states_util::load_font, welcome_state::StartGameState};
+use crate::states::{
+    states_util::{get_scaling_factor, load_font},
+    welcome_state::StartGameState,
+};
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
@@ -41,6 +44,7 @@ impl SimpleState for HelpState {
 ///
 ///By default, it uses a non-bold sans-serif font called ZxSpectrum
 fn get_help_txt(world: &mut World) {
+    let sf = get_scaling_factor();
     let trans = UiTransform::new(
         "help_txt".to_string(),
         Anchor::Middle,
@@ -48,14 +52,14 @@ fn get_help_txt(world: &mut World) {
         0.0,
         0.0,
         0.5,
-        1500.0,
-        900.0,
+        sf * 1500.0,
+        sf * 900.0,
     );
     let txt = UiText::new(
         load_font(world, "Hyperlegible"),
         HELP_TXT.to_string(),
         [1.0; 4],
-        50.0,
+        sf * 50.0,
         LineMode::Wrap,
         Anchor::MiddleLeft,
     );

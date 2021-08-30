@@ -1,6 +1,10 @@
 use crate::{
     level_editor::level_editor_state::LevelEditorState,
-    states::{game_state::LEVELS, states_util::load_font, welcome_state::StartGameState},
+    states::{
+        game_state::LEVELS,
+        states_util::{get_scaling_factor, load_font},
+        welcome_state::StartGameState,
+    },
     HOVER_COLOUR,
 };
 use amethyst::{
@@ -75,21 +79,22 @@ impl SimpleState for LevelEditorLevelSelectState {
 ///
 /// Returns an Hashmap with the Entities to the indicies of level paths in *LEVELS*, or in the case of None, a new level
 pub fn init_menu(world: &mut World) -> HashMap<Option<usize>, Entity> {
+    let sf = get_scaling_factor();
     let mut map = HashMap::new();
     let font_handle = load_font(world, "ZxSpectrum");
     let bold_handle = load_font(world, "ZxSpectrumBold");
 
     let level_txt_height = {
         let no_levels = LEVELS.len() as i32 + 1;
-        let tot_height = 900;
-        let buffer_space = 200;
+        let tot_height = (sf * 900.0) as i32;
+        let buffer_space = (sf * 200.0) as i32;
 
         (tot_height - buffer_space) / no_levels
     };
     let get_height = |index: usize, is_new: bool| {
         let pos = level_txt_height as f32
             * ((LEVELS.len() - index) as i32 + (if is_new { 0 } else { -1 })) as f32;
-        pos - 450.0 + 100.0
+        pos - (450.0 * sf) + (100.0 * sf)
     };
     let he = |index: usize| get_height(index, false);
 
@@ -98,16 +103,16 @@ pub fn init_menu(world: &mut World) -> HashMap<Option<usize>, Entity> {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        350.0,
+        sf * 350.0,
         0.5,
-        1500.0,
-        100.0,
+        sf * 1500.0,
+        sf * 100.0,
     );
     let main_txt = UiText::new(
         bold_handle,
         "Welcome to the Level Editor Select. Click a level to edit it, or click New Level for a new level.".to_string(),
         [1.0; 4],
-        33.3,
+        sf * 33.3,
         LineMode::Wrap,
         Anchor::Middle
     );
@@ -117,16 +122,16 @@ pub fn init_menu(world: &mut World) -> HashMap<Option<usize>, Entity> {
         .with(main_txt)
         .build();
 
-    let font_height = 50.0;
+    let font_height = sf * 50.0;
 
     let new_trans = UiTransform::new(
         "new_level".to_string(),
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        get_height(0, true),
+        get_height(0, true), //already sf-ed in func
         0.5,
-        1500.0,
+        sf * 1500.0,
         font_height,
     );
     let new_txt = UiText::new(
@@ -166,7 +171,7 @@ pub fn init_menu(world: &mut World) -> HashMap<Option<usize>, Entity> {
             0.0,
             he(level_no),
             0.5,
-            1500.0,
+            sf * 1500.0,
             font_height,
         );
         let txt = UiText::new(

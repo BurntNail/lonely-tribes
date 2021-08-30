@@ -1,7 +1,11 @@
 use crate::{
     components::text_wobble::TextWobble,
     level_editor::editor_select_state::LevelEditorLevelSelectState,
-    states::{help_state::HelpState, level_select::LevelSelectState, states_util::load_font},
+    states::{
+        help_state::HelpState,
+        level_select::LevelSelectState,
+        states_util::{get_scaling_factor, load_font},
+    },
     HOVER_COLOUR,
 };
 use amethyst::{
@@ -89,6 +93,7 @@ impl SimpleState for StartGameState {
 ///
 /// Returns an Entity with the Start Button, one with the Help Button, and one with the Level Editor button
 fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
+    let sf = get_scaling_factor();
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
     let font_handle = load_font(world, "ZxSpectrum");
 
@@ -98,16 +103,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        100.0,
+        sf * 100.0,
         0.0,
-        1000.0,
-        250.0,
+        sf * 1000.0,
+        sf * 250.0,
     );
     let welcome_txt = UiText::new(
         bold_font_handle,
         String::from("Welcome to Lonely Tribes!"),
         [1.0, 1.0, 1.0, 0.5],
-        75.0,
+        sf * 75.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
@@ -124,16 +129,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        -85.0,
+        sf * -85.0,
         0.0,
-        1000.0,
-        40.0,
+        sf * 1000.0,
+        sf * 40.0,
     );
     let start_btn_txt = UiText::new(
         font_handle.clone(),
         String::from("Click here to Start."),
         [1.0; 4],
-        50.0,
+        sf * 50.0,
         LineMode::Single,
         Anchor::Middle,
     );
@@ -141,7 +146,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         .create_entity()
         .with(start_btn_trans)
         .with(start_btn_txt)
-        .with(TextWobble::new(10.0, -85.0, 2.5))
+        .with(TextWobble::new(sf * 10.0, sf * -85.0, 2.5))
         .with(Interactable)
         .build();
     //endregion
@@ -152,16 +157,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        -145.0,
+        sf * -145.0,
         0.0,
-        1000.0,
-        40.0,
+        sf * 1000.0,
+        sf * 40.0,
     );
     let help_btn_txt = UiText::new(
         font_handle.clone(),
         String::from("Click here to get Help."),
         [1.0; 4],
-        50.0,
+        sf * 50.0,
         LineMode::Single,
         Anchor::Middle,
     );
@@ -169,7 +174,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         .create_entity()
         .with(help_btn_trans)
         .with(help_btn_txt)
-        .with(TextWobble::new(10.0, -145.0, 2.5))
+        .with(TextWobble::new(sf * 10.0, sf * -145.0, 2.5))
         .with(Interactable)
         .build();
     //endregion
@@ -180,16 +185,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        -205.0,
+        sf * -205.0,
         0.0,
-        1500.0,
-        40.0,
+        sf * 1500.0,
+        sf * 40.0,
     );
     let editor_btn_txt = UiText::new(
         font_handle,
         String::from("Click here to open the Level Editor."),
         [1.0; 4],
-        50.0,
+        sf * 50.0,
         LineMode::Single,
         Anchor::Middle,
     );
@@ -197,7 +202,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         .create_entity()
         .with(editor_btn_trans)
         .with(editor_btn_txt)
-        .with(TextWobble::new(10.0, -205.0, 2.5))
+        .with(TextWobble::new(sf * 10.0, sf * -205.0, 2.5))
         .with(Interactable)
         .build();
     //endregion

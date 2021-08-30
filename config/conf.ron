@@ -1,0 +1,4 @@
+ReadInConfig (
+    screen_dimensions: Some((800, 450)),
+    maximised: false
+)

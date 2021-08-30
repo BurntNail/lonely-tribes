@@ -1,4 +1,7 @@
-use crate::states::{states_util::load_font, welcome_state::StartGameState};
+use crate::states::{
+    states_util::{get_scaling_factor, load_font},
+    welcome_state::StartGameState,
+};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
@@ -72,6 +75,7 @@ impl SimpleState for TrueEnd {
 ///
 ///Returns the entity of that text, for checking when it was clicked
 pub fn get_true_end_txt(world: &mut World) -> Entity {
+    let sf = get_scaling_factor();
     let trans = UiTransform::new(
         "end_txt".to_string(),
         Anchor::Middle,
@@ -79,14 +83,14 @@ pub fn get_true_end_txt(world: &mut World) -> Entity {
         0.0,
         0.0,
         0.5,
-        1000.0,
-        1000.0,
+        sf * 1000.0,
+        sf * 1000.0,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrum"),
         "Well, I never thought we'd get here... Click here, or press [Space] or [Enter] to go back to the Main Menu. Congrats!".to_string(),
         [1.0; 4],
-        45.0,
+        sf * 45.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
