@@ -99,7 +99,7 @@ fn main() -> amethyst::Result<()> {
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
         .with(LightListSystem, "light_list", &[])
-        .with(FogOfWarSystem, "fog_of_war", &["light_list"]);
+        .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"]);
 
     if opts.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
@@ -168,8 +168,6 @@ pub struct Flags {
 }
 
 //todos
-
-//TODO: Refactor lists to one generic type
 
 //TODO: With Text, make sure to account for Screen Scaling
 

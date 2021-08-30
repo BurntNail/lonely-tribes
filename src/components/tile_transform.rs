@@ -1,7 +1,9 @@
 use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
 use std::{
+    cmp::Ordering,
     fmt::{Display, Formatter},
+    hash::{Hash, Hasher},
     ops::{Add, AddAssign, Mul, Sub},
 };
 
@@ -14,9 +16,9 @@ pub struct TileTransform {
     ///Y Position - Vertical
     pub y: i32,
 
-    ///X offset - measured in camera px, rather than grid
+    ///X offset - measured in camera px, rather than grid. SHOULD ONLY BE USED FOR COSMETICS
     pub x_offset: i32,
-    ///Y offset - measured in camera px, rather than grid
+    ///Y offset - measured in camera px, rather than grid. SHOULD ONLY BE USED FOR COSMETICS
     pub y_offset: i32,
 }
 impl Component for TileTransform {
@@ -78,6 +80,7 @@ impl TileTransform {
     }
 }
 
+//region implementations
 impl Add for TileTransform {
     type Output = Self;
 
@@ -136,6 +139,20 @@ impl PartialEq for TileTransform {
     }
 }
 impl Eq for TileTransform {}
+impl Hash for TileTransform {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        Hash::hash(&self.x, state);
+        Hash::hash(&self.y, state);
+    }
+}
+impl PartialOrd for TileTransform {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.get_magnitude()
+            .abs()
+            .partial_cmp(&other.get_magnitude().abs())
+    }
+}
+//endregion
 
 #[cfg(test)]
 mod tests {
