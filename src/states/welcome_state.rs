@@ -13,6 +13,7 @@ use amethyst::{
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
+use amethyst::input::{InputEvent, VirtualKeyCode};
 
 ///State for welcoming the player to the game
 #[derive(Default)]
@@ -46,8 +47,8 @@ impl SimpleState for StartGameState {
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
 
-        if let StateEvent::Ui(ui_event) = event {
-            if let Some(start_btn) = self.start_btn {
+        match event {
+            StateEvent::Ui(ui_event) => if let Some(start_btn) = self.start_btn {
                 if let Some(help_btn) = self.help_btn {
                     if let Some(lvl_btn) = self.level_btn {
                         let is_start = ui_event.target == start_btn;
@@ -82,7 +83,15 @@ impl SimpleState for StartGameState {
                         }
                     }
                 }
-            }
+            },
+            StateEvent::Input(event) => if let InputEvent::KeyPressed {key_code, ..} = event {
+                if key_code == VirtualKeyCode::Space {
+                    t = SimpleTrans::Switch(Box::new(
+                        LevelSelectState::default(),
+                    ));
+                }
+            },
+            _ => {}
         }
 
         t

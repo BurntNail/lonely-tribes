@@ -7,20 +7,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add collider-based shadows for lighting w/ a cache">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add config/screen scaling/logo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/display.ron" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help_text.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/true_end.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -352,8 +343,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
@@ -476,14 +467,7 @@
       <workItem from="1630081950853" duration="196000" />
       <workItem from="1630091024284" duration="116000" />
       <workItem from="1630177341685" duration="3762000" />
-      <workItem from="1630355410982" duration="6907000" />
-    </task>
-    <task id="LOCAL-00040" summary="Add script to automate new release">
-      <created>1628531163319</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1628531163319</updated>
+      <workItem from="1630355410982" duration="7607000" />
     </task>
     <task id="LOCAL-00041" summary="Add steam marketing materials">
       <created>1628531183461</created>
@@ -821,7 +805,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630359392747</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="add config/screen scaling/logo">
+      <created>1630362578301</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1630362578301</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -856,7 +847,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Start of timed movement." />
     <MESSAGE value="Timing how long the 'special' moves last, and tinting depending on how many left." />
     <MESSAGE value="Change FX Entities to be made in a func rather than in the event loop" />
     <MESSAGE value="General bug fixes inc:&#10;&#10; - Changing add_to_new into impl Add for TileTransform&#10; - Strict float comparison errors&#10; - Using Results&#10; - Changing single-case-matches to if lets&#10; - Fixing Animations to actually move from start to end, rather than end to start" />
@@ -881,7 +871,8 @@
     <MESSAGE value="fog of war" />
     <MESSAGE value="little qol changes" />
     <MESSAGE value="add collider-based shadows for lighting w/ a cache" />
-    <option name="LAST_COMMIT_MESSAGE" value="add collider-based shadows for lighting w/ a cache" />
+    <MESSAGE value="add config/screen scaling/logo" />
+    <option name="LAST_COMMIT_MESSAGE" value="add config/screen scaling/logo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

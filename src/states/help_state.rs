@@ -42,7 +42,7 @@ impl SimpleState for HelpState {
 ///Function to insert text onto the Help screen
 ///The text is **not** interactable.
 ///
-///By default, it uses a non-bold sans-serif font called ZxSpectrum
+///By default, it uses Atkinson Hyperlegible
 fn get_help_txt(world: &mut World) {
     let sf = get_scaling_factor();
     let trans = UiTransform::new(
@@ -53,13 +53,13 @@ fn get_help_txt(world: &mut World) {
         0.0,
         0.5,
         sf * 1500.0,
-        sf * 900.0,
+        sf * 800.0,
     );
     let txt = UiText::new(
         load_font(world, "Hyperlegible"),
         HELP_TXT.to_string(),
         [1.0; 4],
-        sf * 50.0,
+        sf * 42.5,
         LineMode::Wrap,
         Anchor::MiddleLeft,
     );
