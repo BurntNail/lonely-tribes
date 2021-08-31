@@ -1,5 +1,8 @@
 use crate::{
-    components::{animator::Animator, tile_transform::TileTransform},
+    components::{
+        animator::{AnimationData, Animator, MovementAnimationData},
+        tile_transform::TileTransform,
+    },
     HEIGHT,
 };
 use amethyst::{
@@ -19,7 +22,7 @@ impl<'s> System<'s> for UpdateTileTransforms {
     type SystemData = (
         WriteStorage<'s, TileTransform>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, Animator>,
+        WriteStorage<'s, Animator<MovementAnimationData>>,
         Read<'s, Time>,
     );
 
@@ -40,10 +43,10 @@ impl<'s> System<'s> for UpdateTileTransforms {
 
                 //Translation
                 let start = anim.start;
-                let xo = anim.x_offset();
+                let (xo, yo) = anim.get_current();
 
                 let x = ((start.x as f32) - xo) * 8.0 + TILE_WIDTH;
-                let y = ((HEIGHT as f32 - start.y as f32) + anim.y_offset()) * 8.0 - TILE_HEIGHT;
+                let y = ((HEIGHT as f32 - start.y as f32) + yo) * 8.0 - TILE_HEIGHT;
                 let z = trans.translation().z;
 
                 trans.set_translation_xyz(x, y, z);

@@ -14,45 +14,38 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
+use crate::components::animator::{Animator, AnimInterpolation};
+use crate::components::point_light::TintAnimatorData;
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
     cacher: LightCacher,
 }
 
+const TINT_ANIMATION_TIME: f32 = 0.25;
+
 impl<'s> System<'s> for FogOfWarSystem {
     type SystemData = (
         ReadStorage<'s, TileTransform>,
+        ReadStorage<'s, Tint>,
         Read<'s, LightList>,
         Read<'s, ColliderList>,
-        WriteStorage<'s, Tint>,
         ReadStorage<'s, TintOverride>,
+        WriteStorage<'s, Animator<TintAnimatorData>>,
     );
 
-    fn run(&mut self, (tiles, lights, collider_list, mut tints, overrides): Self::SystemData) {
+    fn run(&mut self, (tiles, tints, lights, collider_list, overrides, mut animators): Self::SystemData) {
         let lighted_cells = self
             .cacher
             .get_lighted_cells(lights.get(), collider_list.get());
 
-        for (tile, tint, _) in (&tiles, &mut tints, !&overrides).join() {
+        for (tile, tint, _, anim) in (&tiles, &tints, !&overrides, &mut animators).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
-            tint.0.red = factor;
-            tint.0.green = factor;
-            tint.0.blue = factor;
-            tint.0.alpha = factor;
+            anim.replace_data(TintAnimatorData::new(tint.0.alpha, factor, None, TINT_ANIMATION_TIME, AnimInterpolation::Linear));
         }
-        for (tile, tint, t_override) in (&tiles, &mut tints, &overrides).join() {
+        for (tile, tint, t_override, anim) in (&tiles, &tints, &overrides, &mut animators).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
-            let (r, g, b) = (
-                t_override.0 .0.red,
-                t_override.0 .0.green,
-                t_override.0 .0.blue,
-            );
-
-            tint.0.red = r * factor;
-            tint.0.green = g * factor;
-            tint.0.blue = b * factor;
-            tint.0.alpha = factor;
+            anim.replace_data(TintAnimatorData::new(tint.0.alpha, factor, Some(t_override.0), TINT_ANIMATION_TIME, AnimInterpolation::Linear));
         }
     }
 }
@@ -97,7 +90,9 @@ impl LightCacher {
                 current_delta_pos.x = i;
                 current_delta_pos.y = j;
 
-                if colls.contains(&current_delta_pos) {
+                if colls.contains(&current_delta_pos)
+                    || current_delta_pos.get_magnitude() > rad as f32
+                {
                     continue;
                 }
 
@@ -161,13 +156,16 @@ impl LightCacher {
             Self::get_lighted_cells_no_cache(l_t, l.radius as i32, colls)
                 .into_iter()
                 .for_each(|t| {
-                    let current_fac = hm.remove(&t).unwrap_or(0.0);
-                    let try_fac = (1.0 - t.distance(l_t_ref) / l.radius as f32).log10() + 2.0;
+                    let dist = t.distance(l_t_ref);
+                    let rad = l.radius as f32;
+                    let try_fac = (rad - dist) / rad;
 
+                    let current_fac = hm.remove(&t).unwrap_or(0.0);
                     let mut nu_fac = current_fac + try_fac;
                     if nu_fac > 1.0 {
                         nu_fac = 1.0;
                     }
+
                     hm.insert(t, nu_fac);
                 });
         });

@@ -1,10 +1,10 @@
 use crate::{
     components::{
-        animator::{AnimInterpolation, Animator},
+        animator::{AnimInterpolation, Animator, MovementAnimationData},
         colliders::{Collider, ColliderList},
         data_holder::EntityHolder,
         npc::NonPlayerCharacter,
-        point_light::{PointLight, TintOverride},
+        point_light::{PointLight},
         score::Score,
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
@@ -33,6 +33,7 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
+use crate::components::point_light::TintAnimatorData;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -363,8 +364,8 @@ impl PuzzleState {
                 .create_entity()
                 .with(s)
                 .with(tt)
-                .with(Tint(Srgba::new(1.0, 1.0, 1.0, 1.0)))
-                .with(TintOverride(ti))
+                .with(ti)
+                .with(Animator::<TintAnimatorData>::new())
                 .with(trans)
                 .build();
             self.tmp_fx_entities.push(ent);
@@ -450,8 +451,9 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(trans)
                         .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::player::Player::new(id))
-                        .with(Animator::new())
-                        .with(PointLight::new(5))
+                        .with(Animator::<MovementAnimationData>::new())
+                        .with(Animator::<TintAnimatorData>::new())
+                        .with(PointLight::new(3))
                         .with(tint)
                         .build();
                     holder.add_player_entity(ent);
@@ -464,6 +466,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(trans)
                         .with(NonPlayerCharacter::new(is_enemy))
                         .with(Collider::default())
+                        .with(Animator::<TintAnimatorData>::new())
                         .with(tint)
                         .build();
                 }
@@ -474,6 +477,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(Collider::default())
+                        .with(Animator::<TintAnimatorData>::new())
                         .with(tint)
                         .build();
                     holder.add_tile(ent);
@@ -485,6 +489,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(Collider::new(trigger_type))
+                        .with(Animator::<TintAnimatorData>::new())
                         .with(tint)
                         .build();
                     holder.add_tile(ent);
@@ -496,6 +501,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(tint)
+                        .with(Animator::<TintAnimatorData>::new())
                         .build();
                     holder.add_tile(ent);
                 }

@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        animator::{AnimInterpolation, AnimationData, Animator},
+        animator::{AnimInterpolation, Animator, MovementAnimationData},
         colliders::ColliderList,
         player::Player,
         tile_transform::TileTransform,
@@ -66,7 +66,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         Read<'s, Time>,
         Write<'s, GameState>,
         Read<'s, MovementDisabler>,
-        WriteStorage<'s, Animator>,
+        WriteStorage<'s, Animator<MovementAnimationData>>,
         Write<'s, MovementType>,
         Write<'s, GameModeManager>,
     );
@@ -223,10 +223,10 @@ pub fn tile_works(proposed_tile: TileTransform, collision_tiles: &[TileTransform
 pub fn set_tiletransform_with_anim(
     from: &mut TileTransform,
     to: TileTransform,
-    anim: &mut Animator,
+    anim: &mut Animator<MovementAnimationData>,
     t: f32,
     interp: AnimInterpolation,
 ) {
-    anim.replace_data(AnimationData::new(*from, to, t, interp));
+    anim.replace_data(MovementAnimationData::new(*from, to, t, interp));
     from.set(to);
 }

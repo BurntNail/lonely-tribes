@@ -6,3 +6,4 @@ pub mod txt_wobble_system;
 pub mod update_score;
 pub mod update_tile_transforms;
 pub mod win_system;
+pub mod tint_animator;

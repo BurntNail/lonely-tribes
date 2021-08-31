@@ -31,6 +31,7 @@ use amethyst::{
     LoggerConfig,
 };
 use log::LevelFilter;
+use crate::systems::tint_animator::TintAnimatorSystem;
 // use steamworks::{Client, FriendFlags};
 
 #[macro_use]
@@ -107,7 +108,8 @@ fn main() -> amethyst::Result<()> {
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
         .with(LightListSystem, "light_list", &[])
-        .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"]);
+        .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"])
+        .with(TintAnimatorSystem, "tint_animtor", &[]);
 
     if opts.flags.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(

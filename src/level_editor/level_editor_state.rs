@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        animator::{AnimInterpolation, AnimationData, Animator},
+        animator::{AnimInterpolation, Animator, MovementAnimationData},
         tile_transform::TileTransform,
     },
     level::{Room, SpriteRequest, LIST_OF_ALL_SPRITEREQUESTS, REVERSED_SPRITESHEET_SWATCH_HASHMAP},
@@ -103,7 +103,7 @@ impl SimpleState for LevelEditorState {
                 .with(spr)
                 .with(tt)
                 .with(trans)
-                .with(Animator::default())
+                .with(Animator::<MovementAnimationData>::default())
                 .build()
         };
         self.highlighter = Some(high);
@@ -166,10 +166,10 @@ impl SimpleState for LevelEditorState {
                     self.current_editing = working_version;
 
                     let mut tiletransforms = world.write_component::<TileTransform>();
-                    let mut animators = world.write_component::<Animator>();
+                    let mut animators = world.write_component::<Animator<MovementAnimationData>>();
                     if let Some(high) = self.highlighter {
                         if let Some(an) = animators.get_mut(high) {
-                            let data = AnimationData::new_no_rotate(
+                            let data = MovementAnimationData::new_no_rotate(
                                 old,
                                 working_version,
                                 PLAYER_MOVEMENT_ANIM_LEN,
