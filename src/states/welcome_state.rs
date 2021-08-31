@@ -10,10 +10,10 @@ use crate::{
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
+    input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
-use amethyst::input::{InputEvent, VirtualKeyCode};
 
 ///State for welcoming the player to the game
 #[derive(Default)]
@@ -48,49 +48,51 @@ impl SimpleState for StartGameState {
         let mut t = SimpleTrans::None;
 
         match event {
-            StateEvent::Ui(ui_event) => if let Some(start_btn) = self.start_btn {
-                if let Some(help_btn) = self.help_btn {
-                    if let Some(lvl_btn) = self.level_btn {
-                        let is_start = ui_event.target == start_btn;
-                        let is_help = ui_event.target == help_btn;
-                        let is_level = ui_event.target == lvl_btn;
+            StateEvent::Ui(ui_event) => {
+                if let Some(start_btn) = self.start_btn {
+                    if let Some(help_btn) = self.help_btn {
+                        if let Some(lvl_btn) = self.level_btn {
+                            let is_start = ui_event.target == start_btn;
+                            let is_help = ui_event.target == help_btn;
+                            let is_level = ui_event.target == lvl_btn;
 
-                        if is_start || is_help || is_level {
-                            let mut texts = data.world.write_storage::<UiText>();
-                            let txt = texts.get_mut(ui_event.target);
+                            if is_start || is_help || is_level {
+                                let mut texts = data.world.write_storage::<UiText>();
+                                let txt = texts.get_mut(ui_event.target);
 
-                            if let Some(txt) = txt {
-                                match ui_event.event_type {
-                                    UiEventType::ClickStop => {
-                                        txt.color = [1.0, 1.0, 1.0, 0.5];
-                                        if is_start {
-                                            t = SimpleTrans::Switch(Box::new(
-                                                LevelSelectState::default(),
-                                            ));
-                                        } else if is_help {
-                                            t = SimpleTrans::Switch(Box::new(HelpState::default()));
-                                        } else if is_level {
-                                            t = SimpleTrans::Switch(Box::new(
-                                                LevelEditorLevelSelectState::default(),
-                                            ));
+                                if let Some(txt) = txt {
+                                    match ui_event.event_type {
+                                        UiEventType::ClickStop => {
+                                            txt.color = [1.0, 1.0, 1.0, 0.5];
+                                            if is_start {
+                                                t = SimpleTrans::Switch(Box::new(
+                                                    LevelSelectState::default(),
+                                                ));
+                                            } else if is_help {
+                                                t = SimpleTrans::Switch(Box::new(
+                                                    HelpState::default(),
+                                                ));
+                                            } else if is_level {
+                                                t = SimpleTrans::Switch(Box::new(
+                                                    LevelEditorLevelSelectState::default(),
+                                                ));
+                                            }
                                         }
-                                    }
-                                    UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                                    UiEventType::HoverStop => txt.color = [1.0; 4],
-                                    _ => {}
-                                };
+                                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
+                                        UiEventType::HoverStop => txt.color = [1.0; 4],
+                                        _ => {}
+                                    };
+                                }
                             }
                         }
                     }
                 }
-            },
-            StateEvent::Input(event) => if let InputEvent::KeyPressed {key_code, ..} = event {
+            }
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
                 if key_code == VirtualKeyCode::Space {
-                    t = SimpleTrans::Switch(Box::new(
-                        LevelSelectState::default(),
-                    ));
+                    t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
                 }
-            },
+            }
             _ => {}
         }
 

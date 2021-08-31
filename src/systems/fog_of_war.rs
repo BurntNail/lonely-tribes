@@ -1,5 +1,9 @@
 use crate::{
-    components::{colliders::ColliderList, point_light::PointLight, tile_transform::TileTransform},
+    components::{
+        colliders::ColliderList,
+        point_light::{PointLight, TintOverride},
+        tile_transform::TileTransform,
+    },
     HEIGHT, WIDTH,
 };
 use amethyst::{
@@ -22,19 +26,32 @@ impl<'s> System<'s> for FogOfWarSystem {
         Read<'s, LightList>,
         Read<'s, ColliderList>,
         WriteStorage<'s, Tint>,
+        ReadStorage<'s, TintOverride>,
     );
 
-    fn run(&mut self, (tiles, lights, collider_list, mut tints): Self::SystemData) {
-        let lighted_cells: HashMap<TileTransform, f32> = {
-            self.cacher
-                .get_lighted_cells(lights.get(), collider_list.get())
-        };
+    fn run(&mut self, (tiles, lights, collider_list, mut tints, overrides): Self::SystemData) {
+        let lighted_cells = self
+            .cacher
+            .get_lighted_cells(lights.get(), collider_list.get());
 
-        for (tile, tint) in (&tiles, &mut tints).join() {
+        for (tile, tint, _) in (&tiles, &mut tints, !&overrides).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
             tint.0.red = factor;
             tint.0.green = factor;
             tint.0.blue = factor;
+            tint.0.alpha = factor;
+        }
+        for (tile, tint, t_override) in (&tiles, &mut tints, &overrides).join() {
+            let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
+            let (r, g, b) = (
+                t_override.0 .0.red,
+                t_override.0 .0.green,
+                t_override.0 .0.blue,
+            );
+
+            tint.0.red = r * factor;
+            tint.0.green = g * factor;
+            tint.0.blue = b * factor;
             tint.0.alpha = factor;
         }
     }
@@ -64,8 +81,7 @@ impl LightCacher {
         rad: i32,
         colls: &[TileTransform],
     ) -> Vec<TileTransform> {
-        let mut list = Vec::new();
-        list.push(light);
+        let mut list = vec![light];
 
         let mut current_delta_pos = TileTransform::default();
         let mut cells_to_test = Vec::new();
@@ -146,7 +162,7 @@ impl LightCacher {
                 .into_iter()
                 .for_each(|t| {
                     let current_fac = hm.remove(&t).unwrap_or(0.0);
-                    let try_fac = 1.0 - t.distance(l_t_ref) / l.radius as f32;
+                    let try_fac = (1.0 - t.distance(l_t_ref) / l.radius as f32).log10() + 2.0;
 
                     let mut nu_fac = current_fac + try_fac;
                     if nu_fac > 1.0 {

@@ -1,4 +1,7 @@
-use amethyst::core::ecs::{Component, DefaultVecStorage};
+use amethyst::{
+    core::ecs::{Component, DefaultVecStorage, DenseVecStorage},
+    renderer::resources::Tint,
+};
 
 #[derive(Copy, Clone, Debug)]
 pub struct PointLight {
@@ -16,4 +19,10 @@ impl Default for PointLight {
 }
 impl Component for PointLight {
     type Storage = DefaultVecStorage<Self>;
+}
+
+#[derive(Copy, Clone, Debug)]
+pub struct TintOverride(pub Tint);
+impl Component for TintOverride {
+    type Storage = DenseVecStorage<Self>;
 }

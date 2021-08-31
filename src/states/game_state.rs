@@ -4,7 +4,7 @@ use crate::{
         colliders::{Collider, ColliderList},
         data_holder::EntityHolder,
         npc::NonPlayerCharacter,
-        point_light::PointLight,
+        point_light::{PointLight, TintOverride},
         score::Score,
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
@@ -363,7 +363,8 @@ impl PuzzleState {
                 .create_entity()
                 .with(s)
                 .with(tt)
-                .with(ti)
+                .with(Tint(Srgba::new(1.0, 1.0, 1.0, 1.0)))
+                .with(TintOverride(ti))
                 .with(trans)
                 .build();
             self.tmp_fx_entities.push(ent);

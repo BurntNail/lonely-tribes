@@ -50,9 +50,16 @@ pub struct ParsedConfig {
     pub screen_dimensions: (u32, u32),
     pub maximised: bool,
 }
-
-impl ReadInConfig {
-    fn new() -> ParsedConfig {
+impl Default for ParsedConfig {
+    fn default() -> Self {
+        ParsedConfig {
+            screen_dimensions: (1600, 900),
+            maximised: false,
+        }
+    }
+}
+impl ParsedConfig {
+    pub fn new() -> Self {
         let path = "config/conf.ron".to_string();
         let contents = read_to_string(path.clone()).unwrap_or_default();
         match from_str(contents.as_str()) {
@@ -62,7 +69,7 @@ impl ReadInConfig {
                     //TODO: grab screen res
                     (1920, 1080)
                 });
-                ParsedConfig {
+                Self {
                     screen_dimensions: sd,
                     maximised: w.maximised,
                 }
@@ -74,22 +81,9 @@ impl ReadInConfig {
                     contents,
                     path
                 );
-                ParsedConfig::default()
+                Self::default()
             }
         }
-    }
-}
-impl Default for ParsedConfig {
-    fn default() -> Self {
-        ParsedConfig {
-            screen_dimensions: (1600, 900),
-            maximised: false,
-        }
-    }
-}
-impl ParsedConfig {
-    pub fn new() -> Self {
-        ReadInConfig::new()
     }
 }
 impl LTConfig {
