@@ -16,13 +16,14 @@ use std::{
 };
 use crate::components::animator::{Animator, AnimInterpolation};
 use crate::components::point_light::TintAnimatorData;
+use crate::systems::move_player::HELD_INTERVAL;
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
     cacher: LightCacher,
 }
 
-const TINT_ANIMATION_TIME: f32 = 0.25;
+const TINT_ANIMATION_TIME: f32 = HELD_INTERVAL;
 
 impl<'s> System<'s> for FogOfWarSystem {
     type SystemData = (

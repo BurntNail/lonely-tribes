@@ -25,7 +25,7 @@ pub struct Flags {
 
     ///Option to enable legacy movement
     #[structopt(short, long)]
-    pub timed_movement: Option<f32>,
+    pub timed_movement: bool,
 
     ///Option to use the debug level, requires debug mode
     #[cfg(debug_assertions)]

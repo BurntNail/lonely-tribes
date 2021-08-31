@@ -46,18 +46,16 @@ impl SimpleState for LevelEditorLevelSelectState {
                     target
                 };
 
-                let mut texts = data.world.write_component::<UiText>();
+                if let Some(targ) = my_target {
+                    let mut texts = data.world.write_component::<UiText>();
 
-                if let Some(txt) = texts.get_mut(event.target) {
-                    match event.event_type {
-                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                        UiEventType::HoverStop => txt.color = [1.0; 4],
-                        UiEventType::ClickStop => {
-                            if let Some(targ) = my_target {
-                                t = SimpleTrans::Switch(Box::new(LevelEditorState::new(targ.1)));
-                            }
+                    if let Some(txt) = texts.get_mut(event.target) {
+                        match event.event_type {
+                            UiEventType::HoverStart => txt.color = HOVER_COLOUR,
+                            UiEventType::HoverStop => txt.color = [1.0; 4],
+                            UiEventType::ClickStop => t = SimpleTrans::Switch(Box::new(LevelEditorState::new(targ.1))),
+                            _ => {}
                         }
-                        _ => {}
                     }
                 }
             }

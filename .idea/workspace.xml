@@ -7,17 +7,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="i didn't like the sounds, and most were corrupted">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix animator to be more generic&#10;add animations to tinting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/point_light.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/point_light.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +104,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.Test">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -115,21 +114,6 @@
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Expand lonely_tribes::components::point_light" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="expand --bin lonely-tribes --color=always --theme=GitHub --tests components::point_light" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
@@ -179,23 +163,6 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="build" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
-      </envs>
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="clippy" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false" temporary="true">
       <option name="command" value="clippy" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -214,7 +181,7 @@
       </method>
     </configuration>
     <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run -- -c -d --debug-level -t 0.05" />
+      <option name="command" value="run -- -c -d --debug-level -t" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -263,7 +230,7 @@
       </method>
     </configuration>
     <configuration name="run (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run -- -c -f -t 0.05" />
+      <option name="command" value="run -- -c -f -t" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -280,7 +247,7 @@
       </method>
     </configuration>
     <configuration name="run release (with fps)" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run --release -- -c -f -t 0.05" />
+      <option name="command" value="run --release -- -c -f -t" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -297,7 +264,7 @@
       </method>
     </configuration>
     <configuration name="run release" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run --release -- -t 0.05 -c" />
+      <option name="command" value="run --release -- -t -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -312,7 +279,7 @@
       </method>
     </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run -- -t 0.05 -c" />
+      <option name="command" value="run -- -c" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -349,7 +316,6 @@
       <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.run (with fps)" />
       <item itemvalue="Cargo.debug level" />
-      <item itemvalue="Cargo.build" />
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.docs" />
       <item itemvalue="Cargo.run release" />
@@ -359,11 +325,9 @@
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.clippy" />
       <item itemvalue="Shell Script.New Release" />
-      <item itemvalue="Cargo.Expand lonely_tribes::components::point_light" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Expand lonely_tribes::components::point_light" />
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
       </list>
@@ -490,14 +454,7 @@
       <workItem from="1630177341685" duration="3762000" />
       <workItem from="1630355410982" duration="7688000" />
       <workItem from="1630398133617" duration="6495000" />
-      <workItem from="1630416634294" duration="5031000" />
-    </task>
-    <task id="LOCAL-00044" summary="Animations baby!&#10;However, it did break the win system...">
-      <created>1628584494704</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1628584494704</updated>
+      <workItem from="1630416634294" duration="6550000" />
     </task>
     <task id="LOCAL-00045" summary="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
       <created>1628587925566</created>
@@ -835,7 +792,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630417289518</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="fix animator to be more generic&#10;add animations to tinting">
+      <created>1630438767442</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1630438767442</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -870,7 +834,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fun with impl Into for TileTransform" />
     <MESSAGE value="Add options for Animator for different interpolation types" />
     <MESSAGE value="Remove powerups system - it just doesn't feel good now that I have the movement types system" />
     <MESSAGE value="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff." />
@@ -895,7 +858,8 @@
     <MESSAGE value="fix help text/prompts" />
     <MESSAGE value="add tint-overrides for gamemodes" />
     <MESSAGE value="i didn't like the sounds, and most were corrupted" />
-    <option name="LAST_COMMIT_MESSAGE" value="i didn't like the sounds, and most were corrupted" />
+    <MESSAGE value="fix animator to be more generic&#10;add animations to tinting" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix animator to be more generic&#10;add animations to tinting" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

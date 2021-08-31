@@ -383,7 +383,7 @@ fn add_score(world: &mut World) -> Entity {
         sf * -575.0,
         sf * 400.0,
         0.5,
-        sf * 350.0,
+        sf * 400.0,
         sf * 1000.0,
     );
     let txt = UiText::new(

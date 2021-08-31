@@ -109,7 +109,7 @@ impl SimpleState for PausedState {
 
                                     if stepped_movement {
                                         current_state.can_move = None;
-                                        current_state.movement_timer = Some((0.0, 0.05));
+                                        current_state.movement_timer = Some(0.0);
                                         txt.text = "Toggle Movement type to Stepped.".to_string();
                                     } else {
                                         current_state.can_move = Some(true);

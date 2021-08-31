@@ -18,6 +18,7 @@ use amethyst::{
 use rand::Rng;
 
 pub const PLAYER_MOVEMENT_ANIM_LEN: f32 = 0.125;
+pub const HELD_INTERVAL: f32 = 0.05;
 
 ///System for capturing player movement, and collision
 #[derive(Default)]
@@ -33,20 +34,20 @@ pub struct MovementType {
 
     ///For legacy system
     ///
-    ///Tuple with current time, timer length
+    ///Tuple with current time for the timer
     ///
     /// If none, we assume the new system.
-    pub movement_timer: Option<(f32, f32)>,
+    pub movement_timer: Option<f32>,
 }
 
 impl Default for MovementType {
     fn default() -> Self {
         let opts = LTConfig::new().flags;
 
-        if let Some(interval) = opts.timed_movement {
+        if opts.timed_movement {
             Self {
                 can_move: None,
-                movement_timer: Some((0.0, interval)),
+                movement_timer: Some(0.0),
             }
         } else {
             Self {
@@ -145,18 +146,18 @@ impl<'s> System<'s> for MovePlayerSystem {
             (t, anim_len, interp)
         };
 
-        if let Some((timer, interval)) = &mut movement.movement_timer {
+        if let Some(timer) = &mut movement.movement_timer {
             *timer += time.delta_seconds();
 
-            if timer > interval && !movement_disabler.enabled {
+            if *timer > HELD_INTERVAL && !movement_disabler.enabled {
                 for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
                     let (proposed_tile, anim_len, interp) =
                         proposed_tile_closure(*tile, PLAYER_MOVEMENT_ANIM_LEN);
                     let works = if mode == GamePlayingMode::Nudger {
-                        true
+                        tile_works(proposed_tile, &[])
                     } else {
-                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile
-                    };
+                        tile_works(proposed_tile, &collision_tiles)
+                    } && &proposed_tile != tile;
 
                     if works && actual_movement {
                         set_tiletransform_with_anim(tile, proposed_tile, anim, anim_len, interp);
@@ -176,10 +177,10 @@ impl<'s> System<'s> for MovePlayerSystem {
                     let (proposed_tile, anim_len, interp) =
                         proposed_tile_closure(*tile, PLAYER_MOVEMENT_ANIM_LEN);
                     let works = if mode == GamePlayingMode::Nudger {
-                        true
+                        tile_works(proposed_tile, &[])
                     } else {
-                        tile_works(proposed_tile, &collision_tiles) && &proposed_tile != tile
-                    };
+                        tile_works(proposed_tile, &collision_tiles)
+                    } && &proposed_tile != tile;
 
                     if works && can_move && actual_movement {
                         set_tiletransform_with_anim(tile, proposed_tile, anim, anim_len, interp);
