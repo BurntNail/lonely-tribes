@@ -6,6 +6,7 @@ use std::{
     hash::{Hash, Hasher},
     ops::{Add, AddAssign, Mul, Sub},
 };
+use crate::TILE_WIDTH_HEIGHT;
 
 ///Component for transforms which align to the tile grid
 ///Much easier to manipulate than amethyst Transforms
@@ -64,8 +65,8 @@ impl TileTransform {
 
     ///Gets magnitude of self using pythagoras
     pub fn get_magnitude(&self) -> f32 {
-        let x = (self.x as f32) + (self.x_offset as f32 / 8.0);
-        let y = (self.y as f32) + (self.y_offset as f32 / 8.0);
+        let x = (self.x + (self.x_offset / TILE_WIDTH_HEIGHT)) as f32;
+        let y = (self.y + (self.y_offset / TILE_WIDTH_HEIGHT)) as f32;
 
         (x * x + y * y).sqrt()
     }

@@ -34,9 +34,13 @@ impl AnimInterpolation {
 pub trait AnimationData {
     type AnimDataType;
 
+    #[must_use]
     fn get_offset_multiplier(&self) -> f32;
+    #[must_use]
     fn is_done(&self) -> bool;
+    #[must_use]
     fn add_time(&mut self, time_since_last: f32);
+    #[must_use]
     fn get_current(&self) -> Self::AnimDataType;
 }
 

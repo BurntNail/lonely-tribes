@@ -1,28 +1,19 @@
-use crate::{
-    components::{
-        animator::{AnimInterpolation, Animator, MovementAnimationData},
-        colliders::{Collider, ColliderList},
-        data_holder::EntityHolder,
-        npc::NonPlayerCharacter,
-        point_light::{PointLight},
-        score::Score,
-        tile_transform::TileTransform,
-        win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
-    },
-    config::LTConfig,
-    file_utils::list_file_names_in_dir,
-    level::Room,
-    states::{
-        afterwards_state::PostGameState,
-        level_select::LevelSelectState,
-        paused_state::PausedState,
-        states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
-        true_end::TrueEnd,
-    },
-    systems::update_tile_transforms::UpdateTileTransforms,
-    tag::{Tag, TriggerType},
-    ARENA_HEIGHT, ARENA_WIDTH,
-};
+use crate::{components::{
+    animator::{AnimInterpolation, Animator, MovementAnimationData},
+    colliders::{Collider, ColliderList},
+    data_holder::EntityHolder,
+    npc::NonPlayerCharacter,
+    point_light::{PointLight},
+    score::Score,
+    tile_transform::TileTransform,
+    win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
+}, config::LTConfig, file_utils::list_file_names_in_dir, level::Room, states::{
+    afterwards_state::PostGameState,
+    level_select::LevelSelectState,
+    paused_state::PausedState,
+    states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
+    true_end::TrueEnd,
+}, systems::update_tile_transforms::UpdateTileTransforms, tag::{Tag, TriggerType}, ARENA_HEIGHT, ARENA_WIDTH, TILE_WIDTH_HEIGHT};
 use amethyst::{
     assets::Handle,
     core::{ecs::Entity, math::Vector3, transform::Transform, Hidden, Time},

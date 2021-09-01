@@ -1,10 +1,7 @@
-use crate::{
-    components::{
-        animator::{AnimationData, Animator, MovementAnimationData},
-        tile_transform::TileTransform,
-    },
-    HEIGHT,
-};
+use crate::{components::{
+    animator::{AnimationData, Animator, MovementAnimationData},
+    tile_transform::TileTransform,
+}, HEIGHT, TILE_WIDTH_HEIGHT};
 use amethyst::{
     core::{ecs::Read, transform::Transform, Time},
     ecs::{Join, System, WriteStorage},
@@ -14,9 +11,9 @@ use amethyst::{
 pub struct UpdateTileTransforms;
 
 ///Offset x to have tile anchored to centre rather than corner.
-pub const TILE_WIDTH: f32 = 8.0 / 2.0;
+pub const TILE_WIDTH: f32 = TILE_WIDTH_HEIGHT as f32 / 2.0;
 ///Offset y to have tile anchored to centre rather than corner.
-pub const TILE_HEIGHT: f32 = 8.0 / 2.0;
+pub const TILE_HEIGHT: f32 = TILE_WIDTH_HEIGHT as f32 / 2.0;
 
 impl<'s> System<'s> for UpdateTileTransforms {
     type SystemData = (
@@ -29,8 +26,8 @@ impl<'s> System<'s> for UpdateTileTransforms {
     fn run(&mut self, (tiles, mut transforms, mut animators, time): Self::SystemData) {
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
-            let x = tile.x as f32 * 8.0 + TILE_WIDTH + tile.x_offset as f32;
-            let y = (HEIGHT as f32 - tile.y as f32) * 8.0 - TILE_HEIGHT - tile.y_offset as f32;
+            let x = tile.x as f32 * TILE_WIDTH_HEIGHT as f32 + TILE_WIDTH + tile.x_offset as f32;
+            let y = (HEIGHT as f32 - tile.y as f32) * TILE_WIDTH_HEIGHT as f32 - TILE_HEIGHT - tile.y_offset as f32;
 
             trans.set_translation_xyz(x, y, old_z);
         }
@@ -45,16 +42,16 @@ impl<'s> System<'s> for UpdateTileTransforms {
                 let start = anim.start;
                 let (xo, yo) = anim.get_current();
 
-                let x = ((start.x as f32) - xo) * 8.0 + TILE_WIDTH;
-                let y = ((HEIGHT as f32 - start.y as f32) + yo) * 8.0 - TILE_HEIGHT;
+                let x = ((start.x as f32) - xo) * TILE_WIDTH_HEIGHT as f32 + TILE_WIDTH;
+                let y = ((HEIGHT as f32 - start.y as f32) + yo) * TILE_WIDTH_HEIGHT as f32 - TILE_HEIGHT;
                 let z = trans.translation().z;
 
                 trans.set_translation_xyz(x, y, z);
 
                 //Rotation
-                if xo != 0.0 && anim.rotates {
+                if (xo != 0.0 || yo != 0.0) && anim.rotates {
                     let rotation = (anim.get_offset_multiplier() * 180.0).to_radians().sin() / 2.0;
-                    let mult = if xo > 0.0 { 1.0 } else { -1.0 };
+                    let mult = if xo > 0.0 || yo > 0.0 { 1.0 } else { -1.0 };
                     trans.set_rotation_2d(mult * rotation);
                 } else {
                     trans.set_rotation_2d(0.0);
@@ -75,8 +72,8 @@ impl UpdateTileTransforms {
     }
     ///Convert a TileTransform to an XYZ for a Transform on Screen
     pub fn tile_to_xyz(tile: TileTransform) -> (f32, f32) {
-        let x = tile.x as f32 * 8.0 + TILE_WIDTH;
-        let y = (HEIGHT - tile.y as u32) as f32 * 8.0 - TILE_HEIGHT;
+        let x = tile.x as f32 * TILE_WIDTH_HEIGHT as f32 + TILE_WIDTH;
+        let y = (HEIGHT - tile.y as u32) as f32 * TILE_WIDTH_HEIGHT as f32 - TILE_HEIGHT;
         (x, y)
     }
 }

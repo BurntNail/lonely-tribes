@@ -7,16 +7,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix animator to be more generic&#10;add animations to tinting">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add clearer SPECIAL score&#10;fix intervals for held movement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +103,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Test">
+  <component name="RunManager" selected="Cargo.run">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -279,7 +278,7 @@
       </method>
     </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run -- -c" />
+      <option name="command" value="run -- -c -t" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -454,14 +453,7 @@
       <workItem from="1630177341685" duration="3762000" />
       <workItem from="1630355410982" duration="7688000" />
       <workItem from="1630398133617" duration="6495000" />
-      <workItem from="1630416634294" duration="6550000" />
-    </task>
-    <task id="LOCAL-00045" summary="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
-      <created>1628587925566</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1628587925566</updated>
+      <workItem from="1630416634294" duration="8197000" />
     </task>
     <task id="LOCAL-00046" summary="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
       <created>1628587938354</created>
@@ -799,7 +791,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630438767442</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="add clearer SPECIAL score&#10;fix intervals for held movement">
+      <created>1630442155435</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1630442155435</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -834,7 +833,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add options for Animator for different interpolation types" />
     <MESSAGE value="Remove powerups system - it just doesn't feel good now that I have the movement types system" />
     <MESSAGE value="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff." />
     <MESSAGE value="cargo fmt" />
@@ -859,7 +857,8 @@
     <MESSAGE value="add tint-overrides for gamemodes" />
     <MESSAGE value="i didn't like the sounds, and most were corrupted" />
     <MESSAGE value="fix animator to be more generic&#10;add animations to tinting" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix animator to be more generic&#10;add animations to tinting" />
+    <MESSAGE value="add clearer SPECIAL score&#10;fix intervals for held movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="add clearer SPECIAL score&#10;fix intervals for held movement" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
