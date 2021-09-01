@@ -1,19 +1,31 @@
-use crate::{components::{
-    animator::{AnimInterpolation, Animator, MovementAnimationData},
-    colliders::{Collider, ColliderList},
-    data_holder::EntityHolder,
-    npc::NonPlayerCharacter,
-    point_light::{PointLight},
-    score::Score,
-    tile_transform::TileTransform,
-    win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
-}, config::LTConfig, file_utils::list_file_names_in_dir, level::Room, states::{
-    afterwards_state::PostGameState,
-    level_select::LevelSelectState,
-    paused_state::PausedState,
-    states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
-    true_end::TrueEnd,
-}, systems::update_tile_transforms::UpdateTileTransforms, tag::{Tag, TriggerType}, ARENA_HEIGHT, ARENA_WIDTH, TILE_WIDTH_HEIGHT};
+use crate::{
+    components::{
+        animations::{
+            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
+            rotation::RotationAnimationData, tint::TintAnimatorData,
+        },
+        colliders::{Collider, ColliderList},
+        data_holder::EntityHolder,
+        npc::NonPlayerCharacter,
+        point_light::PointLight,
+        score::Score,
+        tile_transform::TileTransform,
+        win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
+    },
+    config::LTConfig,
+    file_utils::list_file_names_in_dir,
+    level::Room,
+    states::{
+        afterwards_state::PostGameState,
+        level_select::LevelSelectState,
+        paused_state::PausedState,
+        states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
+        true_end::TrueEnd,
+    },
+    systems::update_tile_transforms::UpdateTileTransforms,
+    tag::{Tag, TriggerType},
+    ARENA_HEIGHT, ARENA_WIDTH,
+};
 use amethyst::{
     assets::Handle,
     core::{ecs::Entity, math::Vector3, transform::Transform, Hidden, Time},
@@ -24,7 +36,6 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
-use crate::components::point_light::TintAnimatorData;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -443,6 +454,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::player::Player::new(id))
                         .with(Animator::<MovementAnimationData>::new())
+                        .with(Animator::<RotationAnimationData>::new())
                         .with(Animator::<TintAnimatorData>::new())
                         .with(PointLight::new(3))
                         .with(tint)

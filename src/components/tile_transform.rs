@@ -1,3 +1,4 @@
+use crate::TILE_WIDTH_HEIGHT;
 use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -6,7 +7,6 @@ use std::{
     hash::{Hash, Hasher},
     ops::{Add, AddAssign, Mul, Sub},
 };
-use crate::TILE_WIDTH_HEIGHT;
 
 ///Component for transforms which align to the tile grid
 ///Much easier to manipulate than amethyst Transforms

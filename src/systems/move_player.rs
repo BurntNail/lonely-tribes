@@ -1,6 +1,9 @@
 use crate::{
     components::{
-        animator::{AnimInterpolation, Animator, MovementAnimationData},
+        animations::{
+            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
+            rotation::RotationAnimationData,
+        },
         colliders::ColliderList,
         player::Player,
         tile_transform::TileTransform,
@@ -68,6 +71,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         Write<'s, GameState>,
         Read<'s, MovementDisabler>,
         WriteStorage<'s, Animator<MovementAnimationData>>,
+        WriteStorage<'s, Animator<RotationAnimationData>>,
         Write<'s, MovementType>,
         Write<'s, GameModeManager>,
     );
@@ -82,7 +86,8 @@ impl<'s> System<'s> for MovePlayerSystem {
             time,
             mut gws,
             movement_disabler,
-            mut animators,
+            mut movement_animators,
+            mut rotation_animators,
             mut movement,
             mut gm,
         ): Self::SystemData,
@@ -127,7 +132,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         let proposed_tile_closure = |tile: TileTransform, base_len: f32| {
             let mut rng = rand::thread_rng();
             let mut anim_len = base_len;
-            let mut interp = AnimInterpolation::Linear;
+            // let mut interp = AnimInterpolation::Linear;
 
             let t = match mode {
                 GamePlayingMode::TradeOff => {
@@ -135,7 +140,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
                 GamePlayingMode::Crazy => {
                     anim_len *= 3.0;
-                    interp = AnimInterpolation::ReverseExponential;
+                    // interp = AnimInterpolation::ReverseExponential;
                     TileTransform::new(
                         rng.gen_range(0..WIDTH as i32),
                         rng.gen_range(0..HEIGHT as i32),
@@ -143,14 +148,21 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
                 _ => tile + proposed_tile_addition,
             };
-            (t, anim_len, interp)
+            (t, anim_len, AnimInterpolation::ReverseExponential)
         };
 
         if let Some(timer) = &mut movement.movement_timer {
             *timer += time.delta_seconds();
 
             if *timer > HELD_INTERVAL && !movement_disabler.enabled {
-                for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
+                for (tile, _, movement_anim, rot_anim) in (
+                    &mut tiles,
+                    &players,
+                    &mut movement_animators,
+                    &mut rotation_animators,
+                )
+                    .join()
+                {
                     let (proposed_tile, anim_len, interp) =
                         proposed_tile_closure(*tile, PLAYER_MOVEMENT_ANIM_LEN);
                     let works = if mode == GamePlayingMode::Nudger {
@@ -160,7 +172,14 @@ impl<'s> System<'s> for MovePlayerSystem {
                     } && &proposed_tile != tile;
 
                     if works && actual_movement {
-                        set_tiletransform_with_anim(tile, proposed_tile, anim, anim_len, interp);
+                        set_tiletransform_with_anim(
+                            tile,
+                            proposed_tile,
+                            movement_anim,
+                            rot_anim,
+                            anim_len,
+                            interp,
+                        );
                         if mode.adds_to_score() {
                             add_to_score = true;
                         }
@@ -173,7 +192,14 @@ impl<'s> System<'s> for MovePlayerSystem {
 
         if let Some(can_move) = movement.can_move {
             if !movement_disabler.enabled {
-                for (tile, _, anim) in (&mut tiles, &players, &mut animators).join() {
+                for (tile, _, movement_anim, rot_anim) in (
+                    &mut tiles,
+                    &players,
+                    &mut movement_animators,
+                    &mut rotation_animators,
+                )
+                    .join()
+                {
                     let (proposed_tile, anim_len, interp) =
                         proposed_tile_closure(*tile, PLAYER_MOVEMENT_ANIM_LEN);
                     let works = if mode == GamePlayingMode::Nudger {
@@ -183,7 +209,14 @@ impl<'s> System<'s> for MovePlayerSystem {
                     } && &proposed_tile != tile;
 
                     if works && can_move && actual_movement {
-                        set_tiletransform_with_anim(tile, proposed_tile, anim, anim_len, interp);
+                        set_tiletransform_with_anim(
+                            tile,
+                            proposed_tile,
+                            movement_anim,
+                            rot_anim,
+                            anim_len,
+                            interp,
+                        );
                         add_to_score = true;
                     }
                 }
@@ -220,14 +253,19 @@ pub fn tile_works(proposed_tile: TileTransform, collision_tiles: &[TileTransform
     res
 }
 
-///Sets one tiletransform equal to another with the animator, and a given duration
+///Sets one tiletransform equal to another with the animations, and a given duration. Also adds a rotation
 pub fn set_tiletransform_with_anim(
     from: &mut TileTransform,
     to: TileTransform,
-    anim: &mut Animator<MovementAnimationData>,
+    anim_move: &mut Animator<MovementAnimationData>,
+    anim_rot: &mut Animator<RotationAnimationData>,
     t: f32,
     interp: AnimInterpolation,
 ) {
-    anim.replace_data(MovementAnimationData::new(*from, to, t, interp));
+    anim_move.replace_data(MovementAnimationData::new(*from, to, t, interp));
+    anim_rot.replace_data(RotationAnimationData::new(
+        t,
+        AnimInterpolation::ReverseExponential,
+    ));
     from.set(to);
 }

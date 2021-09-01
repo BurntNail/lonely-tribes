@@ -7,14 +7,24 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add clearer SPECIAL score&#10;fix intervals for held movement">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="change hard-coded 8.0s">
+      <change afterPath="$PROJECT_DIR$/src/components/animations/data.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/point_light.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/point_light.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/tint_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/tint_animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,11 +92,11 @@
       <recent name="$PROJECT_DIR$/src/systems" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\src\components\animator" />
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\config" />
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\fonts" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/systems" />
-      <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -453,21 +463,7 @@
       <workItem from="1630177341685" duration="3762000" />
       <workItem from="1630355410982" duration="7688000" />
       <workItem from="1630398133617" duration="6495000" />
-      <workItem from="1630416634294" duration="8197000" />
-    </task>
-    <task id="LOCAL-00046" summary="Fix win system with animations.&#10;Now, if no players are detected, it will not auto-win.">
-      <created>1628587938354</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1628587938354</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Fix powerups spawning in colliders and OOB">
-      <created>1628668969119</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1628668969119</updated>
+      <workItem from="1630416634294" duration="11715000" />
     </task>
     <task id="LOCAL-00048" summary="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins">
       <created>1628669824548</created>
@@ -798,7 +794,21 @@
       <option name="project" value="LOCAL" />
       <updated>1630442155435</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="change hard-coded 8.0s">
+      <created>1630488194571</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1630488194571</updated>
+    </task>
+    <task id="LOCAL-00096" summary="change hard-coded 8.0s">
+      <created>1630488203862</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1630488203862</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -833,7 +843,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove powerups system - it just doesn't feel good now that I have the movement types system" />
     <MESSAGE value="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff." />
     <MESSAGE value="cargo fmt" />
     <MESSAGE value="Add 2 new gameplay modes" />
@@ -858,7 +867,8 @@
     <MESSAGE value="i didn't like the sounds, and most were corrupted" />
     <MESSAGE value="fix animator to be more generic&#10;add animations to tinting" />
     <MESSAGE value="add clearer SPECIAL score&#10;fix intervals for held movement" />
-    <option name="LAST_COMMIT_MESSAGE" value="add clearer SPECIAL score&#10;fix intervals for held movement" />
+    <MESSAGE value="change hard-coded 8.0s" />
+    <option name="LAST_COMMIT_MESSAGE" value="change hard-coded 8.0s" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

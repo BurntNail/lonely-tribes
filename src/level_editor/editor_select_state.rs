@@ -53,7 +53,9 @@ impl SimpleState for LevelEditorLevelSelectState {
                         match event.event_type {
                             UiEventType::HoverStart => txt.color = HOVER_COLOUR,
                             UiEventType::HoverStop => txt.color = [1.0; 4],
-                            UiEventType::ClickStop => t = SimpleTrans::Switch(Box::new(LevelEditorState::new(targ.1))),
+                            UiEventType::ClickStop => {
+                                t = SimpleTrans::Switch(Box::new(LevelEditorState::new(targ.1)))
+                            }
                             _ => {}
                         }
                     }

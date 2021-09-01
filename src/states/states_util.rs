@@ -56,6 +56,5 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
 
 pub fn get_scaling_factor() -> f32 {
     let c = crate::config::LTConfig::new();
-    let s = c.conf.screen_dimensions.0 as f32 / 1600.0; //game was originally designed for 1600x900
-    s
+    c.conf.screen_dimensions.0 as f32 / 1600.0 //game was originally designed for 1600x900
 }

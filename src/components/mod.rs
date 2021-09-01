@@ -1,4 +1,4 @@
-pub mod animator;
+pub mod animations;
 pub mod colliders;
 pub mod data_holder;
 pub mod npc;

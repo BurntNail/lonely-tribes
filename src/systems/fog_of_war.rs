@@ -1,9 +1,13 @@
 use crate::{
     components::{
+        animations::{
+            animation::Animator, interpolation::AnimInterpolation, tint::TintAnimatorData,
+        },
         colliders::ColliderList,
         point_light::{PointLight, TintOverride},
         tile_transform::TileTransform,
     },
+    systems::move_player::HELD_INTERVAL,
     HEIGHT, WIDTH,
 };
 use amethyst::{
@@ -14,9 +18,6 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
-use crate::components::animator::{Animator, AnimInterpolation};
-use crate::components::point_light::TintAnimatorData;
-use crate::systems::move_player::HELD_INTERVAL;
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
@@ -35,25 +36,39 @@ impl<'s> System<'s> for FogOfWarSystem {
         WriteStorage<'s, Animator<TintAnimatorData>>,
     );
 
-    fn run(&mut self, (tiles, tints, lights, collider_list, overrides, mut animators): Self::SystemData) {
+    fn run(
+        &mut self,
+        (tiles, tints, lights, collider_list, overrides, mut animators): Self::SystemData,
+    ) {
         let lighted_cells = self
             .cacher
             .get_lighted_cells(lights.get(), collider_list.get());
 
         for (tile, tint, _, anim) in (&tiles, &tints, !&overrides, &mut animators).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
-            anim.replace_data(TintAnimatorData::new(tint.0.alpha, factor, None, TINT_ANIMATION_TIME, AnimInterpolation::Linear));
+            anim.replace_data(TintAnimatorData::new(
+                tint.0.alpha,
+                factor,
+                None,
+                TINT_ANIMATION_TIME,
+                AnimInterpolation::Linear,
+            ));
         }
         for (tile, tint, t_override, anim) in (&tiles, &tints, &overrides, &mut animators).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
-            anim.replace_data(TintAnimatorData::new(tint.0.alpha, factor, Some(t_override.0), TINT_ANIMATION_TIME, AnimInterpolation::Linear));
+            anim.replace_data(TintAnimatorData::new(
+                tint.0.alpha,
+                factor,
+                Some(t_override.0),
+                TINT_ANIMATION_TIME,
+                AnimInterpolation::Linear,
+            ));
         }
     }
 }
 
 #[derive(Default, Clone)]
 pub struct LightCacher {
-    ///testing, tetsing
     pub current: Option<LightingData>,
 }
 #[derive(Clone, Default)]

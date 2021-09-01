@@ -1,9 +1,11 @@
-use crate::components::{score::Score, win_state::GameState};
+use crate::components::{
+    score::Score,
+    win_state::{GameModeManager, GameState},
+};
 use amethyst::{
     core::ecs::{Join, Read, ReadStorage, System, WriteStorage},
     ui::UiText,
 };
-use crate::components::win_state::GameModeManager;
 
 ///System to update the score in the PuzzleState
 pub struct ScoreUpdaterSystem;
@@ -21,7 +23,10 @@ impl<'s> System<'s> for ScoreUpdaterSystem {
         let moves_left = gmm.moves_left;
 
         for (_, text) in (&scores, &mut texts).join() {
-            text.text = format!("Current Score: {}.\nSPECIAL moves left: {}", score, moves_left);
+            text.text = format!(
+                "Current Score: {}.\nSPECIAL moves left: {}",
+                score, moves_left
+            );
         }
     }
 }

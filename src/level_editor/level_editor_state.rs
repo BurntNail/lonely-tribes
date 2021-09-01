@@ -1,6 +1,8 @@
 use crate::{
     components::{
-        animator::{AnimInterpolation, Animator, MovementAnimationData},
+        animations::{
+            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
+        },
         tile_transform::TileTransform,
     },
     level::{Room, SpriteRequest, LIST_OF_ALL_SPRITEREQUESTS, REVERSED_SPRITESHEET_SWATCH_HASHMAP},
@@ -48,7 +50,7 @@ impl LevelEditorState {
         } else {
             level_editing = get_levels().len();
             let img: ImageBuffer<Rgba<u8>, Vec<u8>> =
-                ImageBuffer::from_pixel(WIDTH, HEIGHT, Rgba::from([0, 0, 0, 0]));
+                ImageBuffer::from_pixel(WIDTH as u32, HEIGHT as u32, Rgba::from([0, 0, 0, 0]));
 
             let path = format!("lvl-{:02}.png", level_editing + 1);
             img.save(format!("assets/maps/{}", path))
@@ -64,7 +66,7 @@ impl LevelEditorState {
         }
     }
     pub fn save_self(&self) {
-        let mut img = ImageBuffer::new(WIDTH, HEIGHT);
+        let mut img = ImageBuffer::new(WIDTH as u32, HEIGHT as u32);
         for (x, y, px) in img.enumerate_pixels_mut() {
             let res = *REVERSED_SPRITESHEET_SWATCH_HASHMAP
                 .get(&self.data[x as usize][y as usize])
@@ -169,7 +171,7 @@ impl SimpleState for LevelEditorState {
                     let mut animators = world.write_component::<Animator<MovementAnimationData>>();
                     if let Some(high) = self.highlighter {
                         if let Some(an) = animators.get_mut(high) {
-                            let data = MovementAnimationData::new_no_rotate(
+                            let data = MovementAnimationData::new(
                                 old,
                                 working_version,
                                 PLAYER_MOVEMENT_ANIM_LEN,

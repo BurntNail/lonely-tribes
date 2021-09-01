@@ -198,7 +198,7 @@ impl Room {
         image::open(path)
             .unwrap_or_else(|err| {
                 log::error!("Image Error for Room {}: {}", path, err);
-                DynamicImage::new_bgr8(WIDTH, HEIGHT)
+                DynamicImage::new_bgr8(WIDTH as u32, HEIGHT as u32)
             })
             .pixels()
             .for_each(|(x, y, px)| {

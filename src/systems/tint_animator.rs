@@ -1,16 +1,21 @@
-use amethyst::core::ecs::{System, WriteStorage, Read, Join};
-use crate::components::animator::{Animator, AnimationData};
-use crate::components::point_light::TintAnimatorData;
-use amethyst::renderer::resources::Tint;
-use amethyst::core::Time;
+use crate::components::animations::{
+    animation::Animator, data::AnimationData, tint::TintAnimatorData,
+};
+use amethyst::{
+    core::{
+        ecs::{Join, Read, System, WriteStorage},
+        Time,
+    },
+    renderer::resources::Tint,
+};
 
 pub struct TintAnimatorSystem;
 
-impl <'s> System<'s> for TintAnimatorSystem {
+impl<'s> System<'s> for TintAnimatorSystem {
     type SystemData = (
         WriteStorage<'s, Animator<TintAnimatorData>>,
         WriteStorage<'s, Tint>,
-        Read<'s, Time>
+        Read<'s, Time>,
     );
 
     fn run(&mut self, (mut animators, mut tints, time): Self::SystemData) {
