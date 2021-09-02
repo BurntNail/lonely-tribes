@@ -1,8 +1,12 @@
 ///Type of Interpolation for Animation
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum AnimInterpolation {
+    ///A reverse exponential curve
+    ///
+    /// https://www.desmos.com/calculator/sbq8tbhr9d
     ReverseExponential,
     #[allow(dead_code)]
+    ///A linear curve - f(x) = x
     Linear,
 }
 
@@ -20,11 +24,7 @@ impl AnimInterpolation {
     ///Turns a 0.0-1.0 value into another 0.0-1.0 value, using the interpolation method of self
     pub fn get_val_from_pctg(&self, pctg: f32) -> f32 {
         match self {
-            AnimInterpolation::ReverseExponential => {
-                //worked out with desmos
-                //https://www.desmos.com/calculator/sbq8tbhr9d
-                (-1.0 * A.powf(B * pctg)) + 1.0
-            }
+            AnimInterpolation::ReverseExponential => (-1.0 * A.powf(B * pctg)) + 1.0,
             AnimInterpolation::Linear => pctg,
         }
     }

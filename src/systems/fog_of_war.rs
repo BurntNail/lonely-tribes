@@ -44,7 +44,7 @@ impl<'s> System<'s> for FogOfWarSystem {
             .cacher
             .get_lighted_cells(lights.get(), collider_list.get());
 
-        for (tile, tint, _, anim) in (&tiles, &tints, !&overrides, &mut animators).join() {
+        for (tile, tint, anim) in (&tiles, &tints, &mut animators).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
             anim.replace_data(TintAnimatorData::new(
                 tint.0.alpha,

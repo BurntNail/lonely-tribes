@@ -36,6 +36,7 @@ impl<T: AnimationData> Animator<T> {
         }
     }
 
+    ///Increases self.time_elapsed if it has an animation currently in
     pub fn add_time(&mut self, t: f32) {
         if let Some(a) = &mut self.animation_data {
             a.add_time(t);

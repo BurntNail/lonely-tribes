@@ -1,3 +1,4 @@
+///A trait for all structs to hold data for an animation
 pub trait AnimationData {
     ///return type for get_current
     type AnimDataType;

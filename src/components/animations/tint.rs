@@ -5,6 +5,7 @@ use crate::components::animations::{
 use amethyst::renderer::{palette::Srgba, resources::Tint};
 
 #[derive(Copy, Clone, Debug)]
+///component to change an entitiy's tint
 pub struct TintAnimatorData {
     pub start: f32,
     pub end: f32,
@@ -46,11 +47,11 @@ impl AnimationData for TintAnimatorData {
     }
 
     fn get_current(&self) -> Self::AnimDataType {
-        let factor = self.start
-            + (self.end - self.start)
-                * get_offset_multiplier(self.time_elapsed, self.total_time, self.interpolation);
-        let factor: f32 = {
-            let str_version = format!("{:03}", factor);
+        let factor = {
+            let f = self.start
+                + (self.end - self.start)
+                    * get_offset_multiplier(self.time_elapsed, self.total_time, self.interpolation);
+            let str_version = format!("{:03}", f);
             str_version.parse().unwrap_or_else(|err| {
                 log::warn!("Couldn't parse into str because: {}", err);
                 1.0

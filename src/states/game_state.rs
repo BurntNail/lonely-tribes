@@ -36,6 +36,7 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
+use crate::components::point_light::TintOverride;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -367,6 +368,7 @@ impl PuzzleState {
                 .with(s)
                 .with(tt)
                 .with(ti)
+                .with(TintOverride(ti))
                 .with(Animator::<TintAnimatorData>::new())
                 .with(trans)
                 .build();

@@ -7,25 +7,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="change hard-coded 8.0s">
-      <change afterPath="$PROJECT_DIR$/src/components/animations/data.rs" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="refactor animation components">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animator.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/point_light.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/point_light.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/animation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/data.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/data.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/interpolation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/interpolation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/rotation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/rotation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/tests.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tests.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/tint.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tint.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/tint_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/tint_animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,17 +105,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -463,14 +443,8 @@
       <workItem from="1630177341685" duration="3762000" />
       <workItem from="1630355410982" duration="7688000" />
       <workItem from="1630398133617" duration="6495000" />
-      <workItem from="1630416634294" duration="11715000" />
-    </task>
-    <task id="LOCAL-00048" summary="Fix/remove/give up on some todos:&#10;&#10; - Change HighScore's constructor to new rather than default&#10; - Change HighScores to a Vec rather than a HashMap&#10; - Add todo to fix random wins">
-      <created>1628669824548</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1628669824548</updated>
+      <workItem from="1630416634294" duration="13032000" />
+      <workItem from="1630572389749" duration="360000" />
     </task>
     <task id="LOCAL-00049" summary="I broke smth, so i fixed it">
       <created>1628670080098</created>
@@ -808,7 +782,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630488203862</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="refactor animation components">
+      <created>1630492427139</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1630492427139</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -843,7 +824,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff." />
     <MESSAGE value="cargo fmt" />
     <MESSAGE value="Add 2 new gameplay modes" />
     <MESSAGE value="Clean old levels to remove powerups" />
@@ -868,7 +848,8 @@
     <MESSAGE value="fix animator to be more generic&#10;add animations to tinting" />
     <MESSAGE value="add clearer SPECIAL score&#10;fix intervals for held movement" />
     <MESSAGE value="change hard-coded 8.0s" />
-    <option name="LAST_COMMIT_MESSAGE" value="change hard-coded 8.0s" />
+    <MESSAGE value="refactor animation components" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor animation components" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

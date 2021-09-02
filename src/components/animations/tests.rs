@@ -2,9 +2,9 @@
 mod anim_tests {
     use super::super::{
         animation::Animator,
+        data::AnimationData,
         interpolation::{get_offset_multiplier, AnimInterpolation},
         movement::MovementAnimationData,
-        data::AnimationData
     };
 
     ///returns a 1 second linear animatiom from (0,0) to (1,1)
