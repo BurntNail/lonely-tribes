@@ -81,6 +81,7 @@ fn main() -> amethyst::Result<()> {
         title: "Lonely Tribes".to_string(),
         dimensions: Some(opts.conf.screen_dimensions),
         maximized: opts.conf.maximised,
+        decorations: !opts.conf.maximised,
         icon: Some(resources.join("art/logo.png")),
         ..Default::default()
     };

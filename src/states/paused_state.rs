@@ -1,6 +1,9 @@
 use crate::{
     components::data_holder::EntityHolder,
-    states::states_util::{get_scaling_factor, load_font},
+    states::{
+        level_select::LevelSelectState,
+        states_util::{get_scaling_factor, load_font},
+    },
     systems::move_player::MovementType,
     HOVER_COLOUR,
 };
@@ -30,6 +33,10 @@ impl Default for MovementDisabler {
 pub enum PausedStateMenuAction {
     ///Option to toggle the movement
     ToggleMovement,
+    ///Option to quit game
+    QuitGame,
+    ///Option to get to level select
+    LvlSelect,
 }
 
 ///State for when the game is paused
@@ -96,6 +103,7 @@ impl SimpleState for PausedState {
                     res
                 };
 
+                let mut disabler_enabled = world.read_resource::<MovementDisabler>().enabled;
                 if let Some(action) = action {
                     let mut texts = world.write_storage::<UiText>();
 
@@ -117,6 +125,11 @@ impl SimpleState for PausedState {
                                         txt.text = "Toggle Movement type to Held.".to_string();
                                     }
                                 }
+                                PausedStateMenuAction::LvlSelect => {
+                                    disabler_enabled = false;
+                                    t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
+                                }
+                                PausedStateMenuAction::QuitGame => std::process::exit(0),
                             },
                             UiEventType::HoverStart => txt.color = HOVER_COLOUR,
                             UiEventType::HoverStop => txt.color = [1.0; 4],
@@ -124,6 +137,7 @@ impl SimpleState for PausedState {
                         }
                     }
                 }
+                world.insert(MovementDisabler {enabled: disabler_enabled});
             }
             _ => {}
         }
@@ -173,9 +187,9 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * 100.0,
+        sf * 300.0,
         0.0,
-        sf * 1000.0,
+        sf * 1500.0,
         sf * 250.0,
     );
     let welcome_txt = UiText::new(
@@ -210,12 +224,11 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             "Toggle Movement type to Stepped.".to_string()
         };
 
-        #[allow(clippy::redundant_clone)]
         let toggle_btn_txt = UiText::new(
             font_handle.clone(),
             actual_txt,
             [1.0; 4],
-            sf * 25.0,
+            sf * 45.0,
             LineMode::Single,
             Anchor::Middle,
         );
@@ -226,7 +239,64 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             .with(Interactable)
             .build()
     };
+    let quit = {
+        let quit_btn_trans = UiTransform::new(
+            String::from("quit_btn"),
+            Anchor::Middle,
+            Anchor::Middle,
+            0.0,
+            sf * -145.0,
+            0.0,
+            sf * 1500.0,
+            sf * 40.0,
+        );
+
+        let quit_btn_txt = UiText::new(
+            font_handle.clone(),
+            "Exit Game".to_string(),
+            [1.0; 4],
+            sf * 45.0,
+            LineMode::Single,
+            Anchor::Middle,
+        );
+        world
+            .create_entity()
+            .with(quit_btn_trans)
+            .with(quit_btn_txt)
+            .with(Interactable)
+            .build()
+    };
+    let level_select = {
+        let quit_btn_trans = UiTransform::new(
+            String::from("level_btn"),
+            Anchor::Middle,
+            Anchor::Middle,
+            0.0,
+            sf * -205.0,
+            0.0,
+            sf * 1500.0,
+            sf * 40.0,
+        );
+
+        let quit_btn_txt = UiText::new(
+            font_handle,
+            "Exit to Level Select".to_string(),
+            [1.0; 4],
+            sf * 45.0,
+            LineMode::Single,
+            Anchor::Middle,
+        );
+        world
+            .create_entity()
+            .with(quit_btn_trans)
+            .with(quit_btn_txt)
+            .with(Interactable)
+            .build()
+    };
+
     map.insert(toggle, PausedStateMenuAction::ToggleMovement);
+    map.insert(quit, PausedStateMenuAction::QuitGame);
+    map.insert(level_select, PausedStateMenuAction::LvlSelect);
 
     (map, top)
 }

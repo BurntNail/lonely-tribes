@@ -7,16 +7,16 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="refactor animation components">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add docu-comments&#10;fix tint override">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/animation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/data.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/data.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/interpolation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/interpolation.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/animations/rotation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/rotation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/tests.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tests.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/animations/tint.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tint.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help_text.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +46,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/amethyst_window-0.15.3/src/config.rs" root0="SKIP_INSPECTION" />
   </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
@@ -104,7 +107,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.run release">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -112,6 +115,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -127,6 +131,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -142,6 +147,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -159,6 +165,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -176,6 +183,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -193,6 +201,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -208,6 +217,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -225,6 +235,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -242,6 +253,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -259,6 +271,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs />
       <option name="isRedirectInput" value="false" />
@@ -274,6 +287,7 @@
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
         <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
@@ -444,14 +458,10 @@
       <workItem from="1630355410982" duration="7688000" />
       <workItem from="1630398133617" duration="6495000" />
       <workItem from="1630416634294" duration="13032000" />
-      <workItem from="1630572389749" duration="360000" />
-    </task>
-    <task id="LOCAL-00049" summary="I broke smth, so i fixed it">
-      <created>1628670080098</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1628670080098</updated>
+      <workItem from="1630572389749" duration="2651000" />
+      <workItem from="1630595494372" duration="194000" />
+      <workItem from="1630653662193" duration="616000" />
+      <workItem from="1630773587652" duration="348000" />
     </task>
     <task id="LOCAL-00050" summary="fix winning (i hope)">
       <created>1628706301071</created>
@@ -789,7 +799,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630492427139</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="add docu-comments&#10;fix tint override">
+      <created>1630572830648</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1630572830648</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -824,7 +841,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cargo fmt" />
     <MESSAGE value="Add 2 new gameplay modes" />
     <MESSAGE value="Clean old levels to remove powerups" />
     <MESSAGE value="Add rotations to animations" />
@@ -849,7 +865,8 @@
     <MESSAGE value="add clearer SPECIAL score&#10;fix intervals for held movement" />
     <MESSAGE value="change hard-coded 8.0s" />
     <MESSAGE value="refactor animation components" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor animation components" />
+    <MESSAGE value="add docu-comments&#10;fix tint override" />
+    <option name="LAST_COMMIT_MESSAGE" value="add docu-comments&#10;fix tint override" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

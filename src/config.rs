@@ -65,10 +65,7 @@ impl ParsedConfig {
         match from_str(contents.as_str()) {
             Ok(w) => {
                 let w: ReadInConfig = w;
-                let sd = w.screen_dimensions.unwrap_or_else(|| {
-                    //TODO: grab screen res
-                    (1920, 1080)
-                });
+                let sd = w.screen_dimensions.unwrap_or((1920, 1080));
                 Self {
                     screen_dimensions: sd,
                     maximised: w.maximised,

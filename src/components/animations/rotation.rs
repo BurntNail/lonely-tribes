@@ -27,9 +27,7 @@ impl AnimationData for RotationAnimationData {
 
     fn get_current(&self) -> Self::AnimDataType {
         let om = get_offset_multiplier(self.time_elapsed, self.total_time, self.interpolation);
-        let v = (om * 360.0).to_radians().sin() / 2.0;
-        log::info!("{}", v);
-        v
+        (om * 360.0).to_radians().sin() / 2.0
     }
 }
 

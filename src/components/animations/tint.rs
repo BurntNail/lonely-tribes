@@ -58,14 +58,10 @@ impl AnimationData for TintAnimatorData {
             })
         };
 
-        let or = self
-            .override_tint
-            .unwrap_or_else(|| Tint(Srgba::new(1.0, 1.0, 1.0, 1.0)));
-        Tint(Srgba::new(
-            or.0.red * factor,
-            or.0.green * factor,
-            or.0.blue * factor,
-            or.0.alpha * factor,
-        ))
+        if let Some(or) = self.override_tint {
+            Tint(Srgba::new(or.0.red, or.0.green, or.0.blue, factor))
+        } else {
+            Tint(Srgba::new(factor, factor, factor, factor))
+        }
     }
 }

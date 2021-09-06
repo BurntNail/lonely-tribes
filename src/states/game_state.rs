@@ -7,7 +7,7 @@ use crate::{
         colliders::{Collider, ColliderList},
         data_holder::EntityHolder,
         npc::NonPlayerCharacter,
-        point_light::PointLight,
+        point_light::{PointLight, TintOverride},
         score::Score,
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
@@ -36,7 +36,6 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
-use crate::components::point_light::TintOverride;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
