@@ -7,14 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="various clippy fixes&#10;quit buttons">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="remove bug where could see whole map when launching a mode">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/animation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/tests.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tests.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/tint_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/tint_animator.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +61,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/art" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -105,25 +101,9 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test components::animations::tests::anim_tests::new_animator_test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package lonely-tribes --bin lonely-tribes components::animations::tests::anim_tests::new_animator_test -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -164,7 +144,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -182,7 +162,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -200,7 +180,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -234,7 +214,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -252,7 +232,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -270,7 +250,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -304,7 +284,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -341,14 +321,12 @@
       <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.clippy" />
-      <item itemvalue="Cargo.Test components::animations::tests::anim_tests::new_animator_test" />
       <item itemvalue="Shell Script.New Release" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
-        <item itemvalue="Cargo.Test components::animations::tests::anim_tests::new_animator_test" />
       </list>
     </recent_temporary>
   </component>
@@ -478,14 +456,8 @@
       <workItem from="1630595494372" duration="194000" />
       <workItem from="1630653662193" duration="616000" />
       <workItem from="1630773587652" duration="348000" />
-      <workItem from="1630999456923" duration="858000" />
-    </task>
-    <task id="LOCAL-00050" summary="fix winning (i hope)">
-      <created>1628706301071</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1628706301072</updated>
+      <workItem from="1630999456923" duration="1071000" />
+      <workItem from="1631030037586" duration="79000" />
     </task>
     <task id="LOCAL-00051" summary="optimise win_system.rs to not have to use colliderlist">
       <created>1628706481564</created>
@@ -823,7 +795,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630572830648</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="remove bug where could see whole map when launching a mode">
+      <created>1631000470328</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1631000470328</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -858,7 +837,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add 2 new gameplay modes" />
     <MESSAGE value="Clean old levels to remove powerups" />
     <MESSAGE value="Add rotations to animations" />
     <MESSAGE value="Add final bits for steamworks" />
@@ -883,7 +861,8 @@
     <MESSAGE value="change hard-coded 8.0s" />
     <MESSAGE value="refactor animation components" />
     <MESSAGE value="add docu-comments&#10;fix tint override" />
-    <option name="LAST_COMMIT_MESSAGE" value="add docu-comments&#10;fix tint override" />
+    <MESSAGE value="remove bug where could see whole map when launching a mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove bug where could see whole map when launching a mode" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
