@@ -9,7 +9,7 @@ mod anim_tests {
 
     ///returns a 1 second linear animatiom from (0,0) to (1,1)
     fn get_anim() -> Animator<MovementAnimationData> {
-        let mut a = Animator::new();
+        let mut a = Animator::def();
         a.replace_data(MovementAnimationData::new(
             (0, 0).into(),
             (0, 1).into(),
@@ -21,7 +21,7 @@ mod anim_tests {
 
     #[test]
     pub fn new_animator_test() {
-        let mut t = Animator::new();
+        let mut t = Animator::default();
         assert!(t.animation_data.is_none());
 
         let data = MovementAnimationData::new(
@@ -31,6 +31,7 @@ mod anim_tests {
             AnimInterpolation::Linear,
         );
         t.replace_data(data);
+
         assert!(t.animation_data.is_some());
         assert_eq!(
             t.animation_data.unwrap().interpolation,

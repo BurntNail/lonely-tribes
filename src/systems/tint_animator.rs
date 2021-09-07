@@ -29,9 +29,14 @@ impl<'s> System<'s> for TintAnimatorSystem {
                 }
 
                 let new_tint: Tint = d.get_current();
+
                 tint.0 = new_tint.0;
+
                 if tint.0.alpha < 0.001 {
                     tint.0.alpha = 0.0;
+                    anim.finish();
+                } else if tint.0.alpha > 0.999 {
+                    tint.0.alpha = 1.0;
                     anim.finish();
                 }
             }

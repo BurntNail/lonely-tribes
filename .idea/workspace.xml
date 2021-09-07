@@ -7,16 +7,14 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add docu-comments&#10;fix tint override">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="various clippy fixes&#10;quit buttons">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/rotation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/rotation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/animations/tint.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tint.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help_text.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/animation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/tests.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tests.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/tint_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/tint_animator.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,9 +105,25 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run release">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test components::animations::tests::anim_tests::new_animator_test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package lonely-tribes --bin lonely-tribes components::animations::tests::anim_tests::new_animator_test -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -327,12 +341,14 @@
       <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.clippy" />
+      <item itemvalue="Cargo.Test components::animations::tests::anim_tests::new_animator_test" />
       <item itemvalue="Shell Script.New Release" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.Test components::animations::tests::anim_tests::new_animator_test" />
       </list>
     </recent_temporary>
   </component>
@@ -462,6 +478,7 @@
       <workItem from="1630595494372" duration="194000" />
       <workItem from="1630653662193" duration="616000" />
       <workItem from="1630773587652" duration="348000" />
+      <workItem from="1630999456923" duration="858000" />
     </task>
     <task id="LOCAL-00050" summary="fix winning (i hope)">
       <created>1628706301071</created>

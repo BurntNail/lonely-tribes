@@ -3,15 +3,14 @@ use amethyst::core::ecs::{Component, DenseVecStorage};
 use std::ops::{Deref, DerefMut};
 
 ///Component on all players to hold an animations
-#[derive(Copy, Clone, Debug, Default)]
-pub struct Animator<T: AnimationData> {
+#[derive(Copy, Clone, Debug)]
+pub struct Animator<T: AnimationData + Sync + Send + 'static + Copy> {
     pub animation_data: Option<T>,
 }
-impl<T: AnimationData> Animator<T> {
-    ///Constructor which initialises the animationdata as none
-    pub fn new() -> Self {
+impl<T: AnimationData + Sync + Send + 'static + Copy> Animator<T> {
+    pub fn new(animation_data: T) -> Self {
         Self {
-            animation_data: None,
+            animation_data: Some(animation_data),
         }
     }
 
@@ -44,18 +43,26 @@ impl<T: AnimationData> Animator<T> {
     }
 }
 
-impl<T: 'static + AnimationData + Sync + Send> Component for Animator<T> {
+impl<T: 'static + AnimationData + Sync + Send + Copy> Default for Animator<T> {
+    fn default() -> Self {
+        Self {
+            animation_data: None,
+        }
+    }
+}
+
+impl<T: 'static + AnimationData + Sync + Send + Copy> Component for Animator<T> {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl<T: AnimationData> Deref for Animator<T> {
+impl<T: 'static + AnimationData + Sync + Send + Copy> Deref for Animator<T> {
     type Target = Option<T>;
 
     fn deref(&self) -> &Self::Target {
         &self.animation_data
     }
 }
-impl<T: AnimationData> DerefMut for Animator<T> {
+impl<T: 'static + AnimationData + Sync + Send + Copy> DerefMut for Animator<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.animation_data
     }

@@ -18,11 +18,11 @@ use crate::{
     states::{
         afterwards_state::PostGameState,
         level_select::LevelSelectState,
-        paused_state::PausedState,
+        paused_state::{MovementDisabler, PausedState},
         states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
-    systems::update_tile_transforms::UpdateTileTransforms,
+    systems::{fog_of_war::TINT_ANIMATION_TIME, update_tile_transforms::UpdateTileTransforms},
     tag::{Tag, TriggerType},
     ARENA_HEIGHT, ARENA_WIDTH,
 };
@@ -143,6 +143,7 @@ impl SimpleState for PuzzleState {
 
         world.insert(holder);
         world.insert(GameModeManager::new(50));
+        world.insert(MovementDisabler { enabled: false });
 
         self.actions.insert(VirtualKeyCode::R, self.level_index);
 
@@ -272,6 +273,7 @@ impl SimpleState for PuzzleState {
                         .with(trans)
                         .with(SpriteRender::new(spritesheet, 0))
                         .build();
+                    data.world.insert(MovementDisabler { enabled: true });
 
                     (0.0, 1.5, ent)
                 });
@@ -357,18 +359,28 @@ impl PuzzleState {
             }
         }
 
-        for (s, tt, ti) in entities_to_make {
+        for (sprite_renderer, tt, hacker_tint) in entities_to_make {
             let mut trans = Transform::default();
+
+            let nothing_tint = Tint(Srgba::new(0.0, 0.0, 0.0, 0.0));
+            // let anim: Animator<TintAnimatorData> = Animator::new(TintAnimatorData::new(
+            //     0.0,
+            //     1.0,
+            //     Some(hacker_tint),
+            //     TINT_ANIMATION_TIME,
+            //     AnimInterpolation::Linear,
+            // ));
 
             trans.set_translation_z(0.15);
 
             let ent = world
                 .create_entity()
-                .with(s)
+                .with(sprite_renderer)
                 .with(tt)
-                .with(ti)
-                .with(TintOverride(ti))
-                .with(Animator::<TintAnimatorData>::new())
+                .with(nothing_tint)
+                .with(TintOverride(hacker_tint))
+                // .with(anim)
+                .with(Animator::<TintAnimatorData>::default())
                 .with(trans)
                 .build();
             self.tmp_fx_entities.push(ent);
@@ -454,9 +466,9 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(trans)
                         .with(Collider::new(TriggerType::from_id(&id)))
                         .with(crate::components::player::Player::new(id))
-                        .with(Animator::<MovementAnimationData>::new())
-                        .with(Animator::<RotationAnimationData>::new())
-                        .with(Animator::<TintAnimatorData>::new())
+                        .with(Animator::<MovementAnimationData>::default())
+                        .with(Animator::<RotationAnimationData>::default())
+                        .with(Animator::<TintAnimatorData>::default())
                         .with(PointLight::new(3))
                         .with(tint)
                         .build();
@@ -470,7 +482,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(trans)
                         .with(NonPlayerCharacter::new(is_enemy))
                         .with(Collider::default())
-                        .with(Animator::<TintAnimatorData>::new())
+                        .with(Animator::<TintAnimatorData>::default())
                         .with(tint)
                         .build();
                 }
@@ -481,7 +493,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(Collider::default())
-                        .with(Animator::<TintAnimatorData>::new())
+                        .with(Animator::<TintAnimatorData>::default())
                         .with(tint)
                         .build();
                     holder.add_tile(ent);
@@ -493,7 +505,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(Collider::new(trigger_type))
-                        .with(Animator::<TintAnimatorData>::new())
+                        .with(Animator::<TintAnimatorData>::default())
                         .with(tint)
                         .build();
                     holder.add_tile(ent);
@@ -505,7 +517,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tt)
                         .with(trans)
                         .with(tint)
-                        .with(Animator::<TintAnimatorData>::new())
+                        .with(Animator::<TintAnimatorData>::default())
                         .build();
                     holder.add_tile(ent);
                 }

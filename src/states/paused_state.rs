@@ -137,7 +137,9 @@ impl SimpleState for PausedState {
                         }
                     }
                 }
-                world.insert(MovementDisabler {enabled: disabler_enabled});
+                world.insert(MovementDisabler {
+                    enabled: disabler_enabled,
+                });
             }
             _ => {}
         }

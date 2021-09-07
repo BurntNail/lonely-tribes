@@ -24,7 +24,7 @@ pub struct FogOfWarSystem {
     cacher: LightCacher,
 }
 
-const TINT_ANIMATION_TIME: f32 = HELD_INTERVAL;
+pub const TINT_ANIMATION_TIME: f32 = HELD_INTERVAL;
 
 impl<'s> System<'s> for FogOfWarSystem {
     type SystemData = (
@@ -54,6 +54,7 @@ impl<'s> System<'s> for FogOfWarSystem {
                 AnimInterpolation::Linear,
             ));
         }
+
         for (tile, tint, t_override, anim) in (&tiles, &tints, &overrides, &mut animators).join() {
             let factor = *lighted_cells.get(tile).unwrap_or(&0.0);
             anim.replace_data(TintAnimatorData::new(
