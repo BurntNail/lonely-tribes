@@ -86,7 +86,7 @@ impl PartialEq for LightingData {
 impl Eq for LightingData {}
 
 impl LightCacher {
-    fn get_lighted_cells_no_cache(
+    fn get_lighted_cells_no_cache (
         light: TileTransform,
         rad: i32,
         colls: &[TileTransform],
@@ -95,6 +95,7 @@ impl LightCacher {
 
         let mut current_delta_pos = TileTransform::default();
         let mut cells_to_test = Vec::new();
+
         for i in -rad..rad as i32 {
             if light.x + i < 0 || light.x + i >= WIDTH as i32 {
                 continue;
