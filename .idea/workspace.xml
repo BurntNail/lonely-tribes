@@ -7,9 +7,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="remove bug where could see whole map when launching a mode">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add steam stuff&#10;balancing&#10;conf options for held movement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/animation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/animations/tests.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/animations/tests.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,9 +47,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/amethyst_window-0.15.3/src/config.rs" root0="SKIP_INSPECTION" />
-  </component>
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
   </component>
@@ -69,6 +72,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/rouguelike-rpg/assets/maps/test.ron.rs" value="true" />
+    <property name="org.rust.hideToolchainNotifications" value="true" />
     <property name="settings.editor.selected.configurable" value="language.rust" />
   </component>
   <component name="RecentsManager">
@@ -101,7 +105,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.build release">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -111,7 +115,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -144,7 +150,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -156,24 +162,6 @@
       <option name="command" value="clippy" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="STABLE" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="backtrace" value="SHORT" />
-      <envs>
-        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
-      </envs>
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="debug level" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
-      <option name="command" value="run -- -c -d --debug-level -t" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
       <option name="allFeatures" value="false" />
       <option name="emulateTerminal" value="false" />
@@ -232,7 +220,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -250,7 +238,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -267,7 +255,9 @@
       <option name="emulateTerminal" value="false" />
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
-      <envs />
+      <envs>
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
+      </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
       <method v="2">
@@ -284,7 +274,7 @@
       <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="STEAM_SDK_LOCATION" value="$USER_HOME$/sdks/steamworks-151" />
+        <env name="STEAM_SDK_LOCATION" value="$PROJECT_DIR$/../../../../sdks/steamworks-151" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -312,7 +302,6 @@
     <list>
       <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.run (with fps)" />
-      <item itemvalue="Cargo.debug level" />
       <item itemvalue="Cargo.run" />
       <item itemvalue="Cargo.docs" />
       <item itemvalue="Cargo.run release" />
@@ -331,7 +320,7 @@
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -458,13 +447,8 @@
       <workItem from="1630773587652" duration="348000" />
       <workItem from="1630999456923" duration="1071000" />
       <workItem from="1631030037586" duration="79000" />
-    </task>
-    <task id="LOCAL-00051" summary="optimise win_system.rs to not have to use colliderlist">
-      <created>1628706481564</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1628706481564</updated>
+      <workItem from="1631034736075" duration="668000" />
+      <workItem from="1631036765285" duration="483000" />
     </task>
     <task id="LOCAL-00052" summary="Add a basic pause state that hides all game entities when paused, and later unhides them.">
       <created>1628711849185</created>
@@ -802,7 +786,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631000470328</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="add steam stuff&#10;balancing&#10;conf options for held movement">
+      <created>1631030369595</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1631030369595</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -823,7 +814,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="anikets-changes" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -837,7 +828,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Clean old levels to remove powerups" />
     <MESSAGE value="Add rotations to animations" />
     <MESSAGE value="Add final bits for steamworks" />
     <MESSAGE value="Add all-collider mode, and use animators for lvl editors." />
@@ -862,7 +852,8 @@
     <MESSAGE value="refactor animation components" />
     <MESSAGE value="add docu-comments&#10;fix tint override" />
     <MESSAGE value="remove bug where could see whole map when launching a mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove bug where could see whole map when launching a mode" />
+    <MESSAGE value="add steam stuff&#10;balancing&#10;conf options for held movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="add steam stuff&#10;balancing&#10;conf options for held movement" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -32,7 +32,7 @@ use amethyst::{
     LoggerConfig,
 };
 use log::LevelFilter;
-use steamworks::*;
+// use steamworks::*;
 
 #[macro_use]
 extern crate lazy_static;
@@ -122,14 +122,14 @@ fn main() -> amethyst::Result<()> {
     }
 
 
-    {
-        let (client, single) = Client::init().unwrap();
-
-        for _ in 0..50 {
-            single.run_callbacks();
-            ::std::thread::sleep(::std::time::Duration::from_millis(100));
-        }
-    }
+    // {
+    //     let (client, single) = Client::init().unwrap();
+    //
+    //     for _ in 0..50 {
+    //         single.run_callbacks();
+    //         ::std::thread::sleep(::std::time::Duration::from_millis(100));
+    //     }
+    // }
 
     let mut game = {
         if std::fs::read_dir(DATA_DIR).is_ok() {

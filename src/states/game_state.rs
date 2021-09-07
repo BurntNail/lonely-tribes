@@ -22,7 +22,7 @@ use crate::{
         states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
-    systems::{fog_of_war::TINT_ANIMATION_TIME, update_tile_transforms::UpdateTileTransforms},
+    systems::{update_tile_transforms::UpdateTileTransforms},
     tag::{Tag, TriggerType},
     ARENA_HEIGHT, ARENA_WIDTH,
 };

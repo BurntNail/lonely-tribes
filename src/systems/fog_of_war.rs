@@ -18,6 +18,10 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
+use std::time::SystemTime;
+use rayon::prelude::*;
+use rayon::iter::ParallelIterator;
+use std::sync::mpsc::channel;
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
@@ -91,40 +95,42 @@ impl LightCacher {
         rad: i32,
         colls: &[TileTransform],
     ) -> Vec<TileTransform> {
-        let mut list = vec![light];
+        let (sender, receiver) = channel();
 
-        let mut current_delta_pos = TileTransform::default();
-        let mut cells_to_test = Vec::new();
+        (-rad..rad).into_par_iter().for_each_with(sender, |sender, i| {
+            let i = i as i32;
+            if !(light.x + i < 0 || light.x + i >= WIDTH as i32) {
 
-        for i in -rad..rad as i32 {
-            if light.x + i < 0 || light.x + i >= WIDTH as i32 {
-                continue;
-            }
-            for j in -rad..rad as i32 {
-                if light.y + j < 0 || light.y + j >= HEIGHT as i32 {
-                    continue;
+                let (tx, rx) = channel();
+
+                (-rad..rad).into_par_iter().for_each_with(tx, |tx, j| {
+                    let j = j as i32;
+                    if !(light.y + j < 0 || light.y + j >= HEIGHT as i32) {
+
+                        let current_delta_pos = TileTransform::new(i, j);
+
+                        if !(colls.contains(&current_delta_pos)
+                            || current_delta_pos.get_magnitude() > rad as f32)
+                        {
+                            tx.send(current_delta_pos + light).unwrap_or_else(|err| log::warn!("Couldn't send position to cells to test: {}", err));
+                        }
+                    }
+                });
+
+                for item in rx.iter() {
+                    sender.send(item).unwrap_or_else(|err| log::warn!("Couldn't send position to cells to test: {}", err));
                 }
-
-                current_delta_pos.x = i;
-                current_delta_pos.y = j;
-
-                if colls.contains(&current_delta_pos)
-                    || current_delta_pos.get_magnitude() > rad as f32
-                {
-                    continue;
-                }
-
-                cells_to_test.push(current_delta_pos + light);
             }
-        }
+        });
 
-        let mut current_float_repr = (0.0, 0.0);
+        let cells_to_check: Vec<TileTransform> = receiver.iter().collect();
 
-        cells_to_test.into_iter().for_each(|t| {
+        let mut list: Vec<TileTransform> = cells_to_check.into_par_iter().filter(|t| {
+            let t = *t;
             let path = t - light;
             let precision = path.get_magnitude() * 10.0;
             let increment = (path.x as f32 / precision, path.y as f32 / precision);
-            current_float_repr = (0.0, 0.0);
+            let mut current_float_repr = (0.0, 0.0);
 
             let worked = loop {
                 current_float_repr.0 += increment.0;
@@ -134,18 +140,21 @@ impl LightCacher {
                 let plus_delta = light + current_pos;
 
                 if colls.contains(&plus_delta) || current_pos == path {
-                    break Some(plus_delta);
+                    break true;
                 }
 
                 if current_pos > t {
-                    break None;
+                    break false;
                 }
             };
 
-            if let Some(w) = worked {
-                list.push(w);
+            if worked {
+                true
+            } else {
+                false
             }
-        });
+        }).collect();
+        list.push(light);
 
         list
     }
@@ -155,23 +164,23 @@ impl LightCacher {
         lights: &[(TileTransform, PointLight)],
         colls: &[TileTransform],
     ) -> HashMap<TileTransform, f32> {
-        let converted_lights = {
-            let mut v = Vec::new();
-            lights.iter().for_each(|(t, _)| v.push(*t));
-            v
-        };
+        let t = SystemTime::now();
+
+        let converted_lights = lights.iter().map(|(t, _)| *t).collect();
         let converted_colls = Vec::from(colls);
+
         if let Some(data) = &self.current {
             if data.lights == converted_lights && data.colls == converted_colls {
                 return data.tints.clone();
             }
         }
+        log::info!("Now done checking for cache: {:?}", t.elapsed());
 
         let mut hm = HashMap::new();
 
         lights.iter().for_each(|(l_t_ref, l)| {
             let l_t = *l_t_ref;
-            Self::get_lighted_cells_no_cache(l_t, l.radius as i32, colls)
+            Self::get_lighted_cells_no_cache(l_t, l.radius as i32, colls) //TODO: incorporate this into get_l_c_n_c for dat performace
                 .into_iter()
                 .for_each(|t| {
                     let dist = t.distance(l_t_ref);
@@ -186,7 +195,9 @@ impl LightCacher {
 
                     hm.insert(t, nu_fac);
                 });
+            log::info!("Done checking light {} at {:?}", l_t, t.elapsed());
         });
+        log::info!("done checking lights: {:?}", t.elapsed());
 
         let new_data = LightingData {
             tints: hm.clone(),

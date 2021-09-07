@@ -34,6 +34,10 @@ impl Default for TileTransform {
         }
     }
 }
+
+unsafe impl Send for TileTransform {}
+unsafe impl Sync for TileTransform {}
+
 impl Display for TileTransform {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.x, self.y)

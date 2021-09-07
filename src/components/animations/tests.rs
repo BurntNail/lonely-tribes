@@ -8,15 +8,14 @@ mod anim_tests {
     };
 
     ///returns a 1 second linear animatiom from (0,0) to (1,1)
+    #[inline(always)]
     fn get_anim() -> Animator<MovementAnimationData> {
-        let mut a = Animator::def();
-        a.replace_data(MovementAnimationData::new(
+        Animator::new(MovementAnimationData::new(
             (0, 0).into(),
             (0, 1).into(),
             1.0,
             AnimInterpolation::Linear,
-        ));
-        a
+        ))
     }
 
     #[test]

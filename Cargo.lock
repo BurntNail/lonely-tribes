@@ -1888,6 +1888,7 @@ dependencies = [
  "lazy_static",
  "log",
  "rand 0.8.4",
+ "rayon",
  "ron 0.6.4",
  "serde",
  "steamworks",

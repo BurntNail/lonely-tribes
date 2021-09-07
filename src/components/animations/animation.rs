@@ -8,6 +8,7 @@ pub struct Animator<T: AnimationData + Sync + Send + 'static + Copy> {
     pub animation_data: Option<T>,
 }
 impl<T: AnimationData + Sync + Send + 'static + Copy> Animator<T> {
+    #[allow(dead_code)]
     pub fn new(animation_data: T) -> Self {
         Self {
             animation_data: Some(animation_data),
