@@ -12,7 +12,6 @@ use crate::{
         tile_transform::TileTransform,
         win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
     },
-    config::LTConfig,
     file_utils::list_file_names_in_dir,
     level::Room,
     states::{
@@ -22,7 +21,7 @@ use crate::{
         states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
-    systems::{update_tile_transforms::UpdateTileTransforms},
+    systems::update_tile_transforms::UpdateTileTransforms,
     tag::{Tag, TriggerType},
     ARENA_HEIGHT, ARENA_WIDTH,
 };
@@ -44,19 +43,13 @@ lazy_static! {
     };
 }
 pub fn get_levels() -> Vec<String> {
-    let opts = LTConfig::new().flags;
-
-    if cfg!(debug_assertions) && opts.debug && opts.debug_level {
-        vec!["test-room-one.png".to_string()]
-    } else {
-        let mut out: Vec<String> = list_file_names_in_dir("assets/maps")
-            .into_iter()
-            .filter(|nom| nom.contains("lvl-") && nom.contains(".png"))
-            .map(|el| el.replace("\"", ""))
-            .collect();
-        out.sort();
-        out
-    }
+    let mut out: Vec<String> = list_file_names_in_dir("assets/maps")
+        .into_iter()
+        .filter(|nom| nom.contains("lvl-") && nom.contains(".png"))
+        .map(|el| el.replace("\"", ""))
+        .collect();
+    out.sort();
+    out
 }
 
 ///State for when the User is in a puzzle
@@ -76,20 +69,9 @@ pub struct PuzzleState {
 }
 impl Default for PuzzleState {
     fn default() -> Self {
-        let opts = LTConfig::new().flags;
-
-        let mut level_index = 0;
-        if opts.debug {
-            level_index = opts.level.unwrap_or(1) - 1;
-            if level_index > LEVELS.len() - 1 {
-                level_index = 0;
-            }
-            log::info!("Starting early at level {}", level_index);
-        }
-
         Self {
             ws: GameStateEnum::default(),
-            level_index,
+            level_index: 0,
             actions: HashMap::new(),
             score_button: None,
             tmp_fx_entities: Vec::new(),

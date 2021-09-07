@@ -19,22 +19,9 @@ pub struct Flags {
     #[structopt(short, long)]
     pub debug: bool,
 
-    ///Starting level, requires debug mode
-    #[structopt(short, long)]
-    pub level: Option<usize>,
-
-    ///Option to enable legacy movement
+    ///Option to enable held movement
     #[structopt(short, long)]
     pub timed_movement: bool,
-
-    ///Option to use the debug level, requires debug mode
-    #[cfg(debug_assertions)]
-    #[structopt(long)]
-    pub debug_level: bool,
-
-    #[cfg(not(debug_assertions))]
-    #[structopt(skip = false)]
-    pub debug_level: bool,
 }
 
 pub struct LTConfig {

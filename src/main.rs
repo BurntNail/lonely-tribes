@@ -121,7 +121,6 @@ fn main() -> amethyst::Result<()> {
         );
     }
 
-
     // {
     //     let (client, single) = Client::init().unwrap();
     //

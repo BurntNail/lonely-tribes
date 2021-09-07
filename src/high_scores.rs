@@ -1,4 +1,7 @@
-use crate::states::game_state::{get_levels, LEVELS};
+use crate::{
+    config::LTConfig,
+    states::game_state::{get_levels, LEVELS},
+};
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
 use std::fs::{create_dir, read_to_string, write};
@@ -70,6 +73,10 @@ impl HighScores {
 
     ///Function to find what the next level to be played is
     pub fn find_next_level(&self) -> usize {
+        if LTConfig::new().flags.debug {
+            return LEVELS.len();
+        }
+
         let mut i = 0;
         let mut an_unfinished_level_exists = false;
         for level in 0..LEVELS.len() {
