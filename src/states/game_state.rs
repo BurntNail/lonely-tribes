@@ -1,30 +1,21 @@
-use crate::{
-    components::{
-        animations::{
-            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
-            rotation::RotationAnimationData, tint::TintAnimatorData,
-        },
-        colliders::{Collider, ColliderList},
-        data_holder::EntityHolder,
-        npc::NonPlayerCharacter,
-        point_light::{PointLight, TintOverride},
-        score::Score,
-        tile_transform::TileTransform,
-        win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
+use crate::{components::{
+    animations::{
+        animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
+        rotation::RotationAnimationData, tint::TintAnimatorData,
     },
-    file_utils::list_file_names_in_dir,
-    level::Room,
-    states::{
-        afterwards_state::PostGameState,
-        level_select::LevelSelectState,
-        paused_state::{MovementDisabler, PausedState},
-        states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
-        true_end::TrueEnd,
-    },
-    systems::update_tile_transforms::UpdateTileTransforms,
-    tag::{Tag, TriggerType},
-    ARENA_HEIGHT, ARENA_WIDTH,
-};
+    colliders::{Collider, ColliderList},
+    data_holder::EntityHolder,
+    point_light::{PointLight, TintOverride},
+    score::Score,
+    tile_transform::TileTransform,
+    win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
+}, file_utils::list_file_names_in_dir, level::Room, states::{
+    afterwards_state::PostGameState,
+    level_select::LevelSelectState,
+    paused_state::{MovementDisabler, PausedState},
+    states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
+    true_end::TrueEnd,
+}, systems::update_tile_transforms::UpdateTileTransforms, tag::{Tag, TriggerType}, ARENA_HEIGHT, ARENA_WIDTH, Either};
 use amethyst::{
     assets::Handle,
     core::{ecs::Entity, math::Vector3, transform::Transform, Hidden, Time},
@@ -35,6 +26,7 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use std::collections::HashMap;
+use rand::Rng;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -57,9 +49,9 @@ pub struct PuzzleState {
     ///Holding the current WinState
     ws: GameStateEnum,
     ///The index of the current level in *LEVELS*
-    level_index: usize,
+    level_index: Either<usize, f32>,
     ///Holding a HashMap of which keys lead to which indicies of *LEVELS*
-    actions: HashMap<VirtualKeyCode, usize>,
+    actions: HashMap<VirtualKeyCode, Either<usize, f32>>,
     ///Option variable to hold the Score text
     score_button: Option<Entity>,
     ///Vec to hold entities for temporary mode effects (eg. nudger)
@@ -71,7 +63,7 @@ impl Default for PuzzleState {
     fn default() -> Self {
         Self {
             ws: GameStateEnum::default(),
-            level_index: 0,
+            level_index: Either::Two(rand::thread_rng().gen()),
             actions: HashMap::new(),
             score_button: None,
             tmp_fx_entities: Vec::new(),
@@ -81,7 +73,7 @@ impl Default for PuzzleState {
 }
 impl PuzzleState {
     ///Constructor for PuzzleState
-    pub fn new(level_index: usize) -> Self {
+    pub fn new(level_index: Either<usize, f32>) -> Self {
         PuzzleState {
             level_index,
             ..Default::default()
@@ -111,17 +103,23 @@ impl SimpleState for PuzzleState {
         init_camera(world, (ARENA_WIDTH as f32, ARENA_HEIGHT as f32));
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
-
         let level_default = "test-room-one.png".to_string();
-        let this_level = {
-            let this_level = LEVELS.get(self.level_index).unwrap_or(&level_default);
-            this_level.as_str()
+
+        let holder = if let Either::One(level_index) = self.level_index {
+            let this_level = {
+                let this_level = LEVELS.get(level_index).unwrap_or(&level_default);
+                this_level.as_str()
+            };
+
+            load_level(world, handle, this_level)
+        } else if let Either::Two(seed) = self.level_index{
+            //proc gen loading
+            todo!()
+        } else {
+            EntityHolder::default()
         };
 
         world.insert(GameState::new(None, self.level_index, 0));
-        let holder = load_level(world, handle, this_level);
-
-        world.register::<NonPlayerCharacter>();
 
         world.insert(holder);
         world.insert(GameModeManager::new(50));
@@ -231,53 +229,62 @@ impl SimpleState for PuzzleState {
         if let GameStateEnum::End { lost_position } = self.ws {
             let won = lost_position.is_none();
 
-            if self.level_index >= LEVELS.len() - 1 && won {
-                //we won the last level
-                t = Trans::Switch(Box::new(TrueEnd::default()));
-            } else if won {
+            if let Either::One(lvl_index) = self.level_index {
+                if lvl_index >= LEVELS.len() - 1 && won {
+                    //we won the last level
+                    t = Trans::Switch(Box::new(TrueEnd::default()));
+                } else if won {
+                    //we won a level that has another after it
+                    t = Trans::Switch(Box::new(PostGameState::new()));
+                }
+            }  else if won {
                 //we won a level that has another after it
                 t = Trans::Switch(Box::new(PostGameState::new()));
-            } else {
-                //we lost
+            };
 
-                let (so_far, total, ent) = self.death_timer.take().unwrap_or_else(|| {
-                    let pos = lost_position.unwrap_or_default();
-                    let (x, y) = UpdateTileTransforms::tile_to_xyz(pos);
+            if !won
+                 {
+                    //we lost
 
-                    let mut trans = Transform::default();
-                    trans.set_translation_xyz(x, y, 2.0);
+                    let (so_far, total, ent) = self.death_timer.take().unwrap_or_else(|| {
+                        let pos = lost_position.unwrap_or_default();
+                        let (x, y) = UpdateTileTransforms::tile_to_xyz(pos);
 
-                    let spritesheet = load_sprite_sheet(data.world, "zoom-in-on-loss");
+                        let mut trans = Transform::default();
+                        trans.set_translation_xyz(x, y, 2.0);
 
-                    let ent = data
-                        .world
-                        .create_entity()
-                        .with(trans)
-                        .with(SpriteRender::new(spritesheet, 0))
-                        .build();
-                    data.world.insert(MovementDisabler { enabled: true });
+                        let spritesheet = load_sprite_sheet(data.world, "zoom-in-on-loss");
 
-                    (0.0, 1.5, ent)
-                });
+                        let ent = data
+                            .world
+                            .create_entity()
+                            .with(trans)
+                            .with(SpriteRender::new(spritesheet, 0))
+                            .build();
+                        data.world.insert(MovementDisabler { enabled: true });
 
-                if so_far > total {
-                    //anim is done
-                    t = Trans::Switch(Box::new(PostGameState::new()));
-                } else {
-                    let so_far = so_far + data.world.read_resource::<Time>().delta_seconds();
-                    let scale_val = AnimInterpolation::ReverseExponential
-                        .get_val_from_pctg(so_far / total)
-                        * 4.0
-                        + 1.0;
+                        (0.0, 1.5, ent)
+                    });
 
-                    if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
-                        let scale = Vector3::from([scale_val; 3]);
-                        trans.set_scale(scale);
+                    if so_far > total {
+                        //anim is done
+                        t = Trans::Switch(Box::new(PostGameState::new()));
+                    } else {
+                        let so_far = so_far + data.world.read_resource::<Time>().delta_seconds();
+                        let scale_val = AnimInterpolation::ReverseExponential
+                            .get_val_from_pctg(so_far / total)
+                            * 4.0
+                            + 1.0;
+
+                        if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
+                            let scale = Vector3::from([scale_val; 3]);
+                            trans.set_scale(scale);
+                        }
+
+                        self.death_timer = Some((so_far, total, ent));
                     }
-
-                    self.death_timer = Some((so_far, total, ent));
                 }
-            }
+
         }
 
         t
@@ -455,18 +462,6 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str
                         .with(tint)
                         .build();
                     holder.add_player_entity(ent);
-                }
-                Tag::NonPlayerCharacter { is_enemy } => {
-                    world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(NonPlayerCharacter::new(is_enemy))
-                        .with(Collider::default())
-                        .with(Animator::<TintAnimatorData>::default())
-                        .with(tint)
-                        .build();
                 }
                 Tag::Collision => {
                     let ent = world

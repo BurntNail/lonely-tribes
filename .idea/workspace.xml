@@ -7,13 +7,22 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="start to add rayon stuff">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="finish parallel lighting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-07.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend1" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/npc.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tag.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +111,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -446,14 +455,8 @@
       <workItem from="1631030037586" duration="79000" />
       <workItem from="1631034736075" duration="668000" />
       <workItem from="1631036765285" duration="483000" />
-      <workItem from="1631039005422" duration="1707000" />
-    </task>
-    <task id="LOCAL-00053" summary="Change tilemap to have a transparent bg for easier tinting">
-      <created>1628711868383</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1628711868383</updated>
+      <workItem from="1631039005422" duration="2506000" />
+      <workItem from="1631046750541" duration="2143000" />
     </task>
     <task id="LOCAL-00054" summary="Change tilemap to have a transparent bg for easier tinting">
       <created>1628711901862</created>
@@ -791,7 +794,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631039045899</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="finish parallel lighting">
+      <created>1631040849593</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1631040849593</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -826,7 +836,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add final bits for steamworks" />
     <MESSAGE value="Add all-collider mode, and use animators for lvl editors." />
     <MESSAGE value="Fix Log10 mode" />
     <MESSAGE value="fmt" />
@@ -851,7 +860,8 @@
     <MESSAGE value="remove bug where could see whole map when launching a mode" />
     <MESSAGE value="add steam stuff&#10;balancing&#10;conf options for held movement" />
     <MESSAGE value="start to add rayon stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="start to add rayon stuff" />
+    <MESSAGE value="finish parallel lighting" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish parallel lighting" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

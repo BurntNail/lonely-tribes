@@ -2,11 +2,9 @@ use crate::level::SpriteRequest;
 
 #[derive(Copy, Clone, Debug)]
 pub enum Tag {
-    NonPlayerCharacter { is_enemy: bool },
     Player(usize),
     Collision,
     Floor,
-    Weapon,
     Trigger(TriggerType),
 }
 #[derive(Copy, Clone, Debug)]
@@ -41,8 +39,6 @@ impl Tag {
         match spr {
             SpriteRequest::Player(id) => Self::Player(id),
             SpriteRequest::Door => Self::Trigger(TriggerType::Door),
-            Orc => NonPlayerCharacter { is_enemy: true },
-            Axe => Weapon,
             Blank | Shrubbery | DarkShrubbery => Floor,
             _ => Collision,
         }

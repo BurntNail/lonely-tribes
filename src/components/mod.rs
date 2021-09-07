@@ -1,7 +1,6 @@
 pub mod animations;
 pub mod colliders;
 pub mod data_holder;
-pub mod npc;
 pub mod player;
 pub mod point_light;
 pub mod score;

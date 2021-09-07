@@ -1880,7 +1880,7 @@ dependencies = [
 
 [[package]]
 name = "lonely-tribes"
-version = "0.9.0"
+version = "0.11.0"
 dependencies = [
  "amethyst",
  "chrono",

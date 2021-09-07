@@ -1,12 +1,8 @@
-use crate::{
-    high_scores::HighScores,
-    states::{
-        game_state::{PuzzleState, LEVELS},
-        states_util::{get_scaling_factor, load_font},
-        welcome_state::StartGameState,
-    },
-    HOVER_COLOUR,
-};
+use crate::{high_scores::HighScores, states::{
+    game_state::{PuzzleState, LEVELS},
+    states_util::{get_scaling_factor, load_font},
+    welcome_state::StartGameState,
+}, HOVER_COLOUR, Either};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
@@ -14,9 +10,11 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
+use rand::Rng;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
+    proc_gen: Option<Entity>,
     next_level: usize,
 }
 
@@ -24,6 +22,7 @@ impl Default for LevelSelectState {
     fn default() -> Self {
         Self {
             buttons: HashMap::new(),
+            proc_gen: None,
             next_level: 0,
         }
     }
@@ -34,9 +33,10 @@ impl SimpleState for LevelSelectState {
         let world = data.world;
         world.delete_all();
 
-        let (buttons, next_level) = init_menu(world);
+        let (buttons, next_level, proc_gen) = init_menu(world);
         self.buttons = buttons;
         self.next_level = next_level;
+        self.proc_gen = Some(proc_gen);
     }
 
     fn handle_event(
@@ -51,7 +51,7 @@ impl SimpleState for LevelSelectState {
                 use VirtualKeyCode::*;
                 match key_code {
                     Return | Space => {
-                        t = Trans::Switch(Box::new(PuzzleState::new(self.next_level)))
+                        t = Trans::Switch(Box::new(PuzzleState::new(Either::One(self.next_level))))
                     }
                     Escape | Delete => t = Trans::Switch(Box::new(StartGameState::default())),
                     _ => {}
@@ -59,24 +59,29 @@ impl SimpleState for LevelSelectState {
             }
             StateEvent::Ui(event) => {
                 let target_index = {
-                    let mut index = usize::MAX;
+                    let mut index = None;
 
                     self.buttons.iter().for_each(|(entity, i)| {
                         if entity == &event.target {
-                            index = *i;
+                            index = Some(Either::One(*i));
                         }
                     });
+                    if let Some(proc_gen) = self.proc_gen {
+                        if proc_gen == event.target {
+                            index = Some(Either::Two(rand::thread_rng().gen()))
+                        }
+                    }
                     index
                 };
 
-                if target_index != usize::MAX {
+                if let Some(target_index) = target_index {
                     let mut texts = data.world.write_storage::<UiText>();
                     let txt = texts.get_mut(event.target);
 
                     if let Some(txt) = txt {
                         match event.event_type {
                             UiEventType::ClickStop => {
-                                t = SimpleTrans::Switch(Box::new(PuzzleState::new(target_index)))
+                                t = SimpleTrans::Switch(Box::new(PuzzleState::new(target_index)));
                             }
                             UiEventType::HoverStart => txt.color = HOVER_COLOUR,
                             UiEventType::HoverStop => txt.color = [1.0; 4],
@@ -94,8 +99,8 @@ impl SimpleState for LevelSelectState {
 
 ///Function to initialise the Level Select
 ///
-/// Returns an Hashmap with the Entities to the indicies of level paths in *LEVELS*, as well as the next level to play
-fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
+/// Returns an Hashmap with the Entities to the indicies of level paths in *LEVELS*, as well as the next level to play, and a button for the proc-gen level
+fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize, Entity) {
     let sf = get_scaling_factor();
     let mut map = HashMap::new();
     let font_handle = load_font(world, "ZxSpectrum");
@@ -109,8 +114,8 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
         (tot_height - buffer_space) / no_levels
     };
     let get_height = |index: usize| {
-        let pos = level_txt_height as f32 * (LEVELS.len() - 1 - index) as f32;
-        pos - (sf * 450.0) + (sf * 100.0)
+        let pos = level_txt_height as f32 * (LEVELS.len() - index) as f32;
+        pos - (sf * 450.0)
     };
 
     let main_trans = UiTransform::new(
@@ -192,5 +197,30 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize) {
         }
     }
 
-    (map, next_level)
+
+    let proc_gen = {
+        let font_height = sf * 50.0;
+        let trans = UiTransform::new(
+            "proc_gen_lvl".to_string(),
+            Anchor::Middle,
+            Anchor::Middle,
+            0.0,
+            get_height(LEVELS.len()), //already multiplied by sf in func
+            0.5,
+            sf * 1500.0,
+            font_height,
+        );
+        let txt = UiText::new(
+            font_handle,
+            "Procedural Generation!".to_string(),
+            [1.0; 4],
+            font_height,
+            LineMode::Wrap,
+            Anchor::MiddleLeft,
+        );
+        world.create_entity().with(trans).with(txt).with(Interactable).build()
+    };
+
+
+    (map, next_level, proc_gen)
 }

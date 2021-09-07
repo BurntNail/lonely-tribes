@@ -1,4 +1,5 @@
 use crate::components::tile_transform::TileTransform;
+use crate::Either;
 
 ///Enumeration for the current state of the game
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -112,7 +113,7 @@ pub struct GameState {
     ///Current Game Win State
     pub ws: GameStateEnum,
     ///The level for which *ws* refers to
-    pub level_from: usize,
+    pub level_from: Either<usize, f32>,
     ///Amount of time the level has taken
     pub level_no_of_moves: i32,
 }
@@ -120,7 +121,7 @@ impl Default for GameState {
     fn default() -> Self {
         GameState {
             ws: GameStateEnum::default(), //Move this into it's own thing that the world reads
-            level_from: 0,
+            level_from: Either::One(0),
             level_no_of_moves: 0,
         }
     }
@@ -133,7 +134,7 @@ impl GameState {
     ///  - **level_timer_len** refers to how long the level took
     pub fn new(
         lost_tile: Option<Option<TileTransform>>,
-        level_from: usize,
+        level_from: Either<usize, f32>,
         level_timer_len: i32,
     ) -> Self {
         match lost_tile {

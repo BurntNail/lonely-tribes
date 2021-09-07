@@ -1,13 +1,8 @@
-use crate::{
-    components::win_state::{GameState, GameStateEnum},
-    config::LTConfig,
-    high_scores::HighScores,
-    states::{
-        game_state::{PuzzleState, LEVELS},
-        level_select::LevelSelectState,
-        states_util::{get_scaling_factor, load_font},
-    },
-};
+use crate::{components::win_state::{GameState, GameStateEnum}, config::LTConfig, high_scores::HighScores, states::{
+    game_state::{PuzzleState, LEVELS},
+    level_select::LevelSelectState,
+    states_util::{get_scaling_factor, load_font},
+}, Either};
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
@@ -19,7 +14,7 @@ use std::collections::HashMap;
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
     ///A HashMap containing key presses, which lead to indicies for levels in *LEVELS*
-    map: HashMap<VirtualKeyCode, usize>,
+    map: HashMap<VirtualKeyCode, Either<usize, f32>>,
 }
 
 impl PostGameState {
@@ -44,10 +39,12 @@ impl SimpleState for PostGameState {
         let mut nu_high_score = None;
 
         if !opts.debug && won {
-            nu_high_score = Some(high_score.add_score_and_write(level_from, score));
+            if let Either::One(level_from) = level_from {
+                nu_high_score = Some(high_score.add_score_and_write(level_from, score));
+            }
         }
 
-        let won_txt = if won {
+        let won_txt = if won && level_from.is_one() {
             let win = "You Won! Press [R] to Restart, [N] to go to the Next Level, or [L] to go to Level Select.";
             if let Some(nu_high_score) = nu_high_score {
                 if nu_high_score.is_none() {
@@ -65,6 +62,8 @@ impl SimpleState for PostGameState {
                     win
                 )
             }
+        } else if won {
+            "Congrats on beating this procedurally generated level!".to_string()
         } else {
             "You Lost... Press [R] to Restart.".to_string()
         };
@@ -72,7 +71,9 @@ impl SimpleState for PostGameState {
         let mut map = HashMap::new();
         map.insert(VirtualKeyCode::R, level_from);
         if won && !is_last_level {
-            map.insert(VirtualKeyCode::N, level_from + 1);
+            if let Either::One(level_from) = level_from {
+                map.insert(VirtualKeyCode::N, Either::One(level_from + 1));
+            }
         }
         self.map = map;
 
@@ -106,11 +107,15 @@ impl SimpleState for PostGameState {
 ///  - A bool - whether or not that was the last level
 ///  - Another bool - whether or not the previous level was won
 ///  - An f32 - the score from the previous level
-pub fn get_stuff(world: &World) -> (usize, bool, bool, i32) {
+pub fn get_stuff(world: &World) -> (Either<usize, f32>, bool, bool, i32) {
     let gws = world.read_resource::<GameState>();
 
     let level_from = gws.level_from;
-    let is_last_level = level_from >= LEVELS.len() - 1;
+    let is_last_level = if let Either::One(level_from) = level_from {
+        level_from >= LEVELS.len() - 1
+    } else {
+        false
+    };
     let won = match gws.ws {
         GameStateEnum::End { lost_position } => lost_position.is_none(),
         _ => false,

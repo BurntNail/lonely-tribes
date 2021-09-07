@@ -23,9 +23,6 @@ pub enum SpriteRequest {
     TUpDownLeft,
     TUpDownRight,
     Player(usize),
-    Orc,
-    FullHeart,
-    Axe,
     Door,
     Blank,
     Shrubbery,
@@ -59,7 +56,6 @@ lazy_static! {
         s(251, 242, 54, LeftWallDown);//3
         s(153, 229, 80, RightWallDown);
         s(106, 190, 48, Door);
-        s(55, 148, 110, Orc);
         s(75, 105, 47, Shrubbery);//4
         s(82, 75, 36, DarkShrubbery);
         s(50, 60, 57, Tree);
@@ -105,9 +101,6 @@ lazy_static! {
             Player(1),
             Player(2),
             Player(3),
-            Orc,
-            FullHeart,
-            Axe,
             Door,
             Blank,
             Shrubbery,
@@ -146,9 +139,6 @@ impl SpriteRequest {
             },
             TUpDownLeft => 71,
             TUpDownRight => 70,
-            Orc => 11,
-            FullHeart => 90,
-            Axe => 63,
             Shrubbery => 61,
             DarkShrubbery => 60,
             Tree => 74,
@@ -209,5 +199,9 @@ impl Room {
             });
 
         Self { data }
+    }
+
+    pub fn proc_gen () -> Self {
+        todo!()
     }
 }

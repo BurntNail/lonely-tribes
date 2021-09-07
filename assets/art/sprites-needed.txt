@@ -1,0 +1,21 @@
+WALLS:
+ - Back
+ - Back,LeftCorner
+ - Back,RightCorner
+ - Left,
+ - Right,
+ - Front,
+ - Front,LeftCorner
+ - Front,RightCorner
+ - LeftWallDown,
+ - RightWallDown,
+ - LeftWallUp,
+ - RightWallUp,
+ - T,UpDown,Left
+ - T,UpDown,Right
+4 Players
+
+General
+ - Door,
+ - 2 Shrubberies
+ - 2 Trees
