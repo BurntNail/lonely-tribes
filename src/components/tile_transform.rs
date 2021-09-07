@@ -1,4 +1,3 @@
-use crate::TILE_WIDTH_HEIGHT;
 use amethyst::core::ecs::{Component, DefaultVecStorage};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -65,8 +64,8 @@ impl TileTransform {
 
     ///Gets magnitude of self using pythagoras
     pub fn get_magnitude(&self) -> f32 {
-        let x = (self.x + (self.x_offset / TILE_WIDTH_HEIGHT)) as f32;
-        let y = (self.y + (self.y_offset / TILE_WIDTH_HEIGHT)) as f32;
+        let x = self.x as f32;
+        let y = self.y as f32;
 
         (x * x + y * y).sqrt()
     }
@@ -187,12 +186,6 @@ mod tests {
     pub fn magnitude_normal_test() {
         let t: TileTransform = (5, 2).into();
         assert_eq!(t.get_magnitude(), 29.0_f32.sqrt());
-    }
-    #[test]
-    pub fn magnitude_offset_test() {
-        let mut t: TileTransform = (5, 2).into();
-        t.set_offsets((3, 4));
-        assert_eq!(t.get_magnitude(), 35.140625_f32.sqrt());
     }
 
     #[test]

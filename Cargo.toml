@@ -14,7 +14,7 @@ ron = "0.6.4" # ron for a neat file format that maps to rust
 structopt = "0.3" # for launch options
 rand = "0.8.4" # for random powerups
 chrono = "0.4.19" # for getting times for saves
-#steamworks = "0.7.0" # for steam
+steamworks = "0.7.0" # for steam
 
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version

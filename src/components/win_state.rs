@@ -41,10 +41,10 @@ impl GamePlayingMode {
     pub fn get_no_moves(&self) -> i32 {
         match self {
             Self::Boring => 0,
-            Self::Nudger => 1,
-            Self::TradeOff => 0,
-            Self::Crazy => 2,
-            Self::AllTheColliders => 5,
+            Self::Nudger => 2,
+            Self::TradeOff => 1,
+            Self::Crazy => 3,
+            Self::AllTheColliders => 10,
         }
     }
     pub fn adds_to_score(&self) -> bool {
