@@ -14,7 +14,7 @@ use std::collections::HashMap;
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
     ///A HashMap containing key presses, which lead to indicies for levels in *LEVELS*
-    map: HashMap<VirtualKeyCode, Either<usize, f32>>,
+    map: HashMap<VirtualKeyCode, Either<usize, u32>>,
 }
 
 impl PostGameState {
@@ -107,7 +107,7 @@ impl SimpleState for PostGameState {
 ///  - A bool - whether or not that was the last level
 ///  - Another bool - whether or not the previous level was won
 ///  - An f32 - the score from the previous level
-pub fn get_stuff(world: &World) -> (Either<usize, f32>, bool, bool, i32) {
+pub fn get_stuff(world: &World) -> (Either<usize, u32>, bool, bool, i32) {
     let gws = world.read_resource::<GameState>();
 
     let level_from = gws.level_from;

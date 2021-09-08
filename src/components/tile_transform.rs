@@ -128,6 +128,11 @@ impl From<(f32, f32)> for TileTransform {
         (x as i32, y as i32).into()
     }
 }
+impl From<(usize, usize)> for TileTransform {
+    fn from((x, y): (usize, usize)) -> Self {
+        (x as i32, y as i32).into()
+    }
+}
 impl Mul<i32> for TileTransform {
     type Output = Self;
 

@@ -47,6 +47,7 @@ mod states;
 mod systems;
 mod tag;
 mod ui_input;
+mod procedural_generator;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless

@@ -3,4 +3,6 @@
 /assets/data/*.ron
 steam_appid.txt
 .idea/workspace.xml
+
 libsteam_api.so
+steam_api64.*

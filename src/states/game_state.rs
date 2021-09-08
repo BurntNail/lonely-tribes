@@ -49,9 +49,9 @@ pub struct PuzzleState {
     ///Holding the current WinState
     ws: GameStateEnum,
     ///The index of the current level in *LEVELS*
-    level_index: Either<usize, f32>,
+    level_index: Either<usize, u32>,
     ///Holding a HashMap of which keys lead to which indicies of *LEVELS*
-    actions: HashMap<VirtualKeyCode, Either<usize, f32>>,
+    actions: HashMap<VirtualKeyCode, Either<usize, u32>>,
     ///Option variable to hold the Score text
     score_button: Option<Entity>,
     ///Vec to hold entities for temporary mode effects (eg. nudger)
@@ -73,7 +73,7 @@ impl Default for PuzzleState {
 }
 impl PuzzleState {
     ///Constructor for PuzzleState
-    pub fn new(level_index: Either<usize, f32>) -> Self {
+    pub fn new(level_index: Either<usize, u32>) -> Self {
         PuzzleState {
             level_index,
             ..Default::default()
@@ -105,19 +105,17 @@ impl SimpleState for PuzzleState {
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
         let level_default = "test-room-one.png".to_string();
 
-        let holder = if let Either::One(level_index) = self.level_index {
-            let this_level = {
-                let this_level = LEVELS.get(level_index).unwrap_or(&level_default);
-                this_level.as_str()
-            };
-
-            load_level(world, handle, this_level)
-        } else if let Either::Two(seed) = self.level_index{
-            //proc gen loading
-            todo!()
-        } else {
-            EntityHolder::default()
+        let room = match self.level_index {
+            Either::One(index) => {
+                let this_level = {
+                    let this_level = LEVELS.get(index).unwrap_or(&level_default);
+                    this_level.as_str()
+                };
+                Room::new(this_level)
+            }
+            Either::Two(seed) => Room::proc_gen(seed)
         };
+        let holder = load_level(world, handle, room);
 
         world.insert(GameState::new(None, self.level_index, 0));
 
@@ -418,8 +416,7 @@ fn get_no_of_moves(world: &World) -> i32 {
 ///  - **world** is the current game World from Specs
 ///  - **sprites_handle** is a handle to the spritesheet
 ///  - **path** is the Path to the level eg. *"lvl-01.png"*
-fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, path: &str) -> EntityHolder {
-    let lvl = Room::new(path);
+fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, lvl: Room) -> EntityHolder {
     let mut holder = EntityHolder::new();
 
     if lvl.is_empty() {

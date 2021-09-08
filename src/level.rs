@@ -4,6 +4,7 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
+use crate::procedural_generator::ProceduralGenerator;
 
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
@@ -201,7 +202,10 @@ impl Room {
         Self { data }
     }
 
-    pub fn proc_gen () -> Self {
-        todo!()
+    pub fn proc_gen (seed: u32) -> Self {
+        let proc_genner = ProceduralGenerator::new(seed);
+        Self {
+            data: proc_genner.generate()
+        }
     }
 }
