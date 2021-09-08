@@ -10,6 +10,7 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
+use rand::Rng;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -67,7 +68,7 @@ impl SimpleState for LevelSelectState {
                     });
                     if let Some(proc_gen) = self.proc_gen {
                         if proc_gen == event.target {
-                            index = Some(Either::Two(100)) //TODO: Change this
+                            index = Some(Either::Two(rand::thread_rng().gen()))
                         }
                     }
                     index

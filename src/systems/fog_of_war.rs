@@ -132,7 +132,7 @@ impl LightCacher {
             .filter(|t| {
                 let t = *t;
                 let path = t - light;
-                let precision = path.get_magnitude() * 10.0;
+                let precision = path.get_magnitude() * 10.0; //TODO: do testing to find best val
                 let increment = (path.x as f32 / precision, path.y as f32 / precision);
                 let mut current_float_repr = (0.0, 0.0);
 
@@ -148,7 +148,7 @@ impl LightCacher {
                         break true;
                     }
 
-                    if current_pos > t {
+                    if current_pos > t || current_float_repr.0 > WIDTH as f32 || current_float_repr.1 > HEIGHT as f32 {
                         break false;
                     }
                 }
