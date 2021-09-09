@@ -208,7 +208,7 @@ impl Room {
     }
 
     pub fn proc_gen (seed: u32) -> Self {
-        let mappings = ProceduralGenerator::new(seed).generate();
+        let mappings = ProceduralGenerator::new(seed).get();
 
         let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
 

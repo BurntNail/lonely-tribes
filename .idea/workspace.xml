@@ -7,12 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="slightly more on proc gen">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="walls in proc gen are done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -471,14 +469,7 @@
       <workItem from="1631130673244" duration="97000" />
       <workItem from="1631130781222" duration="1292000" />
       <workItem from="1631181925835" duration="375000" />
-      <workItem from="1631211971228" duration="5438000" />
-    </task>
-    <task id="LOCAL-00054" summary="Change tilemap to have a transparent bg for easier tinting">
-      <created>1628711901862</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1628711901862</updated>
+      <workItem from="1631211971228" duration="7359000" />
     </task>
     <task id="LOCAL-00055" summary="fix old problem with loading saves">
       <created>1628712390940</created>
@@ -816,7 +807,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631040849593</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="walls in proc gen are done">
+      <created>1631220633282</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1631220633282</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,7 +849,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add all-collider mode, and use animators for lvl editors." />
     <MESSAGE value="Fix Log10 mode" />
     <MESSAGE value="fmt" />
     <MESSAGE value="change help text to in a file, and with hyperlegible font" />
@@ -876,7 +873,8 @@
     <MESSAGE value="add steam stuff&#10;balancing&#10;conf options for held movement" />
     <MESSAGE value="start to add rayon stuff" />
     <MESSAGE value="finish parallel lighting" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish parallel lighting" />
+    <MESSAGE value="walls in proc gen are done" />
+    <option name="LAST_COMMIT_MESSAGE" value="walls in proc gen are done" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

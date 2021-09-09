@@ -5,8 +5,10 @@ use crate::level::SpriteRequest;
 use crate::{WIDTH, HEIGHT};
 use crate::components::tile_transform::TileTransform;
 use std::collections::HashMap;
+use rayon::iter::ParallelIterator;
+use rayon::prelude::IntoParallelIterator;
 
-pub const PERLIN_SCALE: f64 = 10.0;
+pub const PERLIN_SCALE: f64 = 5.0;
 
 ///for walls which need more info than 8 bits
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
@@ -64,29 +66,91 @@ lazy_static! {
 
 pub struct ProceduralGenerator {
     seed: u32,
-    perlin: Fbm
 }
+
+type Map = Vec<(usize, usize, SpriteRequest)>;
 
 impl ProceduralGenerator {
     pub fn new (seed: u32) -> Self {
-        let p = Fbm::new();
-
         Self {
             seed,
-            perlin: p.set_seed(seed)
         }
     }
 
-    pub fn generate (&self) -> Vec<(usize, usize, SpriteRequest)> {
+    pub fn get(&self) -> Map {
         let mut map = Self::generate_walls_sprs(self.seed as u64);
+        Self::generate_plants(self.seed, &mut map);
         map.push((0, 0, SpriteRequest::Player(0)));
         map.push((10, 10, SpriteRequest::Player(0)));
         map
     }
 
+    fn generate_plants (seed: u32, map: &mut Map) {
+        let blocked_bits: Vec<(usize, usize)> = map.clone().into_par_iter().filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door).map(|(x, y, _)| (x, y)).collect();
+        let plant_places: Vec<(usize, usize)> = map.clone().into_par_iter().filter(|(_, _, spr)| spr == &SpriteRequest::Door).map(|(x, y, _)| (x, y)).collect();
 
+        // let spr = *BITS_TO_SPRS.get(&bits).unwrap_or_else(|| {
+        //     let val = self.perlin.get([x as f64 / PERLIN_SCALE, y as f64 / PERLIN_SCALE]) * 100.0;
+        //     log::info!("Using {} at {}, {}", val, x, y);
+        //
+        //     if val > 0.0 {&SpriteRequest::Shrubbery} else {&SpriteRequest::DarkShrubbery}
+        // });
 
-    fn generate_walls_sprs (seed: u64) -> Vec<(usize, usize, SpriteRequest)> {
+        let p1 = Fbm::new().set_seed(seed);
+        let p2 = Fbm::new().set_seed(seed + 100);
+        let p3 = Fbm::new().set_seed(seed / 3); //for overrides
+
+        for x in 0..WIDTH as usize {
+            for y in 0..HEIGHT as usize {
+                let p_val = [x as f64 / PERLIN_SCALE, y as f64 / PERLIN_SCALE];
+
+                let no_1 = p1.get(p_val);
+                let no_2 = p2.get(p_val);
+
+                let no_3 = if plant_places.contains(&(x, y)) {
+                    if no_1 > 0.0 {
+                        Some((0, no_1))
+                    } else {
+                        Some((1, no_2))
+                    }
+                } else {
+                    None
+                };
+
+                if no_1 > 0.3 || no_2 > 0.3 || no_3.is_some() {
+                    let tree = 0.6;
+                    let can_override = p3.get(p_val) > 0.5;
+
+                    let mut changer = |shrubbery: SpriteRequest, tree_spr: SpriteRequest, v: f64| {
+                        if !(blocked_bits.contains(&(x, y)) && !can_override) {
+                            if v > tree {
+                                map.push((x, y, tree_spr));
+                            } else {
+                                map.push((x, y, shrubbery));
+                            }
+                        }
+                    };
+
+                    if let Some((t, val)) = no_3 {
+                        if t == 0 {
+                            changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, val.abs());
+                        } else {
+                            changer(SpriteRequest::DarkShrubbery, SpriteRequest::WarpedTree, val.abs());
+                        }
+
+                    }
+                    if no_1 > 0.0 {
+                        changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, no_1);
+                    }
+                    if no_2 > 0.0 {
+                        changer(SpriteRequest::DarkShrubbery, SpriteRequest::WarpedTree, no_2);
+                    }
+                }
+            }
+        }
+    }
+
+    fn generate_walls_sprs (seed: u64) -> Map {
         let mut rng = Pcg64::seed_from_u64(seed as u64);
         let walls: [[Option<WallType>; HEIGHT as usize]; WIDTH as usize] = Self::generate_walls(&mut rng);
         println!("{:?}", walls);
@@ -114,17 +178,7 @@ impl ProceduralGenerator {
                 if walls[x][y].is_some() {
                     let bits = get_bits(x, y);
 
-                    // let spr = *BITS_TO_SPRS.get(&bits).unwrap_or_else(|| {
-                    //     let val = self.perlin.get([x as f64 / PERLIN_SCALE, y as f64 / PERLIN_SCALE]) * 100.0;
-                    //     log::info!("Using {} at {}, {}", val, x, y);
-                    //
-                    //     if val > 0.0 {&SpriteRequest::Shrubbery} else {&SpriteRequest::DarkShrubbery}
-                    // });
-                    let spr = *BITS_TO_SPRS.get(&bits).unwrap_or_else(|| {
-                        log::info!("Found nothing for {:?} at {}, {}", bits, x, y);
-                        &SpriteRequest::Door
-                    });
-
+                    let spr = *BITS_TO_SPRS.get(&bits).unwrap_or(&SpriteRequest::Door);
                     let res = (x, y, spr);
 
                     map.push(res);
