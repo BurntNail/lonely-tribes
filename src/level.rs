@@ -36,6 +36,11 @@ impl Default for SpriteRequest {
         Self::Blank
     }
 }
+impl Default for &SpriteRequest {
+    fn default() -> Self {
+        &SpriteRequest::Blank
+    }
+}
 
 lazy_static! {
     static ref SPRITESHEET_SWATCH_HASHMAP: HashMap<Rgba<u8>, SpriteRequest> = {

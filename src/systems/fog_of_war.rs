@@ -20,6 +20,7 @@ use std::{
     ops::{Deref, DerefMut},
     sync::mpsc::channel,
 };
+use crate::config::{LTConfig};
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
@@ -165,6 +166,18 @@ impl LightCacher {
         colls: &[TileTransform],
     ) -> HashMap<TileTransform, f32> {
         // let t = SystemTime::now();
+        let fow_enabled = LTConfig::new().flags.fow_enabled();
+
+        if !fow_enabled {
+            let mut hm = HashMap::new();
+            for x in 0..WIDTH {
+                for y in 0..HEIGHT {
+                    hm.insert(TileTransform::from((x, y)), 1.0);
+                }
+            }
+
+            return hm;
+        }
 
         let converted_lights = lights.iter().map(|(t, _)| *t).collect();
         let converted_colls = Vec::from(colls);
@@ -178,6 +191,7 @@ impl LightCacher {
 
         let (base_sender, base_receiver) = channel();
 
+
         lights
             .par_iter()
             .for_each_with(base_sender, |sender, (l_t_ref, l)| {
@@ -187,9 +201,11 @@ impl LightCacher {
                 Self::get_lighted_cells_no_cache(l_t, l.radius as i32, colls)
                     .into_par_iter()
                     .for_each_with(tx, |tx, t| {
-                        let dist = t.distance(l_t_ref);
-                        let rad = l.radius as f32;
-                        let try_fac = (rad - dist) / rad;
+                        let try_fac = if fow_enabled {
+                            let dist = t.distance(l_t_ref);
+                            let rad = l.radius as f32;
+                            (rad - dist) / rad
+                        } else {1.0};
 
                         tx.send((t, try_fac)).unwrap_or_else(|err| {
                             log::warn!(

@@ -19,9 +19,19 @@ pub struct Flags {
     #[structopt(short, long)]
     pub debug: bool,
 
+    ///Disable Fog Of War
+    ///Requires debug
+    #[structopt(long)]
+    pub fow_disabled: bool,
+
     ///Option to enable held movement
     #[structopt(short, long)]
     pub timed_movement: bool,
+}
+impl Flags {
+    pub fn fow_enabled (&self) -> bool {
+        !(self.debug && self.fow_disabled)
+    }
 }
 
 pub struct LTConfig {
