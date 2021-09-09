@@ -4,6 +4,21 @@ use noise::{Fbm, Seedable, NoiseFn};
 use crate::level::SpriteRequest;
 use crate::{WIDTH, HEIGHT};
 use crate::components::tile_transform::TileTransform;
+use std::collections::HashMap;
+
+lazy_static! {
+    pub static ref BITS_TO_SPRS: HashMap<[bool; 8], SpriteRequest> = {
+        // let f = false;
+        // let t = true;
+
+
+
+        // const BACK: [bool; 8] = [f, f, f, t, t, f, f, f];
+        // const BACK_LEFT_CORNER: [bool; u8] = [f, f, f, f, t, f, t, f];
+
+        HashMap::new()
+    };
+}
 
 pub struct ProceduralGenerator {
     seed: u32,
@@ -23,24 +38,46 @@ impl ProceduralGenerator {
     pub fn generate (&self) -> Vec<(usize, usize, SpriteRequest)> {
         let mut rng = Pcg64::seed_from_u64(self.seed as u64);
         let walls: [[bool; HEIGHT as usize]; WIDTH as usize] = Self::generate_walls_bitmap(&mut rng);
+        let get_bits = |x: usize, y: usize| {
+            let thing_works = |xo: i32, yo: i32| {
+                let xtot = x as i32 + xo;
+                let ytot = y as i32 + yo;
+                if !(0..WIDTH).contains(&xtot) || !(0..HEIGHT).contains(&ytot) {
+                    false
+                } else {
+                    walls[xtot as usize][ytot as usize]
+                }
+            };
+
+            [thing_works(0, 1), thing_works(1, 1), thing_works(1, 0), thing_works(1, -1), thing_works(0, -1), thing_works(-1, -1), thing_works(-1, 0), thing_works(-1, 1)]
+        };
 
         let mut map = Vec::new();
 
         for x in 0..WIDTH as usize {
             for y in 0..HEIGHT as usize {
                 if walls[x][y] {
-                    map.push((x, y, SpriteRequest::BackWall)); //TODO: Change the wall type
+                    let bits = get_bits(x, y);
+                    map.push((x, y, Self::bits_to_sprite_request(bits)));
                 }
             }
         }
         map.push((0, 0, SpriteRequest::Player(0)));
         map.push((0, 1, SpriteRequest::Player(0)));
 
-        //TODO: Players
-        //TODO: Greenery/Trees
         //TODO: Doors
+        //TODO: Greenery/Trees
+        //TODO: Players
 
         map
+    }
+
+
+    fn bits_to_sprite_request (bits: [bool; 8]) -> SpriteRequest {
+
+
+
+        SpriteRequest::BackWall
     }
 
     ///Generates a bitmap for where on the map should be a wall - true is a wall, and false is free
