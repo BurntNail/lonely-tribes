@@ -29,7 +29,7 @@ pub struct Flags {
     pub timed_movement: bool,
 }
 impl Flags {
-    pub fn fow_enabled (&self) -> bool {
+    pub fn fow_enabled(&self) -> bool {
         !(self.debug && self.fow_disabled)
     }
 }

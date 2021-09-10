@@ -43,11 +43,11 @@ mod file_utils;
 mod high_scores;
 mod level;
 mod level_editor;
+mod procedural_generator;
 mod states;
 mod systems;
 mod tag;
 mod ui_input;
-mod procedural_generator;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless
@@ -153,18 +153,16 @@ pub fn get_colours(r: f32, g: f32, b: f32) -> [f32; 4] {
 }
 
 #[derive(Copy, Clone, Debug)]
-pub enum Either<T1, T2>
-{
+pub enum Either<T1, T2> {
     One(T1),
-    Two(T2)
+    Two(T2),
 }
 impl<T1, T2> Either<T1, T2> {
-    pub fn is_one (&self) -> bool {
+    pub fn is_one(&self) -> bool {
         matches!(self, Self::One(_))
     }
-    pub fn is_two (&self) -> bool {
+    pub fn is_two(&self) -> bool {
         matches!(self, Self::Two(_))
-
     }
 }
 

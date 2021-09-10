@@ -1,16 +1,20 @@
-use crate::{high_scores::HighScores, states::{
-    game_state::{PuzzleState, LEVELS},
-    states_util::{get_scaling_factor, load_font},
-    welcome_state::StartGameState,
-}, HOVER_COLOUR, Either};
+use crate::{
+    high_scores::HighScores,
+    states::{
+        game_state::{PuzzleState, LEVELS},
+        states_util::{get_scaling_factor, load_font},
+        welcome_state::StartGameState,
+    },
+    Either, HOVER_COLOUR,
+};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
-use std::collections::HashMap;
 use rand::Rng;
+use std::collections::HashMap;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -197,7 +201,6 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize, Entity) {
         }
     }
 
-
     let proc_gen = {
         let font_height = sf * 50.0;
         let trans = UiTransform::new(
@@ -218,9 +221,13 @@ fn init_menu(world: &mut World) -> (HashMap<Entity, usize>, usize, Entity) {
             LineMode::Wrap,
             Anchor::MiddleLeft,
         );
-        world.create_entity().with(trans).with(txt).with(Interactable).build()
+        world
+            .create_entity()
+            .with(trans)
+            .with(txt)
+            .with(Interactable)
+            .build()
     };
-
 
     (map, next_level, proc_gen)
 }

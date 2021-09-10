@@ -1,21 +1,29 @@
-use crate::{components::{
-    animations::{
-        animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
-        rotation::RotationAnimationData, tint::TintAnimatorData,
+use crate::{
+    components::{
+        animations::{
+            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
+            rotation::RotationAnimationData, tint::TintAnimatorData,
+        },
+        colliders::{Collider, ColliderList},
+        data_holder::EntityHolder,
+        point_light::{PointLight, TintOverride},
+        score::Score,
+        tile_transform::TileTransform,
+        win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
     },
-    colliders::{Collider, ColliderList},
-    data_holder::EntityHolder,
-    point_light::{PointLight, TintOverride},
-    score::Score,
-    tile_transform::TileTransform,
-    win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
-}, file_utils::list_file_names_in_dir, level::Room, states::{
-    afterwards_state::PostGameState,
-    level_select::LevelSelectState,
-    paused_state::{MovementDisabler, PausedState},
-    states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
-    true_end::TrueEnd,
-}, systems::update_tile_transforms::UpdateTileTransforms, tag::{Tag, TriggerType}, ARENA_HEIGHT, ARENA_WIDTH, Either};
+    file_utils::list_file_names_in_dir,
+    level::Room,
+    states::{
+        afterwards_state::PostGameState,
+        level_select::LevelSelectState,
+        paused_state::{MovementDisabler, PausedState},
+        states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
+        true_end::TrueEnd,
+    },
+    systems::update_tile_transforms::UpdateTileTransforms,
+    tag::{Tag, TriggerType},
+    Either, ARENA_HEIGHT, ARENA_WIDTH,
+};
 use amethyst::{
     assets::Handle,
     core::{ecs::Entity, math::Vector3, transform::Transform, Hidden, Time},
@@ -25,8 +33,8 @@ use amethyst::{
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
     winit::{Event, WindowEvent},
 };
-use std::collections::HashMap;
 use rand::Rng;
+use std::collections::HashMap;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -113,7 +121,7 @@ impl SimpleState for PuzzleState {
                 };
                 Room::new(this_level)
             }
-            Either::Two(seed) => Room::proc_gen(seed)
+            Either::Two(seed) => Room::proc_gen(seed),
         };
         let holder = load_level(world, handle, room);
 
@@ -235,54 +243,52 @@ impl SimpleState for PuzzleState {
                     //we won a level that has another after it
                     t = Trans::Switch(Box::new(PostGameState::new()));
                 }
-            }  else if won {
+            } else if won {
                 //we won a level that has another after it
                 t = Trans::Switch(Box::new(PostGameState::new()));
             };
 
-            if !won
-                 {
-                    //we lost
+            if !won {
+                //we lost
 
-                    let (so_far, total, ent) = self.death_timer.take().unwrap_or_else(|| {
-                        let pos = lost_position.unwrap_or_default();
-                        let (x, y) = UpdateTileTransforms::tile_to_xyz(pos);
+                let (so_far, total, ent) = self.death_timer.take().unwrap_or_else(|| {
+                    let pos = lost_position.unwrap_or_default();
+                    let (x, y) = UpdateTileTransforms::tile_to_xyz(pos);
 
-                        let mut trans = Transform::default();
-                        trans.set_translation_xyz(x, y, 2.0);
+                    let mut trans = Transform::default();
+                    trans.set_translation_xyz(x, y, 2.0);
 
-                        let spritesheet = load_sprite_sheet(data.world, "zoom-in-on-loss");
+                    let spritesheet = load_sprite_sheet(data.world, "zoom-in-on-loss");
 
-                        let ent = data
-                            .world
-                            .create_entity()
-                            .with(trans)
-                            .with(SpriteRender::new(spritesheet, 0))
-                            .build();
-                        data.world.insert(MovementDisabler { enabled: true });
+                    let ent = data
+                        .world
+                        .create_entity()
+                        .with(trans)
+                        .with(SpriteRender::new(spritesheet, 0))
+                        .build();
+                    data.world.insert(MovementDisabler { enabled: true });
 
-                        (0.0, 1.5, ent)
-                    });
+                    (0.0, 1.5, ent)
+                });
 
-                    if so_far > total {
-                        //anim is done
-                        t = Trans::Switch(Box::new(PostGameState::new()));
-                    } else {
-                        let so_far = so_far + data.world.read_resource::<Time>().delta_seconds();
-                        let scale_val = AnimInterpolation::ReverseExponential
-                            .get_val_from_pctg(so_far / total)
-                            * 4.0
-                            + 1.0;
+                if so_far > total {
+                    //anim is done
+                    t = Trans::Switch(Box::new(PostGameState::new()));
+                } else {
+                    let so_far = so_far + data.world.read_resource::<Time>().delta_seconds();
+                    let scale_val = AnimInterpolation::ReverseExponential
+                        .get_val_from_pctg(so_far / total)
+                        * 4.0
+                        + 1.0;
 
-                        if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
-                            let scale = Vector3::from([scale_val; 3]);
-                            trans.set_scale(scale);
-                        }
-
-                        self.death_timer = Some((so_far, total, ent));
+                    if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
+                        let scale = Vector3::from([scale_val; 3]);
+                        trans.set_scale(scale);
                     }
-                }
 
+                    self.death_timer = Some((so_far, total, ent));
+                }
+            }
         }
 
         t

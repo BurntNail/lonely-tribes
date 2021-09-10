@@ -8,9 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="walls in proc gen are done">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -325,13 +333,13 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -471,6 +479,8 @@
       <workItem from="1631181925835" duration="375000" />
       <workItem from="1631211971228" duration="7359000" />
       <workItem from="1631278135387" duration="564000" />
+      <workItem from="1631290582457" duration="1611000" />
+      <workItem from="1631305494971" duration="851000" />
     </task>
     <task id="LOCAL-00055" summary="fix old problem with loading saves">
       <created>1628712390940</created>
@@ -850,7 +860,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Log10 mode" />
     <MESSAGE value="fmt" />
     <MESSAGE value="change help text to in a file, and with hyperlegible font" />
     <MESSAGE value="fix anim log10" />
@@ -875,7 +884,8 @@
     <MESSAGE value="start to add rayon stuff" />
     <MESSAGE value="finish parallel lighting" />
     <MESSAGE value="walls in proc gen are done" />
-    <option name="LAST_COMMIT_MESSAGE" value="walls in proc gen are done" />
+    <MESSAGE value="after proc-gen plus val tweaking" />
+    <option name="LAST_COMMIT_MESSAGE" value="after proc-gen plus val tweaking" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

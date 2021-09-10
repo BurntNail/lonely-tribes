@@ -1,8 +1,14 @@
-use crate::{components::win_state::{GameState, GameStateEnum}, config::LTConfig, high_scores::HighScores, states::{
-    game_state::{PuzzleState, LEVELS},
-    level_select::LevelSelectState,
-    states_util::{get_scaling_factor, load_font},
-}, Either};
+use crate::{
+    components::win_state::{GameState, GameStateEnum},
+    config::LTConfig,
+    high_scores::HighScores,
+    states::{
+        game_state::{PuzzleState, LEVELS},
+        level_select::LevelSelectState,
+        states_util::{get_scaling_factor, load_font},
+    },
+    Either,
+};
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
@@ -51,8 +57,9 @@ impl SimpleState for PostGameState {
                     format!("You got a new high score - {}!\n\n{}", score, win)
                 } else {
                     format!(
-                        "You didn't beat your high score of {}...\n\n{}",
+                        "You didn't beat your high score of {}, you only got: {}...\n\n{}",
                         nu_high_score.unwrap_or_else(|| unreachable!()),
+                        score,
                         win
                     )
                 }
@@ -63,7 +70,14 @@ impl SimpleState for PostGameState {
                 )
             }
         } else if won {
-            "Congrats on beating this procedurally generated level!".to_string()
+            let seed = match level_from {
+                Either::One(_) => "Error getting seed...".to_string(),
+                Either::Two(s) => format!("{}", s),
+            };
+            format!(
+                "Congrats on beating this procedurally generated level!\n You got {} on Seed: {}",
+                score, seed
+            )
         } else {
             "You Lost... Press [R] to Restart.".to_string()
         };

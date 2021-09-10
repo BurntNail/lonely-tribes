@@ -7,6 +7,7 @@ use crate::{
         point_light::{PointLight, TintOverride},
         tile_transform::TileTransform,
     },
+    config::LTConfig,
     systems::move_player::HELD_INTERVAL,
     HEIGHT, WIDTH,
 };
@@ -20,7 +21,6 @@ use std::{
     ops::{Deref, DerefMut},
     sync::mpsc::channel,
 };
-use crate::config::{LTConfig};
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
@@ -149,7 +149,10 @@ impl LightCacher {
                         break true;
                     }
 
-                    if current_pos > t || current_float_repr.0 > WIDTH as f32 || current_float_repr.1 > HEIGHT as f32 {
+                    if current_pos > t
+                        || current_float_repr.0 > WIDTH as f32
+                        || current_float_repr.1 > HEIGHT as f32
+                    {
                         break false;
                     }
                 }
@@ -191,7 +194,6 @@ impl LightCacher {
 
         let (base_sender, base_receiver) = channel();
 
-
         lights
             .par_iter()
             .for_each_with(base_sender, |sender, (l_t_ref, l)| {
@@ -205,7 +207,9 @@ impl LightCacher {
                             let dist = t.distance(l_t_ref);
                             let rad = l.radius as f32;
                             (rad - dist) / rad
-                        } else {1.0};
+                        } else {
+                            1.0
+                        };
 
                         tx.send((t, try_fac)).unwrap_or_else(|err| {
                             log::warn!(

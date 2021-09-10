@@ -1,12 +1,10 @@
-use crate::{HEIGHT, WIDTH};
+use crate::{procedural_generator::ProceduralGenerator, HEIGHT, WIDTH};
 use image::{DynamicImage, GenericImageView, Rgba};
 use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
-use crate::procedural_generator::ProceduralGenerator;
 
-#[allow(dead_code)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum SpriteRequest {
     BackWall,
@@ -207,7 +205,7 @@ impl Room {
         Self { data }
     }
 
-    pub fn proc_gen (seed: u32) -> Self {
+    pub fn proc_gen(seed: u32) -> Self {
         let mappings = ProceduralGenerator::new(seed).get();
 
         let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
@@ -216,8 +214,6 @@ impl Room {
             data[x][y] = spr;
         });
 
-        Self {
-            data
-        }
+        Self { data }
     }
 }
