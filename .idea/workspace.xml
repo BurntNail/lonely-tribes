@@ -7,8 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="procgen concurrency">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix oob error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_release.sh" beforeDir="false" afterPath="$PROJECT_DIR$/new_release.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -324,8 +326,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
       </list>
     </recent_temporary>
   </component>
@@ -472,13 +474,6 @@
       <workItem from="1631278135387" duration="564000" />
       <workItem from="1631290582457" duration="1611000" />
       <workItem from="1631305494971" duration="851000" />
-    </task>
-    <task id="LOCAL-00056" summary="Farm out hiding and showing to different methods.">
-      <created>1628712409970</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1628712409970</updated>
     </task>
     <task id="LOCAL-00057" summary="Basic Movement toggler">
       <created>1628715038096</created>
@@ -816,7 +811,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631306632666</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="finish procgen - add players">
+      <created>1631307293152</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1631307293152</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,9 +853,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change help text to in a file, and with hyperlegible font" />
-    <MESSAGE value="fix anim log10" />
-    <MESSAGE value="let player use arrow keys + remove bindings.ron" />
     <MESSAGE value="general clippy fixes + new-startup state is help" />
     <MESSAGE value="start of ui input class" />
     <MESSAGE value="zoom into losing area on loss" />
@@ -876,7 +875,10 @@
     <MESSAGE value="walls in proc gen are done" />
     <MESSAGE value="after proc-gen plus val tweaking" />
     <MESSAGE value="procgen concurrency" />
-    <option name="LAST_COMMIT_MESSAGE" value="procgen concurrency" />
+    <MESSAGE value="finish procgen - add players" />
+    <MESSAGE value="clippy" />
+    <MESSAGE value="fix oob error" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix oob error" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

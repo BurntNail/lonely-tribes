@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-mkdir Releases/new-release
+mkdir -p Releases/new-release
 rm -rf Releases/new-release/*
 cargo build --release
 

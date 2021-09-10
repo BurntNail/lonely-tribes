@@ -5,7 +5,6 @@ use rand_pcg::Pcg64;
 use rayon::{iter::ParallelIterator, prelude::IntoParallelIterator};
 use std::collections::HashMap;
 use std::sync::mpsc::channel;
-use std::time::SystemTime;
 
 pub const PERLIN_SCALE: f64 = 5.0;
 
@@ -64,6 +63,7 @@ pub struct ProceduralGenerator {
 }
 
 type Map = Vec<(usize, usize, SpriteRequest)>;
+type MapSlice = [(usize, usize, SpriteRequest)];
 
 pub const TREE_THRESHOLD: f64 = 0.5;
 pub const SHRUBBERY_THRESHOLD: f64 = 0.3;
@@ -82,9 +82,9 @@ impl ProceduralGenerator {
         map
     }
 
-    fn get_blocked_bits (map: &Map) -> Vec<(usize, usize)> {
+    fn get_blocked_bits (map: &MapSlice) -> Vec<(usize, usize)> {
         map
-            .clone()
+            .to_owned()
             .into_par_iter()
             .filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door)
             .map(|(x, y, _)| (x, y))
@@ -95,8 +95,9 @@ impl ProceduralGenerator {
         let mut rng = Pcg64::seed_from_u64(seed as u64);
         let blocked_bits = Self::get_blocked_bits(map);
 
-        let no_players: Vec<i32> = (0..rng.gen_range(1..=4)).into_iter().map(|id| {
-            let offset = 3 - id;
+        #[allow(clippy::needless_collect)]
+            let no_players: Vec<i32> = (0..rng.gen_range(1..=4)).into_iter().map(|id| {
+            let offset = 4 - id;
             rng.gen_range(2*offset..5*offset)
         }).collect();
 
@@ -117,8 +118,6 @@ impl ProceduralGenerator {
     }
 
     fn add_plants(seed: u32, map: &mut Map) {
-        let t = SystemTime::now();
-
         let blocked_bits = Self::get_blocked_bits(map);
         let plant_places: Vec<(usize, usize)> = map
             .clone()
@@ -235,9 +234,9 @@ impl ProceduralGenerator {
 
         let mut map = Vec::new();
 
-        for x in 0..WIDTH as usize {
-            for y in 0..HEIGHT as usize {
-                if walls[x][y].is_some() {
+        for (x, col) in walls.iter().enumerate().take(WIDTH as usize) {
+            for (y, el) in col.iter().enumerate().take(HEIGHT as usize) {
+                if el.is_some() {
                     let bits = get_bits(x, y);
 
                     let spr = *BITS_TO_SPRS.get(&bits).unwrap_or(&SpriteRequest::Door);
@@ -280,9 +279,9 @@ impl ProceduralGenerator {
         let mut map = [[None; HEIGHT as usize]; WIDTH as usize];
 
         for (top_left, btm_right) in rooms {
-            for x in (top_left.x as usize)..=(btm_right.x as usize) {
-                map[x][top_left.y as usize] = Some(WallType::Back);
-                map[x][btm_right.y as usize] = Some(WallType::Front);
+            for map in map.iter_mut().take((btm_right.x as usize) + 1).skip(top_left.x as usize) {
+                map[top_left.y as usize] = Some(WallType::Back);
+                map[btm_right.y as usize] = Some(WallType::Front);
             }
 
             for y in (top_left.y as usize)..=(btm_right.y as usize) {
