@@ -70,6 +70,12 @@ pub struct ProceduralGenerator {
 
 type Map = Vec<(usize, usize, SpriteRequest)>;
 
+pub const TREE_THRESHOLD: f64 = 0.5;
+pub const OVERRIDE_WALL_THRESHOLD: f64 = 0.4;
+pub const SHRUBBERY_THRESHOLD: f64 = 0.0;
+pub const DOOR_REPLACER_MODIFIER: f64 = 5.0;
+
+
 impl ProceduralGenerator {
     pub fn new (seed: u32) -> Self {
         Self {
@@ -89,13 +95,6 @@ impl ProceduralGenerator {
         let blocked_bits: Vec<(usize, usize)> = map.clone().into_par_iter().filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door).map(|(x, y, _)| (x, y)).collect();
         let plant_places: Vec<(usize, usize)> = map.clone().into_par_iter().filter(|(_, _, spr)| spr == &SpriteRequest::Door).map(|(x, y, _)| (x, y)).collect();
 
-        // let spr = *BITS_TO_SPRS.get(&bits).unwrap_or_else(|| {
-        //     let val = self.perlin.get([x as f64 / PERLIN_SCALE, y as f64 / PERLIN_SCALE]) * 100.0;
-        //     log::info!("Using {} at {}, {}", val, x, y);
-        //
-        //     if val > 0.0 {&SpriteRequest::Shrubbery} else {&SpriteRequest::DarkShrubbery}
-        // });
-
         let p1 = Fbm::new().set_seed(seed);
         let p2 = Fbm::new().set_seed(seed + 100);
         let p3 = Fbm::new().set_seed(seed / 3); //for overrides
@@ -108,7 +107,7 @@ impl ProceduralGenerator {
                 let no_2 = p2.get(p_val);
 
                 let no_3 = if plant_places.contains(&(x, y)) {
-                    if no_1 > 0.0 {
+                    if no_1 > SHRUBBERY_THRESHOLD {
                         Some((0, no_1))
                     } else {
                         Some((1, no_2))
@@ -117,15 +116,16 @@ impl ProceduralGenerator {
                     None
                 };
 
-                if no_1 > 0.3 || no_2 > 0.3 || no_3.is_some() {
-                    let tree = 0.6;
-                    let can_override = p3.get(p_val) > 0.5;
+                if no_1 > SHRUBBERY_THRESHOLD || no_2 > SHRUBBERY_THRESHOLD || no_3.is_some() {
+                    let can_override = p3.get(p_val) > OVERRIDE_WALL_THRESHOLD;
 
                     let mut changer = |shrubbery: SpriteRequest, tree_spr: SpriteRequest, v: f64| {
-                        if !(blocked_bits.contains(&(x, y)) && !can_override) {
-                            if v > tree {
+                        if blocked_bits.contains(&(x, y)) && can_override {
+                            map.push((x, y, tree_spr));
+                        } else {
+                            if v > TREE_THRESHOLD {
                                 map.push((x, y, tree_spr));
-                            } else {
+                            } else if v > SHRUBBERY_THRESHOLD {
                                 map.push((x, y, shrubbery));
                             }
                         }
@@ -133,9 +133,9 @@ impl ProceduralGenerator {
 
                     if let Some((t, val)) = no_3 {
                         if t == 0 {
-                            changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, val.abs());
+                            changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, val.abs() * DOOR_REPLACER_MODIFIER);
                         } else {
-                            changer(SpriteRequest::DarkShrubbery, SpriteRequest::WarpedTree, val.abs());
+                            changer(SpriteRequest::DarkShrubbery, SpriteRequest::WarpedTree, val.abs() * DOOR_REPLACER_MODIFIER);
                         }
 
                     }
