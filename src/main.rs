@@ -1,4 +1,5 @@
 #![windows_subsystem = "windows"] //removes console window
+// #![feature(test)]
 
 use crate::{
     config::LTConfig,
@@ -37,17 +38,19 @@ use log::LevelFilter;
 #[macro_use]
 extern crate lazy_static;
 
-mod components;
-mod config;
-mod file_utils;
-mod high_scores;
-mod level;
-mod level_editor;
-mod procedural_generator;
-mod states;
-mod systems;
-mod tag;
-mod ui_input;
+// extern crate test;
+
+pub mod components;
+pub mod config;
+pub mod file_utils;
+pub mod high_scores;
+pub mod level;
+pub mod level_editor;
+pub mod procedural_generator;
+pub mod states;
+pub mod systems;
+pub mod tag;
+pub mod ui_input;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless

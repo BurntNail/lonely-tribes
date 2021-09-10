@@ -293,3 +293,16 @@ impl ProceduralGenerator {
         map
     }
 }
+
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+//     use test::Bencher;
+//     use rand::random;
+//
+//     #[bench]
+//     fn create_procgen_room_random_seed (b: &mut Bencher) {
+//         let room = ProceduralGenerator::new(random());
+//         b.iter(|| room.get());
+//     }
+// }
