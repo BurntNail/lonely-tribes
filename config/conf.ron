@@ -1,5 +1,5 @@
 ReadInConfig (
-    screen_dimensions: Some((1600, 900)),
+    screen_dimensions: Some((2560, 1440)),
     maximised: false,
     timed_movement: Some(0.1)
 )

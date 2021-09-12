@@ -15,6 +15,7 @@ use crate::{
         update_tile_transforms::UpdateTileTransforms,
         win_system::EndOfGameSystem,
     },
+    audio::Muzac
 };
 use amethyst::{
     core::transform::TransformBundle,
@@ -30,6 +31,7 @@ use amethyst::{
     utils::{application_root_dir, fps_counter::FpsCounterSystem},
     window::DisplayConfig,
     LoggerConfig,
+    audio::{DjSystemDesc, AudioBundle},
 };
 use log::LevelFilter;
 // use steamworks::*;
@@ -48,6 +50,7 @@ mod systems;
 mod tag;
 mod ui_input;
 mod procedural_generator;
+mod audio;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless
@@ -91,6 +94,7 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(TransformBundle::new())?
         .with_bundle(InputBundle::<StringBindings>::new())?
         .with_bundle(UiBundle::<StringBindings>::new())?
+        .with_bundle(AudioBundle::default())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
@@ -100,6 +104,11 @@ fn main() -> amethyst::Result<()> {
                 .with_plugin(RenderUi::default())
                 .with_plugin(RenderFlat2D::default()),
         )?
+        .with_system_desc(
+            DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
+            "dj_system",
+            &[]
+        )
         .with(UpdateTileTransforms, "update_tile_transforms", &[])
         .with(ListSystem, "collider_list", &[])
         .with(

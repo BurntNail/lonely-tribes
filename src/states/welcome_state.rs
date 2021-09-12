@@ -7,6 +7,7 @@ use crate::{
         states_util::{get_scaling_factor, load_font},
     },
     HOVER_COLOUR,
+    audio::init_audio
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
@@ -35,6 +36,8 @@ impl SimpleState for StartGameState {
 
         world.register::<Interactable>();
         world.register::<UiImage>();
+
+        init_audio(world);
 
         let (s, h, l, q) = init_menu(world);
         self.start_btn = Some(s);
