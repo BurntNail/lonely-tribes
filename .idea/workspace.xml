@@ -7,10 +7,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="walls in proc gen are done">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="more procgen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +100,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.no-fow">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -470,14 +471,9 @@
       <workItem from="1631130781222" duration="1292000" />
       <workItem from="1631181925835" duration="375000" />
       <workItem from="1631211971228" duration="7359000" />
-      <workItem from="1631278135387" duration="564000" />
-    </task>
-    <task id="LOCAL-00055" summary="fix old problem with loading saves">
-      <created>1628712390940</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1628712390940</updated>
+      <workItem from="1631278135387" duration="1468000" />
+      <workItem from="1631527255434" duration="667000" />
+      <workItem from="1631537797444" duration="279000" />
     </task>
     <task id="LOCAL-00056" summary="Farm out hiding and showing to different methods.">
       <created>1628712409970</created>
@@ -815,7 +811,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631220633282</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="more procgen">
+      <created>1631290437145</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1631290437145</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -850,7 +853,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix Log10 mode" />
     <MESSAGE value="fmt" />
     <MESSAGE value="change help text to in a file, and with hyperlegible font" />
     <MESSAGE value="fix anim log10" />
@@ -875,7 +877,8 @@
     <MESSAGE value="start to add rayon stuff" />
     <MESSAGE value="finish parallel lighting" />
     <MESSAGE value="walls in proc gen are done" />
-    <option name="LAST_COMMIT_MESSAGE" value="walls in proc gen are done" />
+    <MESSAGE value="more procgen" />
+    <option name="LAST_COMMIT_MESSAGE" value="more procgen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

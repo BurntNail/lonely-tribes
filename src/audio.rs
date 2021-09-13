@@ -1,6 +1,6 @@
 use amethyst::{
     assets::Loader,
-    audio::{AudioSink, Mp3Format, OggFormat, SourceHandle},
+    audio::{AudioSink, Mp3Format, SourceHandle},
     ecs::{World, WorldExt},
 };
 use std::{iter::Cycle, vec::IntoIter};
