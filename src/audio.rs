@@ -1,7 +1,7 @@
 use amethyst::{
     assets::Loader,
-    audio::{Mp3Format, SourceHandle, AudioSink},
-    ecs::{World, WorldExt}
+    audio::{AudioSink, Mp3Format, OggFormat, SourceHandle},
+    ecs::{World, WorldExt},
 };
 use std::{iter::Cycle, vec::IntoIter};
 
@@ -14,13 +14,13 @@ const BACKGROUND_TRACKS: &[&str] = &[
 ];
 
 pub struct Muzac {
-    pub music: Cycle<IntoIter<SourceHandle>>
+    pub music: Cycle<IntoIter<SourceHandle>>,
 }
 
-pub fn init_audio (world: &mut World) {
+pub fn init_audio(world: &mut World) {
     let music = {
         let loader = world.read_resource::<Loader>();
-        
+
         let mut sink = world.write_resource::<AudioSink>();
         sink.set_volume(0.25);
 
@@ -31,12 +31,12 @@ pub fn init_audio (world: &mut World) {
             .into_iter()
             .cycle();
 
-        Muzac {music}
+        Muzac { music }
     };
 
     world.insert(music);
 }
 
-pub fn load_audio_track (loader: &Loader, world: &World, file: &str) -> SourceHandle {
+pub fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle {
     loader.load(file, Mp3Format, (), &world.read_resource())
 }

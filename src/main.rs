@@ -1,6 +1,7 @@
 #![windows_subsystem = "windows"] //removes console window
 
 use crate::{
+    audio::Muzac,
     config::LTConfig,
     high_scores::DATA_DIR,
     states::{help_state::HelpState, welcome_state::StartGameState},
@@ -13,11 +14,11 @@ use crate::{
         txt_wobble_system::TextWobbleSystem,
         update_score::ScoreUpdaterSystem,
         update_tile_transforms::UpdateTileTransforms,
-        win_system::EndOfGameSystem,
+        player_overlap_checker::PlayerOverlapChecker,
     },
-    audio::Muzac
 };
 use amethyst::{
+    audio::{AudioBundle, DjSystemDesc},
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
     prelude::*,
@@ -31,7 +32,6 @@ use amethyst::{
     utils::{application_root_dir, fps_counter::FpsCounterSystem},
     window::DisplayConfig,
     LoggerConfig,
-    audio::{DjSystemDesc, AudioBundle},
 };
 use log::LevelFilter;
 // use steamworks::*;
@@ -39,18 +39,18 @@ use log::LevelFilter;
 #[macro_use]
 extern crate lazy_static;
 
+mod audio;
 mod components;
 mod config;
 mod file_utils;
 mod high_scores;
 mod level;
 mod level_editor;
+mod procedural_generator;
 mod states;
 mod systems;
 mod tag;
 mod ui_input;
-mod procedural_generator;
-mod audio;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless
@@ -107,7 +107,7 @@ fn main() -> amethyst::Result<()> {
         .with_system_desc(
             DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
             "dj_system",
-            &[]
+            &[],
         )
         .with(UpdateTileTransforms, "update_tile_transforms", &[])
         .with(ListSystem, "collider_list", &[])
@@ -116,7 +116,7 @@ fn main() -> amethyst::Result<()> {
             "move_player",
             &["collider_list", "update_tile_transforms"],
         )
-        .with(EndOfGameSystem, "end_of_game", &["collider_list"])
+        .with(PlayerOverlapChecker, "player_overlap", &[])
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
         .with(LightListSystem, "light_list", &[])
@@ -162,18 +162,16 @@ pub fn get_colours(r: f32, g: f32, b: f32) -> [f32; 4] {
 }
 
 #[derive(Copy, Clone, Debug)]
-pub enum Either<T1, T2>
-{
+pub enum Either<T1, T2> {
     One(T1),
-    Two(T2)
+    Two(T2),
 }
 impl<T1, T2> Either<T1, T2> {
-    pub fn is_one (&self) -> bool {
+    pub fn is_one(&self) -> bool {
         matches!(self, Self::One(_))
     }
-    pub fn is_two (&self) -> bool {
+    pub fn is_two(&self) -> bool {
         matches!(self, Self::Two(_))
-
     }
 }
 

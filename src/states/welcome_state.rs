@@ -1,4 +1,5 @@
 use crate::{
+    audio::init_audio,
     components::text_wobble::TextWobble,
     level_editor::editor_select_state::LevelEditorLevelSelectState,
     states::{
@@ -7,7 +8,6 @@ use crate::{
         states_util::{get_scaling_factor, load_font},
     },
     HOVER_COLOUR,
-    audio::init_audio
 };
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},

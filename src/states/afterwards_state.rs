@@ -1,8 +1,14 @@
-use crate::{components::win_state::{GameState, GameStateEnum}, config::LTConfig, high_scores::HighScores, states::{
-    game_state::{PuzzleState, LEVELS},
-    level_select::LevelSelectState,
-    states_util::{get_scaling_factor, load_font},
-}, Either};
+use crate::{
+    components::win_state::{GameState, GameStateEnum},
+    config::LTConfig,
+    high_scores::HighScores,
+    states::{
+        game_state::{PuzzleState, LEVELS},
+        level_select::LevelSelectState,
+        states_util::{get_scaling_factor, load_font},
+    },
+    Either,
+};
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},

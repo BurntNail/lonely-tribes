@@ -1,12 +1,9 @@
+use crate::{components::tile_transform::TileTransform, level::SpriteRequest, HEIGHT, WIDTH};
+use noise::{Fbm, NoiseFn, Seedable};
+use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg64;
-use rand::{SeedableRng, Rng};
-use noise::{Fbm, Seedable, NoiseFn};
-use crate::level::SpriteRequest;
-use crate::{WIDTH, HEIGHT};
-use crate::components::tile_transform::TileTransform;
+use rayon::{iter::ParallelIterator, prelude::IntoParallelIterator};
 use std::collections::HashMap;
-use rayon::iter::ParallelIterator;
-use rayon::prelude::IntoParallelIterator;
 
 pub const PERLIN_SCALE: f64 = 5.0;
 
@@ -25,7 +22,6 @@ lazy_static! {
         let mut a = |list: [Option<WallType>; 8], s: SpriteRequest| {
             map.insert(list, s);
         };
-
 
         use SpriteRequest::*;
         let n = None;
@@ -57,9 +53,6 @@ lazy_static! {
         a([b, r, n, n, n, n, r, n], RightWall);
         a([f, r, n, n, n, n, r, n], RightWall);
 
-
-
-
         map
     };
 }
@@ -75,12 +68,9 @@ pub const OVERRIDE_WALL_THRESHOLD: f64 = 0.4;
 pub const SHRUBBERY_THRESHOLD: f64 = 0.0;
 pub const DOOR_REPLACER_MODIFIER: f64 = 5.0;
 
-
 impl ProceduralGenerator {
-    pub fn new (seed: u32) -> Self {
-        Self {
-            seed,
-        }
+    pub fn new(seed: u32) -> Self {
+        Self { seed }
     }
 
     pub fn get(&self) -> Map {
@@ -91,9 +81,19 @@ impl ProceduralGenerator {
         map
     }
 
-    fn generate_plants (seed: u32, map: &mut Map) {
-        let blocked_bits: Vec<(usize, usize)> = map.clone().into_par_iter().filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door).map(|(x, y, _)| (x, y)).collect();
-        let plant_places: Vec<(usize, usize)> = map.clone().into_par_iter().filter(|(_, _, spr)| spr == &SpriteRequest::Door).map(|(x, y, _)| (x, y)).collect();
+    fn generate_plants(seed: u32, map: &mut Map) {
+        let blocked_bits: Vec<(usize, usize)> = map
+            .clone()
+            .into_par_iter()
+            .filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door)
+            .map(|(x, y, _)| (x, y))
+            .collect();
+        let plant_places: Vec<(usize, usize)> = map
+            .clone()
+            .into_par_iter()
+            .filter(|(_, _, spr)| spr == &SpriteRequest::Door)
+            .map(|(x, y, _)| (x, y))
+            .collect();
 
         let p1 = Fbm::new().set_seed(seed);
         let p2 = Fbm::new().set_seed(seed + 100);
@@ -119,44 +119,56 @@ impl ProceduralGenerator {
                 if no_1 > SHRUBBERY_THRESHOLD || no_2 > SHRUBBERY_THRESHOLD || no_3.is_some() {
                     let can_override = p3.get(p_val) > OVERRIDE_WALL_THRESHOLD;
 
-                    let mut changer = |shrubbery: SpriteRequest, tree_spr: SpriteRequest, v: f64| {
-                        if blocked_bits.contains(&(x, y)) && can_override {
-                            map.push((x, y, tree_spr));
-                        } else {
-                            if v > TREE_THRESHOLD {
+                    let mut changer =
+                        |shrubbery: SpriteRequest, tree_spr: SpriteRequest, v: f64| {
+                            if blocked_bits.contains(&(x, y)) && can_override {
                                 map.push((x, y, tree_spr));
-                            } else if v > SHRUBBERY_THRESHOLD {
-                                map.push((x, y, shrubbery));
+                            } else {
+                                if v > TREE_THRESHOLD {
+                                    map.push((x, y, tree_spr));
+                                } else if v > SHRUBBERY_THRESHOLD {
+                                    map.push((x, y, shrubbery));
+                                }
                             }
-                        }
-                    };
+                        };
 
                     if let Some((t, val)) = no_3 {
                         if t == 0 {
-                            changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, val.abs() * DOOR_REPLACER_MODIFIER);
+                            changer(
+                                SpriteRequest::Shrubbery,
+                                SpriteRequest::Tree,
+                                val.abs() * DOOR_REPLACER_MODIFIER,
+                            );
                         } else {
-                            changer(SpriteRequest::DarkShrubbery, SpriteRequest::WarpedTree, val.abs() * DOOR_REPLACER_MODIFIER);
+                            changer(
+                                SpriteRequest::DarkShrubbery,
+                                SpriteRequest::WarpedTree,
+                                val.abs() * DOOR_REPLACER_MODIFIER,
+                            );
                         }
-
                     }
                     if no_1 > 0.0 {
                         changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, no_1);
                     }
                     if no_2 > 0.0 {
-                        changer(SpriteRequest::DarkShrubbery, SpriteRequest::WarpedTree, no_2);
+                        changer(
+                            SpriteRequest::DarkShrubbery,
+                            SpriteRequest::WarpedTree,
+                            no_2,
+                        );
                     }
                 }
             }
         }
     }
 
-    fn generate_walls_sprs (seed: u64) -> Map {
+    fn generate_walls_sprs(seed: u64) -> Map {
         let mut rng = Pcg64::seed_from_u64(seed as u64);
-        let walls: [[Option<WallType>; HEIGHT as usize]; WIDTH as usize] = Self::generate_walls(&mut rng);
+        let walls: [[Option<WallType>; HEIGHT as usize]; WIDTH as usize] =
+            Self::generate_walls(&mut rng);
         println!("{:?}", walls);
 
         let get_bits = |x: usize, y: usize| {
-
             let thing_works = |xo: i32, yo: i32| {
                 let xtot = x as i32 + xo;
                 let ytot = y as i32 + yo;
@@ -167,8 +179,16 @@ impl ProceduralGenerator {
                 }
             };
 
-
-            [thing_works(-1, 1), thing_works(0, 1), thing_works(1, 1), thing_works(-1, 0), thing_works(1, 0), thing_works(-1, -1), thing_works(0, -1), thing_works(1, -1)]
+            [
+                thing_works(-1, 1),
+                thing_works(0, 1),
+                thing_works(1, 1),
+                thing_works(-1, 0),
+                thing_works(1, 0),
+                thing_works(-1, -1),
+                thing_works(0, -1),
+                thing_works(1, -1),
+            ]
         };
 
         let mut map = Vec::new();
@@ -202,13 +222,18 @@ impl ProceduralGenerator {
             let width = rng.gen_range(4..room_max_width);
             let height = rng.gen_range(4..room_max_height);
 
-            let tup: (TileTransform, TileTransform) = ((x_pos, y_pos).into(), (x_pos + width, y_pos + height).into());
+            let tup: (TileTransform, TileTransform) = (
+                (x_pos, y_pos).into(),
+                (x_pos + width, y_pos + height).into(),
+            );
             log::info!("Making {:?}", tup);
             tup
         };
 
         let mut rooms = Vec::new();
-        (0..no_rooms).into_iter().for_each(|_| rooms.push(gen_room()));
+        (0..no_rooms)
+            .into_iter()
+            .for_each(|_| rooms.push(gen_room()));
 
         let mut map = [[None; HEIGHT as usize]; WIDTH as usize];
 
