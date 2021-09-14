@@ -7,12 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="rework win sys">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add audio conf option">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -476,14 +474,7 @@
       <workItem from="1631527255434" duration="667000" />
       <workItem from="1631537797444" duration="279000" />
       <workItem from="1631538131755" duration="52000" />
-      <workItem from="1631613816237" duration="331000" />
-    </task>
-    <task id="LOCAL-00057" summary="Basic Movement toggler">
-      <created>1628715038096</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1628715038096</updated>
+      <workItem from="1631613816237" duration="2120000" />
     </task>
     <task id="LOCAL-00058" summary="Fix clippy warnings for pause">
       <created>1628756852515</created>
@@ -821,7 +812,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631538175410</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="add audio conf option">
+      <created>1631614216894</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1631614216894</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -856,7 +854,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change help text to in a file, and with hyperlegible font" />
     <MESSAGE value="fix anim log10" />
     <MESSAGE value="let player use arrow keys + remove bindings.ron" />
     <MESSAGE value="general clippy fixes + new-startup state is help" />
@@ -881,7 +878,8 @@
     <MESSAGE value="walls in proc gen are done" />
     <MESSAGE value="more procgen" />
     <MESSAGE value="rework win sys" />
-    <option name="LAST_COMMIT_MESSAGE" value="rework win sys" />
+    <MESSAGE value="add audio conf option" />
+    <option name="LAST_COMMIT_MESSAGE" value="add audio conf option" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

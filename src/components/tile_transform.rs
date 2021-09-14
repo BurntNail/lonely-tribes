@@ -118,14 +118,25 @@ impl AddAssign for TileTransform {
     }
 }
 
+pub fn round (from: (f32, f32)) -> (i32, i32) {
+    let r = |f: f32| -> i32 {
+        if f % 1.0 >= 0.5 {
+            f.ceil() as i32
+        } else {
+            f.floor() as i32
+        }
+    };
+    (r(from.0), r(from.1))
+}
+
 impl From<(i32, i32)> for TileTransform {
     fn from((x, y): (i32, i32)) -> Self {
         Self::new(x, y)
     }
 }
 impl From<(f32, f32)> for TileTransform {
-    fn from((x, y): (f32, f32)) -> Self {
-        (x as i32, y as i32).into()
+    fn from(from: (f32, f32)) -> Self {
+        round(from).into()
     }
 }
 impl From<(usize, usize)> for TileTransform {
@@ -201,7 +212,7 @@ mod tests {
     pub fn into_test() {
         let base = TileTransform::new(0, 1);
         let t1: TileTransform = (0, 1).into();
-        let t2: TileTransform = (0.9, 1.1).into();
+        let t2: TileTransform = (0.1, 1.1).into();
         assert_eq!(t1, base);
         assert_eq!(t2, base);
     }

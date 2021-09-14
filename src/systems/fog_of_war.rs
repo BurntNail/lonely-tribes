@@ -132,27 +132,24 @@ impl LightCacher {
             .into_par_iter()
             .filter(|t| {
                 let t = *t;
-                let path = t - light;
-                let precision = path.get_magnitude() * 10.0; //TODO: do testing to find best val
-                let increment = (path.x as f32 / precision, path.y as f32 / precision);
-                let mut current_float_repr = (0.0, 0.0);
+                let path: TileTransform = t - light;
+                let max_iterations = path.get_magnitude() * 5.0;
 
+                let mut i = 0.0;
                 loop {
-                    //should hopefully never go on forever
-                    current_float_repr.0 += increment.0;
-                    current_float_repr.1 += increment.1;
+                    i += 1.0;
 
-                    let current_pos = TileTransform::from(current_float_repr);
-                    let plus_delta = light + current_pos;
+                    let pctg_done = i / max_iterations;
+                    let pos = TileTransform::from((
+                        path.x as f32 * pctg_done + light.x as f32,
+                        path.y as f32 * pctg_done + light.y as f32,
+                        ));
 
-                    if colls.contains(&plus_delta) || current_pos == path {
+                    if colls.contains(&pos) {
                         break true;
                     }
 
-                    if current_pos > t
-                        || current_float_repr.0 > WIDTH as f32
-                        || current_float_repr.1 > HEIGHT as f32
-                    {
+                    if pctg_done > 1.0 {
                         break false;
                     }
                 }
