@@ -8,6 +8,7 @@ Welcome to Lonely Tribes!
   - Press T to move each player one square over randomly, but for no moves
   - Press K to make players unable to merge, and doors close
   - Press N to allow players to phase through walls and trees
+  - Press F to make players dash 3 moves at once
   - Press B to get back to normal modes
 
 (Press Space or Return to go to the main menu)

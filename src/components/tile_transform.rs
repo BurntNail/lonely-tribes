@@ -4,7 +4,7 @@ use std::{
     cmp::Ordering,
     fmt::{Display, Formatter},
     hash::{Hash, Hasher},
-    ops::{Add, AddAssign, Mul, Sub},
+    ops::{Add, AddAssign, Mul, MulAssign, Sub},
 };
 
 ///Component for transforms which align to the tile grid
@@ -77,6 +77,7 @@ impl TileTransform {
     pub fn distance(&self, other: &TileTransform) -> f32 {
         (*self - *other).get_magnitude()
     }
+
     #[allow(dead_code)]
     pub fn normalised(&self) -> (f32, f32) {
         let mag = self.get_magnitude();
@@ -151,6 +152,12 @@ impl Mul<i32> for TileTransform {
         let mut new = Self::new(self.x * rhs, self.y * rhs);
         new.set_offsets((self.x_offset * rhs, self.y_offset * rhs));
         new
+    }
+}
+impl MulAssign<i32> for TileTransform {
+    fn mul_assign(&mut self, rhs: i32) {
+        self.x *= rhs;
+        self.y *= rhs;
     }
 }
 impl PartialEq for TileTransform {

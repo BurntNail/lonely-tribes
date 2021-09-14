@@ -7,18 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fiddle with fog_of_war.rs">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="clippy + fmt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help_text.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/fog_of_war.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +102,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.fmt">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -482,28 +477,7 @@
       <workItem from="1631527255434" duration="667000" />
       <workItem from="1631537797444" duration="279000" />
       <workItem from="1631538131755" duration="52000" />
-      <workItem from="1631613816237" duration="2562000" />
-    </task>
-    <task id="LOCAL-00059" summary="Make it so that score is only incremented, when it actually moves.">
-      <created>1628756878951</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1628756878951</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Remove clones">
-      <created>1628757227526</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1628757227527</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Remove clones">
-      <created>1628759067458</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1628759067458</updated>
+      <workItem from="1631613816237" duration="3007000" />
     </task>
     <task id="LOCAL-00062" summary="Add sprites that might be used in the future for the pause menu">
       <created>1628759152275</created>
@@ -827,7 +801,28 @@
       <option name="project" value="LOCAL" />
       <updated>1631620746326</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="add config option for volume">
+      <created>1631621207584</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621207584</updated>
+    </task>
+    <task id="LOCAL-00109" summary="rework win system to allow for sfx on merge">
+      <created>1631621220825</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621220825</updated>
+    </task>
+    <task id="LOCAL-00110" summary="clippy + fmt">
+      <created>1631621283188</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621283188</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -862,9 +857,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="let player use arrow keys + remove bindings.ron" />
-    <MESSAGE value="general clippy fixes + new-startup state is help" />
-    <MESSAGE value="start of ui input class" />
     <MESSAGE value="zoom into losing area on loss" />
     <MESSAGE value="fog of war" />
     <MESSAGE value="little qol changes" />
@@ -887,7 +879,10 @@
     <MESSAGE value="rework win sys" />
     <MESSAGE value="add audio conf option" />
     <MESSAGE value="fiddle with fog_of_war.rs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fiddle with fog_of_war.rs" />
+    <MESSAGE value="add config option for volume" />
+    <MESSAGE value="rework win system to allow for sfx on merge" />
+    <MESSAGE value="clippy + fmt" />
+    <option name="LAST_COMMIT_MESSAGE" value="clippy + fmt" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

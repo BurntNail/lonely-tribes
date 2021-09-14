@@ -126,6 +126,10 @@ impl<'s> System<'s> for MovePlayerSystem {
                 movement = false;
             }
 
+            if mode == GamePlayingMode::Frenzy {
+                t *= 3;
+            }
+
             (t, movement)
         };
 
