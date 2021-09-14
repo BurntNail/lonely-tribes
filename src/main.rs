@@ -125,12 +125,13 @@ fn main() -> amethyst::Result<()> {
         );
     }
     if opts.conf.vol > 0.0 {
-        game_data = game_data.with_bundle(AudioBundle::default())?
+        game_data = game_data
+            .with_bundle(AudioBundle::default())?
             .with_system_desc(
-            DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
-            "dj_system",
-            &[],
-        );
+                DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
+                "dj_system",
+                &[],
+            );
     }
 
     // {
