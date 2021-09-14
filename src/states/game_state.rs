@@ -20,8 +20,7 @@ use crate::{
         states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
-    systems::update_tile_transforms::UpdateTileTransforms,
-    systems::player_overlap_checker::DeleteList,
+    systems::{player_overlap_checker::DeleteList, update_tile_transforms::UpdateTileTransforms},
     tag::{Tag, TriggerType},
     Either, ARENA_HEIGHT, ARENA_WIDTH,
 };
@@ -227,14 +226,15 @@ impl SimpleState for PuzzleState {
         {
             let list = {
                 let mut l = data.world.write_resource::<DeleteList>();
-                std::mem::take(&mut l.0).clone()
+                std::mem::take(&mut l.0)
             };
 
             for e in list {
-                data.world.delete_entity(e).unwrap_or_else(|err| log::warn!("Error deleting entity in deleting list: {}", err));
+                data.world.delete_entity(e).unwrap_or_else(|err| {
+                    log::warn!("Error deleting entity in deleting list: {}", err)
+                });
             }
         }
-
 
         if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Boring {
             self.reset_fx_entities(data.world);

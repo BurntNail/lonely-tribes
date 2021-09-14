@@ -118,7 +118,7 @@ impl AddAssign for TileTransform {
     }
 }
 
-pub fn round (from: (f32, f32)) -> (i32, i32) {
+pub fn round(from: (f32, f32)) -> (i32, i32) {
     let r = |f: f32| -> i32 {
         if f % 1.0 >= 0.5 {
             f.ceil() as i32

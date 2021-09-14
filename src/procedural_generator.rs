@@ -119,18 +119,15 @@ impl ProceduralGenerator {
                 if no_1 > SHRUBBERY_THRESHOLD || no_2 > SHRUBBERY_THRESHOLD || no_3.is_some() {
                     let can_override = p3.get(p_val) > OVERRIDE_WALL_THRESHOLD;
 
-                    let mut changer =
-                        |shrubbery: SpriteRequest, tree_spr: SpriteRequest, v: f64| {
-                            if blocked_bits.contains(&(x, y)) && can_override {
-                                map.push((x, y, tree_spr));
-                            } else {
-                                if v > TREE_THRESHOLD {
-                                    map.push((x, y, tree_spr));
-                                } else if v > SHRUBBERY_THRESHOLD {
-                                    map.push((x, y, shrubbery));
-                                }
-                            }
-                        };
+                    let mut changer = |shrubbery: SpriteRequest,
+                                       tree_spr: SpriteRequest,
+                                       v: f64| {
+                        if (blocked_bits.contains(&(x, y)) && can_override) || v > TREE_THRESHOLD {
+                            map.push((x, y, tree_spr));
+                        } else if v > SHRUBBERY_THRESHOLD {
+                            map.push((x, y, shrubbery));
+                        }
+                    };
 
                     if let Some((t, val)) = no_3 {
                         if t == 0 {
@@ -193,9 +190,14 @@ impl ProceduralGenerator {
 
         let mut map = Vec::new();
 
-        for x in 0..WIDTH as usize {
-            for y in 0..HEIGHT as usize {
-                if walls[x][y].is_some() {
+        for (x, col) in walls.iter().enumerate().take(WIDTH as usize) {
+            for (y, cell) in col
+                .iter()
+                .enumerate()
+                .take(HEIGHT as usize)
+                .map(|(y, cell)| (y, cell.is_some()))
+            {
+                if cell {
                     let bits = get_bits(x, y);
 
                     let spr = *BITS_TO_SPRS.get(&bits).unwrap_or(&SpriteRequest::Door);
@@ -238,9 +240,13 @@ impl ProceduralGenerator {
         let mut map = [[None; HEIGHT as usize]; WIDTH as usize];
 
         for (top_left, btm_right) in rooms {
-            for x in (top_left.x as usize)..=(btm_right.x as usize) {
-                map[x][top_left.y as usize] = Some(WallType::Back);
-                map[x][btm_right.y as usize] = Some(WallType::Front);
+            for col in map
+                .iter_mut()
+                .take((btm_right.x as usize) + 1)
+                .skip(top_left.x as usize)
+            {
+                col[top_left.y as usize] = Some(WallType::Back);
+                col[btm_right.y as usize] = Some(WallType::Front);
             }
 
             for y in (top_left.y as usize)..=(btm_right.y as usize) {

@@ -6,7 +6,7 @@ pub struct Player {
     ///Holds the player ID for win-checking.
     ///Should be identical to the trigger id on that entity.
     pub id: usize,
-    pub no_players: u16
+    pub no_players: u16,
 }
 impl Player {
     ///Constructor for a Player

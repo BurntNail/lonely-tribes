@@ -1,10 +1,10 @@
+use crate::config::LTConfig;
 use amethyst::{
     assets::Loader,
     audio::{AudioSink, Mp3Format, SourceHandle},
     ecs::{World, WorldExt},
 };
 use std::{iter::Cycle, vec::IntoIter};
-use crate::config::LTConfig;
 
 const BACKGROUND_TRACKS: &[&str] = &[
     "music/DOS-88/Checking Manifest.mp3",
@@ -30,7 +30,7 @@ pub fn init_audio(world: &mut World) {
 
             let music = BACKGROUND_TRACKS
                 .iter()
-                .map(|file| load_audio_track(&loader, &world, file))
+                .map(|file| load_audio_track(&loader, world, file))
                 .collect::<Vec<_>>()
                 .into_iter()
                 .cycle();

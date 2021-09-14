@@ -143,7 +143,7 @@ impl LightCacher {
                     let pos = TileTransform::from((
                         path.x as f32 * pctg_done + light.x as f32,
                         path.y as f32 * pctg_done + light.y as f32,
-                        ));
+                    ));
 
                     if colls.contains(&pos) {
                         break true;

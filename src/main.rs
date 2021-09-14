@@ -10,11 +10,11 @@ use crate::{
         fog_of_war::{FogOfWarSystem, LightListSystem},
         fps_counter::FpsPrinterSystem,
         move_player::MovePlayerSystem,
+        player_overlap_checker::PlayerOverlapChecker,
         tint_animator::TintAnimatorSystem,
         txt_wobble_system::TextWobbleSystem,
         update_score::ScoreUpdaterSystem,
         update_tile_transforms::UpdateTileTransforms,
-        player_overlap_checker::PlayerOverlapChecker,
     },
 };
 use amethyst::{
