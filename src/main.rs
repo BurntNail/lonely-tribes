@@ -94,7 +94,6 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(TransformBundle::new())?
         .with_bundle(InputBundle::<StringBindings>::new())?
         .with_bundle(UiBundle::<StringBindings>::new())?
-        .with_bundle(AudioBundle::default())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
@@ -104,11 +103,6 @@ fn main() -> amethyst::Result<()> {
                 .with_plugin(RenderUi::default())
                 .with_plugin(RenderFlat2D::default()),
         )?
-        .with_system_desc(
-            DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
-            "dj_system",
-            &[],
-        )
         .with(UpdateTileTransforms, "update_tile_transforms", &[])
         .with(ListSystem, "collider_list", &[])
         .with(
@@ -128,6 +122,14 @@ fn main() -> amethyst::Result<()> {
             FpsPrinterSystem,
             "fps_printer",
             &["fps"],
+        );
+    }
+    if opts.conf.vol > 0.0 {
+        game_data = game_data.with_bundle(AudioBundle::default())?
+            .with_system_desc(
+            DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
+            "dj_system",
+            &[],
         );
     }
 
