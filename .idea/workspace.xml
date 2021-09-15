@@ -7,13 +7,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="clippy + fmt">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add new mode - frenzy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/win_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/win_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help_text.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../U5-Comp-Phys/falling-ball" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/art" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -74,11 +72,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes" />
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
       <recent name="$PROJECT_DIR$/assets/art" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/states" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\src" />
@@ -477,14 +475,10 @@
       <workItem from="1631527255434" duration="667000" />
       <workItem from="1631537797444" duration="279000" />
       <workItem from="1631538131755" duration="52000" />
-      <workItem from="1631613816237" duration="3007000" />
-    </task>
-    <task id="LOCAL-00062" summary="Add sprites that might be used in the future for the pause menu">
-      <created>1628759152275</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1628759152275</updated>
+      <workItem from="1631613816237" duration="3068000" />
+      <workItem from="1631691193629" duration="196000" />
+      <workItem from="1631695269971" duration="436000" />
+      <workItem from="1631700020382" duration="755000" />
     </task>
     <task id="LOCAL-00063" summary="Start of Differing GameModes">
       <created>1628790825521</created>
@@ -822,7 +816,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631621283188</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="add new mode - frenzy">
+      <created>1631621654784</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621654784</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -857,7 +858,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="zoom into losing area on loss" />
     <MESSAGE value="fog of war" />
     <MESSAGE value="little qol changes" />
     <MESSAGE value="add collider-based shadows for lighting w/ a cache" />
@@ -882,7 +882,8 @@
     <MESSAGE value="add config option for volume" />
     <MESSAGE value="rework win system to allow for sfx on merge" />
     <MESSAGE value="clippy + fmt" />
-    <option name="LAST_COMMIT_MESSAGE" value="clippy + fmt" />
+    <MESSAGE value="add new mode - frenzy" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new mode - frenzy" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
