@@ -9,12 +9,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix oob error">
-      <change beforePath="$PROJECT_DIR$/.idea/making-friends.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/making-friends.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Billy's Sacrifice.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Checking Manifest.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Crash Landing.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - Automatav2.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - City Stomper.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - Far away.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Parabola.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Race to Mars.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Smooth Sailing.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Alone - melancholic - slow.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Alone(loop) - melancholic - slow.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Anormal - calming - ambient.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Closing - strings - peaceful.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Concern - drone - anxiety.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Echo - hollow - scary - anxiety.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Echo(loop) - hollow - scary - anxiety.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Lost - drone - dark.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Lost(loop) - drone - dark.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Room(Loop) - piano - drone.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Stars - ambient - guitar - piano.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Transfer - drone - spaces.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Transfer(loop) - drone - spaces.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/licence.TXT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promo-assets/capsule/final/page-bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/audio.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/final/library-hero.png" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/final/library-hero.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/final/small-capsule.png" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/final/small-capsule.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +174,22 @@
     </configuration>
     <configuration name="Test" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="test" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -340,10 +389,10 @@
       <item itemvalue="Cargo.Test" />
       <item itemvalue="Cargo.Run normal" />
       <item itemvalue="Cargo.build release" />
+      <item itemvalue="Cargo.Run" />
       <item itemvalue="Cargo.fmt" />
       <item itemvalue="Cargo.clippy" />
       <item itemvalue="Shell Script.New Release" />
-      <item itemvalue="Cargo.Run" />
     </list>
     <recent_temporary>
       <list>
@@ -492,9 +541,23 @@
       <workItem from="1631130781222" duration="1292000" />
       <workItem from="1631181925835" duration="375000" />
       <workItem from="1631211971228" duration="7359000" />
-      <workItem from="1631278135387" duration="564000" />
-      <workItem from="1631290582457" duration="1611000" />
-      <workItem from="1631305494971" duration="851000" />
+      <workItem from="1631278135387" duration="1468000" />
+      <workItem from="1631527255434" duration="667000" />
+      <workItem from="1631537797444" duration="279000" />
+    </task>
+    <task id="LOCAL-00056" summary="Farm out hiding and showing to different methods.">
+      <created>1628712409970</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1628712409970</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Basic Movement toggler">
+      <created>1628715038096</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1628715038096</updated>
     </task>
     <task id="LOCAL-00058" summary="Fix clippy warnings for pause">
       <created>1628756852515</created>
@@ -818,28 +881,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631220633282</updated>
     </task>
-    <task id="LOCAL-00104" summary="procgen concurrency">
-      <created>1631306632665</created>
+    <task id="LOCAL-00104" summary="more procgen">
+      <created>1631290437145</created>
       <option name="number" value="00104" />
       <option name="presentableId" value="LOCAL-00104" />
       <option name="project" value="LOCAL" />
-      <updated>1631306632666</updated>
+      <updated>1631290437145</updated>
     </task>
-    <task id="LOCAL-00105" summary="finish procgen - add players">
-      <created>1631307293152</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1631307293152</updated>
-    </task>
-    <task id="LOCAL-00106" summary="fix oob error">
-      <created>1631309291783</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1631309291783</updated>
-    </task>
-    <option name="localTasksCounter" value="107" />
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -899,7 +948,8 @@
     <MESSAGE value="finish procgen - add players" />
     <MESSAGE value="clippy" />
     <MESSAGE value="fix oob error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix oob error" />
+    <MESSAGE value="more procgen" />
+    <option name="LAST_COMMIT_MESSAGE" value="more procgen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

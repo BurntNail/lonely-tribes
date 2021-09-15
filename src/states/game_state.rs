@@ -35,6 +35,7 @@ use amethyst::{
 };
 use rand::Rng;
 use std::collections::HashMap;
+use crate::systems::player_overlap_checker::DeleteList;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -222,6 +223,18 @@ impl SimpleState for PuzzleState {
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let mut t = Trans::None;
+
+        {
+            let list = {
+                let mut l = data.world.write_resource::<DeleteList>();
+                std::mem::take(&mut l.0)
+            };
+
+            for e in list {
+                data.world.delete_entity(e).unwrap_or_else(|err| log::warn!("Error deleting entity in deleting list: {}", err));
+            }
+        }
+
 
         if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Boring {
             self.reset_fx_entities(data.world);

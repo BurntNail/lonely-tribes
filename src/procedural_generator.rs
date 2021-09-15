@@ -66,8 +66,9 @@ type Map = Vec<(usize, usize, SpriteRequest)>;
 type MapSlice = [(usize, usize, SpriteRequest)];
 
 pub const TREE_THRESHOLD: f64 = 0.5;
-pub const SHRUBBERY_THRESHOLD: f64 = 0.3;
-pub const OVERRIDE_WALL_THRESHOLD: f64 = 0.5;
+pub const OVERRIDE_WALL_THRESHOLD: f64 = 0.4;
+pub const SHRUBBERY_THRESHOLD: f64 = 0.0;
+// pub const DOOR_REPLACER_MODIFIER: f64 = 5.0;
 
 impl ProceduralGenerator {
     pub fn new(seed: u32) -> Self {
@@ -144,7 +145,6 @@ impl ProceduralGenerator {
 
                         let no_1 = p1.get(p_val);
                         let no_2 = p2.get(p_val);
-
                         let no_3 = if plant_places.contains(&(x, y)) {
                             if no_2 > SHRUBBERY_THRESHOLD {
                                 Some(1)
@@ -293,16 +293,3 @@ impl ProceduralGenerator {
         map
     }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//     use test::Bencher;
-//     use rand::random;
-//
-//     #[bench]
-//     fn create_procgen_room_random_seed (b: &mut Bencher) {
-//         let room = ProceduralGenerator::new(random());
-//         b.iter(|| room.get());
-//     }
-// }

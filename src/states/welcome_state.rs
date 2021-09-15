@@ -1,4 +1,5 @@
 use crate::{
+    audio::init_audio,
     components::text_wobble::TextWobble,
     level_editor::editor_select_state::LevelEditorLevelSelectState,
     states::{
@@ -35,6 +36,8 @@ impl SimpleState for StartGameState {
 
         world.register::<Interactable>();
         world.register::<UiImage>();
+
+        init_audio(world);
 
         let (s, h, l, q) = init_menu(world);
         self.start_btn = Some(s);

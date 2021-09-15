@@ -2,6 +2,7 @@
 // #![feature(test)]
 
 use crate::{
+    audio::Muzac,
     config::LTConfig,
     high_scores::DATA_DIR,
     states::{help_state::HelpState, welcome_state::StartGameState},
@@ -14,10 +15,11 @@ use crate::{
         txt_wobble_system::TextWobbleSystem,
         update_score::ScoreUpdaterSystem,
         update_tile_transforms::UpdateTileTransforms,
-        win_system::EndOfGameSystem,
+        player_overlap_checker::PlayerOverlapChecker,
     },
 };
 use amethyst::{
+    audio::{AudioBundle, DjSystemDesc},
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
     prelude::*,
@@ -38,19 +40,18 @@ use log::LevelFilter;
 #[macro_use]
 extern crate lazy_static;
 
-// extern crate test;
-
-pub mod components;
-pub mod config;
-pub mod file_utils;
-pub mod high_scores;
-pub mod level;
-pub mod level_editor;
-pub mod procedural_generator;
-pub mod states;
-pub mod systems;
-pub mod tag;
-pub mod ui_input;
+mod components;
+mod config;
+mod file_utils;
+mod high_scores;
+mod level;
+mod level_editor;
+mod procedural_generator;
+mod states;
+mod systems;
+mod tag;
+mod ui_input;
+mod audio;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless
@@ -110,7 +111,7 @@ fn main() -> amethyst::Result<()> {
             "move_player",
             &["collider_list", "update_tile_transforms"],
         )
-        .with(EndOfGameSystem, "end_of_game", &["collider_list"])
+        .with(PlayerOverlapChecker, "player_overlap", &[])
         .with(TextWobbleSystem, "txt_wobble", &[])
         .with(ScoreUpdaterSystem, "score_updater", &[])
         .with(LightListSystem, "light_list", &[])
@@ -123,6 +124,14 @@ fn main() -> amethyst::Result<()> {
             "fps_printer",
             &["fps"],
         );
+    }
+    if opts.conf.vol > 0.0 {
+        game_data = game_data.with_bundle(AudioBundle::default())?
+            .with_system_desc(
+                DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
+                "dj_system",
+                &[],
+            )
     }
 
     // {
