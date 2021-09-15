@@ -11,11 +11,11 @@ use crate::{
         fog_of_war::{FogOfWarSystem, LightListSystem},
         fps_counter::FpsPrinterSystem,
         move_player::MovePlayerSystem,
+        player_overlap_checker::PlayerOverlapChecker,
         tint_animator::TintAnimatorSystem,
         txt_wobble_system::TextWobbleSystem,
         update_score::ScoreUpdaterSystem,
         update_tile_transforms::UpdateTileTransforms,
-        player_overlap_checker::PlayerOverlapChecker,
     },
 };
 use amethyst::{
@@ -40,6 +40,7 @@ use log::LevelFilter;
 #[macro_use]
 extern crate lazy_static;
 
+mod audio;
 mod components;
 mod config;
 mod file_utils;
@@ -51,7 +52,6 @@ mod states;
 mod systems;
 mod tag;
 mod ui_input;
-mod audio;
 
 pub const TILE_WIDTH_HEIGHT: i32 = 8;
 ///The width of the grid of tiless
@@ -126,12 +126,13 @@ fn main() -> amethyst::Result<()> {
         );
     }
     if opts.conf.vol > 0.0 {
-        game_data = game_data.with_bundle(AudioBundle::default())?
+        game_data = game_data
+            .with_bundle(AudioBundle::default())?
             .with_system_desc(
                 DjSystemDesc::new(|music: &mut Muzac| music.music.next()),
                 "dj_system",
                 &[],
-            )
+            );
     }
 
     // {

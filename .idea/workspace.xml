@@ -8,46 +8,11 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix oob error">
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Billy's Sacrifice.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Checking Manifest.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Crash Landing.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - Automatav2.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - City Stomper.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - Far away.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Parabola.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Race to Mars.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Smooth Sailing.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Alone - melancholic - slow.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Alone(loop) - melancholic - slow.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Anormal - calming - ambient.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Closing - strings - peaceful.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Concern - drone - anxiety.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Echo - hollow - scary - anxiety.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Echo(loop) - hollow - scary - anxiety.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Lost - drone - dark.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Lost(loop) - drone - dark.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Room(Loop) - piano - drone.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Stars - ambient - guitar - piano.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Transfer - drone - spaces.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Transfer(loop) - drone - spaces.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/music/LOST/licence.TXT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/promo-assets/capsule/final/page-bg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add new mode - frenzy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/capsule.blend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/final/library-hero.png" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/final/library-hero.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promo-assets/capsule/final/small-capsule.png" beforeDir="false" afterPath="$PROJECT_DIR$/promo-assets/capsule/final/small-capsule.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/win_system.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +60,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../U5-Comp-Phys/falling-ball" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/art" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -109,11 +74,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes" />
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
       <recent name="$PROJECT_DIR$/assets/art" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/states" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\src" />
@@ -137,7 +102,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.Run">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -396,8 +361,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
@@ -544,55 +509,11 @@
       <workItem from="1631278135387" duration="1468000" />
       <workItem from="1631527255434" duration="667000" />
       <workItem from="1631537797444" duration="279000" />
-    </task>
-    <task id="LOCAL-00056" summary="Farm out hiding and showing to different methods.">
-      <created>1628712409970</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1628712409970</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Basic Movement toggler">
-      <created>1628715038096</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1628715038096</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Fix clippy warnings for pause">
-      <created>1628756852515</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1628756852516</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Make it so that score is only incremented, when it actually moves.">
-      <created>1628756878951</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1628756878951</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Remove clones">
-      <created>1628757227526</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1628757227527</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Remove clones">
-      <created>1628759067458</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1628759067458</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Add sprites that might be used in the future for the pause menu">
-      <created>1628759152275</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1628759152275</updated>
+      <workItem from="1631538131755" duration="52000" />
+      <workItem from="1631613816237" duration="3068000" />
+      <workItem from="1631691193629" duration="196000" />
+      <workItem from="1631695269971" duration="436000" />
+      <workItem from="1631700020382" duration="755000" />
     </task>
     <task id="LOCAL-00063" summary="Start of Differing GameModes">
       <created>1628790825521</created>
@@ -888,7 +809,56 @@
       <option name="project" value="LOCAL" />
       <updated>1631290437145</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="rework win sys">
+      <created>1631538175410</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1631538175410</updated>
+    </task>
+    <task id="LOCAL-00106" summary="add audio conf option">
+      <created>1631614216894</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1631614216894</updated>
+    </task>
+    <task id="LOCAL-00107" summary="fiddle with fog_of_war.rs">
+      <created>1631620746326</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1631620746326</updated>
+    </task>
+    <task id="LOCAL-00108" summary="add config option for volume">
+      <created>1631621207584</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621207584</updated>
+    </task>
+    <task id="LOCAL-00109" summary="rework win system to allow for sfx on merge">
+      <created>1631621220825</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621220825</updated>
+    </task>
+    <task id="LOCAL-00110" summary="clippy + fmt">
+      <created>1631621283188</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621283188</updated>
+    </task>
+    <task id="LOCAL-00111" summary="add new mode - frenzy">
+      <created>1631621654784</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1631621654784</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -923,9 +893,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="general clippy fixes + new-startup state is help" />
-    <MESSAGE value="start of ui input class" />
-    <MESSAGE value="zoom into losing area on loss" />
     <MESSAGE value="fog of war" />
     <MESSAGE value="little qol changes" />
     <MESSAGE value="add collider-based shadows for lighting w/ a cache" />
@@ -943,13 +910,15 @@
     <MESSAGE value="start to add rayon stuff" />
     <MESSAGE value="finish parallel lighting" />
     <MESSAGE value="walls in proc gen are done" />
-    <MESSAGE value="after proc-gen plus val tweaking" />
-    <MESSAGE value="procgen concurrency" />
-    <MESSAGE value="finish procgen - add players" />
-    <MESSAGE value="clippy" />
-    <MESSAGE value="fix oob error" />
     <MESSAGE value="more procgen" />
-    <option name="LAST_COMMIT_MESSAGE" value="more procgen" />
+    <MESSAGE value="rework win sys" />
+    <MESSAGE value="add audio conf option" />
+    <MESSAGE value="fiddle with fog_of_war.rs" />
+    <MESSAGE value="add config option for volume" />
+    <MESSAGE value="rework win system to allow for sfx on merge" />
+    <MESSAGE value="clippy + fmt" />
+    <MESSAGE value="add new mode - frenzy" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new mode - frenzy" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

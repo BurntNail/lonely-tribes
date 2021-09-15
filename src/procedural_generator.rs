@@ -4,7 +4,6 @@ use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg64;
 use rayon::{iter::ParallelIterator, prelude::IntoParallelIterator};
 use std::collections::HashMap;
-use std::sync::mpsc::channel;
 
 pub const PERLIN_SCALE: f64 = 5.0;
 
@@ -83,14 +82,19 @@ impl ProceduralGenerator {
         map
     }
 
-    fn get_blocked_bits (map: &MapSlice) -> Vec<(usize, usize)> {
-        map
-            .to_owned()
+    fn generate_plants(seed: u32, map: &mut Map) {
+        let blocked_bits: Vec<(usize, usize)> = map
+            .clone()
             .into_par_iter()
             .filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door)
             .map(|(x, y, _)| (x, y))
-            .collect()
-    }
+            .collect();
+        let plant_places: Vec<(usize, usize)> = map
+            .clone()
+            .into_par_iter()
+            .filter(|(_, _, spr)| spr == &SpriteRequest::Door)
+            .map(|(x, y, _)| (x, y))
+            .collect();
 
     fn add_players (seed: u32, map: &mut Map) {
         let mut rng = Pcg64::seed_from_u64(seed as u64);
@@ -155,52 +159,43 @@ impl ProceduralGenerator {
                             None
                         };
 
-                        if no_1 > SHRUBBERY_THRESHOLD || no_2 > SHRUBBERY_THRESHOLD || no_3.is_some() {
-                            let can_override = p3.get(p_val) > OVERRIDE_WALL_THRESHOLD;
-
-                            let changer =
-                                |shrubbery: SpriteRequest, tree_spr: SpriteRequest, v: f64, must: bool| {
-                                    let blocked = blocked_bits.contains(&(x, y));
-                                    if blocked && can_override {
-                                        s.send((x, y, tree_spr)).unwrap_or_else(|err| log::warn!("Error with Multithreading for Proc Gen - in changer: {}", err));
-                                    } else if !blocked {
-                                        if v > TREE_THRESHOLD {
-                                            s.send((x, y, tree_spr)).unwrap_or_else(|err| log::warn!("Error with Multithreading for Proc Gen - in changer: {}", err));
-                                        } else if v > SHRUBBERY_THRESHOLD || must {
-                                            s.send((x, y, shrubbery)).unwrap_or_else(|err| log::warn!("Error with Multithreading for Proc Gen - in changer: {}", err));
-                                        }
-                                    }
-                                };
-
-                            if let Some(t) = no_3 {
-                                if t == 0 {
-                                    changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, no_1, true);
-                                } else {
-                                    changer(
-                                        SpriteRequest::DarkShrubbery,
-                                        SpriteRequest::WarpedTree,
-                                        no_2,
-                                        true,
-                                    );
-                                }
-                            } else if no_1 > 0.0 {
-                                changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, no_1, false);
-                            } else if no_2 > 0.0 {
-                                changer(
-                                    SpriteRequest::DarkShrubbery,
-                                    SpriteRequest::WarpedTree,
-                                    no_2,
-                                    false,
-                                );
-                            }
+                    let mut changer = |shrubbery: SpriteRequest,
+                                       tree_spr: SpriteRequest,
+                                       v: f64| {
+                        if (blocked_bits.contains(&(x, y)) && can_override) || v > TREE_THRESHOLD {
+                            map.push((x, y, tree_spr));
+                        } else if v > SHRUBBERY_THRESHOLD {
+                            map.push((x, y, shrubbery));
                         }
                     });
 
-                receiver.iter().for_each(|el| s.send(el).unwrap_or_else(|err| log::warn!("Error with Proc Gen Multithreading - {}", err)));
-            });
-
-        for item in receiver.iter() {
-            map.push(item);
+                    if let Some((t, val)) = no_3 {
+                        if t == 0 {
+                            changer(
+                                SpriteRequest::Shrubbery,
+                                SpriteRequest::Tree,
+                                val.abs() * DOOR_REPLACER_MODIFIER,
+                            );
+                        } else {
+                            changer(
+                                SpriteRequest::DarkShrubbery,
+                                SpriteRequest::WarpedTree,
+                                val.abs() * DOOR_REPLACER_MODIFIER,
+                            );
+                        }
+                    }
+                    if no_1 > 0.0 {
+                        changer(SpriteRequest::Shrubbery, SpriteRequest::Tree, no_1);
+                    }
+                    if no_2 > 0.0 {
+                        changer(
+                            SpriteRequest::DarkShrubbery,
+                            SpriteRequest::WarpedTree,
+                            no_2,
+                        );
+                    }
+                }
+            }
         }
     }
 
@@ -208,6 +203,7 @@ impl ProceduralGenerator {
         let mut rng = Pcg64::seed_from_u64(seed as u64);
         let walls: [[Option<WallType>; HEIGHT as usize]; WIDTH as usize] =
             Self::generate_walls(&mut rng);
+        println!("{:?}", walls);
 
         let get_bits = |x: usize, y: usize| {
             let thing_works = |xo: i32, yo: i32| {
@@ -235,8 +231,13 @@ impl ProceduralGenerator {
         let mut map = Vec::new();
 
         for (x, col) in walls.iter().enumerate().take(WIDTH as usize) {
-            for (y, el) in col.iter().enumerate().take(HEIGHT as usize) {
-                if el.is_some() {
+            for (y, cell) in col
+                .iter()
+                .enumerate()
+                .take(HEIGHT as usize)
+                .map(|(y, cell)| (y, cell.is_some()))
+            {
+                if cell {
                     let bits = get_bits(x, y);
 
                     let spr = *BITS_TO_SPRS.get(&bits).unwrap_or(&SpriteRequest::Door);
@@ -268,6 +269,7 @@ impl ProceduralGenerator {
                 (x_pos, y_pos).into(),
                 (x_pos + width, y_pos + height).into(),
             );
+            log::info!("Making {:?}", tup);
             tup
         };
 
@@ -279,9 +281,13 @@ impl ProceduralGenerator {
         let mut map = [[None; HEIGHT as usize]; WIDTH as usize];
 
         for (top_left, btm_right) in rooms {
-            for map in map.iter_mut().take((btm_right.x as usize) + 1).skip(top_left.x as usize) {
-                map[top_left.y as usize] = Some(WallType::Back);
-                map[btm_right.y as usize] = Some(WallType::Front);
+            for col in map
+                .iter_mut()
+                .take((btm_right.x as usize) + 1)
+                .skip(top_left.x as usize)
+            {
+                col[top_left.y as usize] = Some(WallType::Back);
+                col[btm_right.y as usize] = Some(WallType::Front);
             }
 
             for y in (top_left.y as usize)..=(btm_right.y as usize) {

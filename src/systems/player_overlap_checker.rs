@@ -1,13 +1,21 @@
-use amethyst::core::ecs::{System, Entity, WriteStorage, ReadStorage, Join, Entities, Write};
-use crate::components::player::Player;
-use crate::components::tile_transform::TileTransform;
+use crate::components::{
+    player::Player,
+    tile_transform::TileTransform,
+    win_state::{GameState, GameStateEnum},
+};
+use amethyst::core::ecs::{Entities, Entity, Join, ReadStorage, System, Write, WriteStorage};
 use std::collections::HashMap;
-use crate::components::win_state::{GameState, GameStateEnum};
 
 pub struct PlayerOverlapChecker;
 
-impl <'s> System<'s> for PlayerOverlapChecker {
-    type SystemData = (WriteStorage<'s, Player>, ReadStorage<'s, TileTransform>, Entities<'s>, Write<'s, DeleteList>, Write<'s, GameState>);
+impl<'s> System<'s> for PlayerOverlapChecker {
+    type SystemData = (
+        WriteStorage<'s, Player>,
+        ReadStorage<'s, TileTransform>,
+        Entities<'s>,
+        Write<'s, DeleteList>,
+        Write<'s, GameState>,
+    );
 
     fn run(&mut self, (mut players, tiles, entities, mut delete_list, mut gs): Self::SystemData) {
         let mut map: HashMap<TileTransform, Player> = HashMap::new();
@@ -18,7 +26,9 @@ impl <'s> System<'s> for PlayerOverlapChecker {
                     current.no_players += 1;
                     delete_list.0.push(e);
                 } else {
-                    gs.ws = GameStateEnum::End {lost_position: Some(*t)};
+                    gs.ws = GameStateEnum::End {
+                        lost_position: Some(*t),
+                    };
                 }
                 current
             } else {
@@ -33,10 +43,12 @@ impl <'s> System<'s> for PlayerOverlapChecker {
         }
 
         if map.len() == id_list.len() {
-            gs.ws = GameStateEnum::End {lost_position: None};
+            gs.ws = GameStateEnum::End {
+                lost_position: None,
+            };
         }
     }
 }
 
 #[derive(Default)]
-pub struct DeleteList (pub Vec<Entity>);
+pub struct DeleteList(pub Vec<Entity>);

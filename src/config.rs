@@ -42,19 +42,19 @@ pub struct LTConfig {
 struct ReadInConfig {
     pub screen_dimensions: Option<(u32, u32)>,
     pub maximised: bool,
-    pub vol: f32
+    pub vol: f32,
 }
 pub struct ParsedConfig {
     pub screen_dimensions: (u32, u32),
     pub maximised: bool,
-    pub vol: f32
+    pub vol: f32,
 }
 impl Default for ParsedConfig {
     fn default() -> Self {
         ParsedConfig {
             screen_dimensions: (1600, 900),
             maximised: false,
-            vol: 1.0
+            vol: 1.0,
         }
     }
 }
@@ -69,7 +69,7 @@ impl ParsedConfig {
                 Self {
                     screen_dimensions: sd,
                     maximised: w.maximised,
-                    vol: w.vol
+                    vol: w.vol,
                 }
             }
             Err(e) => {

@@ -20,7 +20,7 @@ use crate::{
         states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
-    systems::update_tile_transforms::UpdateTileTransforms,
+    systems::{player_overlap_checker::DeleteList, update_tile_transforms::UpdateTileTransforms},
     tag::{Tag, TriggerType},
     Either, ARENA_HEIGHT, ARENA_WIDTH,
 };
@@ -35,7 +35,6 @@ use amethyst::{
 };
 use rand::Rng;
 use std::collections::HashMap;
-use crate::systems::player_overlap_checker::DeleteList;
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
@@ -199,6 +198,7 @@ impl SimpleState for PuzzleState {
                 T => self.set_gameplay_mode(GamePlayingMode::TradeOff, world),
                 C => self.set_gameplay_mode(GamePlayingMode::Crazy, world),
                 K => self.set_gameplay_mode(GamePlayingMode::AllTheColliders, world),
+                F => self.set_gameplay_mode(GamePlayingMode::Frenzy, world),
                 B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
@@ -231,10 +231,11 @@ impl SimpleState for PuzzleState {
             };
 
             for e in list {
-                data.world.delete_entity(e).unwrap_or_else(|err| log::warn!("Error deleting entity in deleting list: {}", err));
+                data.world.delete_entity(e).unwrap_or_else(|err| {
+                    log::warn!("Error deleting entity in deleting list: {}", err)
+                });
             }
         }
-
 
         if data.world.read_resource::<GameModeManager>().current_mode == GamePlayingMode::Boring {
             self.reset_fx_entities(data.world);
@@ -404,7 +405,7 @@ fn add_score(world: &mut World) -> Entity {
         sf * -575.0,
         sf * 400.0,
         0.5,
-        sf * 400.0,
+        sf * 600.0,
         sf * 1000.0,
     );
     let txt = UiText::new(
