@@ -3,9 +3,7 @@ use noise::{Fbm, NoiseFn, Seedable};
 use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg64;
 use rayon::{iter::ParallelIterator, prelude::IntoParallelIterator};
-use std::collections::HashMap;
-use std::sync::mpsc::channel;
-use std::time::SystemTime;
+use std::{collections::HashMap, sync::mpsc::channel};
 
 pub const PERLIN_SCALE: f64 = 5.0;
 
@@ -64,6 +62,7 @@ pub struct ProceduralGenerator {
 }
 
 type Map = Vec<(usize, usize, SpriteRequest)>;
+type MapSlice = [(usize, usize, SpriteRequest)];
 
 pub const TREE_THRESHOLD: f64 = 0.5;
 pub const SHRUBBERY_THRESHOLD: f64 = 0.3;
@@ -76,22 +75,51 @@ impl ProceduralGenerator {
 
     pub fn get(&self) -> Map {
         let mut map = Self::generate_walls_sprs(self.seed as u64);
-        Self::generate_plants(self.seed, &mut map);
+        Self::add_plants(self.seed, &mut map);
+        Self::add_players(self.seed, &mut map);
 
-        map.push((0, 0, SpriteRequest::Player(0)));
-        map.push((10, 10, SpriteRequest::Player(0)));
         map
     }
 
-    fn generate_plants(seed: u32, map: &mut Map) {
-        let t = SystemTime::now();
-
-        let blocked_bits: Vec<(usize, usize)> = map
-            .clone()
+    fn find_blocked_bits(map: &MapSlice) -> Vec<(usize, usize)> {
+        map.to_owned()
             .into_par_iter()
             .filter(|(_, _, spr)| spr != &SpriteRequest::Blank && spr != &SpriteRequest::Door)
             .map(|(x, y, _)| (x, y))
-            .collect();
+            .collect()
+    }
+
+    fn add_players(seed: u32, map: &mut Map) {
+        let mut rng = Pcg64::seed_from_u64(seed as u64);
+        let blocked_bits = Self::find_blocked_bits(map);
+
+        let no_players = (0..rng.gen_range(1..=4))
+            .into_iter()
+            .map(|id| {
+                let offset = 3 - id;
+                rng.gen_range(2 * offset..5 * offset)
+            }).collect::<Vec<i32>>().into_iter().enumerate();
+
+        let mut players = Vec::new();
+        for (id, no) in no_players {
+            for _ in 0..no {
+                loop {
+                    let x = rng.gen_range(0..WIDTH as usize);
+                    let y = rng.gen_range(0..HEIGHT as usize);
+                    if !blocked_bits.contains(&(x, y)) && !players.contains(&(x, y)) {
+                        players.push((x, y));
+                        map.push((x, y, SpriteRequest::Player(id)));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    fn add_plants(seed: u32, map: &mut Map) {
+        // let t = SystemTime::now();
+
+        let blocked_bits = Self::find_blocked_bits(map);
         let plant_places: Vec<(usize, usize)> = map
             .clone()
             .into_par_iter()
@@ -175,8 +203,6 @@ impl ProceduralGenerator {
         for item in receiver.iter() {
             map.push(item);
         }
-
-        log::info!("Conc procgen took {:?}", t.elapsed());
     }
 
     fn generate_walls_sprs(seed: u64) -> Map {
@@ -209,9 +235,9 @@ impl ProceduralGenerator {
 
         let mut map = Vec::new();
 
-        for x in 0..WIDTH as usize {
-            for y in 0..HEIGHT as usize {
-                if walls[x][y].is_some() {
+        for (x, col) in walls.iter().enumerate().take(WIDTH as usize) {
+            for (y, is_some) in col.iter().enumerate().take(HEIGHT as usize).map(|(y, pos)| (y, pos.is_some())) {
+                if is_some {
                     let bits = get_bits(x, y);
 
                     let spr = *BITS_TO_SPRS.get(&bits).unwrap_or(&SpriteRequest::Door);

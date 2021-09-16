@@ -8,7 +8,7 @@ use crate::{
     level::{Room, SpriteRequest, LIST_OF_ALL_SPRITEREQUESTS, REVERSED_SPRITESHEET_SWATCH_HASHMAP},
     level_editor::editor_select_state::LevelEditorLevelSelectState,
     states::{
-        game_state::get_levels,
+        game_state::{get_levels, LEVELS},
         states_util::{init_camera, load_sprite_sheet},
     },
     systems::move_player::PLAYER_MOVEMENT_ANIM_LEN,
@@ -44,7 +44,7 @@ impl LevelEditorState {
         let level_editing;
         if let Some(index) = index {
             level_editing = *index;
-            if let Some(lvl) = get_levels().get(*index) {
+            if let Some(lvl) = LEVELS.get(*index) {
                 data = Room::new(lvl.as_str());
             }
         } else {

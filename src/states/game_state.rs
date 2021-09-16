@@ -39,14 +39,23 @@ use std::collections::HashMap;
 lazy_static! {
     ///List of strings holding the file paths to all levels
     pub static ref LEVELS: Vec<String> = {
-        get_levels()
+        get_levels().into_iter().map(|(_, s)| s).collect()
     };
 }
-pub fn get_levels() -> Vec<String> {
-    let mut out: Vec<String> = list_file_names_in_dir("assets/maps")
+pub fn get_levels() -> Vec<(bool, String)> {
+    let mut out: Vec<(bool, String)> = list_file_names_in_dir("assets/maps")
         .into_iter()
-        .filter(|nom| nom.contains("lvl-") && nom.contains(".png"))
-        .map(|el| el.replace("\"", ""))
+        .filter_map(|nom| {
+            let is_normal =  nom.contains("lvl-") && nom.contains(".png");
+            let is_pg = nom.contains("pg-") && nom.contains(".txt");
+            let name = nom.replace("\"", "");
+
+            if is_normal || is_pg {
+                Some((is_normal, name))
+            } else {
+                None
+            }
+        })
         .collect();
     out.sort();
     out
@@ -200,6 +209,7 @@ impl SimpleState for PuzzleState {
                 K => self.set_gameplay_mode(GamePlayingMode::AllTheColliders, world),
                 F => self.set_gameplay_mode(GamePlayingMode::Frenzy, world),
                 B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
+                Key0 | Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 => self.save_pg_level(key_code),
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -310,6 +320,23 @@ impl SimpleState for PuzzleState {
 }
 
 impl PuzzleState {
+    fn save_pg_level (&mut self, slot: VirtualKeyCode) {
+        use VirtualKeyCode::*;
+        let index: usize = match slot {
+            Key1 => 1,
+            Key2 => 2,
+            Key3 => 3,
+            Key4 => 4,
+            Key5 => 5,
+            Key6 => 6,
+            Key7 => 7,
+            Key8 => 8,
+            Key9 => 9,
+            _ => 0,
+        };
+
+    }
+
     fn set_gameplay_mode(&mut self, new_mode: GamePlayingMode, world: &mut World) {
         let can_change = {
             let mut current_mode = world.write_resource::<GameModeManager>();
