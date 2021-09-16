@@ -10,9 +10,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add new mode - frenzy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/art/left_right.ron" beforeDir="false" afterPath="$PROJECT_DIR$/assets/art/left_right.ron" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/update_score.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/art" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/maps" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -74,11 +73,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\maps" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes" />
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
       <recent name="$PROJECT_DIR$/assets/art" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\src" />
@@ -102,7 +101,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -361,8 +360,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
       </list>
     </recent_temporary>
   </component>
@@ -514,6 +513,12 @@
       <workItem from="1631691193629" duration="196000" />
       <workItem from="1631695269971" duration="436000" />
       <workItem from="1631700020382" duration="755000" />
+      <workItem from="1631776916777" duration="725000" />
+      <workItem from="1631786341078" duration="738000" />
+      <workItem from="1631787107186" duration="25000" />
+      <workItem from="1631792323969" duration="1191000" />
+      <workItem from="1631796560668" duration="733000" />
+      <workItem from="1631807520592" duration="1599000" />
     </task>
     <task id="LOCAL-00063" summary="Start of Differing GameModes">
       <created>1628790825521</created>
