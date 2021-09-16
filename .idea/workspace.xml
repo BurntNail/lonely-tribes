@@ -8,11 +8,9 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="add new mode - frenzy">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix player overlap checker to actually remove the players, and to change the light rad">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -505,14 +503,7 @@
       <workItem from="1631796560668" duration="733000" />
       <workItem from="1631807520592" duration="1599000" />
       <workItem from="1631811700221" duration="115000" />
-      <workItem from="1631811897612" duration="735000" />
-    </task>
-    <task id="LOCAL-00063" summary="Start of Differing GameModes">
-      <created>1628790825521</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1628790825521</updated>
+      <workItem from="1631811897612" duration="828000" />
     </task>
     <task id="LOCAL-00064" summary="Start of timed movement.">
       <created>1628873732321</created>
@@ -850,7 +841,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631621654784</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="fix player overlap checker to actually remove the players, and to change the light rad">
+      <created>1631812669021</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1631812669021</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -885,7 +883,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fog of war" />
     <MESSAGE value="little qol changes" />
     <MESSAGE value="add collider-based shadows for lighting w/ a cache" />
     <MESSAGE value="add config/screen scaling/logo" />
@@ -910,7 +907,8 @@
     <MESSAGE value="rework win system to allow for sfx on merge" />
     <MESSAGE value="clippy + fmt" />
     <MESSAGE value="add new mode - frenzy" />
-    <option name="LAST_COMMIT_MESSAGE" value="add new mode - frenzy" />
+    <MESSAGE value="fix player overlap checker to actually remove the players, and to change the light rad" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix player overlap checker to actually remove the players, and to change the light rad" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
