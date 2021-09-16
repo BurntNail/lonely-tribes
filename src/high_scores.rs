@@ -1,11 +1,10 @@
 use crate::{
     config::LTConfig,
-    states::game_state::{get_levels},
+    states::game_state::{get_levels, get_levels_str},
 };
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
 use std::fs::{create_dir, read_to_string, write};
-use crate::states::game_state::get_levels_str;
 
 ///The path to the high scores
 const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";
@@ -25,7 +24,7 @@ impl Default for HighScores {
                 get_levels()
                     .into_iter()
                     .filter(|(_, is_normal)| *is_normal)
-                    .count()
+                    .count(),
             ),
         }
     }

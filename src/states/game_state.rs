@@ -26,7 +26,12 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::{ecs::Entity, math::Vector3, transform::Transform, Hidden, Time},
+    core::{
+        ecs::Entity,
+        math::{Vector3, VectorN, U3},
+        transform::Transform,
+        Hidden, Time,
+    },
     input::{InputEvent, VirtualKeyCode},
     prelude::*,
     renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet},
@@ -35,7 +40,6 @@ use amethyst::{
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::File, io::Write};
-use amethyst::core::math::{VectorN, U3};
 
 pub fn get_levels() -> Vec<(String, bool)> {
     let mut out: Vec<(String, bool)> = list_file_names_in_dir("assets/maps")
@@ -122,7 +126,10 @@ impl SimpleState for PuzzleState {
 
         let room = match self.level_index {
             Either::One(index) => {
-                let lvl = get_levels_str().get(index).unwrap_or(&level_default).to_string();
+                let lvl = get_levels_str()
+                    .get(index)
+                    .unwrap_or(&level_default)
+                    .to_string();
                 Room::new(lvl)
             }
             Either::Two(seed) => Room::proc_gen(seed),

@@ -46,7 +46,6 @@ mod config;
 mod file_utils;
 mod high_scores;
 mod level;
-mod level_editor;
 mod procedural_generator;
 mod states;
 mod systems;

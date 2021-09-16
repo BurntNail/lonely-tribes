@@ -1,7 +1,6 @@
 use crate::{
     audio::init_audio,
     components::text_wobble::TextWobble,
-    level_editor::editor_select_state::LevelEditorLevelSelectState,
     states::{
         help_state::HelpState,
         level_select::LevelSelectState,
@@ -23,8 +22,6 @@ pub struct StartGameState {
     start_btn: Option<Entity>,
     ///Stores the Entity for the Help Button as an option for easier initialisation
     help_btn: Option<Entity>,
-    ///Stores the Entity for the Level Editor Button as an option for easier initialisation
-    level_btn: Option<Entity>,
     ///Stores the Entity for the Quit as an option for easier initialisation
     quit_btn: Option<Entity>,
 }
@@ -39,10 +36,9 @@ impl SimpleState for StartGameState {
 
         init_audio(world);
 
-        let (s, h, l, q) = init_menu(world);
+        let (s, h, q) = init_menu(world);
         self.start_btn = Some(s);
         self.help_btn = Some(h);
-        self.level_btn = Some(l);
         self.quit_btn = Some(q);
     }
 
@@ -57,42 +53,35 @@ impl SimpleState for StartGameState {
             StateEvent::Ui(ui_event) => {
                 if let Some(start_btn) = self.start_btn {
                     if let Some(help_btn) = self.help_btn {
-                        if let Some(lvl_btn) = self.level_btn {
-                            if let Some(quit_btn) = self.quit_btn {
-                                let is_start = ui_event.target == start_btn;
-                                let is_help = ui_event.target == help_btn;
-                                let is_level = ui_event.target == lvl_btn;
-                                let is_quit = ui_event.target == quit_btn;
+                        if let Some(quit_btn) = self.quit_btn {
+                            let is_start = ui_event.target == start_btn;
+                            let is_help = ui_event.target == help_btn;
+                            let is_quit = ui_event.target == quit_btn;
 
-                                if is_start || is_help || is_level || is_quit {
-                                    let mut texts = data.world.write_storage::<UiText>();
-                                    let txt = texts.get_mut(ui_event.target);
+                            if is_start || is_help || is_quit {
+                                let mut texts = data.world.write_storage::<UiText>();
+                                let txt = texts.get_mut(ui_event.target);
 
-                                    if let Some(txt) = txt {
-                                        match ui_event.event_type {
-                                            UiEventType::ClickStop => {
-                                                txt.color = [1.0, 1.0, 1.0, 0.5];
-                                                if is_start {
-                                                    t = SimpleTrans::Switch(Box::new(
-                                                        LevelSelectState::default(),
-                                                    ));
-                                                } else if is_help {
-                                                    t = SimpleTrans::Switch(Box::new(
-                                                        HelpState::default(),
-                                                    ));
-                                                } else if is_level {
-                                                    t = SimpleTrans::Switch(Box::new(
-                                                        LevelEditorLevelSelectState::default(),
-                                                    ));
-                                                } else if is_quit {
-                                                    std::process::exit(0);
-                                                }
+                                if let Some(txt) = txt {
+                                    match ui_event.event_type {
+                                        UiEventType::ClickStop => {
+                                            txt.color = [1.0, 1.0, 1.0, 0.5];
+                                            if is_start {
+                                                t = SimpleTrans::Switch(Box::new(
+                                                    LevelSelectState::default(),
+                                                ));
+                                            } else if is_help {
+                                                t = SimpleTrans::Switch(Box::new(
+                                                    HelpState::default(),
+                                                ));
+                                            }else if is_quit {
+                                                std::process::exit(0);
                                             }
-                                            UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                                            UiEventType::HoverStop => txt.color = [1.0; 4],
-                                            _ => {}
-                                        };
-                                    }
+                                        }
+                                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
+                                        UiEventType::HoverStop => txt.color = [1.0; 4],
+                                        _ => {}
+                                    };
                                 }
                             }
                         }
@@ -114,7 +103,7 @@ impl SimpleState for StartGameState {
 ///Function to initialise Start Screen Main Menu
 ///
 /// Returns an Entity with the Start Button, one with the Help Button, one with the Level Editor button, and one with the Quit button
-fn init_menu(world: &mut World) -> (Entity, Entity, Entity, Entity) {
+fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
     let sf = get_scaling_factor();
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
     let font_handle = load_font(world, "ZxSpectrum");
@@ -201,34 +190,6 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity, Entity) {
         .build();
     //endregion
 
-    //region level editor
-    let editor_btn_trans = UiTransform::new(
-        String::from("level_btn"),
-        Anchor::Middle,
-        Anchor::Middle,
-        0.0,
-        sf * -205.0,
-        0.0,
-        sf * 1500.0,
-        sf * 40.0,
-    );
-    let editor_btn_txt = UiText::new(
-        font_handle.clone(),
-        String::from("Click here to open the Level Editor."),
-        [1.0; 4],
-        sf * 50.0,
-        LineMode::Single,
-        Anchor::Middle,
-    );
-    let editor = world
-        .create_entity()
-        .with(editor_btn_trans)
-        .with(editor_btn_txt)
-        .with(TextWobble::new(sf * 10.0, sf * -205.0, 2.5))
-        .with(Interactable)
-        .build();
-    //endregion
-
     //region quit
     let quit_btn_trans = UiTransform::new(
         String::from("quit_btn"),
@@ -257,5 +218,5 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity, Entity) {
         .build();
     //endregion
 
-    (start, help, editor, quit)
+    (start, help, quit)
 }

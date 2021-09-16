@@ -8,9 +8,17 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="almost fixed saving pgs">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix it">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/editor_select_state.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level_editor/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/welcome_state.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,8 +351,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
@@ -504,14 +512,7 @@
       <workItem from="1631807520592" duration="1599000" />
       <workItem from="1631811700221" duration="115000" />
       <workItem from="1631811897612" duration="928000" />
-      <workItem from="1631816544931" duration="4804000" />
-    </task>
-    <task id="LOCAL-00069" summary="Add options for Animator for different interpolation types">
-      <created>1629697356480</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1629697356480</updated>
+      <workItem from="1631816544931" duration="4951000" />
     </task>
     <task id="LOCAL-00070" summary="Remove powerups system - it just doesn't feel good now that I have the movement types system">
       <created>1629698191197</created>
@@ -849,7 +850,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631823849868</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="fix it">
+      <created>1631824105088</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1631824105088</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -884,7 +892,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="i didn't like the sounds, and most were corrupted" />
     <MESSAGE value="fix animator to be more generic&#10;add animations to tinting" />
     <MESSAGE value="add clearer SPECIAL score&#10;fix intervals for held movement" />
     <MESSAGE value="change hard-coded 8.0s" />
@@ -909,7 +916,8 @@
     <MESSAGE value="prepare for procgen saved levels" />
     <MESSAGE value="almost ready for saving procgens" />
     <MESSAGE value="almost fixed saving pgs" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost fixed saving pgs" />
+    <MESSAGE value="fix it" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix it" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

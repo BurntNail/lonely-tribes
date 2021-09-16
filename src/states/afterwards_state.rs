@@ -3,7 +3,7 @@ use crate::{
     config::LTConfig,
     high_scores::HighScores,
     states::{
-        game_state::{PuzzleState},
+        game_state::{get_levels_str, PuzzleState},
         level_select::LevelSelectState,
         states_util::{get_scaling_factor, load_font},
     },
@@ -16,7 +16,6 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
-use crate::states::game_state::get_levels_str;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
