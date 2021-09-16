@@ -34,24 +34,27 @@ use amethyst::{
     winit::{Event, WindowEvent},
 };
 use rand::Rng;
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::File, io::Write};
+use amethyst::core::math::{VectorN, U3};
 
 lazy_static! {
     ///List of strings holding the file paths to all levels
     pub static ref LEVELS: Vec<String> = {
-        get_levels().into_iter().map(|(_, s)| s).collect()
+        let l = get_levels().into_iter().map(|(s, _)| s).collect();
+        log::info!("levels are {:?}", l);
+        l
     };
 }
-pub fn get_levels() -> Vec<(bool, String)> {
-    let mut out: Vec<(bool, String)> = list_file_names_in_dir("assets/maps")
+pub fn get_levels() -> Vec<(String, bool)> {
+    let mut out: Vec<(String, bool)> = list_file_names_in_dir("assets/maps")
         .into_iter()
         .filter_map(|nom| {
-            let is_normal =  nom.contains("lvl-") && nom.contains(".png");
+            let is_normal = nom.contains("lvl-") && nom.contains(".png");
             let is_pg = nom.contains("pg-") && nom.contains(".txt");
             let name = nom.replace("\"", "");
 
             if is_normal || is_pg {
-                Some((is_normal, name))
+                Some((name, is_normal))
             } else {
                 None
             }
@@ -209,7 +212,11 @@ impl SimpleState for PuzzleState {
                 K => self.set_gameplay_mode(GamePlayingMode::AllTheColliders, world),
                 F => self.set_gameplay_mode(GamePlayingMode::Frenzy, world),
                 B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
-                Key0 | Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 => self.save_pg_level(key_code),
+                Key0 | Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 => {
+                    if self.level_index.is_two() {
+                        self.save_pg_level(key_code);
+                    }
+                }
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(*v)));
@@ -306,7 +313,7 @@ impl SimpleState for PuzzleState {
                         + 1.0;
 
                     if let Some(trans) = data.world.write_storage::<Transform>().get_mut(ent) {
-                        let scale = Vector3::from([scale_val; 3]);
+                        let scale: VectorN<f32, U3> = Vector3::from([scale_val; 3]);
                         trans.set_scale(scale);
                     }
 
@@ -320,7 +327,7 @@ impl SimpleState for PuzzleState {
 }
 
 impl PuzzleState {
-    fn save_pg_level (&mut self, slot: VirtualKeyCode) {
+    fn save_pg_level(&self, slot: VirtualKeyCode) {
         use VirtualKeyCode::*;
         let index: usize = match slot {
             Key1 => 1,
@@ -334,7 +341,18 @@ impl PuzzleState {
             Key9 => 9,
             _ => 0,
         };
+        log::info!("Saving current level to Slot {}", index);
+        let current_index = if let Either::Two(i) = self.level_index {
+            i
+        } else {
+            0
+        };
 
+        if let Ok(mut output) = File::create(format!("assets/maps/pg-{}.txt", index)) {
+            write!(output, "{}", current_index)
+                .unwrap_or_else(|err| log::error!("Error writing to pg-{}.txt - {}", index, err));
+            // output.write_u32(current_index).unwrap_or_else(|err| log::error!("Error writing to pg-{}.txt - {}", index, err));
+        }
     }
 
     fn set_gameplay_mode(&mut self, new_mode: GamePlayingMode, world: &mut World) {

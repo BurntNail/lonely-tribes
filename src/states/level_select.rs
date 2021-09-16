@@ -1,7 +1,7 @@
 use crate::{
     high_scores::HighScores,
     states::{
-        game_state::{PuzzleState, LEVELS},
+        game_state::{get_levels, PuzzleState, LEVELS},
         states_util::{get_scaling_factor, load_font, load_sprite_sheet},
         welcome_state::StartGameState,
     },
@@ -15,7 +15,7 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use rand::Rng;
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::read_to_string};
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -73,7 +73,12 @@ impl SimpleState for LevelSelectState {
 
                     self.buttons.iter().for_each(|(entity, i)| {
                         if entity == &event.target {
-                            index = Some(Either::One(*i));
+                            let ind = *i;
+                            if ind > 1000 {
+                                index = Some(Either::Two((ind - 1000) as u32))
+                            } else {
+                                index = Some(Either::One(ind));
+                            }
                         }
                     });
                     if let Some(proc_gen) = self.proc_gen {
@@ -175,8 +180,7 @@ fn create_lvl_select_btns(
     };
     let get_height = |index: usize| {
         let pos = level_txt_height as f32 * (LEVELS.len() - index) as f32;
-        // log::info!("Index is {}, pos = {}", index, pos);
-        pos - (sf * 450.0)
+        pos - (sf * 450.0) - (sf * 100.0)
     };
 
     let main_trans = UiTransform::new(
@@ -204,7 +208,7 @@ fn create_lvl_select_btns(
         .build();
 
     let next_level = high_scores.find_next_level();
-    for (i, level) in LEVELS
+    for (i, (level, isnt_procgen)) in get_levels()
         .iter()
         .skip(current_screen * (MAX_LEVELS_ONE_SCREEN - 1) as usize)
         .take(5)
@@ -212,22 +216,49 @@ fn create_lvl_select_btns(
     {
         let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
 
-        let high_score = high_scores.get_high_score(i_adj as usize);
-        #[allow(clippy::collapsible_else_if)]
-        let (text, colour, can_be_played) = if let Some(score) = high_score {
-            (
-                format!("Level number: {:02}, High Score of: {}", i_adj + 1, score),
-                [1.0; 4],
-                true,
-            )
-        } else {
-            if i == next_level {
-                (format!("Level number: {:02}", i_adj + 1), [1.0; 4], true)
+        let (text, colour, can_be_played, pg_ind) = {
+            if *isnt_procgen {
+                let high_score = high_scores.get_high_score(i_adj as usize);
+
+                #[allow(clippy::collapsible_else_if)]
+                if let Some(score) = high_score {
+                    (
+                        format!("Level number: {:02}, High Score of: {}", i_adj + 1, score),
+                        [1.0; 4],
+                        true,
+                        None,
+                    )
+                } else {
+                    if i == next_level {
+                        (
+                            format!("Level number: {:02}", i_adj + 1),
+                            [1.0; 4],
+                            true,
+                            None,
+                        )
+                    } else {
+                        (
+                            format!("Level number: {:02}", i_adj + 1),
+                            [1.0, 0.25, 0.25, 1.0],
+                            false,
+                            None,
+                        )
+                    }
+                }
             } else {
+                let index = read_to_string(format!("assets/maps/{}", level))
+                    .unwrap_or_default()
+                    .parse::<usize>()
+                    .unwrap_or_default();
+
                 (
-                    format!("Level number: {:02}", i_adj + 1),
-                    [1.0, 0.25, 0.25, 1.0],
-                    false,
+                    format!(
+                        "Procedurally Generated Level: {}",
+                        level.replace("pg-", "").replace(".txt", "")
+                    ),
+                    [1.0; 4],
+                    true,
+                    Some(index),
                 )
             }
         };
@@ -257,7 +288,14 @@ fn create_lvl_select_btns(
             entity = entity.with(Interactable);
         }
 
-        map.insert(entity.build(), i_adj as usize);
+        map.insert(
+            entity.build(),
+            if *isnt_procgen {
+                i_adj as usize
+            } else {
+                1000 + pg_ind.unwrap_or(0)
+            },
+        );
     }
 
     let proc_gen = {

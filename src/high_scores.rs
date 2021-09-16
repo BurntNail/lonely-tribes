@@ -20,7 +20,13 @@ pub struct HighScores {
 impl Default for HighScores {
     fn default() -> Self {
         Self {
-            scores: Vec::with_capacity(get_levels().len()),
+            scores: Vec::with_capacity(
+                get_levels()
+                    .into_iter()
+                    .filter(|(_, is_normal)| *is_normal)
+                    .collect::<Vec<(String, bool)>>()
+                    .len(),
+            ),
         }
     }
 }

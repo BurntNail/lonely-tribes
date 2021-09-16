@@ -8,11 +8,12 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="truly fix procgen with players&#10;+ clippy/fmt">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="prepare for procgen saved levels">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/level_editor/level_editor_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/high_scores.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/level_select.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/states_util.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/player_overlap_checker.rs" afterDir="false" />
     </list>
@@ -104,7 +105,7 @@
       <command value="cargo tree" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -347,8 +348,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
@@ -508,14 +509,7 @@
       <workItem from="1631807520592" duration="1599000" />
       <workItem from="1631811700221" duration="115000" />
       <workItem from="1631811897612" duration="928000" />
-      <workItem from="1631816544931" duration="981000" />
-    </task>
-    <task id="LOCAL-00066" summary="Timing how long the 'special' moves last, and tinting depending on how many left.">
-      <created>1628937371605</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1628937371606</updated>
+      <workItem from="1631816544931" duration="2932000" />
     </task>
     <task id="LOCAL-00067" summary="General bug fixes inc:&#10;&#10; - Changing add_to_new into impl Add for TileTransform&#10; - Strict float comparison errors&#10; - Using Results&#10; - Changing single-case-matches to if lets&#10; - Fixing Animations to actually move from start to end, rather than end to start">
       <created>1629696435468</created>
@@ -853,7 +847,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631812791819</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="prepare for procgen saved levels">
+      <created>1631817628421</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1631817628422</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -888,7 +889,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add config/screen scaling/logo" />
     <MESSAGE value="fix help text/prompts" />
     <MESSAGE value="add tint-overrides for gamemodes" />
     <MESSAGE value="i didn't like the sounds, and most were corrupted" />
@@ -913,7 +913,8 @@
     <MESSAGE value="fix player overlap checker to actually remove the players, and to change the light rad" />
     <MESSAGE value="fix procgen from old commit - is now concurrent" />
     <MESSAGE value="truly fix procgen with players&#10;+ clippy/fmt" />
-    <option name="LAST_COMMIT_MESSAGE" value="truly fix procgen with players&#10;+ clippy/fmt" />
+    <MESSAGE value="prepare for procgen saved levels" />
+    <option name="LAST_COMMIT_MESSAGE" value="prepare for procgen saved levels" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

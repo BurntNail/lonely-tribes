@@ -58,7 +58,6 @@ impl<'s> System<'s> for PlayerOverlapChecker {
         for (p, l) in (&players, &mut lights).join() {
             //TODO: farm out to different sys
             let r = ((p.no_players + 1) as f32 * 3.0) as u32; //TODO: work out better func for rad, maybe bands (eg. 1 = 3, 2-3 = 5, 3-5 = 6, 5-8 = 9)
-            log::info!("new rad is {} for {}", r, p.no_players + 1);
             l.radius = r;
         }
     }

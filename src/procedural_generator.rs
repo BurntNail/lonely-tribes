@@ -96,9 +96,12 @@ impl ProceduralGenerator {
         let no_players = (0..rng.gen_range(1..=4))
             .into_iter()
             .map(|id| {
-                let offset = 3 - id;
+                let offset = 4 - id;
                 rng.gen_range(2 * offset..5 * offset)
-            }).collect::<Vec<i32>>().into_iter().enumerate();
+            })
+            .collect::<Vec<i32>>()
+            .into_iter()
+            .enumerate();
 
         let mut players = Vec::new();
         for (id, no) in no_players {
@@ -236,7 +239,12 @@ impl ProceduralGenerator {
         let mut map = Vec::new();
 
         for (x, col) in walls.iter().enumerate().take(WIDTH as usize) {
-            for (y, is_some) in col.iter().enumerate().take(HEIGHT as usize).map(|(y, pos)| (y, pos.is_some())) {
+            for (y, is_some) in col
+                .iter()
+                .enumerate()
+                .take(HEIGHT as usize)
+                .map(|(y, pos)| (y, pos.is_some()))
+            {
                 if is_some {
                     let bits = get_bits(x, y);
 
