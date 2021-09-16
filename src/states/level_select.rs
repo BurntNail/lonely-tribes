@@ -180,7 +180,8 @@ fn create_lvl_select_btns(
         (tot_height - buffer_space) / MAX_LEVELS_ONE_SCREEN
     };
     let get_height = |index: usize| {
-        let pos = level_txt_height as f32 * (get_levels_str().len() - index) as f32;
+        let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - index) as f32;
+        // let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - (index % (MAX_LEVELS_ONE_SCREEN as usize - 1))) as f32;
         pos - (sf * 450.0)
     };
 
