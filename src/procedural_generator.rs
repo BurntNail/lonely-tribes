@@ -254,9 +254,13 @@ impl ProceduralGenerator {
         let mut map = [[None; HEIGHT as usize]; WIDTH as usize];
 
         for (top_left, btm_right) in rooms {
-            for x in (top_left.x as usize)..=(btm_right.x as usize) {
-                map[x][top_left.y as usize] = Some(WallType::Back);
-                map[x][btm_right.y as usize] = Some(WallType::Front);
+            for col in map
+                .iter_mut()
+                .take((btm_right.x as usize) + 1)
+                .skip(top_left.x as usize)
+            {
+                col[top_left.y as usize] = Some(WallType::Back);
+                col[btm_right.y as usize] = Some(WallType::Front);
             }
 
             for y in (top_left.y as usize)..=(btm_right.y as usize) {

@@ -8,8 +8,7 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix player overlap checker to actually remove the players, and to change the light rad">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix procgen from old commit - is now concurrent">
       <change beforePath="$PROJECT_DIR$/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/procedural_generator.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -503,14 +502,7 @@
       <workItem from="1631796560668" duration="733000" />
       <workItem from="1631807520592" duration="1599000" />
       <workItem from="1631811700221" duration="115000" />
-      <workItem from="1631811897612" duration="828000" />
-    </task>
-    <task id="LOCAL-00064" summary="Start of timed movement.">
-      <created>1628873732321</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1628873732321</updated>
+      <workItem from="1631811897612" duration="891000" />
     </task>
     <task id="LOCAL-00065" summary="Timing how long the 'special' moves last, and tinting depending on how many left.">
       <created>1628887972376</created>
@@ -848,7 +840,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631812669021</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="fix procgen from old commit - is now concurrent">
+      <created>1631812736659</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1631812736659</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -883,7 +882,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="little qol changes" />
     <MESSAGE value="add collider-based shadows for lighting w/ a cache" />
     <MESSAGE value="add config/screen scaling/logo" />
     <MESSAGE value="fix help text/prompts" />
@@ -908,7 +906,8 @@
     <MESSAGE value="clippy + fmt" />
     <MESSAGE value="add new mode - frenzy" />
     <MESSAGE value="fix player overlap checker to actually remove the players, and to change the light rad" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix player overlap checker to actually remove the players, and to change the light rad" />
+    <MESSAGE value="fix procgen from old commit - is now concurrent" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix procgen from old commit - is now concurrent" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
