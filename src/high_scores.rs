@@ -1,10 +1,11 @@
 use crate::{
     config::LTConfig,
-    states::game_state::{get_levels, LEVELS},
+    states::game_state::{get_levels},
 };
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
 use std::fs::{create_dir, read_to_string, write};
+use crate::states::game_state::get_levels_str;
 
 ///The path to the high scores
 const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";
@@ -24,8 +25,7 @@ impl Default for HighScores {
                 get_levels()
                     .into_iter()
                     .filter(|(_, is_normal)| *is_normal)
-                    .collect::<Vec<(String, bool)>>()
-                    .len(),
+                    .count()
             ),
         }
     }
@@ -80,12 +80,12 @@ impl HighScores {
     ///Function to find what the next level to be played is
     pub fn find_next_level(&self) -> usize {
         if LTConfig::new().flags.debug {
-            return LEVELS.len();
+            return get_levels_str().len();
         }
 
         let mut i = 0;
         let mut an_unfinished_level_exists = false;
-        for level in 0..LEVELS.len() {
+        for level in 0..get_levels_str().len() {
             if self.get_high_score(level).is_some() {
                 i = level + 1;
             } else {

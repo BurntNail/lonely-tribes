@@ -8,7 +8,7 @@ use crate::{
     level::{Room, SpriteRequest, LIST_OF_ALL_SPRITEREQUESTS, REVERSED_SPRITESHEET_SWATCH_HASHMAP},
     level_editor::editor_select_state::LevelEditorLevelSelectState,
     states::{
-        game_state::{get_levels, LEVELS},
+        game_state::{get_levels},
         states_util::{init_camera, load_sprite_sheet},
     },
     systems::move_player::PLAYER_MOVEMENT_ANIM_LEN,
@@ -25,6 +25,7 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use image::{ImageBuffer, Rgba};
+use crate::states::game_state::get_levels_str;
 
 #[derive(Clone, Default)]
 pub struct LevelEditorState {
@@ -44,8 +45,8 @@ impl LevelEditorState {
         let level_editing;
         if let Some(index) = index {
             level_editing = *index;
-            if let Some(lvl) = LEVELS.get(*index) {
-                data = Room::new(lvl.as_str());
+            if let Some(lvl) = get_levels_str().get(*index) {
+                data = Room::new(lvl.to_string());
             }
         } else {
             level_editing = get_levels().len();
@@ -56,7 +57,7 @@ impl LevelEditorState {
             img.save(format!("assets/maps/{}", path))
                 .unwrap_or_else(|err| log::error!("Error creating new level file: {}", err));
 
-            data = Room::new(path.as_str());
+            data = Room::new(path);
         }
 
         Self {

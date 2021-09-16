@@ -184,7 +184,7 @@ impl DerefMut for Room {
 }
 
 impl Room {
-    pub fn new(path: &str) -> Self {
+    pub fn new(path: String) -> Self {
         let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
         let path = format!("assets/maps/{}", path);
         let path = path.as_str();

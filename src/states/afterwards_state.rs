@@ -3,7 +3,7 @@ use crate::{
     config::LTConfig,
     high_scores::HighScores,
     states::{
-        game_state::{PuzzleState, LEVELS},
+        game_state::{PuzzleState},
         level_select::LevelSelectState,
         states_util::{get_scaling_factor, load_font},
     },
@@ -16,6 +16,7 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use std::collections::HashMap;
+use crate::states::game_state::get_levels_str;
 
 ///State for when after a *PuzzleState*
 pub struct PostGameState {
@@ -126,7 +127,7 @@ pub fn get_stuff(world: &World) -> (Either<usize, u32>, bool, bool, i32) {
 
     let level_from = gws.level_from;
     let is_last_level = if let Either::One(level_from) = level_from {
-        level_from >= LEVELS.len() - 1
+        level_from >= get_levels_str().len() - 1
     } else {
         false
     };

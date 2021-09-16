@@ -1,7 +1,7 @@
 use crate::{
     high_scores::HighScores,
     states::{
-        game_state::{get_levels, PuzzleState, LEVELS},
+        game_state::{get_levels, PuzzleState},
         states_util::{get_scaling_factor, load_font, load_sprite_sheet},
         welcome_state::StartGameState,
     },
@@ -16,6 +16,7 @@ use amethyst::{
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
+use crate::states::game_state::get_levels_str;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -179,8 +180,8 @@ fn create_lvl_select_btns(
         (tot_height - buffer_space) / MAX_LEVELS_ONE_SCREEN
     };
     let get_height = |index: usize| {
-        let pos = level_txt_height as f32 * (LEVELS.len() - index) as f32;
-        pos - (sf * 450.0) - (sf * 100.0)
+        let pos = level_txt_height as f32 * (get_levels_str().len() - index) as f32;
+        pos - (sf * 450.0)
     };
 
     let main_trans = UiTransform::new(
@@ -329,7 +330,7 @@ fn create_lvl_select_btns(
     let lr = {
         let spritesheet = load_sprite_sheet(world, "left_right");
 
-        let right_btn = if current_screen < (LEVELS.len() / MAX_LEVELS_ONE_SCREEN as usize) {
+        let right_btn = if current_screen < (get_levels_str().len() / MAX_LEVELS_ONE_SCREEN as usize) {
             let right = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
             let right_trans = UiTransform::new(
                 "right_scrn_btn".to_string(),

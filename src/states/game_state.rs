@@ -37,14 +37,6 @@ use rand::Rng;
 use std::{collections::HashMap, fs::File, io::Write};
 use amethyst::core::math::{VectorN, U3};
 
-lazy_static! {
-    ///List of strings holding the file paths to all levels
-    pub static ref LEVELS: Vec<String> = {
-        let l = get_levels().into_iter().map(|(s, _)| s).collect();
-        log::info!("levels are {:?}", l);
-        l
-    };
-}
 pub fn get_levels() -> Vec<(String, bool)> {
     let mut out: Vec<(String, bool)> = list_file_names_in_dir("assets/maps")
         .into_iter()
@@ -62,6 +54,9 @@ pub fn get_levels() -> Vec<(String, bool)> {
         .collect();
     out.sort();
     out
+}
+pub fn get_levels_str() -> Vec<String> {
+    get_levels().into_iter().map(|(s, _)| s).collect()
 }
 
 ///State for when the User is in a puzzle
@@ -127,11 +122,8 @@ impl SimpleState for PuzzleState {
 
         let room = match self.level_index {
             Either::One(index) => {
-                let this_level = {
-                    let this_level = LEVELS.get(index).unwrap_or(&level_default);
-                    this_level.as_str()
-                };
-                Room::new(this_level)
+                let lvl = get_levels_str().get(index).unwrap_or(&level_default).to_string();
+                Room::new(lvl)
             }
             Either::Two(seed) => Room::proc_gen(seed),
         };
@@ -267,7 +259,7 @@ impl SimpleState for PuzzleState {
             let won = lost_position.is_none();
 
             if let Either::One(lvl_index) = self.level_index {
-                if lvl_index >= LEVELS.len() - 1 && won {
+                if lvl_index >= get_levels_str().len() - 1 && won {
                     //we won the last level
                     t = Trans::Switch(Box::new(TrueEnd::default()));
                 } else if won {
