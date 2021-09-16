@@ -2,7 +2,7 @@ use crate::{
     high_scores::HighScores,
     states::{
         game_state::{PuzzleState, LEVELS},
-        states_util::{get_scaling_factor, load_font},
+        states_util::{get_scaling_factor, load_font, load_sprite_sheet},
         welcome_state::StartGameState,
     },
     Either, HOVER_COLOUR,
@@ -10,22 +10,19 @@ use crate::{
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
-    ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
+    renderer::SpriteRender,
+    ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use rand::Rng;
 use std::collections::HashMap;
-use amethyst::core::Hidden;
-use crate::states::states_util::load_sprite_sheet;
-use amethyst::ui::UiImage;
-use amethyst::renderer::SpriteRender;
 
 pub struct LevelSelectState {
-    buttons: HashMap<usize, HashMap<Entity, usize>>,
+    buttons: HashMap<Entity, usize>,
     proc_gen: Option<Entity>,
-    left_btn: Option<Entity>,
-    right_btn: Option<Entity>,
+    leftright: Option<(Entity, Entity)>,
     next_level: usize,
+    current_screen: usize,
 }
 
 impl Default for LevelSelectState {
@@ -34,6 +31,8 @@ impl Default for LevelSelectState {
             buttons: HashMap::new(),
             proc_gen: None,
             next_level: 0,
+            leftright: None,
+            current_screen: 0,
         }
     }
 }
@@ -43,10 +42,11 @@ impl SimpleState for LevelSelectState {
         let world = data.world;
         world.delete_all();
 
-        let (buttons, next_level, proc_gen) = init_menu(world);
+        let (buttons, next_level, proc_gen, lr) = create_lvl_select_btns(world, 0);
         self.buttons = buttons;
         self.next_level = next_level;
         self.proc_gen = Some(proc_gen);
+        self.leftright = Some(lr);
     }
 
     fn handle_event(
@@ -81,6 +81,7 @@ impl SimpleState for LevelSelectState {
                             index = Some(Either::Two(rand::thread_rng().gen()))
                         }
                     }
+
                     index
                 };
 
@@ -99,6 +100,49 @@ impl SimpleState for LevelSelectState {
                         }
                     }
                 }
+
+                let is_left = {
+                    let mut res = None;
+                    if let Some((l, r)) = self.leftright {
+                        if event.target == l {
+                            res = Some(true);
+                        } else if event.target == r {
+                            res = Some(false);
+                        }
+                    }
+
+                    res
+                };
+                let mut needs_to_redo_btns = false;
+                if let Some(is_left) = is_left {
+                    if data
+                        .world
+                        .read_storage::<UiImage>()
+                        .get(event.target)
+                        .is_some()
+                        && event.event_type == UiEventType::ClickStop
+                    {
+                        if is_left {
+                            //we need to go back one screen
+                            if self.current_screen != 0 {
+                                self.current_screen -= 1;
+                                needs_to_redo_btns = true;
+                            }
+                        } else {
+                            self.current_screen += 1;
+                            needs_to_redo_btns = true;
+                        }
+                    }
+                }
+
+                if needs_to_redo_btns {
+                    let (buttons, next_level, proc_gen, lr) =
+                        create_lvl_select_btns(data.world, self.current_screen);
+                    self.buttons = buttons;
+                    self.next_level = next_level;
+                    self.proc_gen = Some(proc_gen);
+                    self.leftright = Some(lr);
+                }
             }
             _ => {}
         }
@@ -112,9 +156,14 @@ pub const MAX_LEVELS_ONE_SCREEN: i32 = 6;
 ///Function to initialise the Level Select
 ///
 /// Returns an Hashmap with the Entities to the indicies of level paths in *LEVELS*, as well as the next level to play, and a button for the proc-gen level, and the back and forward buttons
-fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, Entity, Entity) {
+fn create_lvl_select_btns(
+    world: &mut World,
+    current_screen: usize,
+) -> (HashMap<Entity, usize>, usize, Entity, (Entity, Entity)) {
     let sf = get_scaling_factor();
-    let mut map: Vec<HashMap<Entity, usize>> = HashMap::new();
+    world.delete_all();
+
+    let mut map: HashMap<Entity, usize> = HashMap::new();
     let font_handle = load_font(world, "ZxSpectrum");
     let high_scores = HighScores::new();
 
@@ -126,6 +175,7 @@ fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, 
     };
     let get_height = |index: usize| {
         let pos = level_txt_height as f32 * (LEVELS.len() - index) as f32;
+        // log::info!("Index is {}, pos = {}", index, pos);
         pos - (sf * 450.0)
     };
 
@@ -134,7 +184,7 @@ fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, 
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * 350.0,
+        sf * 425.0,
         0.5,
         sf * 1500.0,
         sf * 100.0,
@@ -154,24 +204,28 @@ fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, 
         .build();
 
     let next_level = high_scores.find_next_level();
-    let mut current_screen = 0;
-    for (i, level) in LEVELS.iter().enumerate() {
-        current_screen = MAX_LEVELS_ONE_SCREEN / i;
+    for (i, level) in LEVELS
+        .iter()
+        .skip(current_screen * (MAX_LEVELS_ONE_SCREEN - 1) as usize)
+        .take(5)
+        .enumerate()
+    {
+        let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
 
-        let high_score = high_scores.get_high_score(i);
+        let high_score = high_scores.get_high_score(i_adj as usize);
         #[allow(clippy::collapsible_else_if)]
         let (text, colour, can_be_played) = if let Some(score) = high_score {
             (
-                format!("Level number: {:02}, High Score of: {}", i + 1, score),
+                format!("Level number: {:02}, High Score of: {}", i_adj + 1, score),
                 [1.0; 4],
                 true,
             )
         } else {
             if i == next_level {
-                (format!("Level number: {:02}", i + 1), [1.0; 4], true)
+                (format!("Level number: {:02}", i_adj + 1), [1.0; 4], true)
             } else {
                 (
-                    format!("Level number: {:02}", i + 1),
+                    format!("Level number: {:02}", i_adj + 1),
                     [1.0, 0.25, 0.25, 1.0],
                     false,
                 )
@@ -198,17 +252,12 @@ fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, 
             Anchor::MiddleLeft,
         );
 
-        let mut ent = world.create_entity().with(trans).with(txt);
+        let mut entity = world.create_entity().with(trans).with(txt);
         if can_be_played {
-            ent = ent.with(Interactable);
-        }
-        if current_screen != 0 {
-            ent = ent.with(Hidden);
+            entity = entity.with(Interactable);
         }
 
-        let mut scrn = map.remove(&current_screen as usize).unwrap_or_default();
-        scrn.insert(ent.build(), i);
-        map[current_screen as usize] = scrn;
+        map.insert(entity.build(), i_adj as usize);
     }
 
     let proc_gen = {
@@ -218,7 +267,7 @@ fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, 
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            get_height(LEVELS.len()), //already multiplied by sf in func
+            get_height(MAX_LEVELS_ONE_SCREEN as usize - 1), //already multiplied by sf in func
             0.5,
             sf * 1500.0,
             font_height,
@@ -231,47 +280,65 @@ fn init_menu(world: &mut World) -> (Vec<HashMap<Entity, usize>>, usize, Entity, 
             LineMode::Wrap,
             Anchor::MiddleLeft,
         );
-        let mut ent = world
+        world
             .create_entity()
             .with(trans)
             .with(txt)
-            .with(Interactable);
-
-        let current_scrn = MAX_LEVELS_ONE_SCREEN / LEVELS.len();
-
-        if current_screen != 0 {
-            ent = ent.with(Hidden);
-        }
-
-        ent.build()
+            .with(Interactable)
+            .build()
     };
 
-    let (left_btn, right_btn) = {
+    let lr = {
         let spritesheet = load_sprite_sheet(world, "left_right");
 
-        let left = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
-        let right = UiImage::Sprite(SpriteRender::new(spritesheet, 2));
+        let right_btn = if current_screen < (LEVELS.len() / MAX_LEVELS_ONE_SCREEN as usize) {
+            let right = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
+            let right_trans = UiTransform::new(
+                "right_scrn_btn".to_string(),
+                Anchor::BottomRight,
+                Anchor::BottomRight,
+                sf * -10.0,
+                sf * 10.0,
+                0.5,
+                sf * 90.0,
+                sf * 90.0,
+            );
 
-        let left_trans = UiTransform::new(
-            "left_btn".to_string(),
-            Anchor::BottomLeft,
-            Anchor::BottomLeft,
-            sf * -900.0,
-            sf * -450.0,
-            0.5,
-            sf * 27.0,
-            sf * 27.0
-        );
+            world
+                .create_entity()
+                .with(right)
+                .with(right_trans)
+                .with(Interactable)
+                .build()
+        } else {
+            world.create_entity().build()
+        };
+        let left_btn = if current_screen > 0 {
+            let left = UiImage::Sprite(SpriteRender::new(spritesheet, 0));
 
-        let left_btn = world
-            .create_entity()
-            .with(left)
-            .with(left_trans)
-            .with(Interactable)
-            .build();
+            let left_trans = UiTransform::new(
+                "left_scrn_btn".to_string(),
+                Anchor::BottomLeft,
+                Anchor::BottomLeft,
+                sf * 10.0,
+                sf * 10.0,
+                0.5,
+                sf * 90.0,
+                sf * 90.0,
+            );
 
-        (left_btn, world.create_entity().build())
+            world
+                .create_entity()
+                .with(left)
+                .with(left_trans)
+                .with(Interactable)
+                .build()
+        } else {
+            world.create_entity().build()
+        };
+
+        (left_btn, right_btn)
     };
 
-    (map, next_level, proc_gen, left_btn, right_btn)
+    (map, next_level, proc_gen, lr)
 }
