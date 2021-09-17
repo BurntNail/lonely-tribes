@@ -1,9 +1,9 @@
-use crate::components::{
+use amethyst::ecs::{Join, ReadStorage, System, Write};
+use lonely_tribes_lib::components::{
     colliders::{Collider, ColliderList},
     player::Player,
     tile_transform::TileTransform,
 };
-use amethyst::ecs::{Join, ReadStorage, System, Write};
 
 ///System to update ColliderList, and LevelState
 pub struct ListSystem;

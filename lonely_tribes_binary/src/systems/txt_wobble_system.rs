@@ -1,4 +1,3 @@
-use crate::components::text_wobble::TextWobble;
 use amethyst::{
     core::{
         ecs::{Join, Read, System, WriteStorage},
@@ -6,6 +5,7 @@ use amethyst::{
     },
     ui::UiTransform,
 };
+use lonely_tribes_lib::components::text_wobble::TextWobble;
 
 pub struct TextWobbleSystem;
 

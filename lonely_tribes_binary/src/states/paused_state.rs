@@ -1,12 +1,4 @@
-use crate::{
-    components::data_holder::EntityHolder,
-    states::{
-        level_select::LevelSelectState,
-        states_util::{get_scaling_factor, load_font},
-    },
-    systems::move_player::MovementType,
-    HOVER_COLOUR,
-};
+use crate::{states::level_select::LevelSelectState, systems::move_player::MovementType};
 use amethyst::{
     core::{
         ecs::{Builder, Entity, World, WorldExt},
@@ -15,6 +7,11 @@ use amethyst::{
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEvent, UiEventType, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
+};
+use lonely_tribes_lib::{
+    components::data_holder::EntityHolder,
+    states_util::{get_scaling_factor, load_font},
+    HOVER_COLOUR,
 };
 use std::collections::HashMap;
 

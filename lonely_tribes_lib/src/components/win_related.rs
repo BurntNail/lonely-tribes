@@ -1,4 +1,4 @@
-use crate::{components::tile_transform::TileTransform, Either};
+use crate::{components::tile_transform::TileTransform, either::Either};
 
 ///Enumeration for the current state of the game
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]

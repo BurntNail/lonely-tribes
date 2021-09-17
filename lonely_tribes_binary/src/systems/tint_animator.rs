@@ -1,12 +1,12 @@
-use crate::components::animations::{
-    animation::Animator, data::AnimationData, tint::TintAnimatorData,
-};
 use amethyst::{
     core::{
         ecs::{Join, Read, System, WriteStorage},
         Time,
     },
     renderer::resources::Tint,
+};
+use lonely_tribes_lib::components::animations::{
+    animation::Animator, data::AnimationData, tint::TintAnimatorData,
 };
 
 pub struct TintAnimatorSystem;

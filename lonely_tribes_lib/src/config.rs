@@ -92,3 +92,8 @@ impl LTConfig {
         }
     }
 }
+impl Default for LTConfig {
+    fn default() -> Self {
+        Self::new()
+    }
+}

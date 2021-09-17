@@ -1,19 +1,16 @@
-use crate::{
-    components::win_state::{GameState, GameStateEnum},
-    config::LTConfig,
-    high_scores::HighScores,
-    states::{
-        game_state::{get_levels_str, PuzzleState},
-        level_select::LevelSelectState,
-        states_util::{get_scaling_factor, load_font},
-    },
-    Either,
-};
+use crate::states::{game_state::PuzzleState, level_select::LevelSelectState};
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
+};
+use lonely_tribes_lib::{
+    components::win_related::{GameState, GameStateEnum},
+    config::LTConfig,
+    either::Either,
+    high_scores::HighScores,
+    states_util::{get_scaling_factor, levels_len, load_font},
 };
 use std::collections::HashMap;
 
@@ -126,7 +123,7 @@ pub fn get_stuff(world: &World) -> (Either<usize, u32>, bool, bool, i32) {
 
     let level_from = gws.level_from;
     let is_last_level = if let Either::One(level_from) = level_from {
-        level_from >= get_levels_str().len() - 1
+        level_from >= levels_len() - 1
     } else {
         false
     };

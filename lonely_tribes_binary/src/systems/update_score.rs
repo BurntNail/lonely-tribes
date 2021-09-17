@@ -1,10 +1,10 @@
-use crate::components::{
-    score::Score,
-    win_state::{GameModeManager, GameState},
-};
 use amethyst::{
     core::ecs::{Join, Read, ReadStorage, System, WriteStorage},
     ui::UiText,
+};
+use lonely_tribes_lib::components::{
+    score::Score,
+    win_related::{GameModeManager, GameState},
 };
 
 ///System to update the score in the PuzzleState

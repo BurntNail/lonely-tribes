@@ -1,13 +1,11 @@
-use crate::states::{
-    states_util::{get_scaling_factor, load_font},
-    welcome_state::StartGameState,
-};
+use crate::states::welcome_state::StartGameState;
 use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
+use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = include_str!("../help_text.txt");

@@ -1,9 +1,9 @@
-use crate::states::states_util::load_font;
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::VirtualKeyCode,
     ui::{Anchor, LineMode, UiText, UiTransform},
 };
+use lonely_tribes_lib::states_util::load_font;
 
 #[derive(Clone, Debug)]
 #[allow(dead_code)]

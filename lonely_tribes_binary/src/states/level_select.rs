@@ -1,18 +1,16 @@
-use crate::{
-    high_scores::HighScores,
-    states::{
-        game_state::{get_levels, get_levels_str, PuzzleState},
-        states_util::{get_scaling_factor, load_font, load_sprite_sheet},
-        welcome_state::StartGameState,
-    },
-    Either, HOVER_COLOUR,
-};
+use crate::states::{game_state::PuzzleState, welcome_state::StartGameState};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     renderer::SpriteRender,
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
+};
+use lonely_tribes_lib::{
+    either::Either,
+    high_scores::HighScores,
+    states_util::{get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet},
+    HOVER_COLOUR,
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
@@ -330,29 +328,28 @@ fn create_lvl_select_btns(
     let lr = {
         let spritesheet = load_sprite_sheet(world, "left_right");
 
-        let right_btn =
-            if current_screen < (get_levels_str().len() / MAX_LEVELS_ONE_SCREEN as usize) {
-                let right = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
-                let right_trans = UiTransform::new(
-                    "right_scrn_btn".to_string(),
-                    Anchor::BottomRight,
-                    Anchor::BottomRight,
-                    sf * -10.0,
-                    sf * 10.0,
-                    0.5,
-                    sf * 90.0,
-                    sf * 90.0,
-                );
+        let right_btn = if current_screen < (levels_len() / MAX_LEVELS_ONE_SCREEN as usize) {
+            let right = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
+            let right_trans = UiTransform::new(
+                "right_scrn_btn".to_string(),
+                Anchor::BottomRight,
+                Anchor::BottomRight,
+                sf * -10.0,
+                sf * 10.0,
+                0.5,
+                sf * 90.0,
+                sf * 90.0,
+            );
 
-                world
-                    .create_entity()
-                    .with(right)
-                    .with(right_trans)
-                    .with(Interactable)
-                    .build()
-            } else {
-                world.create_entity().build()
-            };
+            world
+                .create_entity()
+                .with(right)
+                .with(right_trans)
+                .with(Interactable)
+                .build()
+        } else {
+            world.create_entity().build()
+        };
         let left_btn = if current_screen > 0 {
             let left = UiImage::Sprite(SpriteRender::new(spritesheet, 0));
 

@@ -1,18 +1,15 @@
-use crate::{
-    audio::init_audio,
-    components::text_wobble::TextWobble,
-    states::{
-        help_state::HelpState,
-        level_select::LevelSelectState,
-        states_util::{get_scaling_factor, load_font},
-    },
-    HOVER_COLOUR,
-};
+use crate::states::{help_state::HelpState, level_select::LevelSelectState};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
+};
+use lonely_tribes_lib::{
+    audio::init_audio,
+    components::text_wobble::TextWobble,
+    states_util::{get_scaling_factor, load_font},
+    HOVER_COLOUR,
 };
 
 ///State for welcoming the player to the game
@@ -74,7 +71,7 @@ impl SimpleState for StartGameState {
                                                 t = SimpleTrans::Switch(Box::new(
                                                     HelpState::default(),
                                                 ));
-                                            }else if is_quit {
+                                            } else if is_quit {
                                                 std::process::exit(0);
                                             }
                                         }

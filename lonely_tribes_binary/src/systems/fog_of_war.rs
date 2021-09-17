@@ -1,4 +1,9 @@
-use crate::{
+use crate::systems::move_player::HELD_INTERVAL;
+use amethyst::{
+    core::ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
+    renderer::resources::Tint,
+};
+use lonely_tribes_lib::{
     components::{
         animations::{
             animation::Animator, interpolation::AnimInterpolation, tint::TintAnimatorData,
@@ -8,12 +13,7 @@ use crate::{
         tile_transform::TileTransform,
     },
     config::LTConfig,
-    systems::move_player::HELD_INTERVAL,
     HEIGHT, WIDTH,
-};
-use amethyst::{
-    core::ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
-    renderer::resources::Tint,
 };
 use rayon::{iter::ParallelIterator, prelude::*};
 use std::{
@@ -165,7 +165,6 @@ impl LightCacher {
         lights: &[(TileTransform, PointLight)],
         colls: &[TileTransform],
     ) -> HashMap<TileTransform, f32> {
-        // let t = SystemTime::now();
         let fow_enabled = LTConfig::new().flags.fow_enabled();
 
         if !fow_enabled {

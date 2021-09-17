@@ -1,4 +1,8 @@
-use crate::{
+use amethyst::{
+    core::{ecs::Read, transform::Transform, Time},
+    ecs::{Join, System, WriteStorage},
+};
+use lonely_tribes_lib::{
     components::{
         animations::{
             animation::Animator, data::AnimationData, movement::MovementAnimationData,
@@ -7,10 +11,6 @@ use crate::{
         tile_transform::TileTransform,
     },
     HEIGHT, TILE_WIDTH_HEIGHT,
-};
-use amethyst::{
-    core::{ecs::Read, transform::Transform, Time},
-    ecs::{Join, System, WriteStorage},
 };
 
 /// System to turn TileTransforms into Transforms

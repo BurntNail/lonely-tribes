@@ -1,13 +1,13 @@
-use crate::states::{
-    states_util::{get_scaling_factor, load_font},
-    welcome_state::StartGameState,
-};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
+
+use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
+
+use crate::states::welcome_state::StartGameState;
 
 ///State for when the user has finished all levels
 #[derive(Default)]

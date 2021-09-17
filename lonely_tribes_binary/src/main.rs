@@ -1,12 +1,7 @@
 #![windows_subsystem = "windows"] //removes console window
 
-use lonely_tribes_lib::{
-    audio::Muzac,
-    config::LTConfig,
-    high_scores::DATA_DIR,
-    
-};
 use crate::{
+    states::{help_state::HelpState, welcome_state::StartGameState},
     systems::{
         colliders_list_system::ListSystem,
         fog_of_war::{FogOfWarSystem, LightListSystem},
@@ -18,7 +13,6 @@ use crate::{
         update_score::ScoreUpdaterSystem,
         update_tile_transforms::UpdateTileTransforms,
     },
-    states::{help_state::HelpState, welcome_state::StartGameState},
 };
 use amethyst::{
     audio::{AudioBundle, DjSystemDesc},
@@ -37,26 +31,11 @@ use amethyst::{
     LoggerConfig,
 };
 use log::LevelFilter;
-// use steamworks::*;
+use lonely_tribes_lib::{audio::Muzac, config::LTConfig, high_scores::DATA_DIR};
 
-#[macro_use]
-extern crate lazy_static;
-
-pub mod states;
-pub mod systems;
-pub mod ui_input;
-
-pub const TILE_WIDTH_HEIGHT: i32 = 8;
-///The width of the grid of tiless
-pub const WIDTH: i32 = 64;
-///The height of the grid of tiles
-pub const HEIGHT: i32 = 36;
-///The width of the grid of tiles in px relative to the spritesheet
-pub const ARENA_WIDTH: i32 = TILE_WIDTH_HEIGHT * WIDTH;
-///The height of the grid of tiles in px relative to the spritesheet
-pub const ARENA_HEIGHT: i32 = TILE_WIDTH_HEIGHT * HEIGHT; //each sprite is 8px wide, so arena will be 16 sprites by 9 sprites
-///The colour when a txt is hovered over
-pub const HOVER_COLOUR: [f32; 4] = [1.0, 0.5, 0.75, 1.0];
+mod states;
+mod systems;
+mod ui_input;
 
 fn main() -> amethyst::Result<()> {
     let opts = LTConfig::new();
@@ -74,7 +53,7 @@ fn main() -> amethyst::Result<()> {
 
     let app_root = application_root_dir()?;
 
-    let resources = app_root.join("assets");
+    let resources = app_root.join("../assets");
     let display_config = DisplayConfig {
         title: "Lonely Tribes".to_string(),
         dimensions: Some(opts.conf.screen_dimensions),
@@ -128,15 +107,6 @@ fn main() -> amethyst::Result<()> {
             );
     }
 
-    // {
-    //     let (client, single) = Client::init().unwrap();
-    //
-    //     for _ in 0..50 {
-    //         single.run_callbacks();
-    //         ::std::thread::sleep(::std::time::Duration::from_millis(100));
-    //     }
-    // }
-
     let mut game = {
         if std::fs::read_dir(DATA_DIR).is_ok() {
             Application::new(resources, StartGameState::default(), game_data)?
@@ -157,8 +127,6 @@ pub fn get_colours(r: f32, g: f32, b: f32) -> [f32; 4] {
         .into_components();
     [r, g, b, a]
 }
-
-
 
 //todos
 

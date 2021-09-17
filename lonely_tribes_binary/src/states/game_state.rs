@@ -1,28 +1,11 @@
 use crate::{
-    components::{
-        animations::{
-            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
-            rotation::RotationAnimationData, tint::TintAnimatorData,
-        },
-        colliders::{Collider, ColliderList},
-        data_holder::EntityHolder,
-        point_light::{PointLight, TintOverride},
-        score::Score,
-        tile_transform::TileTransform,
-        win_state::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
-    },
-    file_utils::list_file_names_in_dir,
-    level::Room,
     states::{
         afterwards_state::PostGameState,
         level_select::LevelSelectState,
         paused_state::{MovementDisabler, PausedState},
-        states_util::{get_scaling_factor, init_camera, load_font, load_sprite_sheet},
         true_end::TrueEnd,
     },
     systems::{player_overlap_checker::DeleteList, update_tile_transforms::UpdateTileTransforms},
-    tag::{Tag, TriggerType},
-    Either, ARENA_HEIGHT, ARENA_WIDTH,
 };
 use amethyst::{
     assets::Handle,
@@ -38,30 +21,27 @@ use amethyst::{
     ui::{Anchor, Interactable, LineMode, UiText, UiTransform},
     winit::{Event, WindowEvent},
 };
+use lonely_tribes_lib::{
+    components::{
+        animations::{
+            animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
+            rotation::RotationAnimationData, tint::TintAnimatorData,
+        },
+        colliders::{Collider, ColliderList},
+        data_holder::EntityHolder,
+        point_light::{PointLight, TintOverride},
+        score::Score,
+        tile_transform::TileTransform,
+        win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
+    },
+    either::Either,
+    level::Room,
+    states_util::{get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet},
+    tag::{Tag, TriggerType},
+    ARENA_HEIGHT, ARENA_WIDTH,
+};
 use rand::Rng;
 use std::{collections::HashMap, fs::File, io::Write};
-
-pub fn get_levels() -> Vec<(String, bool)> {
-    let mut out: Vec<(String, bool)> = list_file_names_in_dir("assets/maps")
-        .into_iter()
-        .filter_map(|nom| {
-            let is_normal = nom.contains("lvl-") && nom.contains(".png");
-            let is_pg = nom.contains("pg-") && nom.contains(".txt");
-            let name = nom.replace("\"", "");
-
-            if is_normal || is_pg {
-                Some((name, is_normal))
-            } else {
-                None
-            }
-        })
-        .collect();
-    out.sort();
-    out
-}
-pub fn get_levels_str() -> Vec<String> {
-    get_levels().into_iter().map(|(s, _)| s).collect()
-}
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -514,7 +494,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, lvl: Room)
                         .with(tt)
                         .with(trans)
                         .with(Collider::new(TriggerType::from_id(&id)))
-                        .with(crate::components::player::Player::new(id))
+                        .with(lonely_tribes_lib::components::player::Player::new(id))
                         .with(Animator::<MovementAnimationData>::default())
                         .with(Animator::<RotationAnimationData>::default())
                         .with(Animator::<TintAnimatorData>::default())

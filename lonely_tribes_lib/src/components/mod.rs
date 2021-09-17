@@ -6,4 +6,4 @@ pub mod point_light;
 pub mod score;
 pub mod text_wobble;
 pub mod tile_transform;
-pub mod win_state;
+pub mod win_related;

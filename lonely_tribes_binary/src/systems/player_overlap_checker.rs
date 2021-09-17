@@ -1,10 +1,10 @@
-use crate::components::{
+use amethyst::core::ecs::{Entities, Entity, Join, ReadStorage, System, Write, WriteStorage};
+use lonely_tribes_lib::components::{
     player::Player,
     point_light::PointLight,
     tile_transform::TileTransform,
-    win_state::{GameState, GameStateEnum},
+    win_related::{GameState, GameStateEnum},
 };
-use amethyst::core::ecs::{Entities, Entity, Join, ReadStorage, System, Write, WriteStorage};
 use std::collections::HashMap;
 
 pub struct PlayerOverlapChecker;
@@ -29,7 +29,6 @@ impl<'s> System<'s> for PlayerOverlapChecker {
             let p_id = p.id;
             let to_insert = if let Some(mut current) = map.remove(t) {
                 if current.id == p_id {
-                    log::info!("found");
                     current.no_players += 1;
                     delete_list.0.push(e);
                 } else {

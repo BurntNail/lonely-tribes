@@ -16,6 +16,7 @@ chrono = "0.4.19" # for getting times for saves
 #steamworks = "0.7.0" # for steam
 rayon = "1.5.1" # for multi-threading
 noise = "0.7.0" #for perlin noise
+lonely_tribes_lib = {path="../lonely_tribes_lib"}
 
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version

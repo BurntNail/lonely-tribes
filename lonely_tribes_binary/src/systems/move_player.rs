@@ -1,4 +1,10 @@
-use crate::{
+use crate::states::paused_state::MovementDisabler;
+use amethyst::{
+    core::Time,
+    ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
+    input::{InputHandler, StringBindings, VirtualKeyCode},
+};
+use lonely_tribes_lib::{
     components::{
         animations::{
             animation::Animator, interpolation::AnimInterpolation, movement::MovementAnimationData,
@@ -7,16 +13,10 @@ use crate::{
         colliders::ColliderList,
         player::Player,
         tile_transform::TileTransform,
-        win_state::{GameModeManager, GamePlayingMode, GameState},
+        win_related::{GameModeManager, GamePlayingMode, GameState},
     },
     config::LTConfig,
-    states::paused_state::MovementDisabler,
     HEIGHT, WIDTH,
-};
-use amethyst::{
-    core::Time,
-    ecs::{Join, Read, ReadStorage, System, Write, WriteStorage},
-    input::{InputHandler, StringBindings, VirtualKeyCode},
 };
 use rand::Rng;
 
@@ -136,7 +136,7 @@ impl<'s> System<'s> for MovePlayerSystem {
         let proposed_tile_closure = |tile: TileTransform, base_len: f32| {
             let mut rng = rand::thread_rng();
             let mut anim_len = base_len;
-            // let mut interp = AnimInterpolation::Linear;
+            let mut interp = AnimInterpolation::Linear;
 
             let t = match mode {
                 GamePlayingMode::TradeOff => {
@@ -144,7 +144,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
                 GamePlayingMode::Crazy => {
                     anim_len *= 3.0;
-                    // interp = AnimInterpolation::ReverseExponential;
+                    interp = AnimInterpolation::ReverseExponential;
                     TileTransform::new(
                         rng.gen_range(0..WIDTH as i32),
                         rng.gen_range(0..HEIGHT as i32),
@@ -152,7 +152,7 @@ impl<'s> System<'s> for MovePlayerSystem {
                 }
                 _ => tile + proposed_tile_addition,
             };
-            (t, anim_len, AnimInterpolation::ReverseExponential)
+            (t, anim_len, interp)
         };
 
         if let Some(timer) = &mut movement.movement_timer {

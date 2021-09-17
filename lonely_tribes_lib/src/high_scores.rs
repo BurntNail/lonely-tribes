@@ -1,6 +1,6 @@
 use crate::{
     config::LTConfig,
-    states::game_state::{get_levels, get_levels_str},
+    states_util::{get_levels, levels_len},
 };
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
@@ -79,12 +79,12 @@ impl HighScores {
     ///Function to find what the next level to be played is
     pub fn find_next_level(&self) -> usize {
         if LTConfig::new().flags.debug {
-            return get_levels_str().len();
+            return levels_len();
         }
 
         let mut i = 0;
         let mut an_unfinished_level_exists = false;
-        for level in 0..get_levels_str().len() {
+        for level in 0..levels_len() {
             if self.get_high_score(level).is_some() {
                 i = level + 1;
             } else {
