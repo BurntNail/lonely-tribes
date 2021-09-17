@@ -1837,7 +1837,25 @@ dependencies = [
 ]
 
 [[package]]
-name = "lonely-tribes"
+name = "lonely_tribes_binary"
+version = "0.11.0"
+dependencies = [
+ "amethyst",
+ "chrono",
+ "image 0.23.14",
+ "lazy_static",
+ "log",
+ "noise",
+ "rand 0.8.4",
+ "rand_pcg 0.3.1",
+ "rayon",
+ "ron 0.6.4",
+ "serde",
+ "structopt",
+]
+
+[[package]]
+name = "lonely_tribes_lib"
 version = "0.11.0"
 dependencies = [
  "amethyst",
