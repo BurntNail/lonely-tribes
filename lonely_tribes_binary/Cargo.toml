@@ -21,3 +21,11 @@ lonely_tribes_lib = {path="../lonely_tribes_lib"}
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version
 features = ["vulkan", "no-slow-safety-checks"]
+
+[dev-dependencies]
+criterion = "0.3.5"
+
+[[bench]]
+name = "procgen_bench"
+path = "../benches/procgen_bench.rs"
+harness = false

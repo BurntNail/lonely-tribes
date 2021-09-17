@@ -22,3 +22,4 @@ noise = "0.7.0" #for perlin noise
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version
 features = ["vulkan", "no-slow-safety-checks"]
+
