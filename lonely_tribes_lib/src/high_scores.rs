@@ -1,10 +1,11 @@
-use crate::{
-    config::LTConfig,
-    states_util::{get_levels, levels_len},
-};
+use std::fs::{create_dir, read_to_string, write};
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
-use std::fs::{create_dir, read_to_string, write};
+use crate::states_util::{get_levels, levels_len};
+
+use crate::{
+	config::LTConfig,
+};
 
 ///The path to the high scores
 const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";

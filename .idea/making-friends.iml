@@ -5,8 +5,15 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/benches" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_binary/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_animations/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_components/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_lib/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_states/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_systems/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_utils/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_generation/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lonely_tribes_tags/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

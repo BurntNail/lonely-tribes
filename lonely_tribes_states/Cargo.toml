@@ -1,0 +1,21 @@
+[package]
+name = "lonely_tribes_states"
+version = "0.1.0"
+authors = ["Jack Maguire <jackmaguire1234@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand = "0.8.4" # for random stuff
+log = "0.4.14"
+lonely_tribes_lib = { path = "../lonely_tribes_lib"}
+lonely_tribes_components = {path = "../lonely_tribes_components"}
+lonely_tribes_generation = {path = "../lonely_tribes_generation"}
+lonely_tribes_systems = {path = "../lonely_tribes_systems"}
+lonely_tribes_animations = {path = "../lonely_tribes_animations"}
+lonely_tribes_tags = {path = "../lonely_tribes_tags"}
+
+[dependencies.amethyst] # base game engine
+version = "0.15.3" # latest specs version
+features = ["vulkan", "no-slow-safety-checks"]
