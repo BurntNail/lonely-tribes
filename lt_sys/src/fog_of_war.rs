@@ -11,8 +11,7 @@ use lonely_tribes_components::{
     point_light::{PointLight, TintOverride},
     tile_transform::TileTransform,
 };
-use lonely_tribes_fog_of_war::fog::LightCacher;
-use lonely_tribes_fog_of_war::light_list::LightList;
+use lonely_tribes_fog_of_war::{fog::LightCacher, light_list::LightList};
 
 #[derive(Default)]
 pub struct FogOfWarSystem {
