@@ -1,0 +1,34 @@
+Text prompt system (maybe make it as part of the animator?)
+Limit which special modes can be used?
+More level meta-data options
+come up with a better name (stupid acronym?) for special (cos thats kinda a fallout thing)
+
+
+Levels plan:
+
+10 normal levels, each increasing in difficulty
+
+2 levels dedicated to each special mode (eg. introduce frenzy mode, and have the player walk through a wall)
+2 level after each two using the one just learnt and another in conjuction
+1 boss fight with multiple modes
+
+10 more levels that use all the special modes
+1 boss fight
+
+GLaDOS vibe?
+
+Boss fight ideas:
+use dudes to battle boss - more dudes merged at once that hit him do exponentially more damage to his health? with dudes regenning - but boss can randomly kill dudes, so do you wait for more and take the risk, or slowly deal damage
+
+
+
+Start of EA:
+No bosses, no voice-over.
+
+End of EA:
+More levels, more bosses
+
+
+TODO:
+Sound (Music (lexi)/FX)
+config editor program
