@@ -1946,17 +1946,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "lonely_tribes_animations"
-version = "0.1.0"
-dependencies = [
- "amethyst",
- "log",
- "lonely_tribes_components",
- "lonely_tribes_lib",
-]
-
-[[package]]
-name = "lonely_tribes_binary"
+name = "lonely-tribes"
 version = "0.11.0"
 dependencies = [
  "amethyst",
@@ -1978,6 +1968,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "lonely_tribes_animations"
+version = "0.1.0"
+dependencies = [
+ "amethyst",
+ "log",
+ "lonely_tribes_components",
+ "lonely_tribes_lib",
+]
+
+[[package]]
 name = "lonely_tribes_components"
 version = "0.1.0"
 dependencies = [
@@ -1985,6 +1985,16 @@ dependencies = [
  "log",
  "lonely_tribes_lib",
  "lonely_tribes_tags",
+]
+
+[[package]]
+name = "lonely_tribes_fog_of_war"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "lonely_tribes_components",
+ "lonely_tribes_lib",
+ "rayon",
 ]
 
 [[package]]
@@ -2038,9 +2048,9 @@ dependencies = [
  "log",
  "lonely_tribes_animations",
  "lonely_tribes_components",
+ "lonely_tribes_fog_of_war",
  "lonely_tribes_lib",
  "rand 0.8.4",
- "rayon",
 ]
 
 [[package]]

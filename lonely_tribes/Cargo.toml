@@ -1,5 +1,5 @@
 [package]
-name = "lonely_tribes_binary"
+name = "lonely-tribes"
 version = "0.11.0"
 edition = "2018"
 

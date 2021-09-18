@@ -7,6 +7,7 @@ members = [
     "lt_states",
     "lt_animations",
     "lt_generation",
-    "lt_state"
+    "lt_state",
+    "lt_fog_of_war"
 ]
 
