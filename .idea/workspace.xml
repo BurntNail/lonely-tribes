@@ -9,61 +9,71 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix it">
-      <change afterPath="$PROJECT_DIR$/lonely_tribes_animations/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lonely_tribes_components/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lonely_tribes_states/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lonely_tribes_systems/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lt_state/src/trigger_type.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/making-friends.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/making-friends.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/help_text.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/true_end.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_states/src/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/colliders_list_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/fog_of_war.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/fps_counter.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/fps_counter.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/move_player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/player_overlap_checker.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/player_overlap_checker.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/tint_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/tint_animator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/txt_wobble_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/txt_wobble_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/update_score.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/systems/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_systems/src/update_tile_transforms.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_binary/src/ui_input.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_lib/src/ui_input.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_lib/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/audio.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_lib/src/audio.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/animation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/data.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/data.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/interpolation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/interpolation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/movement.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/movement.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/rotation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/rotation.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/tests.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/animations/tint.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_animations/src/tint.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/colliders.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/data_holder.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/point_light.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/point_light.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/score.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/text_wobble.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/text_wobble.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/tile_transform.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/components/win_related.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_components/src/win_related.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_lib/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_generation/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_lib/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_generation/src/procedural_generator.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes_tags/src/tag.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/benches/procgen_bench.rs" beforeDir="false" afterPath="$PROJECT_DIR$/benches/procgen_bench.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/animation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/data.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/data.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/interpolation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/interpolation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/movement.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/movement.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/rotation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/rotation.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_animations/src/tint.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/tint.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/colliders.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/colliders.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/data_holder.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/data_holder.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/point_light.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/point_light.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/score.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/text_wobble.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/text_wobble.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/tile_transform.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/tile_transform.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_components/src/win_related.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/win_related.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_generation/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_generation/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_generation/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/audio.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/audio.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/config.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/either.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/either.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_lib/src/ui_input.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/ui_input.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/help_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/help_text.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/paused_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/true_end.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_states/src/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_states/src/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/colliders_list_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/colliders_list_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/fog_of_war.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/fps_counter.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/fps_counter.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/player_overlap_checker.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/player_overlap_checker.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/tint_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/tint_animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/txt_wobble_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/txt_wobble_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/update_score.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/update_score.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_systems/src/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/update_tile_transforms.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_tags/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_state/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_tags/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_state/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_tags/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_state/src/tag.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes_tags/src/trigger_type.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_release.sh" beforeDir="false" afterPath="$PROJECT_DIR$/new_release.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +165,7 @@
       <command value="cargo bench" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.bench [lonely-tribes]">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -415,9 +425,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.bench [lonely-tribes]" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
   </component>
@@ -581,7 +591,9 @@
       <workItem from="1631906154990" duration="2917000" />
       <workItem from="1631909085617" duration="1291000" />
       <workItem from="1631910385092" duration="710000" />
-      <workItem from="1631911105960" duration="1925000" />
+      <workItem from="1631911105960" duration="2047000" />
+      <workItem from="1631951728172" duration="495000" />
+      <workItem from="1631954893003" duration="483000" />
     </task>
     <task id="LOCAL-00070" summary="Remove powerups system - it just doesn't feel good now that I have the movement types system">
       <created>1629698191197</created>

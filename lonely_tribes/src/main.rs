@@ -1,35 +1,36 @@
 #![windows_subsystem = "windows"] //removes console window
 
 use amethyst::{
-	audio::{AudioBundle, DjSystemDesc},
-	core::transform::TransformBundle,
-	input::{InputBundle, StringBindings},
-	LoggerConfig,
-	prelude::*,
-	renderer::{
-		palette::Srgba,
-		plugins::{RenderFlat2D, RenderToWindow},
-		RenderingBundle,
-		types::DefaultBackend,
+    audio::{AudioBundle, DjSystemDesc},
+    core::transform::TransformBundle,
+    input::{InputBundle, StringBindings},
+    prelude::*,
+    renderer::{
+        palette::Srgba,
+        plugins::{RenderFlat2D, RenderToWindow},
+        types::DefaultBackend,
+        RenderingBundle,
     },
-	ui::{RenderUi, UiBundle},
-	utils::{application_root_dir, fps_counter::FpsCounterSystem},
-	window::DisplayConfig,
+    ui::{RenderUi, UiBundle},
+    utils::{application_root_dir, fps_counter::FpsCounterSystem},
+    window::DisplayConfig,
+    LoggerConfig,
 };
 use log::LevelFilter;
 
 use lonely_tribes_lib::{audio::Muzac, config::LTConfig, high_scores::DATA_DIR};
-use lonely_tribes_systems::update_tile_transforms::UpdateTileTransforms;
-use lonely_tribes_systems::colliders_list_system::ListSystem;
-use lonely_tribes_systems::move_player::MovePlayerSystem;
-use lonely_tribes_systems::player_overlap_checker::PlayerOverlapChecker;
-use lonely_tribes_systems::txt_wobble_system::TextWobbleSystem;
-use lonely_tribes_systems::update_score::ScoreUpdaterSystem;
-use lonely_tribes_systems::fog_of_war::{LightListSystem, FogOfWarSystem};
-use lonely_tribes_systems::tint_animator::TintAnimatorSystem;
-use lonely_tribes_systems::fps_counter::FpsPrinterSystem;
-use lonely_tribes_states::welcome_state::StartGameState;
-use lonely_tribes_states::help_state::HelpState;
+use lonely_tribes_states::{help_state::HelpState, welcome_state::StartGameState};
+use lonely_tribes_systems::{
+    colliders_list_system::ListSystem,
+    fog_of_war::{FogOfWarSystem, LightListSystem},
+    fps_counter::FpsPrinterSystem,
+    move_player::MovePlayerSystem,
+    player_overlap_checker::PlayerOverlapChecker,
+    tint_animator::TintAnimatorSystem,
+    txt_wobble_system::TextWobbleSystem,
+    update_score::ScoreUpdaterSystem,
+    update_tile_transforms::UpdateTileTransforms,
+};
 
 fn main() -> amethyst::Result<()> {
     let opts = LTConfig::new();

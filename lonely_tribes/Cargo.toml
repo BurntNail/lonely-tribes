@@ -17,9 +17,9 @@ chrono = "0.4.19" # for getting times for saves
 rayon = "1.5.1" # for multi-threading
 noise = "0.7.0" #for perlin noise
 
-lonely_tribes_lib = {path="../lonely_tribes_lib"}
-lonely_tribes_systems = {path="../lonely_tribes_systems"}
-lonely_tribes_states = {path="../lonely_tribes_states"}
+lonely_tribes_lib = {path= "../lt_lib" }
+lonely_tribes_systems = {path= "../lt_sys" }
+lonely_tribes_states = {path= "../lt_states" }
 
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version
@@ -28,7 +28,3 @@ features = ["vulkan", "no-slow-safety-checks"]
 [dev-dependencies]
 criterion = "0.3.5"
 
-[[bench]]
-name = "procgen_bench"
-path = "../benches/procgen_bench.rs"
-harness = false

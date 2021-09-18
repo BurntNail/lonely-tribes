@@ -1,12 +1,12 @@
 [workspace]
 members = [
     "lonely_tribes",
-    "lonely_tribes_lib",
-    "lonely_tribes_components",
-    "lonely_tribes_systems",
-    "lonely_tribes_states",
-    "lonely_tribes_animations",
-    "lonely_tribes_generation",
-    "lonely_tribes_tags"
+    "lt_lib",
+    "lt_components",
+    "lt_sys",
+    "lt_states",
+    "lt_animations",
+    "lt_generation",
+    "lt_state"
 ]
 
