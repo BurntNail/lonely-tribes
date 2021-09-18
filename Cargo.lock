@@ -1955,9 +1955,12 @@ dependencies = [
  "image 0.23.14",
  "lazy_static",
  "log",
+ "lonely_tribes_animations",
+ "lonely_tribes_components",
+ "lonely_tribes_generation",
  "lonely_tribes_lib",
- "lonely_tribes_states",
  "lonely_tribes_systems",
+ "lonely_tribes_tags",
  "noise",
  "rand 0.8.4",
  "rand_pcg 0.3.1",
@@ -2023,21 +2026,6 @@ dependencies = [
  "ron 0.6.4",
  "serde",
  "structopt",
-]
-
-[[package]]
-name = "lonely_tribes_states"
-version = "0.1.0"
-dependencies = [
- "amethyst",
- "log",
- "lonely_tribes_animations",
- "lonely_tribes_components",
- "lonely_tribes_generation",
- "lonely_tribes_lib",
- "lonely_tribes_systems",
- "lonely_tribes_tags",
- "rand 0.8.4",
 ]
 
 [[package]]

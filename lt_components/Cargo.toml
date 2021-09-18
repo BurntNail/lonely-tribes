@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 log = "0.4.14"
 lonely_tribes_lib = {path = "../lt_lib" }
-lonely_tribes_tags = {path = "../lt_state" }
+lonely_tribes_tags = {path = "../lt_tags" }
 
 [dependencies.amethyst]
 version = "0.15.3"

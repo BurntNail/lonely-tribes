@@ -1,4 +1,4 @@
-use crate::{help_state::HelpState, level_select::LevelSelectState};
+use super::{help_state::HelpState, level_select::LevelSelectState};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},

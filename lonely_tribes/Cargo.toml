@@ -19,7 +19,10 @@ noise = "0.7.0" #for perlin noise
 
 lonely_tribes_lib = {path= "../lt_lib" }
 lonely_tribes_systems = {path= "../lt_sys" }
-lonely_tribes_states = {path= "../lt_states" }
+lonely_tribes_components = {path = "../lt_components"}
+lonely_tribes_animations = {path="../lt_animations"}
+lonely_tribes_generation = {path="../lt_generation"}
+lonely_tribes_tags = {path="../lt_tags"}
 
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version

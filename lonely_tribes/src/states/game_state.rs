@@ -1,6 +1,6 @@
 use std::{collections::HashMap, fs::File, io::Write};
 
-use crate::{
+use super::{
     afterwards_state::PostGameState, level_select::LevelSelectState, paused_state::PausedState,
     true_end::TrueEnd,
 };

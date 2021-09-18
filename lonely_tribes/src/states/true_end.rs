@@ -1,4 +1,4 @@
-use crate::welcome_state::StartGameState;
+use super::welcome_state::StartGameState;
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},

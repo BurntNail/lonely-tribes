@@ -11,10 +11,10 @@
       <sourceFolder url="file://$MODULE_DIR$/lt_components/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lt_generation/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lt_lib/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lt_state/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lt_states/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lt_sys/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lt_fog_of_war/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lt_tags/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

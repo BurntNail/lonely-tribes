@@ -1,4 +1,4 @@
-use crate::level_select::LevelSelectState;
+use super::level_select::LevelSelectState;
 use amethyst::{
     core::{
         ecs::{Builder, Entity, World, WorldExt},

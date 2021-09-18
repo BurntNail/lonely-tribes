@@ -1,5 +1,7 @@
 #![windows_subsystem = "windows"] //removes console window
 
+mod states;
+
 use amethyst::{
     audio::{AudioBundle, DjSystemDesc},
     core::transform::TransformBundle,
@@ -19,7 +21,7 @@ use amethyst::{
 use log::LevelFilter;
 
 use lonely_tribes_lib::{audio::Muzac, config::LTConfig, high_scores::DATA_DIR};
-use lonely_tribes_states::{help_state::HelpState, welcome_state::StartGameState};
+use states::{help_state::HelpState, welcome_state::StartGameState};
 use lonely_tribes_systems::{
     colliders_list_system::ListSystem,
     fog_of_war::{FogOfWarSystem, LightListSystem},
@@ -48,7 +50,8 @@ fn main() -> amethyst::Result<()> {
 
     let app_root = application_root_dir()?;
 
-    let resources = app_root.join("../assets");
+    let resources = app_root.join("assets");
+    
     let display_config = DisplayConfig {
         title: "Lonely Tribes".to_string(),
         dimensions: Some(opts.conf.screen_dimensions),

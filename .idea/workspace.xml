@@ -14,8 +14,24 @@
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/fog_of_war.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/fog_of_war.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_components/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_state/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_state/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_state/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/src/tag.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_state/src/trigger_type.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/src/trigger_type.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/help_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/help_text.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/paused_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/true_end.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_states/src/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_release.sh" beforeDir="false" afterPath="$PROJECT_DIR$/new_release.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +79,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/maps" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lonely_tribes/src/states" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -78,11 +94,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lonely_tribes/src/states" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\maps" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes" />
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
-      <recent name="$PROJECT_DIR$/assets/art" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lonely_tribes_tags/src" />
@@ -537,6 +553,7 @@
       <workItem from="1631951728172" duration="495000" />
       <workItem from="1631954893003" duration="483000" />
       <workItem from="1631956986920" duration="543000" />
+      <workItem from="1631958708802" duration="1013000" />
     </task>
     <task id="LOCAL-00071" summary="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff.">
       <created>1629698665509</created>

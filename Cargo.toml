@@ -4,10 +4,9 @@ members = [
     "lt_lib",
     "lt_components",
     "lt_sys",
-    "lt_states",
     "lt_animations",
     "lt_generation",
-    "lt_state",
+    "lt_tags",
     "lt_fog_of_war"
 ]
 
