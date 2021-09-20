@@ -19,7 +19,11 @@ use amethyst::{
     LoggerConfig,
 };
 use log::LevelFilter;
-use lonely_tribes_lib::{audio::Muzac, config::LTConfig, high_scores::DATA_DIR};
+use lonely_tribes_lib::{
+    audio::Muzac,
+    paths::{get_directory, is_end_user_build},
+    CONFIG,
+};
 use lonely_tribes_systems::{
     colliders_list_system::ListSystem,
     fog_of_war::{FogOfWarSystem, LightListSystem},
@@ -32,10 +36,10 @@ use lonely_tribes_systems::{
     update_tile_transforms::UpdateTileTransforms,
 };
 use states::{help_state::HelpState, welcome_state::StartGameState};
-use std::env::var_os;
 
 fn main() -> amethyst::Result<()> {
-    let opts = LTConfig::new();
+    let opts = *CONFIG;
+    log::info!("Using {:?}", opts);
 
     amethyst::start_logger(if opts.flags.console {
         LoggerConfig::default()
@@ -50,10 +54,10 @@ fn main() -> amethyst::Result<()> {
 
     let app_root = application_root_dir()?;
 
-    let resources = if var_os("CARGO_MANIFEST_DIR").is_some() {
-        app_root.join("../assets") //if cargo_manifest_dir is some, then we know we're developing, because final builds don't have cargo manifest dirs.
-    } else {
+    let resources = if is_end_user_build() {
         app_root.join("assets")
+    } else {
+        app_root.join("../assets")
     };
 
     let display_config = DisplayConfig {
@@ -110,11 +114,17 @@ fn main() -> amethyst::Result<()> {
     }
 
     let mut game = {
-        if std::fs::read_dir(DATA_DIR).is_ok() {
+        if std::fs::read_dir(get_directory(false)).is_ok() {
             Application::new(resources, StartGameState::default(), game_data)?
         } else {
-            std::fs::create_dir(DATA_DIR)
-                .unwrap_or_else(|err| log::warn!("Unable to create data dir: {}", err));
+            let p = get_directory(false);
+            std::fs::create_dir(p.clone()).unwrap_or_else(|err| {
+                log::warn!(
+                    "Unable to create data dir: {}, p: {}",
+                    err,
+                    p.to_str().unwrap_or_default()
+                )
+            });
             Application::new(resources, HelpState, game_data)?
         }
     };

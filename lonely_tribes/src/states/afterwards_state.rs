@@ -7,10 +7,10 @@ use amethyst::{
 };
 use lonely_tribes_components::win_related::{GameState, GameStateEnum};
 use lonely_tribes_lib::{
-    config::LTConfig,
     either::Either,
     high_scores::HighScores,
     states_util::{get_scaling_factor, levels_len, load_font},
+    CONFIG,
 };
 use std::collections::HashMap;
 
@@ -36,7 +36,7 @@ impl SimpleState for PostGameState {
         let (level_from, is_last_level, won, score) = get_stuff(world);
         let mut high_score = HighScores::new();
 
-        let opts = LTConfig::new().flags;
+        let opts = CONFIG.flags;
 
         let mut nu_high_score = None;
 

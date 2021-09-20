@@ -1,10 +1,11 @@
+use crate::paths::get_directory;
 use ron::from_str;
 use serde::{Deserialize, Serialize};
 use std::fs::read_to_string;
 use structopt::StructOpt;
 
 ///Flags for Lonely Tribes
-#[derive(StructOpt, Debug)]
+#[derive(StructOpt, Copy, Clone, Debug)]
 pub struct Flags {
     ///Enable an FPS counter in the console
     #[structopt(short, long)]
@@ -34,6 +35,7 @@ impl Flags {
     }
 }
 
+#[derive(Copy, Clone, Debug)]
 pub struct LTConfig {
     pub flags: Flags,
     pub conf: ParsedConfig,
@@ -44,6 +46,7 @@ struct ReadInConfig {
     pub maximised: bool,
     pub vol: f32,
 }
+#[derive(Copy, Clone, Debug)]
 pub struct ParsedConfig {
     pub screen_dimensions: (u32, u32),
     pub maximised: bool,
@@ -60,7 +63,7 @@ impl Default for ParsedConfig {
 }
 impl ParsedConfig {
     pub fn new() -> Self {
-        let path = "config/conf.ron".to_string();
+        let path = get_directory(true).join("conf.ron");
         let contents = read_to_string(path.clone()).unwrap_or_default();
         match from_str(contents.as_str()) {
             Ok(w) => {
@@ -77,7 +80,7 @@ impl ParsedConfig {
                     "Unable to parse conf: {}, contents: {}, path: {}",
                     e,
                     contents,
-                    path
+                    path.to_str().unwrap_or_default()
                 );
                 Self::default()
             }
@@ -85,7 +88,7 @@ impl ParsedConfig {
     }
 }
 impl LTConfig {
-    pub fn new() -> Self {
+    pub(crate) fn new() -> Self {
         Self {
             flags: Flags::from_args(),
             conf: ParsedConfig::new(),

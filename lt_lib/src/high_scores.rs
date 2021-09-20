@@ -1,14 +1,14 @@
-use crate::states_util::{get_levels, levels_len};
+use crate::{
+    config::LTConfig,
+    paths::get_directory,
+    states_util::{get_levels, levels_len},
+};
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
-use std::fs::{create_dir, read_to_string, write};
-
-use crate::config::LTConfig;
-
-///The path to the high scores
-const HIGH_SCORES_PATH: &str = "assets/data/high_scores.ron";
-///The data dir
-pub const DATA_DIR: &str = "assets/data";
+use std::{
+    fs::{create_dir, read_to_string, write},
+    path::PathBuf,
+};
 
 ///Struct to score High Scores
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -28,9 +28,14 @@ impl Default for HighScores {
         }
     }
 }
+
+fn high_scores_path() -> PathBuf {
+    get_directory(false).join("high_scores.ron")
+}
+
 impl HighScores {
     pub fn new() -> Self {
-        let file = read_to_string(HIGH_SCORES_PATH).unwrap_or_else(|_| "".to_string());
+        let file = read_to_string(high_scores_path()).unwrap_or_else(|_| "".to_string());
 
         let scores: Vec<i32> = from_str(file.as_str()).unwrap_or_default();
 
@@ -101,10 +106,10 @@ impl HighScores {
     fn write_self_to_file(&self) {
         let text = to_string(&self.scores);
         if let Ok(text) = text {
-            write(HIGH_SCORES_PATH, &text).unwrap_or_else(|_| {
-                create_dir(DATA_DIR)
+            write(high_scores_path(), &text).unwrap_or_else(|_| {
+                create_dir(get_directory(false))
                     .unwrap_or_else(|err| log::error!("Unable to create data directory: {}", err));
-                write(HIGH_SCORES_PATH, &text)
+                write(high_scores_path(), &text)
                     .unwrap_or_else(|err| log::error!("Unable to write high scores: {}", err));
             });
         }

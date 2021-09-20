@@ -15,7 +15,7 @@ use lonely_tribes_components::{
     tile_transform::TileTransform,
     win_related::{GameModeManager, GamePlayingMode, GameState},
 };
-use lonely_tribes_lib::{config::LTConfig, HEIGHT, WIDTH};
+use lonely_tribes_lib::{CONFIG, HEIGHT, WIDTH};
 use rand::Rng;
 
 ///Resource to optionally disable movement - unless it is true, we assume false as the default is false
@@ -53,7 +53,7 @@ pub struct MovementType {
 
 impl Default for MovementType {
     fn default() -> Self {
-        let opts = LTConfig::new().flags;
+        let opts = CONFIG.flags;
 
         if opts.timed_movement {
             Self {

@@ -1,5 +1,5 @@
 use lonely_tribes_components::{point_light::PointLight, tile_transform::TileTransform};
-use lonely_tribes_lib::{config::LTConfig, HEIGHT, WIDTH};
+use lonely_tribes_lib::{CONFIG, HEIGHT, WIDTH};
 use rayon::iter::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 use std::{collections::HashMap, sync::mpsc::channel};
 
@@ -97,7 +97,7 @@ impl LightCacher {
         lights: &[(TileTransform, PointLight)],
         colls: &[TileTransform],
     ) -> HashMap<TileTransform, f32> {
-        let fow_enabled = LTConfig::new().flags.fow_enabled();
+        let fow_enabled = CONFIG.flags.fow_enabled();
 
         if !fow_enabled {
             let mut hm = HashMap::new();
