@@ -10,15 +10,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="much better fix for end-build/indev assets location">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/move_player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/move_player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/benches/procgen_bench.rs" beforeDir="false" afterPath="$PROJECT_DIR$/benches/generation_bench.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +69,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/generation_bench.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/procgen_bench.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/tester.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/rouguelike-rpg/assets/maps/test.ron.rs" value="true" />

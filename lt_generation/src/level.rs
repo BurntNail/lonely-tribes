@@ -12,6 +12,7 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
+use lonely_tribes_lib::paths::get_directory;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum SpriteRequest {
@@ -211,8 +212,8 @@ impl DerefMut for Room {
 impl Room {
     pub fn new(path: String) -> Self {
         let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
-        let path = format!("assets/maps/{}", path);
-        let path = path.as_str();
+        let path = get_directory(false).join("../maps").join(path);
+        let path = path.to_str().unwrap_or_default();
 
         image::open(path)
             .unwrap_or_else(|err| {

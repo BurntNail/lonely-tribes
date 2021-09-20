@@ -8,6 +8,7 @@ use amethyst::{
     ui::{FontAsset, TtfFormat},
 };
 use std::{fs::read_dir, path::Path};
+use crate::paths::get_directory;
 
 ///Helper function to initialise a camera in the world
 ///
@@ -61,7 +62,7 @@ pub fn get_scaling_factor() -> f32 {
 }
 
 pub fn get_levels() -> Vec<(String, bool)> {
-    let mut out: Vec<(String, bool)> = list_file_names_in_dir("assets/maps")
+    let mut out: Vec<(String, bool)> = list_file_names_in_dir("../maps", false)
         .into_iter()
         .filter_map(|nom| {
             let is_normal = nom.contains("lvl-") && nom.contains(".png");
@@ -82,7 +83,7 @@ pub fn get_levels_str() -> Vec<String> {
     get_levels().into_iter().map(|(s, _)| s).collect()
 }
 pub fn levels_len() -> usize {
-    if let Ok(read) = read_dir("assets/maps") {
+    if let Ok(read) = read_dir(get_directory(false).join("../maps/")) {
         read.count()
     } else {
         0
@@ -90,9 +91,9 @@ pub fn levels_len() -> usize {
 }
 
 ///Gets file names inside a directory
-pub fn list_file_names_in_dir<P: AsRef<Path>>(path: P) -> Vec<String> {
+pub fn list_file_names_in_dir<P: AsRef<Path>>(path: P, is_config: bool) -> Vec<String> {
     let mut list = Vec::new();
-    if let Ok(read) = read_dir(path) {
+    if let Ok(read) = read_dir(get_directory(is_config).join(path)) {
         read.for_each(|el| {
             if let Ok(el) = el {
                 let current_file = format!("{:?}", el.file_name());

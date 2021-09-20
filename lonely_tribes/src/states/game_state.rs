@@ -42,6 +42,7 @@ use lonely_tribes_systems::{
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use rand::Rng;
+use lonely_tribes_lib::paths::get_directory;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -327,10 +328,10 @@ impl PuzzleState {
             0
         };
 
-        if let Ok(mut output) = File::create(format!("assets/maps/pg-{}.txt", index)) {
+        let file_path = get_directory(false).join(format!("../maps/pg-{}.txt", index));
+        if let Ok(mut output) = File::create(file_path.clone()) {
             write!(output, "{}", current_index)
-                .unwrap_or_else(|err| log::error!("Error writing to pg-{}.txt - {}", index, err));
-            // output.write_u32(current_index).unwrap_or_else(|err| log::error!("Error writing to pg-{}.txt - {}", index, err));
+                .unwrap_or_else(|err| log::error!("Error writing to {:?} - {}", file_path, err));
         }
     }
 

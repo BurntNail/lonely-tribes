@@ -14,6 +14,7 @@ use lonely_tribes_lib::{
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
+use lonely_tribes_lib::paths::get_directory;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -245,7 +246,7 @@ fn create_lvl_select_btns(
                     }
                 }
             } else {
-                let index = read_to_string(format!("assets/maps/{}", level))
+                let index = read_to_string(get_directory(false).join("../maps/").join(level))
                     .unwrap_or_default()
                     .parse::<usize>()
                     .unwrap_or_default();
