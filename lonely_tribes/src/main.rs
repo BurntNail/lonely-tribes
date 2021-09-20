@@ -19,9 +19,7 @@ use amethyst::{
     LoggerConfig,
 };
 use log::LevelFilter;
-
 use lonely_tribes_lib::{audio::Muzac, config::LTConfig, high_scores::DATA_DIR};
-use states::{help_state::HelpState, welcome_state::StartGameState};
 use lonely_tribes_systems::{
     colliders_list_system::ListSystem,
     fog_of_war::{FogOfWarSystem, LightListSystem},
@@ -33,6 +31,8 @@ use lonely_tribes_systems::{
     update_score::ScoreUpdaterSystem,
     update_tile_transforms::UpdateTileTransforms,
 };
+use states::{help_state::HelpState, welcome_state::StartGameState};
+use std::env::var_os;
 
 fn main() -> amethyst::Result<()> {
     let opts = LTConfig::new();
@@ -50,8 +50,12 @@ fn main() -> amethyst::Result<()> {
 
     let app_root = application_root_dir()?;
 
-    let resources = app_root.join("assets");
-    
+    let resources = if var_os("CARGO_MANIFEST_DIR").is_some() {
+        app_root.join("../assets") //if cargo_manifest_dir is some, then we know we're developing, because final builds don't have cargo manifest dirs.
+    } else {
+        app_root.join("assets")
+    };
+
     let display_config = DisplayConfig {
         title: "Lonely Tribes".to_string(),
         dimensions: Some(opts.conf.screen_dimensions),

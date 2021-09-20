@@ -9,29 +9,112 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="rename stuff + add more crit benches">
-      <change beforePath="$PROJECT_DIR$/.idea/making-friends.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/making-friends.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.ron" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/highlighter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/highlighter.ron" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/left_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/left_right.ron" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/pause-menu-sprites.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/pause-menu-sprites.ron" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/sprites-needed.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/zoom-in-on-loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/art/zoom-in-on-loss.ron" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Hyperlegible.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/OFL.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Silverfinster-x3L2K.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/ZxSpectrum.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/ZxSpectrumBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/colours-palette.aseprite" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/lvl-01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/lvl-02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/lvl-03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/lvl-04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/lvl-05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/maps/lvl-06.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Billy's Sacrifice.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Checking Manifest.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Crash Landing.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - Automatav2.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - City Stomper.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/DOS-88 - Far away.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Parabola.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Race to Mars.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/DOS-88/Smooth Sailing.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Alone - melancholic - slow.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Alone(loop) - melancholic - slow.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Anormal - calming - ambient.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Closing - strings - peaceful.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Concern - drone - anxiety.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Echo - hollow - scary - anxiety.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Echo(loop) - hollow - scary - anxiety.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Lost - drone - dark.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Lost(loop) - drone - dark.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Room(Loop) - piano - drone.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Stars - ambient - guitar - piano.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Transfer - drone - spaces.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/Transfer(loop) - drone - spaces.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/music/LOST/licence.TXT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/colored_tilemap_packed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/colored_tilemap_packed.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/highlighter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/highlighter.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/left_right.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/left_right.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/pause-menu-sprites.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/pause-menu-sprites.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/sprites-needed.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/zoom-in-on-loss.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/art/zoom-in-on-loss.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/data/high_scores.ron" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/fonts/Hyperlegible.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/fonts/OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/fonts/Silverfinster-x3L2K.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/fonts/ZxSpectrum.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/fonts/ZxSpectrumBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/colours-palette.aseprite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/lvl-01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/lvl-02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/lvl-03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/lvl-04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/lvl-05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/lvl-06.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-0.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/maps/pg-8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/Billy's Sacrifice.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/Checking Manifest.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/Crash Landing.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/DOS-88 - Automatav2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/DOS-88 - City Stomper.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/DOS-88 - Far away.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/Parabola.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/Race to Mars.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/DOS-88/Smooth Sailing.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Alone - melancholic - slow.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Alone(loop) - melancholic - slow.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Anormal - calming - ambient.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Closing - strings - peaceful.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Concern - drone - anxiety.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Echo - hollow - scary - anxiety.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Echo(loop) - hollow - scary - anxiety.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Lost - drone - dark.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Lost(loop) - drone - dark.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Room(Loop) - piano - drone.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Stars - ambient - guitar - piano.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Transfer - drone - spaces.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/Transfer(loop) - drone - spaces.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/assets/music/LOST/licence.TXT" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/config/conf.ron" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_components/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_generation/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_state/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_state/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_state/src/tag.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/src/tag.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_state/src/trigger_type.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_tags/src/trigger_type.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/help_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/help_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/help_text.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/lib.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/paused_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/true_end.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_states/src/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_release.sh" beforeDir="false" afterPath="$PROJECT_DIR$/new_release.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,11 +184,11 @@
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lonely_tribes_tags/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_algos/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_lib/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_utils/src" />
-      <recent name="$PROJECT_DIR$/lonely_tribes_components/src" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -123,7 +206,7 @@
       <command value="cargo bench" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.fmt">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -383,8 +466,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.bench [lonely-tribes]" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.bench [lonely-tribes]" />
         <item itemvalue="Cargo.clippy" />
       </list>
     </recent_temporary>
@@ -554,6 +637,7 @@
       <workItem from="1631954893003" duration="483000" />
       <workItem from="1631956986920" duration="543000" />
       <workItem from="1631958708802" duration="1013000" />
+      <workItem from="1632155605675" duration="410000" />
     </task>
     <task id="LOCAL-00071" summary="Remove save/loads - doesn't feel right to me for this game, plus can be mega exploited for rng based stuff.">
       <created>1629698665509</created>
