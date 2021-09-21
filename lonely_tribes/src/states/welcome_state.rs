@@ -11,8 +11,6 @@ use lonely_tribes_lib::{
     states_util::{get_scaling_factor, load_font},
     HOVER_COLOUR,
 };
-use lonely_tribes_lib::states_util::init_camera;
-use crate::states::game_state::get_camera_dimensions;
 
 ///State for welcoming the player to the game
 #[derive(Default)]
@@ -103,7 +101,7 @@ impl SimpleState for StartGameState {
 ///
 /// Returns an Entity with the Start Button, one with the Help Button, one with the Level Editor button, and one with the Quit button
 fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
     let font_handle = load_font(world, "ZxSpectrum");
 
@@ -113,16 +111,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * 100.0,
+        sf_y * 100.0,
         0.0,
-        sf * 1000.0,
-        sf * 250.0,
+        sf_x * 1000.0,
+        sf_y * 250.0,
     );
     let welcome_txt = UiText::new(
         bold_font_handle,
         String::from("Welcome to Lonely Tribes!"),
         [1.0, 1.0, 1.0, 0.5],
-        sf * 75.0,
+        sf_y * 75.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
@@ -139,16 +137,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * -85.0,
+        sf_y * -85.0,
         0.0,
-        sf * 1000.0,
-        sf * 40.0,
+        sf_x * 1000.0,
+        sf_y * 40.0,
     );
     let start_btn_txt = UiText::new(
         font_handle.clone(),
         String::from("Click here to Start."),
         [1.0; 4],
-        sf * 50.0,
+        sf_y * 50.0,
         LineMode::Single,
         Anchor::Middle,
     );
@@ -156,7 +154,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         .create_entity()
         .with(start_btn_trans)
         .with(start_btn_txt)
-        .with(TextWobble::new(sf * 10.0, sf * -85.0, 2.5))
+        .with(TextWobble::new(sf_y * 10.0, sf_y * -85.0, 2.5))
         .with(Interactable)
         .build();
     //endregion
@@ -167,16 +165,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * -145.0,
+        sf_y * -145.0,
         0.0,
-        sf * 1000.0,
-        sf * 40.0,
+        sf_x * 1000.0,
+        sf_y * 40.0,
     );
     let help_btn_txt = UiText::new(
         font_handle.clone(),
         String::from("Click here to get Help."),
         [1.0; 4],
-        sf * 50.0,
+        sf_y * 50.0,
         LineMode::Single,
         Anchor::Middle,
     );
@@ -184,7 +182,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         .create_entity()
         .with(help_btn_trans)
         .with(help_btn_txt)
-        .with(TextWobble::new(sf * 10.0, sf * -145.0, 2.5))
+        .with(TextWobble::new(sf_y * 10.0, sf_y * -145.0, 2.5))
         .with(Interactable)
         .build();
     //endregion
@@ -195,16 +193,16 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * -265.0,
+        sf_y * -265.0,
         0.0,
-        sf * 1500.0,
-        sf * 40.0,
+        sf_x * 1500.0,
+        sf_y * 40.0,
     );
     let quit_btn_text = UiText::new(
         font_handle,
         String::from("Exit Game"),
         [1.0; 4],
-        sf * 50.0,
+        sf_y * 50.0,
         LineMode::Single,
         Anchor::Middle,
     );
@@ -212,7 +210,7 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         .create_entity()
         .with(quit_btn_trans)
         .with(quit_btn_text)
-        .with(TextWobble::new(sf * 10.0, sf * -265.0, 2.5))
+        .with(TextWobble::new(sf_y * 10.0, sf_y * -265.0, 2.5))
         .with(Interactable)
         .build();
     //endregion

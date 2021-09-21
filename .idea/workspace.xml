@@ -8,14 +8,21 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fully fix all paths to use new system">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="start testing and documenting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/help_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/paused_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/paused_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/true_end.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_sys/src/update_tile_transforms.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/update_tile_transforms.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +43,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="redoc-plus-retest" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -369,14 +381,14 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.fmt" />
+        <item itemvalue="Cargo.clippy" />
         <item itemvalue="Cargo.bench [lonely-tribes]" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -547,6 +559,7 @@
       <workItem from="1632171552305" duration="1245000" />
       <workItem from="1632227629198" duration="799000" />
       <workItem from="1632239354906" duration="376000" />
+      <workItem from="1632242633265" duration="940000" />
     </task>
     <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
       <created>1629699968118</created>

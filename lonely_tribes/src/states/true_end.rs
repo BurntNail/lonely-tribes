@@ -73,7 +73,7 @@ impl SimpleState for TrueEnd {
 ///
 ///Returns the entity of that text, for checking when it was clicked
 pub fn get_true_end_txt(world: &mut World) -> Entity {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     let trans = UiTransform::new(
         "end_txt".to_string(),
         Anchor::Middle,
@@ -81,14 +81,14 @@ pub fn get_true_end_txt(world: &mut World) -> Entity {
         0.0,
         0.0,
         0.5,
-        sf * 1000.0,
-        sf * 1000.0,
+        sf_x * 1000.0,
+        sf_y * 1000.0,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrum"),
         "Well, I never thought we'd get here... Click here, or press [Space] or [Enter] to go back to the Main Menu. Congrats!".to_string(),
         [1.0; 4],
-        sf * 45.0,
+        sf_y * 45.0,
         LineMode::Wrap,
         Anchor::Middle,
     );

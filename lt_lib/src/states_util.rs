@@ -1,3 +1,4 @@
+use crate::{paths::get_directory, CONFIG, HEIGHT, TILE_WIDTH_HEIGHT, WIDTH};
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
     core::{
@@ -7,8 +8,28 @@ use amethyst::{
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{FontAsset, TtfFormat},
 };
+use lazy_static::lazy_static;
 use std::{fs::read_dir, path::Path};
-use crate::paths::get_directory;
+
+pub const CAMERA_BASE_WIDTH: f32 = (TILE_WIDTH_HEIGHT * WIDTH) as f32; //For ingame-transform Measurements
+pub const CAMERA_BASE_HEIGHT: f32 = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
+
+lazy_static! {
+    pub static ref CAMERA_WIDTH_MULTIPLIER: (f32, f32) = {
+        let (w, h) = CONFIG.conf.screen_dimensions;
+        let (x, y) = (w as f32 / CAMERA_BASE_WIDTH, h as f32 / CAMERA_BASE_HEIGHT);
+
+        if x > y {
+            (x / y, 1.0)
+        } else {
+            (1.0, y / x)
+        }
+    };
+    pub static ref CAMERA_DIMENSIONS: (f32, f32) = {
+        let (x, y) = *CAMERA_WIDTH_MULTIPLIER;
+        (CAMERA_BASE_WIDTH * x, CAMERA_BASE_HEIGHT * y)
+    };
+}
 
 ///Helper function to initialise a camera in the world
 ///
@@ -56,9 +77,12 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
     )
 }
 
-pub fn get_scaling_factor() -> f32 {
-    let c = crate::config::LTConfig::new();
-    c.conf.screen_dimensions.0 as f32 / 1600.0 //game was originally designed for 1600x900
+pub fn get_scaling_factor() -> (f32, f32) {
+    let c = CONFIG.conf;
+    (
+        c.screen_dimensions.0 as f32 / 1600.0, //game was originally designed for 1600x900
+        c.screen_dimensions.1 as f32 / 900.0,
+    )
 }
 
 pub fn get_levels() -> Vec<(String, bool)> {

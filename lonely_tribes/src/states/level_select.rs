@@ -9,12 +9,12 @@ use amethyst::{
 use lonely_tribes_lib::{
     either::Either,
     high_scores::HighScores,
+    paths::get_directory,
     states_util::{get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet},
     HOVER_COLOUR,
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
-use lonely_tribes_lib::paths::get_directory;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -164,7 +164,7 @@ fn create_lvl_select_btns(
     world: &mut World,
     current_screen: usize,
 ) -> (HashMap<Entity, usize>, usize, Entity, (Entity, Entity)) {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     world.delete_all();
 
     let mut map: HashMap<Entity, usize> = HashMap::new();
@@ -172,15 +172,15 @@ fn create_lvl_select_btns(
     let high_scores = HighScores::new();
 
     let level_txt_height = {
-        let tot_height = (sf * 900.0) as i32;
-        let buffer_space = (sf * 200.0) as i32;
+        let tot_height = (sf_y * 900.0) as i32;
+        let buffer_space = (sf_y * 200.0) as i32;
 
         (tot_height - buffer_space) / MAX_LEVELS_ONE_SCREEN
     };
     let get_height = |index: usize| {
         let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - index) as f32;
         // let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - (index % (MAX_LEVELS_ONE_SCREEN as usize - 1))) as f32;
-        pos - (sf * 450.0)
+        pos - (sf_y * 450.0)
     };
 
     let main_trans = UiTransform::new(
@@ -188,16 +188,16 @@ fn create_lvl_select_btns(
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * 425.0,
+        sf_y * 425.0,
         0.5,
-        sf * 1500.0,
-        sf * 100.0,
+        sf_x * 1500.0,
+        sf_y * 100.0,
     );
     let main_txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Welcome to the Level Select. Press [Space] Or [Return] to Automatically go to the next unlocked level (or the last level if you have finished the game)".to_string(),
         [1.0; 4],
-        sf * 33.3,
+        sf_y * 33.3,
         LineMode::Wrap,
         Anchor::Middle
     );
@@ -263,7 +263,7 @@ fn create_lvl_select_btns(
             }
         };
 
-        let font_height = sf * 50.0;
+        let font_height = sf_y * 50.0;
         let trans = UiTransform::new(
             format!("{}-text", level),
             Anchor::Middle,
@@ -271,7 +271,7 @@ fn create_lvl_select_btns(
             0.0,
             get_height(i), //already multiplied by sf in func
             0.5,
-            sf * 1500.0,
+            sf_x * 1500.0,
             font_height,
         );
         let txt = UiText::new(
@@ -299,7 +299,7 @@ fn create_lvl_select_btns(
     }
 
     let proc_gen = {
-        let font_height = sf * 50.0;
+        let font_height = sf_y * 50.0;
         let trans = UiTransform::new(
             "proc_gen_lvl".to_string(),
             Anchor::Middle,
@@ -307,7 +307,7 @@ fn create_lvl_select_btns(
             0.0,
             get_height(MAX_LEVELS_ONE_SCREEN as usize - 1), //already multiplied by sf in func
             0.5,
-            sf * 1500.0,
+            sf_x * 1500.0,
             font_height,
         );
         let txt = UiText::new(
@@ -335,11 +335,11 @@ fn create_lvl_select_btns(
                 "right_scrn_btn".to_string(),
                 Anchor::BottomRight,
                 Anchor::BottomRight,
-                sf * -10.0,
-                sf * 10.0,
+                sf_x * -10.0,
+                sf_y * 10.0,
                 0.5,
-                sf * 90.0,
-                sf * 90.0,
+                sf_x * 90.0,
+                sf_x * 90.0, //for Sprites, they need to NOT scale in 2 dimensions
             );
 
             world
@@ -358,11 +358,11 @@ fn create_lvl_select_btns(
                 "left_scrn_btn".to_string(),
                 Anchor::BottomLeft,
                 Anchor::BottomLeft,
-                sf * 10.0,
-                sf * 10.0,
+                sf_x * 10.0,
+                sf_y * 10.0,
                 0.5,
-                sf * 90.0,
-                sf * 90.0,
+                sf_x * 90.0,
+                sf_x * 90.0, //for Sprites, they need to NOT scale in 2 dimensions
             );
 
             world

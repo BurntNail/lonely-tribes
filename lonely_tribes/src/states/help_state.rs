@@ -5,7 +5,7 @@ use amethyst::{
     ui::{Anchor, LineMode, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
-use lonely_tribes_lib::states_util::{get_scaling_factor, load_font, init_camera};
+use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = include_str!("help_text.txt");
@@ -42,7 +42,7 @@ impl SimpleState for HelpState {
 ///
 ///By default, it uses Atkinson Hyperlegible
 fn get_help_txt(world: &mut World) {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     let trans = UiTransform::new(
         "help_txt".to_string(),
         Anchor::Middle,
@@ -50,14 +50,14 @@ fn get_help_txt(world: &mut World) {
         0.0,
         0.0,
         0.5,
-        sf * 1500.0,
-        sf * 800.0,
+        sf_x * 1500.0,
+        sf_y * 800.0,
     );
     let txt = UiText::new(
         load_font(world, "Hyperlegible"),
         HELP_TXT.to_string(),
         [1.0; 4],
-        sf * 42.5,
+        sf_y * 42.5,
         LineMode::Wrap,
         Anchor::MiddleLeft,
     );

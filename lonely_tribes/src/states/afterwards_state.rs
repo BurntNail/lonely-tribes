@@ -140,7 +140,7 @@ pub fn get_stuff(world: &World) -> (Either<usize, u32>, bool, bool, i32) {
 ///
 ///By default, it uses a non-bold sans-serif font called ZxSpectrum
 pub fn get_end_txt(world: &mut World, won_txt: String) {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     let trans = UiTransform::new(
         "won_txt".to_string(),
         Anchor::Middle,
@@ -148,14 +148,14 @@ pub fn get_end_txt(world: &mut World, won_txt: String) {
         0.0,
         0.0,
         0.5,
-        sf * 1000.0,
-        sf * 1000.0,
+        sf_x * 1000.0,
+        sf_y * 1000.0,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrum"),
         won_txt,
         [1.0; 4],
-        sf * 50.0,
+        sf_y * 50.0,
         LineMode::Wrap,
         Anchor::Middle,
     );

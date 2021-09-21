@@ -1,4 +1,3 @@
-use std::{collections::HashMap, fs::File, io::Write};
 use super::{
     afterwards_state::PostGameState, level_select::LevelSelectState, paused_state::PausedState,
     true_end::TrueEnd,
@@ -30,25 +29,21 @@ use lonely_tribes_components::{
     win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
 };
 use lonely_tribes_generation::level::{FromSpr, Room};
-use lonely_tribes_lib::{either::Either, states_util::{get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet}, TILE_WIDTH_HEIGHT, HEIGHT, WIDTH, CONFIG};
+use lonely_tribes_lib::{
+    either::Either,
+    paths::get_directory,
+    states_util::{
+        get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet,
+        CAMERA_DIMENSIONS,
+    },
+};
 use lonely_tribes_systems::{
     move_player::MovementDisabler, player_overlap_checker::DeleteList,
     update_tile_transforms::UpdateTileTransforms,
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use rand::Rng;
-use lonely_tribes_lib::paths::get_directory;
-
-pub fn get_camera_dimensions () -> (f32, f32) {
-    let base_width = (TILE_WIDTH_HEIGHT * WIDTH) as f32;
-    let base_height = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
-
-    let (w, h) = CONFIG.conf.screen_dimensions;
-    let width_mul = (w as f32 / h as f32) / (base_width / base_height);
-    log::info!("{}", width_mul);
-
-    (base_width * width_mul, base_height)
-}
+use std::{collections::HashMap, fs::File, io::Write};
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -106,7 +101,7 @@ impl SimpleState for PuzzleState {
         let world = data.world;
         world.delete_all();
 
-        init_camera(world, get_camera_dimensions());
+        init_camera(world, *CAMERA_DIMENSIONS);
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
         let level_default = "test-room-one.png".to_string();
@@ -428,22 +423,22 @@ impl PuzzleState {
 
 ///Adds an entity with UiText to mark the score to the player
 fn add_score(world: &mut World) -> Entity {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     let trans = UiTransform::new(
         "score_txt".to_string(),
         Anchor::Middle,
         Anchor::Middle,
-        sf * -575.0,
-        sf * 400.0,
+        sf_x * -575.0,
+        sf_y * 400.0,
         0.5,
-        sf * 600.0,
-        sf * 1000.0,
+        sf_x * 600.0,
+        sf_y * 1000.0,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Current Score: 0".to_string(),
         [1.0, 1.0, 1.0, 0.5],
-        sf * 25.0,
+        sf_y * 25.0,
         LineMode::Wrap,
         Anchor::Middle,
     );

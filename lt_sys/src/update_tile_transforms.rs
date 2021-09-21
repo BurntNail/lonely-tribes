@@ -7,7 +7,10 @@ use lonely_tribes_animations::{
     rotation::RotationAnimationData,
 };
 use lonely_tribes_components::tile_transform::TileTransform;
-use lonely_tribes_lib::{HEIGHT, TILE_WIDTH_HEIGHT};
+use lonely_tribes_lib::{
+    states_util::{CAMERA_BASE_HEIGHT, CAMERA_BASE_WIDTH, CAMERA_DIMENSIONS},
+    HEIGHT, TILE_WIDTH_HEIGHT,
+};
 
 /// System to turn TileTransforms into Transforms
 pub struct UpdateTileTransforms;
@@ -30,12 +33,20 @@ impl<'s> System<'s> for UpdateTileTransforms {
         &mut self,
         (tiles, mut transforms, mut movement_animators, mut rotation_animators, time): Self::SystemData,
     ) {
+        let dims = *CAMERA_DIMENSIONS;
+        let wide_x_offset = (dims.0 - CAMERA_BASE_WIDTH) / 2.0;
+        let wide_y_offset = (dims.1 - CAMERA_BASE_HEIGHT) / 2.0;
+
         for (tile, trans) in (&tiles, &mut transforms).join() {
             let old_z = trans.translation().z;
-            let x = tile.x as f32 * TILE_WIDTH_HEIGHT as f32 + TILE_WIDTH + tile.x_offset as f32;
+            let x = tile.x as f32 * TILE_WIDTH_HEIGHT as f32
+                + TILE_WIDTH
+                + tile.x_offset as f32
+                + wide_x_offset;
             let y = (HEIGHT as f32 - tile.y as f32) * TILE_WIDTH_HEIGHT as f32
                 - TILE_HEIGHT
-                - tile.y_offset as f32;
+                - tile.y_offset as f32
+                + wide_y_offset;
 
             trans.set_translation_xyz(x, y, old_z);
         }
@@ -50,9 +61,11 @@ impl<'s> System<'s> for UpdateTileTransforms {
                 let start = anim.start;
                 let (xo, yo) = anim.get_current();
 
-                let x = ((start.x as f32) - xo) * TILE_WIDTH_HEIGHT as f32 + TILE_WIDTH;
+                let x = (((start.x as f32) - xo) * TILE_WIDTH_HEIGHT as f32 + TILE_WIDTH)
+                    + wide_x_offset;
                 let y = ((HEIGHT as f32 - start.y as f32) + yo) * TILE_WIDTH_HEIGHT as f32
-                    - TILE_HEIGHT;
+                    - TILE_HEIGHT
+                    + wide_y_offset;
                 let z = trans.translation().z;
 
                 trans.set_translation_xyz(x, y, z);

@@ -166,7 +166,7 @@ pub fn show_entities(world: &mut World, entities: Vec<Entity>) {
 ///
 /// Returns a HashMap of all the buttons, and the title
 pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuAction>, Entity) {
-    let sf = get_scaling_factor();
+    let (sf_x, sf_y) = get_scaling_factor();
     let mut map = HashMap::new();
 
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
@@ -177,16 +177,16 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
         Anchor::Middle,
         Anchor::Middle,
         0.0,
-        sf * 300.0,
+        sf_y * 300.0,
         0.0,
-        sf * 1500.0,
-        sf * 250.0,
+        sf_x * 1500.0,
+        sf_y * 250.0,
     );
     let welcome_txt = UiText::new(
         bold_font_handle,
         String::from("The Game is currently Paused."),
         [1.0, 1.0, 1.0, 0.5],
-        sf * 75.0,
+        sf_y * 75.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
@@ -202,10 +202,10 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            sf * -85.0,
+            sf_y * -85.0,
             0.0,
-            sf * 1500.0,
-            sf * 40.0,
+            sf_x * 1500.0,
+            sf_y * 40.0,
         );
 
         let actual_txt = if world.read_resource::<MovementType>().can_move.is_some() {
@@ -218,7 +218,7 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             font_handle.clone(),
             actual_txt,
             [1.0; 4],
-            sf * 45.0,
+            sf_y * 45.0,
             LineMode::Single,
             Anchor::Middle,
         );
@@ -235,17 +235,17 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            sf * -145.0,
+            sf_y * -145.0,
             0.0,
-            sf * 1500.0,
-            sf * 40.0,
+            sf_x * 1500.0,
+            sf_y * 40.0,
         );
 
         let quit_btn_txt = UiText::new(
             font_handle.clone(),
             "Exit Game".to_string(),
             [1.0; 4],
-            sf * 45.0,
+            sf_y * 45.0,
             LineMode::Single,
             Anchor::Middle,
         );
@@ -262,17 +262,17 @@ pub fn get_pause_buttons(world: &mut World) -> (HashMap<Entity, PausedStateMenuA
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            sf * -205.0,
+            sf_y * -205.0,
             0.0,
-            sf * 1500.0,
-            sf * 40.0,
+            sf_x * 1500.0,
+            sf_y * 40.0,
         );
 
         let quit_btn_txt = UiText::new(
             font_handle,
             "Exit to Level Select".to_string(),
             [1.0; 4],
-            sf * 45.0,
+            sf_y * 45.0,
             LineMode::Single,
             Anchor::Middle,
         );

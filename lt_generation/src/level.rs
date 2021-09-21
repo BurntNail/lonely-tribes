@@ -1,6 +1,6 @@
 use crate::procedural_generator::ProceduralGenerator;
 use image::{DynamicImage, GenericImageView, Rgba};
-use lonely_tribes_lib::{HEIGHT, WIDTH};
+use lonely_tribes_lib::{paths::get_directory, HEIGHT, WIDTH};
 use lonely_tribes_tags::{
     tag::{
         Tag,
@@ -12,7 +12,6 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
-use lonely_tribes_lib::paths::get_directory;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum SpriteRequest {
