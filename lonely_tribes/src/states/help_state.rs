@@ -5,7 +5,7 @@ use amethyst::{
     ui::{Anchor, LineMode, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
-use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
+use lonely_tribes_lib::states_util::{get_scaling_factor, load_font, init_camera};
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = include_str!("help_text.txt");

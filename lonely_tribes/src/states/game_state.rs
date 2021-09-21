@@ -1,5 +1,4 @@
 use std::{collections::HashMap, fs::File, io::Write};
-
 use super::{
     afterwards_state::PostGameState, level_select::LevelSelectState, paused_state::PausedState,
     true_end::TrueEnd,
@@ -31,11 +30,7 @@ use lonely_tribes_components::{
     win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
 };
 use lonely_tribes_generation::level::{FromSpr, Room};
-use lonely_tribes_lib::{
-    either::Either,
-    states_util::{get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet},
-    ARENA_HEIGHT, ARENA_WIDTH,
-};
+use lonely_tribes_lib::{either::Either, states_util::{get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet}, TILE_WIDTH_HEIGHT, HEIGHT, WIDTH, CONFIG};
 use lonely_tribes_systems::{
     move_player::MovementDisabler, player_overlap_checker::DeleteList,
     update_tile_transforms::UpdateTileTransforms,
@@ -43,6 +38,17 @@ use lonely_tribes_systems::{
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use rand::Rng;
 use lonely_tribes_lib::paths::get_directory;
+
+pub fn get_camera_dimensions () -> (f32, f32) {
+    let base_width = (TILE_WIDTH_HEIGHT * WIDTH) as f32;
+    let base_height = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
+
+    let (w, h) = CONFIG.conf.screen_dimensions;
+    let width_mul = (w as f32 / h as f32) / (base_width / base_height);
+    log::info!("{}", width_mul);
+
+    (base_width * width_mul, base_height)
+}
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -100,7 +106,7 @@ impl SimpleState for PuzzleState {
         let world = data.world;
         world.delete_all();
 
-        init_camera(world, (ARENA_WIDTH as f32, ARENA_HEIGHT as f32));
+        init_camera(world, get_camera_dimensions());
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
         let level_default = "test-room-one.png".to_string();

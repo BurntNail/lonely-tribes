@@ -8,13 +8,14 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="much better fix for end-build/indev assets location">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fully fix all paths to use new system">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/benches/procgen_bench.rs" beforeDir="false" afterPath="$PROJECT_DIR$/benches/generation_bench.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/help_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/help_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_lib/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +70,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/animation_bench.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/generation_bench.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/procgen_bench.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/tester.rs" value="true" />
@@ -107,7 +109,7 @@
       <command value="cargo bench" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.clippy">
+  <component name="RunManager" selected="Cargo.run">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -374,7 +376,7 @@
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -541,13 +543,10 @@
       <workItem from="1632155605675" duration="589000" />
       <workItem from="1632156632534" duration="1785000" />
       <workItem from="1632161116052" duration="1851000" />
-    </task>
-    <task id="LOCAL-00072" summary="cargo fmt">
-      <created>1629698745195</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1629698745195</updated>
+      <workItem from="1632170315994" duration="807000" />
+      <workItem from="1632171552305" duration="1245000" />
+      <workItem from="1632227629198" duration="799000" />
+      <workItem from="1632239354906" duration="376000" />
     </task>
     <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
       <created>1629699968118</created>
@@ -885,7 +884,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632156191687</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="fully fix all paths to use new system">
+      <created>1632169873352</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1632169873352</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -920,7 +926,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change hard-coded 8.0s" />
     <MESSAGE value="refactor animation components" />
     <MESSAGE value="add docu-comments&#10;fix tint override" />
     <MESSAGE value="remove bug where could see whole map when launching a mode" />
@@ -945,7 +950,8 @@
     <MESSAGE value="fix it" />
     <MESSAGE value="rename stuff + add more crit benches" />
     <MESSAGE value="much better fix for end-build/indev assets location" />
-    <option name="LAST_COMMIT_MESSAGE" value="much better fix for end-build/indev assets location" />
+    <MESSAGE value="fully fix all paths to use new system" />
+    <option name="LAST_COMMIT_MESSAGE" value="fully fix all paths to use new system" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
