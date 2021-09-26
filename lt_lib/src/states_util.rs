@@ -102,6 +102,22 @@ impl LevelType {
     }
 }
 
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum LevelType {
+    Developer,
+    User,
+    ProcGen
+}
+impl LevelType {
+    pub(crate) fn id (&self) -> u8 {
+        match self {
+            LevelType::Developer => 0,
+            LevelType::User => 1,
+            LevelType::ProcGen => 2,
+        }
+    }
+}
+
 // #[cfg(test)]
 // mod lt_tests {
 //     use super::LevelType::*;
