@@ -15,6 +15,7 @@ use lonely_tribes_lib::{
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
+use lonely_tribes_lib::states_util::LevelType;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -76,6 +77,7 @@ impl SimpleState for LevelSelectState {
                             if ind > 1000 {
                                 index = Some(Either::Two((ind - 1000) as u32))
                             } else {
+                                log::info!("ind: {}", ind);
                                 index = Some(Either::One(ind));
                             }
                         }
@@ -208,7 +210,7 @@ fn create_lvl_select_btns(
         .build();
 
     let next_level = high_scores.find_next_level();
-    for (i, (level, isnt_procgen)) in get_levels()
+    for (i, (level, level_type)) in get_levels()
         .iter()
         .skip(current_screen * (MAX_LEVELS_ONE_SCREEN - 1) as usize)
         .take(5)
@@ -217,7 +219,7 @@ fn create_lvl_select_btns(
         let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
 
         let (text, colour, can_be_played, pg_ind) = {
-            if *isnt_procgen {
+            if level_type == &LevelType::Developer {
                 let high_score = high_scores.get_high_score(i_adj as usize);
 
                 #[allow(clippy::collapsible_else_if)]
@@ -246,20 +248,25 @@ fn create_lvl_select_btns(
                     }
                 }
             } else {
-                let index = read_to_string(get_directory(false).join("../maps/").join(level))
-                    .unwrap_or_default()
-                    .parse::<usize>()
-                    .unwrap_or_default();
+                if level_type == &LevelType::ProcGen {
+                    let index = read_to_string(get_directory(false).join("../maps/").join(level))
+                        .unwrap_or_default()
+                        .parse::<usize>()
+                        .unwrap_or_default();
 
-                (
-                    format!(
+                    (format!(
                         "Procedurally Generated Level: {}",
                         level.replace("pg-", "").replace(".txt", "")
                     ),
-                    [1.0; 4],
-                    true,
-                    Some(index),
-                )
+                        [1.0; 4],
+                        true,
+                        Some(index))
+                } else {
+                    (format!("User Created/Downloaded Level: {}", level.replace("m-user-", "").replace(".png", "")),
+                        [1.0; 4],
+                        true,
+                        None)
+                }
             }
         };
 
@@ -290,12 +297,16 @@ fn create_lvl_select_btns(
 
         map.insert(
             entity.build(),
-            if *isnt_procgen {
+            if level_type != &LevelType::ProcGen {
                 i_adj as usize
             } else {
                 1000 + pg_ind.unwrap_or(0)
             },
         );
+
+        if level_type != &LevelType::ProcGen {
+            log::info!("adding on");
+        }
     }
 
     let proc_gen = {

@@ -104,13 +104,12 @@ impl SimpleState for PuzzleState {
         init_camera(world, *CAMERA_DIMENSIONS);
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
-        let level_default = "test-room-one.png".to_string();
 
         let room = match self.level_index {
             Either::One(index) => {
                 let lvl = get_levels_str()
                     .get(index)
-                    .unwrap_or(&level_default)
+                    .unwrap_or(&format!("uh oh ind: {}", index))
                     .to_string();
                 Room::new(lvl)
             }

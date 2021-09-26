@@ -59,27 +59,30 @@ impl SimpleState for StartGameState {
                                 let mut texts = data.world.write_storage::<UiText>();
                                 let txt = texts.get_mut(ui_event.target);
 
-                                if let Some(txt) = txt {
-                                    match ui_event.event_type {
-                                        UiEventType::ClickStop => {
-                                            txt.color = [1.0, 1.0, 1.0, 0.5];
-                                            if is_start {
-                                                t = SimpleTrans::Switch(Box::new(
-                                                    LevelSelectState::default(),
-                                                ));
-                                            } else if is_help {
-                                                t = SimpleTrans::Switch(Box::new(
-                                                    HelpState::default(),
-                                                ));
-                                            } else if is_quit {
-                                                std::process::exit(0);
-                                            }
-                                        }
-                                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                                        UiEventType::HoverStop => txt.color = [1.0; 4],
-                                        _ => {}
-                                    };
-                                }
+                    if let Some(txt) = txt {
+                        match ui_event.event_type {
+                            UiEventType::ClickStop => {
+                                txt.color = [1.0, 1.0, 1.0, 0.5];
+                                match target {
+                                    ButtonType::Start => {
+                                        t = SimpleTrans::Switch(Box::new(
+                                            LevelSelectState::default(),
+                                        ));
+                                    }
+                                    ButtonType::Help => {
+                                        t = SimpleTrans::Switch(Box::new(HelpState::default()));
+                                    }
+                                    ButtonType::Editor => {
+                                        t = SimpleTrans::Switch(Box::new(LevelEditorState::new(
+                                            Box::new(Self::default()),
+                                            0,
+                                            "m-user-01.png".to_string()
+                                        )));
+                                    }
+                                    ButtonType::Quit => {
+                                        t = SimpleTrans::Quit;
+                                    }
+                                };
                             }
                         }
                     }

@@ -138,6 +138,16 @@ lazy_static! {
             WarpedTree,
         ]
     };
+
+    pub static ref INDEX_TO_SPRITEREQUEST: HashMap<usize, SpriteRequest> = {
+        let mut map = HashMap::new();
+
+        for sp in LIST_OF_ALL_SPRITEREQUESTS.clone() {
+            map.insert(sp.get_spritesheet_index(), sp);
+        }
+
+        map
+    };
 }
 
 impl SpriteRequest {

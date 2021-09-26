@@ -88,7 +88,7 @@
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/lonely-tribes/benches/tester.rs" value="true" />
     <property name="org.rust.disableDetachedFileInspection/home/jack/Documents/Code/Rust/Games/rouguelike-rpg/assets/maps/test.ron.rs" value="true" />
     <property name="org.rust.hideToolchainNotifications" value="true" />
-    <property name="settings.editor.selected.configurable" value="language.rust" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -168,9 +168,7 @@
       <envs />
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
     <configuration name="bench [lonely-tribes]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="bench" />
@@ -364,19 +362,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Cargo.run release (with fps)" />
-      <item itemvalue="Cargo.run (with fps)" />
-      <item itemvalue="Cargo.run" />
-      <item itemvalue="Cargo.no-fow" />
-      <item itemvalue="Cargo.docs" />
-      <item itemvalue="Cargo.run release" />
-      <item itemvalue="Cargo.Test" />
-      <item itemvalue="Cargo.Run normal" />
-      <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.Run" />
-      <item itemvalue="Cargo.fmt" />
-      <item itemvalue="Cargo.clippy" />
+      <item itemvalue="Cargo.Run normal" />
+      <item itemvalue="Cargo.Test" />
+      <item itemvalue="Cargo.build release" />
+      <item itemvalue="Cargo.docs" />
+      <item itemvalue="Cargo.no-fow" />
+      <item itemvalue="Cargo.run" />
+      <item itemvalue="Cargo.run (with fps)" />
+      <item itemvalue="Cargo.run release" />
+      <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.bench [lonely-tribes]" />
+      <item itemvalue="Cargo.clippy" />
+      <item itemvalue="Cargo.fmt" />
       <item itemvalue="Shell Script.New Release" />
     </list>
     <recent_temporary>

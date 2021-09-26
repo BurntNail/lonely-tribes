@@ -9,6 +9,7 @@ use std::{
     fs::{create_dir, read_to_string, write},
     path::PathBuf,
 };
+use crate::states_util::LevelType;
 
 ///Struct to score High Scores
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -22,7 +23,7 @@ impl Default for HighScores {
             scores: Vec::with_capacity(
                 get_levels()
                     .into_iter()
-                    .filter(|(_, is_normal)| *is_normal)
+                    .filter(|(_, is_normal)| is_normal == &LevelType::Developer)
                     .count(),
             ),
         }
