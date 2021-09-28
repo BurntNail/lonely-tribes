@@ -471,7 +471,7 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, lvl: Room)
     for x in 0..lvl.len() {
         for y in 0..lvl[0].len() {
             let spr_index = lvl[x][y].get_spritesheet_index();
-            if spr_index == 9999 {
+            if spr_index == 0 {
                 continue;
             }
 

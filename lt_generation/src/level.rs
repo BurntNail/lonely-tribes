@@ -156,33 +156,33 @@ impl SpriteRequest {
         //REMEMBER - AMETHYST GOES BY ROWS
         use SpriteRequest::*;
         match self {
-            BackWall => 1,
-            BackWallLeftCorner => 3,
-            BackWallRightCorner => 0,
-            LeftWall => 14,
-            RightWall => 17,
-            LeftWallDown => 45,
-            RightWallDown => 44,
-            LeftWallUp => 43,
-            RightWallUp => 42,
-            FrontWall => 58,
-            Door => 30,
-            FrontWallLeftCorner => 28,
-            FrontWallRightCorner => 31,
+            BackWall => 19,
+            BackWallLeftCorner => 20,
+            BackWallRightCorner => 18,
+            LeftWall => 66,
+            RightWall => 68,
+            LeftWallDown => 1, //fix
+            RightWallDown => 162,
+            LeftWallUp => 1, //fix
+            RightWallUp => 1, //fix
+            FrontWall => 115,
+            Door => 488,
+            FrontWallLeftCorner => 114, //fix
+            FrontWallRightCorner => 116, //fix
             Player(index) => match index {
-                0 => 4,
-                1 => 5,
-                2 => 6,
-                3 => 7,
-                _ => 9999,
+                0 => 409,
+                1 => 361,
+                2 => 366,
+                3 => 367,
+                _ => 0,
             },
-            TUpDownLeft => 71,
-            TUpDownRight => 70,
-            Shrubbery => 61,
-            DarkShrubbery => 60,
-            Tree => 74,
-            WarpedTree => 77,
-            Blank => 9999,
+            TUpDownLeft => 71, //fix
+            TUpDownRight => 70, //fix
+            Shrubbery => 96,
+            DarkShrubbery => 4,
+            Tree => 51,
+            WarpedTree => 102,
+            Blank => 0,
         }
     }
 

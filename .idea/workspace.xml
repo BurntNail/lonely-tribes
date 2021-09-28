@@ -8,18 +8,10 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="rename stuff + add more crit benches">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fully fix all paths to use new system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_level_editor/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_level_editor/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_level_editor/src/level_editor_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_level_editor/src/level_editor_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,11 +88,11 @@
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lonely_tribes_tags/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_algos/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_lib/src" />
-      <recent name="$PROJECT_DIR$/lonely_tribes_utils/src" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -118,7 +110,7 @@
       <command value="cargo bench" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.run release">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -381,7 +373,7 @@
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/cargo/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -552,25 +544,11 @@
       <workItem from="1632171552305" duration="1245000" />
       <workItem from="1632227629198" duration="799000" />
       <workItem from="1632239354906" duration="376000" />
-      <workItem from="1632242633265" duration="972000" />
-      <workItem from="1632250497659" duration="361000" />
-      <workItem from="1632312463255" duration="156000" />
-      <workItem from="1632342126211" duration="3185000" />
-      <workItem from="1632378717914" duration="74000" />
-      <workItem from="1632381920741" duration="463000" />
-      <workItem from="1632399358543" duration="1247000" />
-      <workItem from="1632400737429" duration="1604000" />
-      <workItem from="1632405688566" duration="91000" />
-      <workItem from="1632405893615" duration="268000" />
-      <workItem from="1632406821792" duration="6000" />
-      <workItem from="1632425904906" duration="632000" />
-      <workItem from="1632426965143" duration="612000" />
-      <workItem from="1632468116866" duration="1040000" />
-      <workItem from="1632471188917" duration="588000" />
-      <workItem from="1632472418395" duration="1943000" />
-      <workItem from="1632514565260" duration="660000" />
-      <workItem from="1632515234415" duration="299000" />
-      <workItem from="1632515542065" duration="3484000" />
+      <workItem from="1632242633265" duration="940000" />
+      <workItem from="1632818674747" duration="324000" />
+      <workItem from="1632831611577" duration="1081000" />
+      <workItem from="1632833755218" duration="627000" />
+      <workItem from="1632854964735" duration="1177000" />
     </task>
     <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
       <created>1629699968118</created>
