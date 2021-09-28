@@ -28,7 +28,7 @@ use lonely_tribes_components::{
     tile_transform::TileTransform,
     win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
 };
-use lonely_tribes_generation::level::{FromSpr, Room};
+use lonely_tribes_generation::sprite_stuff::{FromSpr, Room};
 use lonely_tribes_lib::{
     either::Either,
     paths::get_directory,
@@ -42,17 +42,16 @@ use lonely_tribes_systems::{
     update_tile_transforms::UpdateTileTransforms,
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
-use rand::Rng;
 use std::{collections::HashMap, fs::File, io::Write};
+use lonely_tribes_generation::level::Level;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
     ///Holding the current WinState
     ws: GameStateEnum,
-    ///The index of the current level in *LEVELS*
-    level_index: Either<usize, u32>,
+    level_path: String,
     ///Holding a HashMap of which keys lead to which indicies of *LEVELS*
-    actions: HashMap<VirtualKeyCode, Either<usize, u32>>,
+    actions: HashMap<VirtualKeyCode, String>,
     ///Option variable to hold the Score text
     score_button: Option<Entity>,
     ///Vec to hold entities for temporary mode effects (eg. nudger)
@@ -64,7 +63,7 @@ impl Default for PuzzleState {
     fn default() -> Self {
         Self {
             ws: GameStateEnum::default(),
-            level_index: Either::Two(rand::thread_rng().gen()),
+            level_path: "not a path".to_string(),
             actions: HashMap::new(),
             score_button: None,
             tmp_fx_entities: Vec::new(),
@@ -74,9 +73,9 @@ impl Default for PuzzleState {
 }
 impl PuzzleState {
     ///Constructor for PuzzleState
-    pub fn new(level_index: Either<usize, u32>) -> Self {
+    pub fn new(path_to_conf: String) -> Self {
         PuzzleState {
-            level_index,
+            level_path: path_to_conf,
             ..Default::default()
         }
     }
@@ -105,25 +104,16 @@ impl SimpleState for PuzzleState {
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
-        let room = match self.level_index {
-            Either::One(index) => {
-                let lvl = get_levels_str()
-                    .get(index)
-                    .unwrap_or(&format!("uh oh ind: {}", index))
-                    .to_string();
-                Room::new(lvl)
-            }
-            Either::Two(seed) => Room::proc_gen(seed),
-        };
-        let holder = load_level(world, handle, room);
+        let room = Level::new(&self.level_path);
+        let holder = load_level(world, handle, room.room.clone());
 
-        world.insert(GameState::new(None, self.level_index, 0));
+        world.insert(GameState::new(None, self.level_path.clone(), 0));
 
         world.insert(holder);
-        world.insert(GameModeManager::new(50));
+        world.insert(GameModeManager::new(room.specials as i32));
         world.insert(MovementDisabler { enabled: false });
 
-        self.actions.insert(VirtualKeyCode::R, self.level_index);
+        self.actions.insert(VirtualKeyCode::R, self.level_path.clone());
 
         self.score_button = Some(add_score(world));
     }
@@ -136,7 +126,7 @@ impl SimpleState for PuzzleState {
         if let GameStateEnum::End { lost_position } = self.ws {
             world.insert(GameState::new(
                 Some(lost_position),
-                self.level_index,
+                self.level_path.clone(),
                 get_no_of_moves(world),
             ));
         }
@@ -193,13 +183,13 @@ impl SimpleState for PuzzleState {
                 F => self.set_gameplay_mode(GamePlayingMode::Frenzy, world),
                 B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
                 Key0 | Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 => {
-                    if self.level_index.is_two() {
+                    if self.level_path.contains("pg-") {
                         self.save_pg_level(key_code);
                     }
                 }
                 _ => self.actions.iter().for_each(|(k, v)| {
                     if &key_code == k {
-                        t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                        t = Trans::Switch(Box::new(PuzzleState::new(v.clone())));
                     }
                 }),
             },
@@ -246,7 +236,7 @@ impl SimpleState for PuzzleState {
         if let GameStateEnum::End { lost_position } = self.ws {
             let won = lost_position.is_none();
 
-            if let Either::One(lvl_index) = self.level_index {
+            if let Either::One(lvl_index) = Level::get_seed_index_from_path(&self.level_path) {
                 if lvl_index >= get_levels_str().len() - 1 && won {
                     //we won the last level
                     t = Trans::Switch(Box::new(TrueEnd::default()));
@@ -322,7 +312,7 @@ impl PuzzleState {
             _ => 0,
         };
         log::info!("Saving current level to Slot {}", index);
-        let current_index = if let Either::Two(i) = self.level_index {
+        let current_index = if let Either::Two(i) = Level::get_seed_index_from_path(&self.level_path) {
             i
         } else {
             0

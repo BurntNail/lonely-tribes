@@ -13,12 +13,13 @@ use lonely_tribes_lib::{
     CONFIG,
 };
 use std::collections::HashMap;
+use lonely_tribes_generation::level::Level;
 
 ///State for when after a *PuzzleState*
 #[derive(Default)]
 pub struct PostGameState {
     ///A HashMap containing key presses, which lead to indicies for levels in *LEVELS*
-    map: HashMap<VirtualKeyCode, Either<usize, u32>>,
+    map: HashMap<VirtualKeyCode, String>,
 }
 
 impl PostGameState {
@@ -40,13 +41,11 @@ impl SimpleState for PostGameState {
 
         let mut nu_high_score = None;
 
-        if !opts.debug && won {
-            if let Either::One(level_from) = level_from {
-                nu_high_score = Some(high_score.add_score_and_write(level_from, score));
-            }
+        if !opts.debug && won && level_from.contains("lvl-") {
+                nu_high_score = Some(high_score.add_score_and_write(level_from.clone(), score));
         }
 
-        let won_txt = if won && level_from.is_one() {
+        let won_txt = if won && level_from.contains("lvl-") {
             let win = "You Won! Press [R] to Restart, [N] to go to the Next Level, or [L] to go to Level Select.";
             if let Some(nu_high_score) = nu_high_score {
                 if nu_high_score.is_none() {
@@ -66,7 +65,7 @@ impl SimpleState for PostGameState {
                 )
             }
         } else if won {
-            let seed = match level_from {
+            let seed = match Level::get_seed_index_from_path(&level_from) {
                 Either::One(_) => "Error getting seed...".to_string(),
                 Either::Two(s) => format!("{}", s),
             };
@@ -79,10 +78,10 @@ impl SimpleState for PostGameState {
         };
 
         let mut map = HashMap::new();
-        map.insert(VirtualKeyCode::R, level_from);
+        map.insert(VirtualKeyCode::R, level_from.clone());
         if won && !is_last_level {
-            if let Either::One(level_from) = level_from {
-                map.insert(VirtualKeyCode::N, Either::One(level_from + 1));
+            if let Either::One(level_from) = Level::get_seed_index_from_path(&level_from) {
+                map.insert(VirtualKeyCode::N, format!("lvl-{:02}.ron", level_from));
             }
         }
         self.map = map;
@@ -99,7 +98,7 @@ impl SimpleState for PostGameState {
         if let StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) = event {
             self.map.iter().for_each(|(k, v)| {
                 if &key_code == k {
-                    t = Trans::Switch(Box::new(PuzzleState::new(*v)));
+                    t = Trans::Switch(Box::new(PuzzleState::new(v.clone())));
                 }
             });
             if key_code == VirtualKeyCode::L {
@@ -117,11 +116,11 @@ impl SimpleState for PostGameState {
 ///  - A bool - whether or not that was the last level
 ///  - Another bool - whether or not the previous level was won
 ///  - An f32 - the score from the previous level
-pub fn get_stuff(world: &World) -> (Either<usize, u32>, bool, bool, i32) {
+pub fn get_stuff(world: &World) -> (String, bool, bool, i32) {
     let gws = world.read_resource::<GameState>();
 
-    let level_from = gws.level_from;
-    let is_last_level = if let Either::One(level_from) = level_from {
+    let level_from = gws.level_from.clone();
+    let is_last_level = if let Either::One(level_from) = Level::get_seed_index_from_path(&level_from) {
         level_from >= levels_len() - 1
     } else {
         false

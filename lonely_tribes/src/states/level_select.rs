@@ -7,7 +7,6 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_lib::{
-    either::Either,
     high_scores::HighScores,
     paths::get_directory,
     states_util::{
@@ -15,7 +14,6 @@ use lonely_tribes_lib::{
     },
     HOVER_COLOUR,
 };
-use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
 
 pub struct LevelSelectState {
@@ -62,7 +60,7 @@ impl SimpleState for LevelSelectState {
                 use VirtualKeyCode::*;
                 match key_code {
                     Return | Space => {
-                        t = Trans::Switch(Box::new(PuzzleState::new(Either::One(self.next_level))))
+                        t = Trans::Switch(Box::new(PuzzleState::new(format!("lvl-{:02}.ron", self.next_level))))
                     }
                     Escape | Delete => t = Trans::Switch(Box::new(StartGameState::default())),
                     _ => {}
@@ -78,16 +76,16 @@ impl SimpleState for LevelSelectState {
                             if entity == &event.target && ints.contains(*entity) {
                                 let ind = *i;
                                 if ind > 1000 {
-                                    index = Some(Either::Two((ind - 1000) as u32))
+                                    index = Some(format!("pg-{:02}.ron", ind));
                                 } else {
-                                    index = Some(Either::One(ind));
+                                    index = Some(format!("lvl-{:02}.ron", ind));
                                 }
                             }
                         });
                     }
                     if let Some(proc_gen) = self.proc_gen {
                         if proc_gen == event.target {
-                            index = Some(Either::Two(rand::thread_rng().gen()))
+                            index = Some("oops".to_string());
                         }
                     }
 
@@ -250,6 +248,7 @@ fn create_lvl_select_btns(
                     }
                 }
             } else {
+                #[allow(clippy::collapsible_else_if)]
                 if level_type == &LevelType::ProcGen {
                     let index = read_to_string(get_directory(false).join("../maps/").join(level))
                         .unwrap_or_default()

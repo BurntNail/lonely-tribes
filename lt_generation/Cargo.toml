@@ -14,6 +14,8 @@ rayon = "1.5.1" # for multi-threading
 noise = "0.7.0" #for perlin noise
 image = "0.23.14" # for loading in levels
 lazy_static = "1.4.0"
+ron = "0.6.5"
+serde = { version = "1", features = ["derive"] } # for serialising and deserialising with
 lonely_tribes_lib = {path= "../lt_lib" }
 lonely_tribes_components = {path= "../lt_components" }
 lonely_tribes_tags = {path = "../lt_tags" }

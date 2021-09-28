@@ -9,13 +9,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fully fix all paths to use new system">
+      <change afterPath="$PROJECT_DIR$/lt_generation/src/sprite_stuff.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/benches/generation_bench.rs" beforeDir="false" afterPath="$PROJECT_DIR$/benches/generation_bench.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/afterwards_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_components/src/win_related.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_components/src/win_related.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_level_editor/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_level_editor/src/level_editor_state.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/procedural_generator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/procedural_generator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_lib/src/either.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/either.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
     </list>
@@ -69,6 +76,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/assets/maps/pg-1.txt" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lonely_tribes/src/states" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -116,7 +124,7 @@
       <command value="cargo bench" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.clippy">
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -374,8 +382,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
       </list>
     </recent_temporary>
   </component>
@@ -555,7 +563,7 @@
       <workItem from="1632818674747" duration="324000" />
       <workItem from="1632831611577" duration="1081000" />
       <workItem from="1632833755218" duration="627000" />
-      <workItem from="1632854964735" duration="2297000" />
+      <workItem from="1632854964735" duration="4217000" />
     </task>
     <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
       <created>1629699968118</created>

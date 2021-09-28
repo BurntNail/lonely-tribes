@@ -1,4 +1,4 @@
-use crate::level::SpriteRequest;
+use crate::sprite_stuff::SpriteRequest;
 use lonely_tribes_components::tile_transform::TileTransform;
 use lonely_tribes_lib::{HEIGHT, WIDTH};
 use noise::{Fbm, NoiseFn, Seedable};

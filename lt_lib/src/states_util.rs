@@ -88,14 +88,12 @@ pub fn get_scaling_factor() -> (f32, f32) {
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LevelType {
     Developer,
-    User,
     ProcGen,
 }
 impl LevelType {
     pub(crate) fn id(&self) -> u8 {
         match self {
             LevelType::Developer => 0,
-            LevelType::User => 1,
             LevelType::ProcGen => 2,
         }
     }
@@ -117,12 +115,10 @@ pub fn get_levels() -> Vec<(String, LevelType)> {
         .into_iter()
         .filter_map(|nom| {
             let mut t = None;
-            if nom.contains("lvl-") && nom.contains(".png") {
+            if nom.contains("lvl-") && nom.contains(".ron") {
                 t = Some(LevelType::Developer);
-            } else if nom.contains("pg-") && nom.contains(".txt") {
+            } else if nom.contains("pg-") && nom.contains(".ron") {
                 t = Some(LevelType::ProcGen);
-            } else if nom.contains("m-user-") && nom.contains(".png") {
-                t = Some(LevelType::User);
             }
 
             let name = nom.replace("\"", "");

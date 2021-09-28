@@ -3,7 +3,7 @@
 
 /assets/data/*.ron
 assets/maps/pg-*.txt
-assets/maps/m-user-*.png
+assets/maps/*.ron
 
 steam_appid.txt
 .idea/workspace.xml
