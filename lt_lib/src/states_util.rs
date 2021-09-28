@@ -9,8 +9,7 @@ use amethyst::{
     ui::{FontAsset, TtfFormat},
 };
 use lazy_static::lazy_static;
-use std::{fs::read_dir, path::Path};
-use std::cmp::Ordering;
+use std::{cmp::Ordering, fs::read_dir, path::Path};
 
 pub const CAMERA_BASE_WIDTH: f32 = (TILE_WIDTH_HEIGHT * WIDTH) as f32; //For ingame-transform Measurements
 pub const CAMERA_BASE_HEIGHT: f32 = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
@@ -90,10 +89,10 @@ pub fn get_scaling_factor() -> (f32, f32) {
 pub enum LevelType {
     Developer,
     User,
-    ProcGen
+    ProcGen,
 }
 impl LevelType {
-    pub(crate) fn id (&self) -> u8 {
+    pub(crate) fn id(&self) -> u8 {
         match self {
             LevelType::Developer => 0,
             LevelType::User => 1,
@@ -101,33 +100,6 @@ impl LevelType {
         }
     }
 }
-
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub enum LevelType {
-    Developer,
-    User,
-    ProcGen
-}
-impl LevelType {
-    pub(crate) fn id (&self) -> u8 {
-        match self {
-            LevelType::Developer => 0,
-            LevelType::User => 1,
-            LevelType::ProcGen => 2,
-        }
-    }
-}
-
-// #[cfg(test)]
-// mod lt_tests {
-//     use super::LevelType::*;
-//
-//     #[test]
-//     fn lt_order_test () {
-//         assert!(Developer < User);
-//         assert!(User < ProcGen);
-//     }
-// }
 
 impl PartialOrd<Self> for LevelType {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {

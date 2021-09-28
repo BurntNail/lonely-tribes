@@ -2018,22 +2018,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lonely_tribes_level_editor"
-version = "0.2.0"
-dependencies = [
- "amethyst",
- "image 0.23.14",
- "log",
- "lonely_tribes_animations",
- "lonely_tribes_components",
- "lonely_tribes_generation",
- "lonely_tribes_lib",
- "lonely_tribes_tiletransform",
- "ron 0.6.5",
- "serde",
-]
-
-[[package]]
 name = "lonely_tribes_lib"
 version = "0.11.0"
 dependencies = [

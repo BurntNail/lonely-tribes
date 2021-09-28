@@ -10,12 +10,13 @@ use lonely_tribes_lib::{
     either::Either,
     high_scores::HighScores,
     paths::get_directory,
-    states_util::{get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet},
+    states_util::{
+        get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet, LevelType,
+    },
     HOVER_COLOUR,
 };
 use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
-use lonely_tribes_lib::states_util::LevelType;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, usize>,
@@ -71,18 +72,19 @@ impl SimpleState for LevelSelectState {
                 let target_index = {
                     let mut index = None;
 
-                    let max_level = HighScores::new().find_next_level();
-                    self.buttons.iter().for_each(|(entity, i)| {
-                        if entity == &event.target && i <= &max_level {
-                            let ind = *i;
-                            if ind > 1000 {
-                                index = Some(Either::Two((ind - 1000) as u32))
-                            } else {
-                                log::info!("ind: {}", ind);
-                                index = Some(Either::One(ind));
+                    {
+                        let ints = data.world.read_storage::<Interactable>();
+                        self.buttons.iter().for_each(|(entity, i)| {
+                            if entity == &event.target && ints.contains(*entity) {
+                                let ind = *i;
+                                if ind > 1000 {
+                                    index = Some(Either::Two((ind - 1000) as u32))
+                                } else {
+                                    index = Some(Either::One(ind));
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                     if let Some(proc_gen) = self.proc_gen {
                         if proc_gen == event.target {
                             index = Some(Either::Two(rand::thread_rng().gen()))
@@ -254,18 +256,25 @@ fn create_lvl_select_btns(
                         .parse::<usize>()
                         .unwrap_or_default();
 
-                    (format!(
-                        "Procedurally Generated Level: {}",
-                        level.replace("pg-", "").replace(".txt", "")
-                    ),
+                    (
+                        format!(
+                            "Procedurally Generated Level: {}",
+                            level.replace("pg-", "").replace(".txt", "")
+                        ),
                         [1.0; 4],
                         true,
-                        Some(index))
+                        Some(index),
+                    )
                 } else {
-                    (format!("User Created/Downloaded Level: {}", level.replace("m-user-", "").replace(".png", "")),
+                    (
+                        format!(
+                            "User Created/Downloaded Level: {}",
+                            level.replace("m-user-", "").replace(".png", "")
+                        ),
                         [1.0; 4],
                         true,
-                        None)
+                        None,
+                    )
                 }
             }
         };
@@ -303,10 +312,6 @@ fn create_lvl_select_btns(
                 1000 + pg_ind.unwrap_or(0)
             },
         );
-
-        if level_type != &LevelType::ProcGen {
-            log::info!("adding on");
-        }
     }
 
     let proc_gen = {

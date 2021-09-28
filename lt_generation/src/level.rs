@@ -163,11 +163,11 @@ impl SpriteRequest {
             RightWall => 68,
             LeftWallDown => 1, //fix
             RightWallDown => 162,
-            LeftWallUp => 1, //fix
+            LeftWallUp => 1,  //fix
             RightWallUp => 1, //fix
             FrontWall => 115,
             Door => 488,
-            FrontWallLeftCorner => 114, //fix
+            FrontWallLeftCorner => 114,  //fix
             FrontWallRightCorner => 116, //fix
             Player(index) => match index {
                 0 => 409,
@@ -176,7 +176,7 @@ impl SpriteRequest {
                 3 => 367,
                 _ => 0,
             },
-            TUpDownLeft => 71, //fix
+            TUpDownLeft => 71,  //fix
             TUpDownRight => 70, //fix
             Shrubbery => 96,
             DarkShrubbery => 4,

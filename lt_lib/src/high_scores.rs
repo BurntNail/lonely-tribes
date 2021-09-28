@@ -1,7 +1,7 @@
 use crate::{
     config::LTConfig,
     paths::get_directory,
-    states_util::{get_levels, levels_len},
+    states_util::{get_levels, levels_len, LevelType},
 };
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
@@ -9,7 +9,6 @@ use std::{
     fs::{create_dir, read_to_string, write},
     path::PathBuf,
 };
-use crate::states_util::LevelType;
 
 ///Struct to score High Scores
 #[derive(Clone, Debug, Serialize, Deserialize)]
