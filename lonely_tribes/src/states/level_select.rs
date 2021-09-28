@@ -76,9 +76,9 @@ impl SimpleState for LevelSelectState {
                             if entity == &event.target && ints.contains(*entity) {
                                 let ind = *i;
                                 if ind > 1000 {
-                                    index = Some(format!("pg-{:02}.ron", ind));
+                                    index = Some(format!("pg-{:02}.ron", ind - 1000));
                                 } else {
-                                    index = Some(format!("lvl-{:02}.ron", ind));
+                                    index = Some(format!("lvl-{:02}.ron", ind + 1));
                                 }
                             }
                         });

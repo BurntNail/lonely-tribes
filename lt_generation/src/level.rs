@@ -41,7 +41,7 @@ impl Level {
 
 	pub fn new (path: &str) -> Self {
 		let pathbuf = get_directory(false).join("../maps").join(path);
-		let contents = read_to_string(pathbuf).unwrap_or_default();
+		let contents = read_to_string(&pathbuf).unwrap_or_default();
 		let ril = from_str::<ReadInLevel>(&contents);
 
 		match ril {
@@ -60,7 +60,7 @@ impl Level {
 				}
 			},
 			Err(err) => {
-				log::warn!("Error reading in room: {}", err);
+				log::warn!("Error reading in room: {} at path: {:?}", err, pathbuf);
 				Self {
 					room: Room::default(),
 					specials: 50
