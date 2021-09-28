@@ -5,7 +5,7 @@ use crate::{
 use lonely_tribes_components::tile_transform::TileTransform;
 
 ///Component to animate a tiletransform horizontally or vertically
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct MovementAnimationData {
     ///start position
     pub start: TileTransform,
@@ -66,5 +66,22 @@ impl AnimationData for MovementAnimationData {
         let x = om * ((self.start.x - self.end.x) as f32);
         let y = om * ((self.start.y - self.end.y) as f32);
         (x, y)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use lonely_tribes_components::tile_transform::TileTransform;
+    use crate::animation::Animator;
+    use crate::interpolation::AnimInterpolation;
+    use super::*;
+    
+    #[test]
+    pub fn get_current_tester () {
+        let start = TileTransform::new(5, 10);
+        let end = TileTransform::new(10, 5);
+        let animator = Animator::new(MovementAnimationData::new(start, end, 1.0, AnimInterpolation::Linear));
+        
+        assert_eq!(animator.animation_data.unwrap().get_current(), (5.0, 10.0));
     }
 }

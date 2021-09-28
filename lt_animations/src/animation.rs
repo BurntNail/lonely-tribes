@@ -3,7 +3,7 @@ use amethyst::core::ecs::{Component, DenseVecStorage};
 use std::ops::{Deref, DerefMut};
 
 ///Component on all players to hold an lt_animations
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Animator<T: AnimationData + Sync + Send + 'static + Copy> {
     pub animation_data: Option<T>,
 }
@@ -32,7 +32,7 @@ impl<T: AnimationData + Sync + Send + 'static + Copy> Animator<T> {
         if let Some(a) = &self.animation_data {
             a.is_done()
         } else {
-            false
+            true
         }
     }
 
@@ -49,6 +49,27 @@ impl<T: 'static + AnimationData + Sync + Send + Copy> Default for Animator<T> {
         Self {
             animation_data: None,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::movement::MovementAnimationData;
+    
+    #[test]
+    pub fn default_test () {
+        assert_eq!(Animator::<MovementAnimationData>::default().animation_data, None);
+    }
+    
+    #[test]
+    pub fn no_anim_set_test () {
+        let a = Animator::<MovementAnimationData>::default();
+        assert!(a.anim_is_done());
+        
+        let mut b = a.clone();
+        b.add_time(1.0);
+        assert_eq!(a, b);
     }
 }
 

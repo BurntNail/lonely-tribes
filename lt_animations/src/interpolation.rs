@@ -11,9 +11,7 @@ pub enum AnimInterpolation {
 }
 
 ///constant for reverse exponential
-const A: f32 = 2.0;
-///constant for reverse exponential
-const B: f32 = -6.5;
+const A: f32 = 4.0;
 
 impl Default for AnimInterpolation {
     fn default() -> Self {
@@ -24,9 +22,9 @@ impl AnimInterpolation {
     ///Turns a 0.0-1.0 value into another 0.0-1.0 value, using the interpolation method of self
     pub fn get_val_from_pctg(&self, pctg: f32) -> f32 {
         match self {
-            AnimInterpolation::ReverseExponential => (-1.0 * A.powf(B * pctg)) + 1.0,
+            AnimInterpolation::ReverseExponential => 1.0 - (1.0 - pctg).powf(A),
             AnimInterpolation::Linear => pctg,
-        }
+        }.abs()
     }
 }
 
@@ -50,5 +48,28 @@ pub fn get_offset_multiplier(
         0.0
     } else {
         val
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    pub fn pctg_tests () {
+        let l = |v: f32| AnimInterpolation::Linear.get_val_from_pctg(v);
+        
+        assert_eq!(l(100.0), 100.0);
+        assert_eq!(l(0.5), 0.5);
+        assert_eq!(l(-1.0), 1.0);
+    }
+    
+    #[test]
+    pub fn offset_tests () {
+        let l = |v: f32| get_offset_multiplier(v, 1.0, AnimInterpolation::Linear);
+    
+        assert_eq!(l(100.0), 100.0);
+        assert_eq!(l(0.5), 0.5);
+        assert_eq!(l(-1.0), 1.0);
     }
 }
