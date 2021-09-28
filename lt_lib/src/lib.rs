@@ -6,7 +6,7 @@ pub mod paths;
 pub mod states_util;
 pub mod ui_input;
 
-pub const TILE_WIDTH_HEIGHT: i32 = 8;
+pub const TILE_WIDTH_HEIGHT: i32 = 16;
 ///The width of the grid of tiless
 pub const WIDTH: i32 = 64;
 ///The height of the grid of tiles
