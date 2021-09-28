@@ -70,8 +70,9 @@ impl SimpleState for LevelSelectState {
                 let target_index = {
                     let mut index = None;
 
+                    let max_level = HighScores::new().find_next_level();
                     self.buttons.iter().for_each(|(entity, i)| {
-                        if entity == &event.target {
+                        if entity == &event.target && i <= &max_level {
                             let ind = *i;
                             if ind > 1000 {
                                 index = Some(Either::Two((ind - 1000) as u32))
@@ -179,7 +180,6 @@ fn create_lvl_select_btns(
     };
     let get_height = |index: usize| {
         let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - index) as f32;
-        // let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - (index % (MAX_LEVELS_ONE_SCREEN as usize - 1))) as f32;
         pos - (sf_y * 450.0)
     };
 
