@@ -28,6 +28,7 @@ use lonely_tribes_systems::{
     colliders_list_system::ListSystem,
     fog_of_war::{FogOfWarSystem, LightListSystem},
     fps_counter::FpsPrinterSystem,
+    message_system::MessageSystem,
     move_player::MovePlayerSystem,
     player_overlap_checker::PlayerOverlapChecker,
     tint_animator::TintAnimatorSystem,
@@ -94,7 +95,8 @@ fn main() -> amethyst::Result<()> {
         .with(ScoreUpdaterSystem, "score_updater", &[])
         .with(LightListSystem, "light_list", &[])
         .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"])
-        .with(TintAnimatorSystem, "tint_animtor", &[]);
+        .with(TintAnimatorSystem, "tint_animtor", &[])
+        .with(MessageSystem::default(), "message_list", &[]);
 
     if opts.flags.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(

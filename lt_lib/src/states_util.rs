@@ -20,9 +20,9 @@ lazy_static! {
         let (x, y) = (w as f32 / CAMERA_BASE_WIDTH, h as f32 / CAMERA_BASE_HEIGHT);
 
         if x > y {
-            (x / y, 1.0)
-        } else {
             (1.0, y / x)
+        } else {
+            (x / y, 1.0)
         }
     };
     pub static ref CAMERA_DIMENSIONS: (f32, f32) = {
@@ -79,10 +79,15 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
 
 pub fn get_scaling_factor() -> (f32, f32) {
     let c = CONFIG.conf;
-    (
+    let (x, y) = (
         c.screen_dimensions.0 as f32 / 1600.0, //game was originally designed for 1600x900
         c.screen_dimensions.1 as f32 / 900.0,
-    )
+    );
+    if x > y {
+        (1.0, y / x)
+    } else {
+        (x / y, 1.0)
+    }
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]

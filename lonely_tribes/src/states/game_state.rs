@@ -41,7 +41,7 @@ use lonely_tribes_lib::{
     },
 };
 use lonely_tribes_systems::{
-    move_player::MovementDisabler, player_overlap_checker::DeleteList,
+    message_system::MessageList, move_player::MovementDisabler, player_overlap_checker::DeleteList,
     update_tile_transforms::UpdateTileTransforms,
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
@@ -119,6 +119,19 @@ impl SimpleState for PuzzleState {
             .insert(VirtualKeyCode::R, self.level_path.clone());
 
         self.score_button = Some(add_score(world));
+
+        {
+            let mut msg_list = world.write_resource::<MessageList>();
+
+            if self.level_path.contains("lvl-01") {
+                //we are in the first level
+                msg_list.push("Use WASD to move!".to_string());
+            } else if self.level_path.contains("pg-")
+                || self.level_path.contains(RT_PROCGEN_FILENAME)
+            {
+                msg_list.push(format!("Have fun on this pg room"));
+            }
+        }
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
