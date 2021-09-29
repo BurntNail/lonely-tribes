@@ -9,7 +9,7 @@ use amethyst::{
     ui::{FontAsset, TtfFormat},
 };
 use lazy_static::lazy_static;
-use std::{fs::read_dir, path::Path};
+use std::{cmp::Ordering, fs::read_dir, path::Path};
 
 pub const CAMERA_BASE_WIDTH: f32 = (TILE_WIDTH_HEIGHT * WIDTH) as f32; //For ingame-transform Measurements
 pub const CAMERA_BASE_HEIGHT: f32 = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
@@ -85,22 +85,49 @@ pub fn get_scaling_factor() -> (f32, f32) {
     )
 }
 
-pub fn get_levels() -> Vec<(String, bool)> {
-    let mut out: Vec<(String, bool)> = list_file_names_in_dir("../maps", false)
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum LevelType {
+    Developer,
+    ProcGen,
+}
+impl LevelType {
+    pub(crate) fn id(&self) -> u8 {
+        match self {
+            LevelType::Developer => 0,
+            LevelType::ProcGen => 2,
+        }
+    }
+}
+
+impl PartialOrd<Self> for LevelType {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.id().partial_cmp(&other.id())
+    }
+}
+impl Ord for LevelType {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.id().cmp(&other.id())
+    }
+}
+
+pub fn get_levels() -> Vec<(String, LevelType)> {
+    let mut out: Vec<(String, LevelType)> = list_file_names_in_dir("../maps", false)
         .into_iter()
         .filter_map(|nom| {
-            let is_normal = nom.contains("lvl-") && nom.contains(".png");
-            let is_pg = nom.contains("pg-") && nom.contains(".txt");
+            let mut t = None;
+            if nom.contains("lvl-") && nom.contains(".ron") {
+                t = Some(LevelType::Developer);
+            } else if nom.contains("pg-") && nom.contains(".ron") {
+                t = Some(LevelType::ProcGen);
+            }
+
             let name = nom.replace("\"", "");
 
-            if is_normal || is_pg {
-                Some((name, is_normal))
-            } else {
-                None
-            }
+            t.map(|t| (name, t))
         })
         .collect();
     out.sort();
+    log::info!("{:?}", out);
     out
 }
 pub fn get_levels_str() -> Vec<String> {

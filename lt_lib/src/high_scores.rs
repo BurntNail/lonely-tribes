@@ -1,7 +1,7 @@
 use crate::{
     config::LTConfig,
     paths::get_directory,
-    states_util::{get_levels, levels_len},
+    states_util::{get_levels, levels_len, LevelType},
 };
 use ron::{from_str, to_string};
 use serde::{Deserialize, Serialize};
@@ -22,7 +22,7 @@ impl Default for HighScores {
             scores: Vec::with_capacity(
                 get_levels()
                     .into_iter()
-                    .filter(|(_, is_normal)| *is_normal)
+                    .filter(|(_, is_normal)| is_normal == &LevelType::Developer)
                     .count(),
             ),
         }
@@ -47,7 +47,11 @@ impl HighScores {
     /// Returns an option
     /// If it is None, then the high score was beaten
     /// If Some, then the i32 is the old high score
-    pub fn add_score_and_write(&mut self, index: usize, score: i32) -> Option<i32> {
+    pub fn add_score_and_write(&mut self, path: String, score: i32) -> Option<i32> {
+        let index = {
+            path.replace("lvl-", "").replace(".png", "").parse().unwrap_or_default()
+        };
+
         let mut new_high_score = false;
         let current = {
             if self.scores.len() > index {

@@ -1,7 +1,10 @@
 /target
 /Releases
+
 /assets/data/*.ron
 assets/maps/pg-*.txt
+assets/maps/*.ron
+
 steam_appid.txt
 .idea/workspace.xml
 

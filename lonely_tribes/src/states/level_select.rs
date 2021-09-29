@@ -7,13 +7,13 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_lib::{
-    either::Either,
     high_scores::HighScores,
     paths::get_directory,
-    states_util::{get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet},
+    states_util::{
+        get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet, LevelType,
+    },
     HOVER_COLOUR,
 };
-use rand::Rng;
 use std::{collections::HashMap, fs::read_to_string};
 
 pub struct LevelSelectState {
@@ -60,7 +60,7 @@ impl SimpleState for LevelSelectState {
                 use VirtualKeyCode::*;
                 match key_code {
                     Return | Space => {
-                        t = Trans::Switch(Box::new(PuzzleState::new(Either::One(self.next_level))))
+                        t = Trans::Switch(Box::new(PuzzleState::new(format!("lvl-{:02}.ron", self.next_level))))
                     }
                     Escape | Delete => t = Trans::Switch(Box::new(StartGameState::default())),
                     _ => {}
@@ -70,19 +70,22 @@ impl SimpleState for LevelSelectState {
                 let target_index = {
                     let mut index = None;
 
-                    self.buttons.iter().for_each(|(entity, i)| {
-                        if entity == &event.target {
-                            let ind = *i;
-                            if ind > 1000 {
-                                index = Some(Either::Two((ind - 1000) as u32))
-                            } else {
-                                index = Some(Either::One(ind));
+                    {
+                        let ints = data.world.read_storage::<Interactable>();
+                        self.buttons.iter().for_each(|(entity, i)| {
+                            if entity == &event.target && ints.contains(*entity) {
+                                let ind = *i;
+                                if ind > 1000 {
+                                    index = Some(format!("pg-{:02}.ron", ind - 1000));
+                                } else {
+                                    index = Some(format!("lvl-{:02}.ron", ind + 1));
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                     if let Some(proc_gen) = self.proc_gen {
                         if proc_gen == event.target {
-                            index = Some(Either::Two(rand::thread_rng().gen()))
+                            index = Some("oops".to_string());
                         }
                     }
 
@@ -179,7 +182,6 @@ fn create_lvl_select_btns(
     };
     let get_height = |index: usize| {
         let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - index) as f32;
-        // let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - (index % (MAX_LEVELS_ONE_SCREEN as usize - 1))) as f32;
         pos - (sf_y * 450.0)
     };
 
@@ -208,7 +210,7 @@ fn create_lvl_select_btns(
         .build();
 
     let next_level = high_scores.find_next_level();
-    for (i, (level, isnt_procgen)) in get_levels()
+    for (i, (level, level_type)) in get_levels()
         .iter()
         .skip(current_screen * (MAX_LEVELS_ONE_SCREEN - 1) as usize)
         .take(5)
@@ -217,7 +219,7 @@ fn create_lvl_select_btns(
         let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
 
         let (text, colour, can_be_played, pg_ind) = {
-            if *isnt_procgen {
+            if level_type == &LevelType::Developer {
                 let high_score = high_scores.get_high_score(i_adj as usize);
 
                 #[allow(clippy::collapsible_else_if)]
@@ -246,20 +248,33 @@ fn create_lvl_select_btns(
                     }
                 }
             } else {
-                let index = read_to_string(get_directory(false).join("../maps/").join(level))
-                    .unwrap_or_default()
-                    .parse::<usize>()
-                    .unwrap_or_default();
+                #[allow(clippy::collapsible_else_if)]
+                if level_type == &LevelType::ProcGen {
+                    let index = read_to_string(get_directory(false).join("../maps/").join(level))
+                        .unwrap_or_default()
+                        .parse::<usize>()
+                        .unwrap_or_default();
 
-                (
-                    format!(
-                        "Procedurally Generated Level: {}",
-                        level.replace("pg-", "").replace(".txt", "")
-                    ),
-                    [1.0; 4],
-                    true,
-                    Some(index),
-                )
+                    (
+                        format!(
+                            "Procedurally Generated Level: {}",
+                            level.replace("pg-", "").replace(".txt", "")
+                        ),
+                        [1.0; 4],
+                        true,
+                        Some(index),
+                    )
+                } else {
+                    (
+                        format!(
+                            "User Created/Downloaded Level: {}",
+                            level.replace("m-user-", "").replace(".png", "")
+                        ),
+                        [1.0; 4],
+                        true,
+                        None,
+                    )
+                }
             }
         };
 
@@ -290,7 +305,7 @@ fn create_lvl_select_btns(
 
         map.insert(
             entity.build(),
-            if *isnt_procgen {
+            if level_type != &LevelType::ProcGen {
                 i_adj as usize
             } else {
                 1000 + pg_ind.unwrap_or(0)

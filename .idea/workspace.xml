@@ -8,13 +8,18 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="start testing and documenting">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fully fix all paths to use new system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/config/conf.ron" beforeDir="false" afterPath="$PROJECT_DIR$/config/conf.ron" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_animations/src/animation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/animation.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_animations/src/interpolation.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/interpolation.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_animations/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_animations/src/movement.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_animations/src/movement.rs" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
+>>>>>>> 7f09a67ff2c4a8d435bd57419aa03ce5572a0472
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +71,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/assets/maps/pg-1.txt" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lonely_tribes/src/states" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -91,11 +97,11 @@
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lonely_tribes_tags/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_algos/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_lib/src" />
-      <recent name="$PROJECT_DIR$/lonely_tribes_utils/src" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -160,9 +166,7 @@
       <envs />
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
     <configuration name="bench [lonely-tribes]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="bench" />
@@ -356,26 +360,25 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Cargo.run release (with fps)" />
-      <item itemvalue="Cargo.run (with fps)" />
-      <item itemvalue="Cargo.run" />
-      <item itemvalue="Cargo.no-fow" />
-      <item itemvalue="Cargo.docs" />
-      <item itemvalue="Cargo.run release" />
-      <item itemvalue="Cargo.Test" />
-      <item itemvalue="Cargo.Run normal" />
-      <item itemvalue="Cargo.build release" />
       <item itemvalue="Cargo.Run" />
-      <item itemvalue="Cargo.fmt" />
-      <item itemvalue="Cargo.clippy" />
+      <item itemvalue="Cargo.Run normal" />
+      <item itemvalue="Cargo.Test" />
+      <item itemvalue="Cargo.build release" />
+      <item itemvalue="Cargo.docs" />
+      <item itemvalue="Cargo.no-fow" />
+      <item itemvalue="Cargo.run" />
+      <item itemvalue="Cargo.run (with fps)" />
+      <item itemvalue="Cargo.run release" />
+      <item itemvalue="Cargo.run release (with fps)" />
       <item itemvalue="Cargo.bench [lonely-tribes]" />
+      <item itemvalue="Cargo.clippy" />
+      <item itemvalue="Cargo.fmt" />
       <item itemvalue="Shell Script.New Release" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
-        <item itemvalue="Cargo.bench [lonely-tribes]" />
+        <item itemvalue="Cargo.fmt" />
       </list>
     </recent_temporary>
   </component>
@@ -552,8 +555,15 @@
       <workItem from="1632227629198" duration="799000" />
       <workItem from="1632239354906" duration="376000" />
       <workItem from="1632242633265" duration="940000" />
+<<<<<<< HEAD
       <workItem from="1632737341963" duration="70000" />
       <workItem from="1632746738439" duration="1209000" />
+=======
+      <workItem from="1632818674747" duration="324000" />
+      <workItem from="1632831611577" duration="1081000" />
+      <workItem from="1632833755218" duration="627000" />
+      <workItem from="1632854964735" duration="4484000" />
+>>>>>>> 7f09a67ff2c4a8d435bd57419aa03ce5572a0472
     </task>
     <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
       <created>1629699968118</created>

@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use lonely_tribes_generation::{level::Room, procedural_generator::ProceduralGenerator};
+use lonely_tribes_generation::{sprite_stuff::Room, procedural_generator::ProceduralGenerator};
 
 pub fn procgen_benchmark(c: &mut Criterion) {
     c.bench_function("procgen rand", |b| {

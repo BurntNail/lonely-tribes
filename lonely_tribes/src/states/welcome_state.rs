@@ -1,7 +1,6 @@
 use super::{help_state::HelpState, level_select::LevelSelectState};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
-    input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
@@ -11,16 +10,19 @@ use lonely_tribes_lib::{
     states_util::{get_scaling_factor, load_font},
     HOVER_COLOUR,
 };
+use std::collections::HashMap;
 
 ///State for welcoming the player to the game
 #[derive(Default)]
 pub struct StartGameState {
-    ///Stores the Entity for the Start Button as an option for easier initialisation
-    start_btn: Option<Entity>,
-    ///Stores the Entity for the Help Button as an option for easier initialisation
-    help_btn: Option<Entity>,
-    ///Stores the Entity for the Quit as an option for easier initialisation
-    quit_btn: Option<Entity>,
+    btns: HashMap<ButtonType, Entity>,
+}
+
+#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
+pub enum ButtonType {
+    Start,
+    Help,
+    Quit,
 }
 
 impl SimpleState for StartGameState {
@@ -33,10 +35,7 @@ impl SimpleState for StartGameState {
 
         init_audio(world);
 
-        let (s, h, q) = init_menu(world);
-        self.start_btn = Some(s);
-        self.help_btn = Some(h);
-        self.quit_btn = Some(q);
+        self.btns = init_menu(world);
     }
 
     fn handle_event(
@@ -48,62 +47,57 @@ impl SimpleState for StartGameState {
 
         match event {
             StateEvent::Ui(ui_event) => {
-                if let Some(start_btn) = self.start_btn {
-                    if let Some(help_btn) = self.help_btn {
-                        if let Some(quit_btn) = self.quit_btn {
-                            let is_start = ui_event.target == start_btn;
-                            let is_help = ui_event.target == help_btn;
-                            let is_quit = ui_event.target == quit_btn;
+                let mut target = None;
 
-                            if is_start || is_help || is_quit {
-                                let mut texts = data.world.write_storage::<UiText>();
-                                let txt = texts.get_mut(ui_event.target);
+                for (t, e) in &self.btns {
+                    if &ui_event.target == e {
+                        target = Some(*t);
+                    }
+                }
 
-                                if let Some(txt) = txt {
-                                    match ui_event.event_type {
-                                        UiEventType::ClickStop => {
-                                            txt.color = [1.0, 1.0, 1.0, 0.5];
-                                            if is_start {
-                                                t = SimpleTrans::Switch(Box::new(
-                                                    LevelSelectState::default(),
-                                                ));
-                                            } else if is_help {
-                                                t = SimpleTrans::Switch(Box::new(
-                                                    HelpState::default(),
-                                                ));
-                                            } else if is_quit {
-                                                std::process::exit(0);
-                                            }
-                                        }
-                                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                                        UiEventType::HoverStop => txt.color = [1.0; 4],
-                                        _ => {}
-                                    };
-                                }
+                if let Some(target) = target {
+                    let mut texts = data.world.write_storage::<UiText>();
+                    let txt = texts.get_mut(ui_event.target);
+
+                    if let Some(txt) = txt {
+                        match ui_event.event_type {
+                            UiEventType::HoverStart => txt.color = HOVER_COLOUR,
+                            UiEventType::HoverStop => txt.color = [1.0; 4],
+                            UiEventType::ClickStart => txt.color = [1.0, 1.0, 1.0, 0.5],
+                            UiEventType::ClickStop => {
+                                match target {
+                                    ButtonType::Start => {
+                                        t = SimpleTrans::Switch(Box::new(
+                                            LevelSelectState::default(),
+                                        ));
+                                    }
+                                    ButtonType::Help => {
+                                        t = SimpleTrans::Switch(Box::new(HelpState::default()));
+                                    }
+                                    ButtonType::Quit => {
+                                        t = SimpleTrans::Quit;
+                                    }
+                                };
                             }
+                            _ => {}
                         }
                     }
                 }
             }
-            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                if key_code == VirtualKeyCode::Space {
-                    t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
-                }
-            }
             _ => {}
         }
-
         t
     }
 }
 
 ///Function to initialise Start Screen Main Menu
 ///
-/// Returns an Entity with the Start Button, one with the Help Button, one with the Level Editor button, and one with the Quit button
-fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
+/// Returns a hashmap of entities
+fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
     let (sf_x, sf_y) = get_scaling_factor();
     let bold_font_handle = load_font(world, "ZxSpectrumBold");
     let font_handle = load_font(world, "ZxSpectrum");
+    let mut map = HashMap::new();
 
     //region welcome
     let welcome_trans = UiTransform::new(
@@ -150,13 +144,13 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         LineMode::Single,
         Anchor::Middle,
     );
-    let start = world
+    map.insert(ButtonType::Start, world
         .create_entity()
         .with(start_btn_trans)
         .with(start_btn_txt)
         .with(TextWobble::new(sf_y * 10.0, sf_y * -85.0, 2.5))
         .with(Interactable)
-        .build();
+        .build());
     //endregion
 
     //region help
@@ -178,13 +172,13 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         LineMode::Single,
         Anchor::Middle,
     );
-    let help = world
+    map.insert(ButtonType::Help, world
         .create_entity()
         .with(help_btn_trans)
         .with(help_btn_txt)
         .with(TextWobble::new(sf_y * 10.0, sf_y * -145.0, 2.5))
         .with(Interactable)
-        .build();
+        .build());
     //endregion
 
     //region quit
@@ -206,14 +200,14 @@ fn init_menu(world: &mut World) -> (Entity, Entity, Entity) {
         LineMode::Single,
         Anchor::Middle,
     );
-    let quit = world
+    map.insert(ButtonType::Quit, world
         .create_entity()
         .with(quit_btn_trans)
         .with(quit_btn_text)
         .with(TextWobble::new(sf_y * 10.0, sf_y * -265.0, 2.5))
         .with(Interactable)
-        .build();
+        .build());
     //endregion
 
-    (start, help, quit)
+    map
 }
