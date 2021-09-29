@@ -45,47 +45,43 @@ impl SimpleState for StartGameState {
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
 
-        match event {
-            StateEvent::Ui(ui_event) => {
-                let mut target = None;
+        if let StateEvent::Ui(ui_event) = event {
+            let mut target = None;
 
-                for (t, e) in &self.btns {
-                    if &ui_event.target == e {
-                        target = Some(*t);
-                    }
+            for (t, e) in &self.btns {
+                if &ui_event.target == e {
+                    target = Some(*t);
                 }
+            }
 
-                if let Some(target) = target {
-                    let mut texts = data.world.write_storage::<UiText>();
-                    let txt = texts.get_mut(ui_event.target);
+            if let Some(target) = target {
+                let mut texts = data.world.write_storage::<UiText>();
+                let txt = texts.get_mut(ui_event.target);
 
-                    if let Some(txt) = txt {
-                        match ui_event.event_type {
-                            UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                            UiEventType::HoverStop => txt.color = [1.0; 4],
-                            UiEventType::ClickStart => txt.color = [1.0, 1.0, 1.0, 0.5],
-                            UiEventType::ClickStop => {
-                                match target {
-                                    ButtonType::Start => {
-                                        t = SimpleTrans::Switch(Box::new(
-                                            LevelSelectState::default(),
-                                        ));
-                                    }
-                                    ButtonType::Help => {
-                                        t = SimpleTrans::Switch(Box::new(HelpState::default()));
-                                    }
-                                    ButtonType::Quit => {
-                                        t = SimpleTrans::Quit;
-                                    }
-                                };
-                            }
-                            _ => {}
+                if let Some(txt) = txt {
+                    match ui_event.event_type {
+                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
+                        UiEventType::HoverStop => txt.color = [1.0; 4],
+                        UiEventType::ClickStart => txt.color = [1.0, 1.0, 1.0, 0.5],
+                        UiEventType::ClickStop => {
+                            match target {
+                                ButtonType::Start => {
+                                    t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
+                                }
+                                ButtonType::Help => {
+                                    t = SimpleTrans::Switch(Box::new(HelpState::default()));
+                                }
+                                ButtonType::Quit => {
+                                    t = SimpleTrans::Quit;
+                                }
+                            };
                         }
+                        _ => {}
                     }
                 }
             }
-            _ => {}
         }
+
         t
     }
 }
@@ -144,13 +140,16 @@ fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
         LineMode::Single,
         Anchor::Middle,
     );
-    map.insert(ButtonType::Start, world
-        .create_entity()
-        .with(start_btn_trans)
-        .with(start_btn_txt)
-        .with(TextWobble::new(sf_y * 10.0, sf_y * -85.0, 2.5))
-        .with(Interactable)
-        .build());
+    map.insert(
+        ButtonType::Start,
+        world
+            .create_entity()
+            .with(start_btn_trans)
+            .with(start_btn_txt)
+            .with(TextWobble::new(sf_y * 10.0, sf_y * -85.0, 2.5))
+            .with(Interactable)
+            .build(),
+    );
     //endregion
 
     //region help
@@ -172,13 +171,16 @@ fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
         LineMode::Single,
         Anchor::Middle,
     );
-    map.insert(ButtonType::Help, world
-        .create_entity()
-        .with(help_btn_trans)
-        .with(help_btn_txt)
-        .with(TextWobble::new(sf_y * 10.0, sf_y * -145.0, 2.5))
-        .with(Interactable)
-        .build());
+    map.insert(
+        ButtonType::Help,
+        world
+            .create_entity()
+            .with(help_btn_trans)
+            .with(help_btn_txt)
+            .with(TextWobble::new(sf_y * 10.0, sf_y * -145.0, 2.5))
+            .with(Interactable)
+            .build(),
+    );
     //endregion
 
     //region quit
@@ -200,13 +202,16 @@ fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
         LineMode::Single,
         Anchor::Middle,
     );
-    map.insert(ButtonType::Quit, world
-        .create_entity()
-        .with(quit_btn_trans)
-        .with(quit_btn_text)
-        .with(TextWobble::new(sf_y * 10.0, sf_y * -265.0, 2.5))
-        .with(Interactable)
-        .build());
+    map.insert(
+        ButtonType::Quit,
+        world
+            .create_entity()
+            .with(quit_btn_trans)
+            .with(quit_btn_text)
+            .with(TextWobble::new(sf_y * 10.0, sf_y * -265.0, 2.5))
+            .with(Interactable)
+            .build(),
+    );
     //endregion
 
     map

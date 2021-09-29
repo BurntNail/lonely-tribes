@@ -6,6 +6,7 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_components::win_related::{GameState, GameStateEnum};
+use lonely_tribes_generation::level::Level;
 use lonely_tribes_lib::{
     either::Either,
     high_scores::HighScores,
@@ -13,7 +14,6 @@ use lonely_tribes_lib::{
     CONFIG,
 };
 use std::collections::HashMap;
-use lonely_tribes_generation::level::Level;
 
 ///State for when after a *PuzzleState*
 #[derive(Default)]
@@ -42,7 +42,7 @@ impl SimpleState for PostGameState {
         let mut nu_high_score = None;
 
         if !opts.debug && won && level_from.contains("lvl-") {
-                nu_high_score = Some(high_score.add_score_and_write(level_from.clone(), score));
+            nu_high_score = Some(high_score.add_score_and_write(level_from.clone(), score));
         }
 
         let won_txt = if won && level_from.contains("lvl-") {
@@ -81,7 +81,7 @@ impl SimpleState for PostGameState {
         map.insert(VirtualKeyCode::R, level_from.clone());
         if won && !is_last_level {
             if let Either::One(level_from) = Level::get_seed_index_from_path(&level_from) {
-                map.insert(VirtualKeyCode::N, format!("lvl-{:02}.ron", level_from));
+                map.insert(VirtualKeyCode::N, format!("lvl-{:02}.ron", level_from + 2));
             }
         }
         self.map = map;
@@ -120,11 +120,12 @@ pub fn get_stuff(world: &World) -> (String, bool, bool, i32) {
     let gws = world.read_resource::<GameState>();
 
     let level_from = gws.level_from.clone();
-    let is_last_level = if let Either::One(level_from) = Level::get_seed_index_from_path(&level_from) {
-        level_from >= levels_len() - 1
-    } else {
-        false
-    };
+    let is_last_level =
+        if let Either::One(level_from) = Level::get_seed_index_from_path(&level_from) {
+            level_from >= levels_len() - 1
+        } else {
+            false
+        };
     let won = match gws.ws {
         GameStateEnum::End { lost_position } => lost_position.is_none(),
         _ => false,

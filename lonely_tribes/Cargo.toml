@@ -13,7 +13,6 @@ structopt = "0.3" # for launch options
 rand = "0.8.4" # for random stuff
 rand_pcg = "0.3.1" #for seeded random numbers
 chrono = "0.4.19" # for getting times for saves
-#steamworks = "0.7.0" # for steam
 rayon = "1.5.1" # for multi-threading
 noise = "0.7.0" #for perlin noise
 

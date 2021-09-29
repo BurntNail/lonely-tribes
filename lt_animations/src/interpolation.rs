@@ -24,7 +24,8 @@ impl AnimInterpolation {
         match self {
             AnimInterpolation::ReverseExponential => 1.0 - (1.0 - pctg).powf(A),
             AnimInterpolation::Linear => pctg,
-        }.abs()
+        }
+        .abs()
     }
 }
 
@@ -54,20 +55,20 @@ pub fn get_offset_multiplier(
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
-    pub fn pctg_tests () {
+    pub fn pctg_tests() {
         let l = |v: f32| AnimInterpolation::Linear.get_val_from_pctg(v);
-        
+
         assert_eq!(l(100.0), 100.0);
         assert_eq!(l(0.5), 0.5);
         assert_eq!(l(-1.0), 1.0);
     }
-    
+
     #[test]
-    pub fn offset_tests () {
+    pub fn offset_tests() {
         let l = |v: f32| get_offset_multiplier(v, 1.0, AnimInterpolation::Linear);
-    
+
         assert_eq!(l(100.0), 100.0);
         assert_eq!(l(0.5), 0.5);
         assert_eq!(l(-1.0), 1.0);

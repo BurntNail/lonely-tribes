@@ -56,17 +56,20 @@ impl<T: 'static + AnimationData + Sync + Send + Copy> Default for Animator<T> {
 mod tests {
     use super::*;
     use crate::movement::MovementAnimationData;
-    
+
     #[test]
-    pub fn default_test () {
-        assert_eq!(Animator::<MovementAnimationData>::default().animation_data, None);
+    pub fn default_test() {
+        assert_eq!(
+            Animator::<MovementAnimationData>::default().animation_data,
+            None
+        );
     }
-    
+
     #[test]
-    pub fn no_anim_set_test () {
+    pub fn no_anim_set_test() {
         let a = Animator::<MovementAnimationData>::default();
         assert!(a.anim_is_done());
-        
+
         let mut b = a.clone();
         b.add_time(1.0);
         assert_eq!(a, b);

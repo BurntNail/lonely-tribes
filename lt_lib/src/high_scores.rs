@@ -49,7 +49,10 @@ impl HighScores {
     /// If Some, then the i32 is the old high score
     pub fn add_score_and_write(&mut self, path: String, score: i32) -> Option<i32> {
         let index = {
-            path.replace("lvl-", "").replace(".png", "").parse().unwrap_or_default()
+            path.replace("lvl-", "")
+                .replace(".png", "")
+                .parse()
+                .unwrap_or_default()
         };
 
         let mut new_high_score = false;

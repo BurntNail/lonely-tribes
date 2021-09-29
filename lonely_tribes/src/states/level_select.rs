@@ -6,18 +6,18 @@ use amethyst::{
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
+use lonely_tribes_generation::level::RT_PROCGEN_FILENAME;
 use lonely_tribes_lib::{
     high_scores::HighScores,
-    paths::get_directory,
     states_util::{
         get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet, LevelType,
     },
     HOVER_COLOUR,
 };
-use std::{collections::HashMap, fs::read_to_string};
+use std::collections::HashMap;
 
 pub struct LevelSelectState {
-    buttons: HashMap<Entity, usize>,
+    buttons: HashMap<Entity, String>,
     proc_gen: Option<Entity>,
     leftright: Option<(Entity, Entity)>,
     next_level: usize,
@@ -60,7 +60,10 @@ impl SimpleState for LevelSelectState {
                 use VirtualKeyCode::*;
                 match key_code {
                     Return | Space => {
-                        t = Trans::Switch(Box::new(PuzzleState::new(format!("lvl-{:02}.ron", self.next_level))))
+                        t = Trans::Switch(Box::new(PuzzleState::new(format!(
+                            "lvl-{:02}.ron",
+                            self.next_level
+                        ))))
                     }
                     Escape | Delete => t = Trans::Switch(Box::new(StartGameState::default())),
                     _ => {}
@@ -74,18 +77,13 @@ impl SimpleState for LevelSelectState {
                         let ints = data.world.read_storage::<Interactable>();
                         self.buttons.iter().for_each(|(entity, i)| {
                             if entity == &event.target && ints.contains(*entity) {
-                                let ind = *i;
-                                if ind > 1000 {
-                                    index = Some(format!("pg-{:02}.ron", ind - 1000));
-                                } else {
-                                    index = Some(format!("lvl-{:02}.ron", ind + 1));
-                                }
+                                index = Some(i.clone());
                             }
                         });
                     }
                     if let Some(proc_gen) = self.proc_gen {
                         if proc_gen == event.target {
-                            index = Some("oops".to_string());
+                            index = Some(RT_PROCGEN_FILENAME.to_string());
                         }
                     }
 
@@ -166,11 +164,11 @@ pub const MAX_LEVELS_ONE_SCREEN: i32 = 6;
 fn create_lvl_select_btns(
     world: &mut World,
     current_screen: usize,
-) -> (HashMap<Entity, usize>, usize, Entity, (Entity, Entity)) {
+) -> (HashMap<Entity, String>, usize, Entity, (Entity, Entity)) {
     let (sf_x, sf_y) = get_scaling_factor();
     world.delete_all();
 
-    let mut map: HashMap<Entity, usize> = HashMap::new();
+    let mut map: HashMap<Entity, String> = HashMap::new();
     let font_handle = load_font(world, "ZxSpectrum");
     let high_scores = HighScores::new();
 
@@ -218,7 +216,7 @@ fn create_lvl_select_btns(
     {
         let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
 
-        let (text, colour, can_be_played, pg_ind) = {
+        let (text, colour, can_be_played) = {
             if level_type == &LevelType::Developer {
                 let high_score = high_scores.get_high_score(i_adj as usize);
 
@@ -228,53 +226,27 @@ fn create_lvl_select_btns(
                         format!("Level number: {:02}, High Score of: {}", i_adj + 1, score),
                         [1.0; 4],
                         true,
-                        None,
                     )
                 } else {
                     if i == next_level {
-                        (
-                            format!("Level number: {:02}", i_adj + 1),
-                            [1.0; 4],
-                            true,
-                            None,
-                        )
+                        (format!("Level number: {:02}", i_adj + 1), [1.0; 4], true)
                     } else {
                         (
                             format!("Level number: {:02}", i_adj + 1),
                             [1.0, 0.25, 0.25, 1.0],
                             false,
-                            None,
                         )
                     }
                 }
             } else {
-                #[allow(clippy::collapsible_else_if)]
-                if level_type == &LevelType::ProcGen {
-                    let index = read_to_string(get_directory(false).join("../maps/").join(level))
-                        .unwrap_or_default()
-                        .parse::<usize>()
-                        .unwrap_or_default();
-
-                    (
-                        format!(
-                            "Procedurally Generated Level: {}",
-                            level.replace("pg-", "").replace(".txt", "")
-                        ),
-                        [1.0; 4],
-                        true,
-                        Some(index),
-                    )
-                } else {
-                    (
-                        format!(
-                            "User Created/Downloaded Level: {}",
-                            level.replace("m-user-", "").replace(".png", "")
-                        ),
-                        [1.0; 4],
-                        true,
-                        None,
-                    )
-                }
+                (
+                    format!(
+                        "Procedurally Generated Level: {}",
+                        level.replace("pg-", "").replace(".ron", "")
+                    ),
+                    [1.0; 4],
+                    true,
+                )
             }
         };
 
@@ -303,14 +275,7 @@ fn create_lvl_select_btns(
             entity = entity.with(Interactable);
         }
 
-        map.insert(
-            entity.build(),
-            if level_type != &LevelType::ProcGen {
-                i_adj as usize
-            } else {
-                1000 + pg_ind.unwrap_or(0)
-            },
-        );
+        map.insert(entity.build(), level.clone());
     }
 
     let proc_gen = {

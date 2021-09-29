@@ -127,7 +127,6 @@ pub fn get_levels() -> Vec<(String, LevelType)> {
         })
         .collect();
     out.sort();
-    log::info!("{:?}", out);
     out
 }
 pub fn get_levels_str() -> Vec<String> {

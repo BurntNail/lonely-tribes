@@ -71,17 +71,21 @@ impl AnimationData for MovementAnimationData {
 
 #[cfg(test)]
 mod tests {
-    use lonely_tribes_components::tile_transform::TileTransform;
-    use crate::animation::Animator;
-    use crate::interpolation::AnimInterpolation;
     use super::*;
-    
+    use crate::{animation::Animator, interpolation::AnimInterpolation};
+    use lonely_tribes_components::tile_transform::TileTransform;
+
     #[test]
-    pub fn get_current_tester () {
+    pub fn get_current_tester() {
         let start = TileTransform::new(5, 10);
         let end = TileTransform::new(10, 5);
-        let animator = Animator::new(MovementAnimationData::new(start, end, 1.0, AnimInterpolation::Linear));
-        
+        let animator = Animator::new(MovementAnimationData::new(
+            start,
+            end,
+            1.0,
+            AnimInterpolation::Linear,
+        ));
+
         assert_eq!(animator.animation_data.unwrap().get_current(), (5.0, 10.0));
     }
 }

@@ -28,7 +28,10 @@ use lonely_tribes_components::{
     tile_transform::TileTransform,
     win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
 };
-use lonely_tribes_generation::sprite_stuff::{FromSpr, Room};
+use lonely_tribes_generation::{
+    level::{Level, ReadInLevel, RT_PROCGEN_FILENAME},
+    sprite_stuff::{FromSpr, Room},
+};
 use lonely_tribes_lib::{
     either::Either,
     paths::get_directory,
@@ -43,7 +46,6 @@ use lonely_tribes_systems::{
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
-use lonely_tribes_generation::level::Level;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -113,7 +115,8 @@ impl SimpleState for PuzzleState {
         world.insert(GameModeManager::new(room.specials as i32));
         world.insert(MovementDisabler { enabled: false });
 
-        self.actions.insert(VirtualKeyCode::R, self.level_path.clone());
+        self.actions
+            .insert(VirtualKeyCode::R, self.level_path.clone());
 
         self.score_button = Some(add_score(world));
     }
@@ -183,7 +186,9 @@ impl SimpleState for PuzzleState {
                 F => self.set_gameplay_mode(GamePlayingMode::Frenzy, world),
                 B => self.set_gameplay_mode(GamePlayingMode::Boring, world),
                 Key0 | Key1 | Key2 | Key3 | Key4 | Key5 | Key6 | Key7 | Key8 | Key9 => {
-                    if self.level_path.contains("pg-") {
+                    if self.level_path.contains("pg-")
+                        || self.level_path.contains(RT_PROCGEN_FILENAME)
+                    {
                         self.save_pg_level(key_code);
                     }
                 }
@@ -311,16 +316,25 @@ impl PuzzleState {
             Key9 => 9,
             _ => 0,
         };
-        log::info!("Saving current level to Slot {}", index);
-        let current_index = if let Either::Two(i) = Level::get_seed_index_from_path(&self.level_path) {
-            i
-        } else {
-            0
-        };
 
-        let file_path = get_directory(false).join(format!("../maps/pg-{}.txt", index));
+        log::info!("Saving current level to Slot {}", index);
+        let current_index =
+            if let Either::Two(i) = Level::get_seed_index_from_path(&self.level_path) {
+                i
+            } else {
+                0
+            };
+
+        let file_path = get_directory(false).join(format!("../maps/pg-{}.ron", index));
+        let contents = ReadInLevel {
+            path: None,
+            seed: Some(current_index),
+            specials: 50,
+        };
+        let contents_str = ron::to_string(&contents).unwrap_or_default();
+
         if let Ok(mut output) = File::create(file_path.clone()) {
-            write!(output, "{}", current_index)
+            write!(output, "{}", &contents_str)
                 .unwrap_or_else(|err| log::error!("Error writing to {:?} - {}", file_path, err));
         }
     }
