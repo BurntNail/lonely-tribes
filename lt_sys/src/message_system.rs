@@ -33,7 +33,34 @@ impl DerefMut for MessageList {
     }
 }
 
-const MESSAGE_TOTAL_TIME: f32 = 1.0;
+#[derive(Default, Clone)]
+pub struct TimedMessagesToAdd {
+    pub timer: f32,
+    pub list: Vec<(f32, String)>
+}
+
+impl Iterator for TimedMessagesToAdd {
+    type Item = String;
+    
+    fn next(&mut self) -> Option<Self::Item> {
+        let mut res = None;
+        
+        if let Some((t, msg)) = self.list.get(0) {
+            if &self.timer > t {
+                res = Some(msg.clone());
+            }
+        }
+        
+        if res.is_some() {
+            self.list.remove(0);
+            self.timer = 0.0;
+        }
+        
+        res
+    }
+}
+
+const MESSAGE_PER_LETTER: f32 = 0.1;
 
 #[derive(Default)]
 pub struct MessageSystem {
@@ -41,6 +68,7 @@ pub struct MessageSystem {
     queue: VecDeque<String>,
     font: Option<FontHandle>,
 }
+
 
 lazy_static::lazy_static! {
     pub static ref DEFAULT_UI_TRANS: UiTransform = {
@@ -52,8 +80,8 @@ lazy_static::lazy_static! {
             -90.0 * sfx,
             -90.0 * sfy,
             0.5,
-            100.0 * sfx,
-            100.0 * sfy
+            333.3 * sfx,
+            500.0 * sfy
         )
     };
 }
@@ -66,14 +94,14 @@ impl<'s> System<'s> for MessageSystem {
         WriteStorage<'s, UiText>,
         WriteStorage<'s, Animator<TintAnimatorData>>,
         Read<'s, Time>,
+        Write<'s, TimedMessagesToAdd>
     );
 
     fn run(
         &mut self,
-        (entites, mut message_list, mut transforms, mut txts, mut aniamtors, time): Self::SystemData,
+        (entites, mut message_list, mut transforms, mut txts, mut aniamtors, time, mut timed_msgs): Self::SystemData,
     ) {
         for msg in std::mem::take(&mut message_list.0) {
-            log::info!("{}", &msg);
             self.queue.push_back(msg);
         }
 
@@ -93,9 +121,19 @@ impl<'s> System<'s> for MessageSystem {
 
         if new_ent_needed {
             self.current = None;
-
-            if let Some(msg) = self.queue.pop_front() {
+            
+            let msg = if let Some(ms) = self.queue.pop_front() {
+                Some(ms)
+            } else {
+                timed_msgs.timer += time.delta_seconds();
+                timed_msgs.next()
+            };
+            
+            if let Some(msg) = msg {
                 if let Some(handle) = self.font.clone() {
+                    let time = MESSAGE_PER_LETTER * msg.len() as f32;
+                    log::info!("writing {} for {}s", &msg, time);
+    
                     let (sfx, _sfy) = get_scaling_factor();
                     let txt = UiText::new(
                         handle,
@@ -105,18 +143,19 @@ impl<'s> System<'s> for MessageSystem {
                         LineMode::Wrap,
                         Anchor::TopRight,
                     );
+                    
                     let anim = Animator::new(
-                        TintAnimatorData::new(1.0, 0.0, None, MESSAGE_TOTAL_TIME, AnimInterpolation::ReverseExponential)
-                    ); //TODO: Fix by writing a new animator system for uitext objs
-
+                        TintAnimatorData::new(1.0, 0.0, None, time, AnimInterpolation::ReverseExponential)
+                    );
+    
                     let ent = entites
                         .build_entity()
                         .with(DEFAULT_UI_TRANS.clone(), &mut transforms)
                         .with(txt, &mut txts)
                         .with(anim, &mut aniamtors)
                         .build();
-
-                    self.current = Some((MESSAGE_TOTAL_TIME, ent));
+    
+                    self.current = Some((time, ent));
                 }
             }
         }

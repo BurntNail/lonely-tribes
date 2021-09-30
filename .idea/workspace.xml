@@ -8,10 +8,13 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="">
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix ui_text animator">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_sys/src/message_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/message_system.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -552,13 +555,8 @@
       <workItem from="1632833755218" duration="627000" />
       <workItem from="1632854964735" duration="4484000" />
       <workItem from="1632947667537" duration="3128000" />
-    </task>
-    <task id="LOCAL-00073" summary="Add 2 new gameplay modes">
-      <created>1629699968118</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1629699968118</updated>
+      <workItem from="1632995937146" duration="728000" />
+      <workItem from="1633000319749" duration="874000" />
     </task>
     <task id="LOCAL-00074" summary="Clean old levels to remove powerups">
       <created>1629701400799</created>
@@ -896,7 +894,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632169873352</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="fix ui_text animator">
+      <created>1632987123593</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1632987123593</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -931,7 +936,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor animation components" />
     <MESSAGE value="add docu-comments&#10;fix tint override" />
     <MESSAGE value="remove bug where could see whole map when launching a mode" />
     <MESSAGE value="add steam stuff&#10;balancing&#10;conf options for held movement" />
@@ -956,7 +960,8 @@
     <MESSAGE value="rename stuff + add more crit benches" />
     <MESSAGE value="much better fix for end-build/indev assets location" />
     <MESSAGE value="fully fix all paths to use new system" />
-    <option name="LAST_COMMIT_MESSAGE" value="fully fix all paths to use new system" />
+    <MESSAGE value="fix ui_text animator" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix ui_text animator" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

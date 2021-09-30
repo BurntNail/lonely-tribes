@@ -10,7 +10,7 @@ use lonely_tribes_lib::{
     states_util::{get_scaling_factor, load_font},
     HOVER_COLOUR,
 };
-use lonely_tribes_systems::message_system::MessageList;
+use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
 use std::collections::HashMap;
 
 ///State for welcoming the player to the game
@@ -34,6 +34,7 @@ impl SimpleState for StartGameState {
         world.register::<Interactable>();
         world.register::<UiImage>();
         world.insert(MessageList::default()); //no idea why I should do this, but otherwise it errors out
+        world.insert(TimedMessagesToAdd::default());
 
         init_audio(world);
 

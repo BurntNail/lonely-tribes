@@ -9,12 +9,14 @@ pub struct ReadInLevel {
     pub path: Option<String>,
     pub seed: Option<u32>,
     pub specials: usize,
+    pub messages: Vec<(f32, String)>
 }
 
 #[derive(Debug)]
 pub struct Level {
     pub room: Room,
     pub specials: usize,
+    pub messages: Vec<(f32, String)>
 }
 
 pub const RT_PROCGEN_FILENAME: &str = "runtime-procgen";
@@ -44,21 +46,23 @@ impl Level {
         }
     }
 
-    pub fn new(path: &str) -> Self {
+    pub fn new(path: &str) -> (Self, Option<u32>) {
         if path.contains(RT_PROCGEN_FILENAME)
         //if we don't have a path, cos we are doing procgen now
         {
-            return Self {
-                room: Room::proc_gen(rand::random()),
+            let seed = rand::random();
+            return (Self {
+                room: Room::proc_gen(seed),
                 specials: 50,
-            };
+                messages: Vec::new()
+            }, Some(seed));
         }
 
         let pathbuf = get_directory(false).join("../maps").join(path);
         let contents = read_to_string(&pathbuf).unwrap_or_default();
         let ril = from_str::<ReadInLevel>(&contents);
 
-        match ril {
+        let r = match ril {
             Ok(ok) => {
                 let room = if let Some(p) = ok.path {
                     Room::new(p)
@@ -71,15 +75,18 @@ impl Level {
                 Self {
                     room,
                     specials: ok.specials,
+                    messages: ok.messages
                 }
             }
             Err(err) => {
                 log::warn!("Error reading in room: {} at path: {:?}", err, pathbuf);
                 Self {
                     room: Room::default(),
-                    specials: 50,
+                    specials: 0,
+                    messages: Vec::new()
                 }
             }
-        }
+        };
+        (r, None)
     }
 }

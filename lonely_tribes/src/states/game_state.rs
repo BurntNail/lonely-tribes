@@ -41,11 +41,12 @@ use lonely_tribes_lib::{
     },
 };
 use lonely_tribes_systems::{
-    message_system::MessageList, move_player::MovementDisabler, player_overlap_checker::DeleteList,
+    move_player::MovementDisabler, player_overlap_checker::DeleteList,
     update_tile_transforms::UpdateTileTransforms,
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
+use lonely_tribes_systems::message_system::TimedMessagesToAdd;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -60,6 +61,7 @@ pub struct PuzzleState {
     tmp_fx_entities: Vec<Entity>,
     ///timer for when we lose containing (so far, duration, entity)
     death_timer: Option<(f32, f32, Entity)>,
+    seed_opt: Option<u32>
 }
 impl Default for PuzzleState {
     fn default() -> Self {
@@ -70,6 +72,7 @@ impl Default for PuzzleState {
             score_button: None,
             tmp_fx_entities: Vec::new(),
             death_timer: None,
+            seed_opt: None
         }
     }
 }
@@ -106,8 +109,9 @@ impl SimpleState for PuzzleState {
 
         let handle = load_sprite_sheet(world, "colored_tilemap_packed");
 
-        let room = Level::new(&self.level_path);
+        let (room, seed_opt) = Level::new(&self.level_path);
         let holder = load_level(world, handle, room.room.clone());
+        self.seed_opt = seed_opt;
 
         world.insert(GameState::new(None, self.level_path.clone(), 0));
 
@@ -119,17 +123,14 @@ impl SimpleState for PuzzleState {
             .insert(VirtualKeyCode::R, self.level_path.clone());
 
         self.score_button = Some(add_score(world));
-
+        
         {
-            let mut msg_list = world.write_resource::<MessageList>();
-
-            if self.level_path.contains("lvl-01") {
-                //we are in the first level
-                msg_list.push("Use WASD to move!".to_string());
-            } else if self.level_path.contains("pg-")
-                || self.level_path.contains(RT_PROCGEN_FILENAME)
-            {
-                msg_list.push(format!("Have fun on this pg room"));
+            let mut timed_msg_list = world.write_resource::<TimedMessagesToAdd>();
+            timed_msg_list.timer = 0.0;
+            timed_msg_list.list = room.messages.clone();
+            
+            if let Some(seed) = seed_opt {
+                timed_msg_list.list.push((1.0, format!("Enjoy playing on seed: {}", seed)));
             }
         }
     }
@@ -331,18 +332,15 @@ impl PuzzleState {
         };
 
         log::info!("Saving current level to Slot {}", index);
-        let current_index =
-            if let Either::Two(i) = Level::get_seed_index_from_path(&self.level_path) {
-                i
-            } else {
-                0
-            };
+        let current_index = self.seed_opt.unwrap_or_default();
+        log::info!("pg seed = {}", current_index);
 
         let file_path = get_directory(false).join(format!("../maps/pg-{}.ron", index));
         let contents = ReadInLevel {
             path: None,
             seed: Some(current_index),
             specials: 50,
+            messages: Vec::new()
         };
         let contents_str = ron::to_string(&contents).unwrap_or_default();
 
