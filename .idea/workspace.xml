@@ -10,14 +10,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_lib/src/states_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/states_util.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,17 +112,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />

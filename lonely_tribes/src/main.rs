@@ -37,6 +37,7 @@ use lonely_tribes_systems::{
     update_tile_transforms::UpdateTileTransforms,
 };
 use states::{help_state::HelpState, welcome_state::StartGameState};
+use lonely_tribes_systems::uitext_animator::UiTextAnimator;
 
 fn main() -> amethyst::Result<()> {
     let opts = *CONFIG;
@@ -96,6 +97,7 @@ fn main() -> amethyst::Result<()> {
         .with(LightListSystem, "light_list", &[])
         .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"])
         .with(TintAnimatorSystem, "tint_animtor", &[])
+        .with(UiTextAnimator, "uitext_animator", &[])
         .with(MessageSystem::default(), "message_list", &[]);
 
     if opts.flags.fps {

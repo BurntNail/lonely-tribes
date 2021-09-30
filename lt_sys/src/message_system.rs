@@ -96,7 +96,6 @@ impl<'s> System<'s> for MessageSystem {
 
             if let Some(msg) = self.queue.pop_front() {
                 if let Some(handle) = self.font.clone() {
-                    log::info!("new boi");
                     let (sfx, _sfy) = get_scaling_factor();
                     let txt = UiText::new(
                         handle,
