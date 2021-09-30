@@ -33,11 +33,11 @@ use lonely_tribes_systems::{
     player_overlap_checker::PlayerOverlapChecker,
     tint_animator::TintAnimatorSystem,
     txt_wobble_system::TextWobbleSystem,
+    uitext_animator::UiTextAnimator,
     update_score::ScoreUpdaterSystem,
     update_tile_transforms::UpdateTileTransforms,
 };
 use states::{help_state::HelpState, welcome_state::StartGameState};
-use lonely_tribes_systems::uitext_animator::UiTextAnimator;
 
 fn main() -> amethyst::Result<()> {
     let opts = *CONFIG;

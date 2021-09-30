@@ -1,20 +1,19 @@
 use amethyst::{
     core::{
-        ecs::{Entity, Read, System, World, Write, WriteStorage},
+        ecs::{Entities, Entity, Read, System, World, Write, WriteStorage},
         Time,
     },
     ui::{Anchor, FontHandle, LineMode, UiText, UiTransform},
 };
+use lonely_tribes_animations::{
+    animation::Animator, interpolation::AnimInterpolation, tint::TintAnimatorData,
+};
 use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
 use std::{
+    borrow::BorrowMut,
     collections::VecDeque,
     ops::{Deref, DerefMut},
 };
-use amethyst::core::ecs::Entities;
-use std::borrow::BorrowMut;
-use lonely_tribes_animations::animation::Animator;
-use lonely_tribes_animations::tint::TintAnimatorData;
-use lonely_tribes_animations::interpolation::AnimInterpolation;
 
 #[derive(Clone, Default, Debug)]
 pub struct MessageList(pub Vec<String>);
@@ -36,26 +35,26 @@ impl DerefMut for MessageList {
 #[derive(Default, Clone)]
 pub struct TimedMessagesToAdd {
     pub timer: f32,
-    pub list: Vec<(f32, String)>
+    pub list: Vec<(f32, String)>,
 }
 
 impl Iterator for TimedMessagesToAdd {
     type Item = String;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         let mut res = None;
-        
+
         if let Some((t, msg)) = self.list.get(0) {
             if &self.timer > t {
                 res = Some(msg.clone());
             }
         }
-        
+
         if res.is_some() {
             self.list.remove(0);
             self.timer = 0.0;
         }
-        
+
         res
     }
 }
@@ -68,7 +67,6 @@ pub struct MessageSystem {
     queue: VecDeque<String>,
     font: Option<FontHandle>,
 }
-
 
 lazy_static::lazy_static! {
     pub static ref DEFAULT_UI_TRANS: UiTransform = {
@@ -94,7 +92,7 @@ impl<'s> System<'s> for MessageSystem {
         WriteStorage<'s, UiText>,
         WriteStorage<'s, Animator<TintAnimatorData>>,
         Read<'s, Time>,
-        Write<'s, TimedMessagesToAdd>
+        Write<'s, TimedMessagesToAdd>,
     );
 
     fn run(
@@ -121,19 +119,18 @@ impl<'s> System<'s> for MessageSystem {
 
         if new_ent_needed {
             self.current = None;
-            
+
             let msg = if let Some(ms) = self.queue.pop_front() {
                 Some(ms)
             } else {
                 timed_msgs.timer += time.delta_seconds();
                 timed_msgs.next()
             };
-            
+
             if let Some(msg) = msg {
                 if let Some(handle) = self.font.clone() {
                     let time = MESSAGE_PER_LETTER * msg.len() as f32;
-                    log::info!("writing {} for {}s", &msg, time);
-    
+
                     let (sfx, _sfy) = get_scaling_factor();
                     let txt = UiText::new(
                         handle,
@@ -143,18 +140,22 @@ impl<'s> System<'s> for MessageSystem {
                         LineMode::Wrap,
                         Anchor::TopRight,
                     );
-                    
-                    let anim = Animator::new(
-                        TintAnimatorData::new(1.0, 0.0, None, time, AnimInterpolation::ReverseExponential)
-                    );
-    
+
+                    let anim = Animator::new(TintAnimatorData::new(
+                        1.0,
+                        0.0,
+                        None,
+                        time,
+                        AnimInterpolation::ReverseExponential,
+                    ));
+
                     let ent = entites
                         .build_entity()
                         .with(DEFAULT_UI_TRANS.clone(), &mut transforms)
                         .with(txt, &mut txts)
                         .with(anim, &mut aniamtors)
                         .build();
-    
+
                     self.current = Some((time, ent));
                 }
             }

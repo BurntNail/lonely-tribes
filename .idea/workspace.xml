@@ -8,13 +8,15 @@
     <cargoProject FILE="$PROJECT_DIR$/benches/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="fix ui_text animator">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="finish ui animator and msg_system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/welcome_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_sys/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_sys/src/message_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/message_system.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -372,8 +374,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.fmt" />
         <item itemvalue="Cargo.clippy" />
+        <item itemvalue="Cargo.fmt" />
       </list>
     </recent_temporary>
   </component>
@@ -556,14 +558,9 @@
       <workItem from="1632854964735" duration="4484000" />
       <workItem from="1632947667537" duration="3128000" />
       <workItem from="1632995937146" duration="728000" />
-      <workItem from="1633000319749" duration="874000" />
-    </task>
-    <task id="LOCAL-00074" summary="Clean old levels to remove powerups">
-      <created>1629701400799</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1629701400799</updated>
+      <workItem from="1633000319749" duration="2301000" />
+      <workItem from="1633005897114" duration="1291000" />
+      <workItem from="1633007323759" duration="26000" />
     </task>
     <task id="LOCAL-00075" summary="Add rotations to animations">
       <created>1629701461806</created>
@@ -901,7 +898,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632987123593</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="finish ui animator and msg_system">
+      <created>1633001327061</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1633001327061</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -936,7 +940,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add docu-comments&#10;fix tint override" />
     <MESSAGE value="remove bug where could see whole map when launching a mode" />
     <MESSAGE value="add steam stuff&#10;balancing&#10;conf options for held movement" />
     <MESSAGE value="start to add rayon stuff" />
@@ -961,7 +964,8 @@
     <MESSAGE value="much better fix for end-build/indev assets location" />
     <MESSAGE value="fully fix all paths to use new system" />
     <MESSAGE value="fix ui_text animator" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix ui_text animator" />
+    <MESSAGE value="finish ui animator and msg_system" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish ui animator and msg_system" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

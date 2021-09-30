@@ -9,14 +9,14 @@ pub struct ReadInLevel {
     pub path: Option<String>,
     pub seed: Option<u32>,
     pub specials: usize,
-    pub messages: Vec<(f32, String)>
+    pub messages: Vec<(f32, String)>,
 }
 
 #[derive(Debug)]
 pub struct Level {
     pub room: Room,
     pub specials: usize,
-    pub messages: Vec<(f32, String)>
+    pub messages: Vec<(f32, String)>,
 }
 
 pub const RT_PROCGEN_FILENAME: &str = "runtime-procgen";
@@ -51,11 +51,14 @@ impl Level {
         //if we don't have a path, cos we are doing procgen now
         {
             let seed = rand::random();
-            return (Self {
-                room: Room::proc_gen(seed),
-                specials: 50,
-                messages: Vec::new()
-            }, Some(seed));
+            return (
+                Self {
+                    room: Room::proc_gen(seed),
+                    specials: 50,
+                    messages: Vec::new(),
+                },
+                Some(seed),
+            );
         }
 
         let pathbuf = get_directory(false).join("../maps").join(path);
@@ -75,7 +78,7 @@ impl Level {
                 Self {
                     room,
                     specials: ok.specials,
-                    messages: ok.messages
+                    messages: ok.messages,
                 }
             }
             Err(err) => {
@@ -83,7 +86,7 @@ impl Level {
                 Self {
                     room: Room::default(),
                     specials: 0,
-                    messages: Vec::new()
+                    messages: Vec::new(),
                 }
             }
         };

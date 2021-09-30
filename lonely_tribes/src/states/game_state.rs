@@ -41,12 +41,11 @@ use lonely_tribes_lib::{
     },
 };
 use lonely_tribes_systems::{
-    move_player::MovementDisabler, player_overlap_checker::DeleteList,
-    update_tile_transforms::UpdateTileTransforms,
+    message_system::TimedMessagesToAdd, move_player::MovementDisabler,
+    player_overlap_checker::DeleteList, update_tile_transforms::UpdateTileTransforms,
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
-use lonely_tribes_systems::message_system::TimedMessagesToAdd;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -61,7 +60,7 @@ pub struct PuzzleState {
     tmp_fx_entities: Vec<Entity>,
     ///timer for when we lose containing (so far, duration, entity)
     death_timer: Option<(f32, f32, Entity)>,
-    seed_opt: Option<u32>
+    seed_opt: Option<u32>,
 }
 impl Default for PuzzleState {
     fn default() -> Self {
@@ -72,7 +71,7 @@ impl Default for PuzzleState {
             score_button: None,
             tmp_fx_entities: Vec::new(),
             death_timer: None,
-            seed_opt: None
+            seed_opt: None,
         }
     }
 }
@@ -123,14 +122,16 @@ impl SimpleState for PuzzleState {
             .insert(VirtualKeyCode::R, self.level_path.clone());
 
         self.score_button = Some(add_score(world));
-        
+
         {
             let mut timed_msg_list = world.write_resource::<TimedMessagesToAdd>();
             timed_msg_list.timer = 0.0;
-            timed_msg_list.list = room.messages.clone();
-            
+            timed_msg_list.list = room.messages;
+
             if let Some(seed) = seed_opt {
-                timed_msg_list.list.push((1.0, format!("Enjoy playing on seed: {}", seed)));
+                timed_msg_list
+                    .list
+                    .push((1.0, format!("Enjoy playing on seed: {}", seed)));
             }
         }
     }
@@ -340,7 +341,7 @@ impl PuzzleState {
             path: None,
             seed: Some(current_index),
             specials: 50,
-            messages: Vec::new()
+            messages: Vec::new(),
         };
         let contents_str = ron::to_string(&contents).unwrap_or_default();
 

@@ -20,6 +20,8 @@ impl PartialEq for LightingData {
 }
 impl Eq for LightingData {}
 
+const AREA_THRESHOLD: f32 = 2.0;
+
 impl LightCacher {
     fn get_lighted_cells_no_cache(
         light: TileTransform,
@@ -62,29 +64,67 @@ impl LightCacher {
 
         let mut list: Vec<TileTransform> = cells_to_check
             .into_par_iter()
-            .filter(|t| {
-                let t = *t;
-                let path: TileTransform = t - light;
-                let max_iterations = path.get_magnitude() * 5.0;
+            .filter(|tile_start| {
+                let tile_start: &TileTransform = tile_start;
+                let x1 = tile_start.x as f32;
+                let y1 = tile_start.y as f32;
+                let x3 = light.x as f32;
+                let y3 = light.y as f32;
 
-                let mut i = 0.0;
-                loop {
-                    i += 1.0;
+                let mut works = true;
 
-                    let pctg_done = i / max_iterations;
-                    let pos = TileTransform::from((
-                        path.x as f32 * pctg_done + light.x as f32,
-                        path.y as f32 * pctg_done + light.y as f32,
-                    ));
+                //https://www.geeksforgeeks.org/program-check-three-points-collinear/
+                //first method
+                for coll in colls {
+                    let x2 = coll.x as f32;
+                    let y2 = coll.y as f32;
 
-                    if colls.contains(&pos) {
-                        break true;
-                    }
+                    let val = ((y3 - y2) * (x2 - x1) -
+                        (y2 - y1) * (x3 - x2));
+                    log::info!("v = {}", val);
 
-                    if pctg_done > 1.0 {
-                        break false;
+                    /*let collider_in_right_direction = {
+                        let xd_t = light.x - tile_start.x;
+                        let xd_c = light.x - coll.x;
+
+                        let yd_t = light.y - tile_start.y;
+                        let yd_c = light.y - coll.y;
+
+                        let x_works = {
+                            if xd_t < 0 {
+                                xd_c > xd_t
+                            } else {
+                                xd_c < xd_t
+                            }
+                            // xd_c > xd_t
+                        };
+                        let y_works = {
+                            if yd_t < 0 {
+                                yd_c < yd_t
+                            } else {
+                                yd_c > yd_t
+                            }
+                            // yd_c < yd_t
+                        };
+                        x_works && y_works
+                    };*/
+
+                    if val.abs() < AREA_THRESHOLD
+                        // && collider_in_right_direction
+                        && tile_start.distance(coll) > f32::sqrt(2.0)
+                    {
+                        // log::info!(
+                        //     "for {}, with light {}, blocked by coll {}, with val {}",
+                        //     tile_start,
+                        //     light,
+                        //     coll,
+                        //     val
+                        // );
+                        works = false;
                     }
                 }
+
+                works
             })
             .collect();
         list.push(light);

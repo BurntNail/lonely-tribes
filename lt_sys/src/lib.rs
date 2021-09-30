@@ -6,6 +6,6 @@ pub mod move_player;
 pub mod player_overlap_checker;
 pub mod tint_animator;
 pub mod txt_wobble_system;
+pub mod uitext_animator;
 pub mod update_score;
 pub mod update_tile_transforms;
-pub mod uitext_animator;
