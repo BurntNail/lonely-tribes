@@ -307,55 +307,58 @@ fn create_lvl_select_btns(
     };
 
     let lr = {
-        let spritesheet = load_sprite_sheet(world, "left_right");
+        if levels_len() > MAX_LEVELS_ONE_SCREEN as usize {
+            let spritesheet = load_sprite_sheet(world, "left_right");
 
-        let right_btn = if current_screen < (levels_len() / MAX_LEVELS_ONE_SCREEN as usize) {
-            let right = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
-            let right_trans = UiTransform::new(
-                "right_scrn_btn".to_string(),
-                Anchor::BottomRight,
-                Anchor::BottomRight,
-                sf_x * -10.0,
-                sf_y * 10.0,
-                0.5,
-                sf_x * 90.0,
-                sf_x * 90.0, //for Sprites, they need to NOT scale in 2 dimensions
-            );
+            let right_btn = if current_screen < (levels_len() / MAX_LEVELS_ONE_SCREEN as usize) {
+                let right = UiImage::Sprite(SpriteRender::new(spritesheet.clone(), 1));
+                let right_trans = UiTransform::new(
+                    "right_scrn_btn".to_string(),
+                    Anchor::BottomRight,
+                    Anchor::BottomRight,
+                    sf_x * -10.0,
+                    sf_y * 10.0,
+                    0.5,
+                    sf_x * 90.0,
+                    sf_x * 90.0, //for Sprites, they need to NOT scale in 2 dimensions
+                );
 
-            world
-                .create_entity()
-                .with(right)
-                .with(right_trans)
-                .with(Interactable)
-                .build()
+                world
+                    .create_entity()
+                    .with(right)
+                    .with(right_trans)
+                    .with(Interactable)
+                    .build()
+            } else {
+                world.create_entity().build()
+            };
+            let left_btn = if current_screen > 0 {
+                let left = UiImage::Sprite(SpriteRender::new(spritesheet, 0));
+
+                let left_trans = UiTransform::new(
+                    "left_scrn_btn".to_string(),
+                    Anchor::BottomLeft,
+                    Anchor::BottomLeft,
+                    sf_x * 10.0,
+                    sf_y * 10.0,
+                    0.5,
+                    sf_x * 90.0,
+                    sf_x * 90.0, //for Sprites, they need to NOT scale in 2 dimensions
+                );
+
+                world
+                    .create_entity()
+                    .with(left)
+                    .with(left_trans)
+                    .with(Interactable)
+                    .build()
+            } else {
+                world.create_entity().build()
+            };
+            (left_btn, right_btn)
         } else {
-            world.create_entity().build()
-        };
-        let left_btn = if current_screen > 0 {
-            let left = UiImage::Sprite(SpriteRender::new(spritesheet, 0));
-
-            let left_trans = UiTransform::new(
-                "left_scrn_btn".to_string(),
-                Anchor::BottomLeft,
-                Anchor::BottomLeft,
-                sf_x * 10.0,
-                sf_y * 10.0,
-                0.5,
-                sf_x * 90.0,
-                sf_x * 90.0, //for Sprites, they need to NOT scale in 2 dimensions
-            );
-
-            world
-                .create_entity()
-                .with(left)
-                .with(left_trans)
-                .with(Interactable)
-                .build()
-        } else {
-            world.create_entity().build()
-        };
-
-        (left_btn, right_btn)
+            (world.create_entity().build(), world.create_entity().build())
+        }
     };
 
     (map, next_level, proc_gen, lr)

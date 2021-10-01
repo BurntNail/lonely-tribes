@@ -2,8 +2,7 @@
 /Releases
 
 /assets/data/*.ron
-assets/maps/pg-*.txt
-assets/maps/*.ron
+assets/maps/pg-*.ron
 
 steam_appid.txt
 .idea/workspace.xml

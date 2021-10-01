@@ -157,8 +157,8 @@ impl SpriteRequest {
         use SpriteRequest::*;
         match self {
             BackWall => 19,
-            BackWallLeftCorner => 20,
-            BackWallRightCorner => 18,
+            BackWallLeftCorner => 18,
+            BackWallRightCorner => 20,
             LeftWall => 66,
             RightWall => 68,
             LeftWallDown => 1, //fix

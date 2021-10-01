@@ -9,14 +9,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="finish ui animator and msg_system">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-01.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-02.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/lvl-02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/maps/lvl-06.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/game_state.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/true_end.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/true_end.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_generation/src/level.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/level.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/message_system.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/message_system.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_sys/src/uitext_animator.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_generation/src/sprite_stuff.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_generation/src/sprite_stuff.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,11 +101,11 @@
       <recent name="C:\Users\Jack Maguire\Downloads\roguelike-rpg\assets\art" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\maps" />
       <recent name="C:\Users\Jack Maguire\Documents\Code\Rust\lonely-tribes\assets\art" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lonely_tribes_tags/src" />
       <recent name="$PROJECT_DIR$/lonely_tribes_algos/src" />
-      <recent name="$PROJECT_DIR$/lonely_tribes_lib/src" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -117,6 +124,17 @@
     </option>
   </component>
   <component name="RunManager" selected="Cargo.run">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run normal" type="CargoCommandRunConfiguration" factoryName="Cargo Command" singleton="false">
       <option name="command" value="run" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -561,6 +579,10 @@
       <workItem from="1633000319749" duration="2301000" />
       <workItem from="1633005897114" duration="1291000" />
       <workItem from="1633007323759" duration="26000" />
+      <workItem from="1633072686549" duration="233000" />
+      <workItem from="1633073552783" duration="81000" />
+      <workItem from="1633076915348" duration="559000" />
+      <workItem from="1633091061594" duration="772000" />
     </task>
     <task id="LOCAL-00075" summary="Add rotations to animations">
       <created>1629701461806</created>

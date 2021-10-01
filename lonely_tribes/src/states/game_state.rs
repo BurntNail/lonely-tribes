@@ -41,8 +41,10 @@ use lonely_tribes_lib::{
     },
 };
 use lonely_tribes_systems::{
-    message_system::TimedMessagesToAdd, move_player::MovementDisabler,
-    player_overlap_checker::DeleteList, update_tile_transforms::UpdateTileTransforms,
+    message_system::{MessageList, TimedMessagesToAdd},
+    move_player::MovementDisabler,
+    player_overlap_checker::DeleteList,
+    update_tile_transforms::UpdateTileTransforms,
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
@@ -140,6 +142,11 @@ impl SimpleState for PuzzleState {
         let world = data.world;
 
         world.delete_all();
+
+        {
+            world.write_resource::<TimedMessagesToAdd>().list.clear();
+            world.write_resource::<MessageList>().0.clear();
+        }
 
         if let GameStateEnum::End { lost_position } = self.ws {
             world.insert(GameState::new(
@@ -338,7 +345,6 @@ impl PuzzleState {
 
         let file_path = get_directory(false).join(format!("../maps/pg-{}.ron", index));
         let contents = ReadInLevel {
-            path: None,
             seed: Some(current_index),
             specials: 50,
             messages: Vec::new(),

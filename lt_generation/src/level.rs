@@ -6,7 +6,6 @@ use std::fs::read_to_string;
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ReadInLevel {
-    pub path: Option<String>,
     pub seed: Option<u32>,
     pub specials: usize,
     pub messages: Vec<(f32, String)>,
@@ -29,17 +28,16 @@ impl Level {
 
         match ril {
             Ok(good) => {
-                if let Some(i) = good.path {
-                    let res = i
+                if let Some(s) = good.seed {
+                    Either::Two(s)
+                } else {
+                    let res: usize = path
                         .replace("lvl-", "")
                         .replace(".ron", "")
                         .parse()
                         .unwrap_or_default();
-                    Either::One(res)
-                } else if let Some(s) = good.seed {
-                    Either::Two(s)
-                } else {
-                    Either::Two(0)
+
+                    Either::One(res - 1)
                 }
             }
             Err(_) => Either::Two(0),
@@ -67,12 +65,10 @@ impl Level {
 
         let r = match ril {
             Ok(ok) => {
-                let room = if let Some(p) = ok.path {
-                    Room::new(p)
-                } else if let Some(s) = ok.seed {
+                let room = if let Some(s) = ok.seed {
                     Room::proc_gen(s)
                 } else {
-                    Room::default()
+                    Room::new(path.replace(".ron", ".png"))
                 };
 
                 Self {

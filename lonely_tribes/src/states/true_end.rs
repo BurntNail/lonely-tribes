@@ -86,7 +86,7 @@ pub fn get_true_end_txt(world: &mut World) -> Entity {
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrum"),
-        "Well, I never thought we'd get here... Click here, or press [Space] or [Enter] to go back to the Main Menu. Congrats!".to_string(),
+        "Congratulations on finishing Lonely Tribes! Now, a world of auto-gen levels awaits.... Click here, or press [Space] or [Enter] to go back to the Main Menu. Congrats!".to_string(),
         [1.0; 4],
         sf_y * 45.0,
         LineMode::Wrap,

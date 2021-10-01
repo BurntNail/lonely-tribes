@@ -48,6 +48,10 @@ impl HighScores {
     /// If it is None, then the high score was beaten
     /// If Some, then the i32 is the old high score
     pub fn add_score_and_write(&mut self, path: String, score: i32) -> Option<i32> {
+        if score == 0 {
+            return None;
+        }
+
         let index = {
             path.replace("lvl-", "")
                 .replace(".png", "")
