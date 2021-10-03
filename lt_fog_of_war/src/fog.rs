@@ -38,12 +38,12 @@ impl LightCacher {
                     (-rad..rad).into_par_iter().for_each_with(tx, |tx, j| {
                         let j = j as i32;
                         if !(light.y + j < 0 || light.y + j >= HEIGHT as i32) {
-                            let current_delta_pos = TileTransform::new(i, j);
+                            let delta = TileTransform::new(i, j);
+                            let pos = light + delta;
 
-                            if !(colls.contains(&current_delta_pos)
-                                || current_delta_pos.get_magnitude() > rad as f32)
+                            if delta.get_magnitude() < rad as f32
                             {
-                                tx.send(current_delta_pos + light).unwrap_or_else(|err| {
+                                tx.send(pos).unwrap_or_else(|err| {
                                     log::warn!("Couldn't send position to cells to test: {}", err)
                                 });
                             }

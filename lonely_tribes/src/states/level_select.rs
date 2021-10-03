@@ -185,10 +185,10 @@ fn create_lvl_select_btns(
 
     let main_trans = UiTransform::new(
         "help_main".to_string(),
-        Anchor::Middle,
-        Anchor::Middle,
+        Anchor::TopMiddle,
+        Anchor::TopMiddle,
         0.0,
-        sf_y * 425.0,
+        sf_y * -20.0,
         0.5,
         sf_x * 1500.0,
         sf_y * 100.0,
