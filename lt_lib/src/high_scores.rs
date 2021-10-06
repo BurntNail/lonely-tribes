@@ -37,7 +37,9 @@ impl HighScores {
     pub fn new() -> Self {
         let file = read_to_string(high_scores_path()).unwrap_or_else(|_| "".to_string());
 
-        let scores: Vec<i32> = from_str(file.as_str()).unwrap_or_default();
+        let mut scores_from_file: Vec<i32> = from_str(file.as_str()).unwrap_or_default();
+        let mut scores = Vec::new();
+        scores.append(&mut scores_from_file);
 
         Self { scores }
     }
@@ -70,13 +72,22 @@ impl HighScores {
                 i32::MAX
             }
         };
+
+        let mut insert = |el: i32| {
+            if index >= self.scores.len() {
+                self.scores.push(el);
+            } else {
+                self.scores.insert(index, el);
+            }
+        };
+
         if score < current {
             new_high_score = true;
-            self.scores.insert(index, score);
+            insert(score);
 
             self.write_self_to_file();
         } else {
-            self.scores.insert(index, current);
+            insert(current);
         }
 
         if new_high_score {

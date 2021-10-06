@@ -18,7 +18,6 @@ use amethyst::{
     window::DisplayConfig,
     LoggerConfig,
 };
-use log::LevelFilter;
 use lonely_tribes_lib::{
     audio::Muzac,
     paths::{get_directory, is_end_user_build},
@@ -41,18 +40,6 @@ use states::{help_state::HelpState, welcome_state::StartGameState};
 
 fn main() -> amethyst::Result<()> {
     let opts = *CONFIG;
-    log::info!("Using {:?}", opts);
-
-    amethyst::start_logger(if opts.flags.console {
-        LoggerConfig::default()
-    } else {
-        LoggerConfig {
-            level_filter: LevelFilter::Off,
-            log_gfx_backend_level: Some(LevelFilter::Off),
-            log_gfx_rendy_level: Some(LevelFilter::Off),
-            ..Default::default()
-        }
-    });
 
     let app_root = application_root_dir()?;
 
@@ -61,6 +48,17 @@ fn main() -> amethyst::Result<()> {
     } else {
         app_root.join("../assets")
     };
+
+
+    amethyst::start_logger(if opts.flags.console {
+        LoggerConfig {
+            log_file: Some(resources.join("log.txt")),
+            ..Default::default()
+        }
+    } else {
+        LoggerConfig::default()
+    });
+
 
     let display_config = DisplayConfig {
         title: "Lonely Tribes".to_string(),

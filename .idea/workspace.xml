@@ -9,10 +9,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918c01c-fe97-4f71-9d9d-c16f8b7c1823" name="Default Changelist" comment="finish ui animator and msg_system">
+      <change beforePath="$PROJECT_DIR$/.idea/making-friends.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/making-friends.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/art/colored_tilemap_packed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/states/level_select.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_fog_of_war/src/fog.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lonely_tribes/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lonely_tribes/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" beforeDir="false" afterPath="$PROJECT_DIR$/lt_lib/src/high_scores.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +112,7 @@
       <command value="cargo bench" />
     </option>
   </component>
-  <component name="RunManager" selected="Cargo.build release">
+  <component name="RunManager" selected="Cargo.run">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -574,6 +573,8 @@
       <workItem from="1633076915348" duration="559000" />
       <workItem from="1633091061594" duration="772000" />
       <workItem from="1633122073097" duration="1571000" />
+      <workItem from="1633551579378" duration="453000" />
+      <workItem from="1633552053621" duration="206000" />
     </task>
     <task id="LOCAL-00075" summary="Add rotations to animations">
       <created>1629701461806</created>

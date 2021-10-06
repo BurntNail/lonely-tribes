@@ -6,6 +6,7 @@ assets/maps/pg-*.ron
 
 steam_appid.txt
 .idea/workspace.xml
+assets/log.txt
 
 libsteam_api.so
 steam_api64.*
