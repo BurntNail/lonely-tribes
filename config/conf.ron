@@ -1,6 +1,1 @@
-ReadInConfig (
-    screen_dimensions: Some((1600, 900)),
-    maximised: false,
-    timed_movement: Some(0.1),
-    vol: 0.0
-)
+(screen_dimensions:Some((426,347)),maximised:false,vol:0)

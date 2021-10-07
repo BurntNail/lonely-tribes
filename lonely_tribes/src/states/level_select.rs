@@ -15,6 +15,8 @@ use lonely_tribes_lib::{
     HOVER_COLOUR,
 };
 use std::collections::HashMap;
+use amethyst::winit::{Event, WindowEvent};
+use lonely_tribes_lib::config::change_screen_res;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, String>,
@@ -147,6 +149,11 @@ impl SimpleState for LevelSelectState {
                     self.next_level = next_level;
                     self.proc_gen = Some(proc_gen);
                     self.leftright = Some(lr);
+                }
+            },
+            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
+                if let WindowEvent::Resized(size) = event {
+                    change_screen_res(size.width as u32, size.height as u32);
                 }
             }
             _ => {}

@@ -6,6 +6,8 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
+use amethyst::winit::{WindowEvent, Event};
+use lonely_tribes_lib::config::change_screen_res;
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = include_str!("help_text.txt");
@@ -28,11 +30,20 @@ impl SimpleState for HelpState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
-        if let StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) = event {
-            if key_code == VirtualKeyCode::Space || key_code == VirtualKeyCode::Return {
-                t = SimpleTrans::Switch(Box::new(StartGameState::default()));
+        match event {
+            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+                if key_code == VirtualKeyCode::Space || key_code == VirtualKeyCode::Return {
+                    t = SimpleTrans::Switch(Box::new(StartGameState::default()));
+                }
+            },
+            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
+                if let WindowEvent::Resized(size) = event {
+                    change_screen_res(size.width as u32, size.height as u32);
+                }
             }
+            _ => {}
         }
+        
         t
     }
 }

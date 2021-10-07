@@ -48,6 +48,7 @@ use lonely_tribes_systems::{
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
+use lonely_tribes_lib::config::change_screen_res;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -226,7 +227,10 @@ impl SimpleState for PuzzleState {
                     gws.ws = GameStateEnum::End {
                         lost_position: Some(TileTransform::default()),
                     };
-                }
+                },
+                WindowEvent::Resized(size) => {
+                    change_screen_res(size.width as u32, size.height as u32);
+                },
                 _ => {}
             },
             _ => {}

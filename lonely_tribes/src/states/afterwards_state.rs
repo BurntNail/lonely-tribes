@@ -14,6 +14,8 @@ use lonely_tribes_lib::{
     CONFIG,
 };
 use std::collections::HashMap;
+use amethyst::winit::{Event, WindowEvent};
+use lonely_tribes_lib::config::change_screen_res;
 
 ///State for when after a *PuzzleState*
 #[derive(Default)]
@@ -95,15 +97,24 @@ impl SimpleState for PostGameState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = Trans::None;
-        if let StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) = event {
-            self.map.iter().for_each(|(k, v)| {
-                if &key_code == k {
-                    t = Trans::Switch(Box::new(PuzzleState::new(v.clone())));
+        
+        match event {
+            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+                self.map.iter().for_each(|(k, v)| {
+                    if &key_code == k {
+                        t = Trans::Switch(Box::new(PuzzleState::new(v.clone())));
+                    }
+                });
+                if key_code == VirtualKeyCode::L {
+                    t = Trans::Switch(Box::new(LevelSelectState::default()));
                 }
-            });
-            if key_code == VirtualKeyCode::L {
-                t = Trans::Switch(Box::new(LevelSelectState::default()));
+            },
+            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
+                if let WindowEvent::Resized(size) = event {
+                    change_screen_res(size.width as u32, size.height as u32);
+                }
             }
+            _ => {}
         }
         t
     }

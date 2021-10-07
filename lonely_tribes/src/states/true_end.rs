@@ -6,6 +6,8 @@ use amethyst::{
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
+use amethyst::winit::{Event, WindowEvent};
+use lonely_tribes_lib::config::change_screen_res;
 
 ///State for when the user has finished all levels
 #[derive(Default)]
@@ -56,6 +58,11 @@ impl SimpleState for TrueEnd {
                         UiEventType::HoverStop => txt.color = [1.0; 4],
                         _ => {}
                     }
+                }
+            },
+            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
+                if let WindowEvent::Resized(size) = event {
+                    change_screen_res(size.width as u32, size.height as u32);
                 }
             }
             _ => {}

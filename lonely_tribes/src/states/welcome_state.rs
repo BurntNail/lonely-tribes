@@ -12,6 +12,8 @@ use lonely_tribes_lib::{
 };
 use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
 use std::collections::HashMap;
+use amethyst::winit::{Event, WindowEvent};
+use lonely_tribes_lib::config::change_screen_res;
 
 ///State for welcoming the player to the game
 #[derive(Default)]
@@ -47,44 +49,52 @@ impl SimpleState for StartGameState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
-
-        if let StateEvent::Ui(ui_event) = event {
-            let mut target = None;
-
-            for (t, e) in &self.btns {
-                if &ui_event.target == e {
-                    target = Some(*t);
+        
+        match event {
+            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
+                if let WindowEvent::Resized(size) = event {
+                    change_screen_res(size.width as u32, size.height as u32);
                 }
             }
-
-            if let Some(target) = target {
-                let mut texts = data.world.write_storage::<UiText>();
-                let txt = texts.get_mut(ui_event.target);
-
-                if let Some(txt) = txt {
-                    match ui_event.event_type {
-                        UiEventType::HoverStart => txt.color = HOVER_COLOUR,
-                        UiEventType::HoverStop => txt.color = [1.0; 4],
-                        UiEventType::ClickStart => txt.color = [1.0, 1.0, 1.0, 0.5],
-                        UiEventType::ClickStop => {
-                            match target {
-                                ButtonType::Start => {
-                                    t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
-                                }
-                                ButtonType::Help => {
-                                    t = SimpleTrans::Switch(Box::new(HelpState::default()));
-                                }
-                                ButtonType::Quit => {
-                                    t = SimpleTrans::Quit;
-                                }
-                            };
-                        }
-                        _ => {}
+            StateEvent::Ui(ui_event) => {
+                let mut target = None;
+    
+                for (t, e) in &self.btns {
+                    if &ui_event.target == e {
+                        target = Some(*t);
                     }
                 }
-            }
+    
+                if let Some(target) = target {
+                    let mut texts = data.world.write_storage::<UiText>();
+                    let txt = texts.get_mut(ui_event.target);
+        
+                    if let Some(txt) = txt {
+                        match ui_event.event_type {
+                            UiEventType::HoverStart => txt.color = HOVER_COLOUR,
+                            UiEventType::HoverStop => txt.color = [1.0; 4],
+                            UiEventType::ClickStart => txt.color = [1.0, 1.0, 1.0, 0.5],
+                            UiEventType::ClickStop => {
+                                match target {
+                                    ButtonType::Start => {
+                                        t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
+                                    }
+                                    ButtonType::Help => {
+                                        t = SimpleTrans::Switch(Box::new(HelpState::default()));
+                                    }
+                                    ButtonType::Quit => {
+                                        t = SimpleTrans::Quit;
+                                    }
+                                };
+                            }
+                            _ => {}
+                        }
+                    }
+                }
+            },
+            _ => {}
         }
-
+        
         t
     }
 }

@@ -61,6 +61,15 @@ impl Default for ParsedConfig {
         }
     }
 }
+impl From<ParsedConfig> for ReadInConfig {
+    fn from(c: ParsedConfig) -> Self {
+        ReadInConfig {
+            screen_dimensions: Some(c.screen_dimensions),
+            maximised: c.maximised,
+            vol: c.vol
+        }
+    }
+}
 impl ParsedConfig {
     pub fn new() -> Self {
         let path = get_directory(true).join("conf.ron");
@@ -98,5 +107,17 @@ impl LTConfig {
 impl Default for LTConfig {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+
+pub fn change_screen_res (new_x: u32, new_y: u32) {
+    log::info!("Changing to {}, {}", new_x, new_y);
+    let mut conf = ParsedConfig::new();
+    conf.screen_dimensions.0 = new_x;
+    conf.screen_dimensions.1 = new_y;
+    
+    if let Ok(str_version) = ron::to_string(&ReadInConfig::from(conf)) {
+        std::fs::write(get_directory(true).join("conf.ron"), str_version).unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));
     }
 }
