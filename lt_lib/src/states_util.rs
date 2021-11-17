@@ -77,12 +77,16 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
     )
 }
 
-pub fn get_scaling_factor() -> (f32, f32) {
+pub fn get_scaling_factor_non_normalised() -> (f32, f32) {
     let c = CONFIG.conf;
-    let (x, y) = (
+    (
         c.screen_dimensions.0 as f32 / 1600.0, //game was originally designed for 1600x900
         c.screen_dimensions.1 as f32 / 900.0,
-    );
+    )
+}
+pub fn get_scaling_factor() -> (f32, f32) {
+    let (x, y) = get_scaling_factor_non_normalised();
+    
     if x > y {
         (1.0, y / x)
     } else {

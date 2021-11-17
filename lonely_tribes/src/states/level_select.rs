@@ -195,7 +195,7 @@ fn create_lvl_select_btns(
         Anchor::TopMiddle,
         Anchor::TopMiddle,
         0.0,
-        sf_y * -20.0,
+        sf_y * -75.0,
         0.5,
         sf_x * 1500.0,
         sf_y * 100.0,

@@ -59,7 +59,6 @@ fn main() -> amethyst::Result<()> {
         LoggerConfig::default()
     });
 
-
     let display_config = DisplayConfig {
         title: "Lonely Tribes".to_string(),
         dimensions: Some(opts.conf.screen_dimensions),

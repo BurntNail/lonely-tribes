@@ -12,8 +12,9 @@ use lonely_tribes_lib::{
 };
 use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
 use std::collections::HashMap;
-use amethyst::winit::{Event, WindowEvent};
-use lonely_tribes_lib::config::change_screen_res;
+use amethyst::winit::{Event, WindowEvent, Window};
+use lonely_tribes_lib::config::{change_screen_res, change_screen, DEFAULT_DPI, DEFAULT_SCREEN_RES};
+use lonely_tribes_lib::CONFIG;
 
 ///State for welcoming the player to the game
 #[derive(Default)]
@@ -39,6 +40,14 @@ impl SimpleState for StartGameState {
         world.insert(TimedMessagesToAdd::default());
 
         init_audio(world);
+        
+        if CONFIG.conf.screen_dimensions == DEFAULT_SCREEN_RES || CONFIG.conf.dpi_factor == DEFAULT_DPI {
+            let w = world.read_resource::<Window>();
+            let monitor = w.get_current_monitor();
+            let res = monitor.get_dimensions();
+            change_screen(res.width as u32, res.height as u32, monitor.get_hidpi_factor());
+            std::process::exit(0);
+        }
 
         self.btns = init_menu(world);
     }

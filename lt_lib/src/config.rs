@@ -35,6 +35,9 @@ impl Flags {
     }
 }
 
+pub const DEFAULT_SCREEN_RES: (u32, u32) = (10, 10);
+pub const DEFAULT_DPI: f64 = 100.0;
+
 #[derive(Copy, Clone, Debug)]
 pub struct LTConfig {
     pub flags: Flags,
@@ -43,12 +46,14 @@ pub struct LTConfig {
 #[derive(Serialize, Deserialize)]
 struct ReadInConfig {
     pub screen_dimensions: Option<(u32, u32)>,
+    pub dpi_factor: Option<f64>,
     pub maximised: bool,
     pub vol: f32,
 }
 #[derive(Copy, Clone, Debug)]
 pub struct ParsedConfig {
     pub screen_dimensions: (u32, u32),
+    pub dpi_factor: f64,
     pub maximised: bool,
     pub vol: f32,
 }
@@ -56,6 +61,7 @@ impl Default for ParsedConfig {
     fn default() -> Self {
         ParsedConfig {
             screen_dimensions: (1600, 900),
+            dpi_factor: 1.0,
             maximised: false,
             vol: 1.0,
         }
@@ -65,6 +71,7 @@ impl From<ParsedConfig> for ReadInConfig {
     fn from(c: ParsedConfig) -> Self {
         ReadInConfig {
             screen_dimensions: Some(c.screen_dimensions),
+            dpi_factor: Some(c.dpi_factor),
             maximised: c.maximised,
             vol: c.vol
         }
@@ -77,11 +84,13 @@ impl ParsedConfig {
         match from_str(contents.as_str()) {
             Ok(w) => {
                 let w: ReadInConfig = w;
-                let sd = w.screen_dimensions.unwrap_or((1920, 1080));
+                let sd = w.screen_dimensions.unwrap_or(DEFAULT_SCREEN_RES);
+                let dpi_factor = w.dpi_factor.unwrap_or(DEFAULT_DPI);
                 Self {
                     screen_dimensions: sd,
                     maximised: w.maximised,
                     vol: w.vol,
+                    dpi_factor
                 }
             }
             Err(e) => {
@@ -116,6 +125,18 @@ pub fn change_screen_res (new_x: u32, new_y: u32) {
     let mut conf = ParsedConfig::new();
     conf.screen_dimensions.0 = new_x;
     conf.screen_dimensions.1 = new_y;
+    
+    if let Ok(str_version) = ron::to_string(&ReadInConfig::from(conf)) {
+        std::fs::write(get_directory(true).join("conf.ron"), str_version).unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));
+    }
+}
+
+pub fn change_screen (new_x: u32, new_y: u32, dpi: f64) {
+    log::info!("Changing to {}, {}", new_x, new_y);
+    let mut conf = ParsedConfig::new();
+    conf.screen_dimensions.0 = new_x;
+    conf.screen_dimensions.1 = new_y;
+    conf.dpi_factor = dpi;
     
     if let Ok(str_version) = ron::to_string(&ReadInConfig::from(conf)) {
         std::fs::write(get_directory(true).join("conf.ron"), str_version).unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));

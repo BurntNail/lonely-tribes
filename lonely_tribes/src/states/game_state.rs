@@ -49,6 +49,7 @@ use lonely_tribes_systems::{
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
 use lonely_tribes_lib::config::change_screen_res;
+use lonely_tribes_lib::states_util::get_scaling_factor_non_normalised;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -451,19 +452,19 @@ fn add_score(world: &mut World) -> Entity {
     let (sf_x, sf_y) = get_scaling_factor();
     let trans = UiTransform::new(
         "score_txt".to_string(),
-        Anchor::Middle,
-        Anchor::Middle,
-        sf_x * -575.0,
-        sf_y * 400.0,
+        Anchor::TopLeft,
+        Anchor::TopLeft,
+        50.0 * sf_x,
+        -50.0 * sf_x,
         0.5,
-        sf_x * 600.0,
-        sf_y * 1000.0,
+        333.3 * sf_x,
+        500.0 * sf_y
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Current Score: 0".to_string(),
         [1.0, 1.0, 1.0, 0.5],
-        sf_y * 25.0,
+        sf_x * 25.0,
         LineMode::Wrap,
         Anchor::Middle,
     );
