@@ -14,28 +14,32 @@ use std::{
 };
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+#[repr(i32)]
 pub enum SpriteRequest {
-    BackWall,
-    BackWallLeftCorner,
-    BackWallRightCorner,
-    LeftWall,
-    RightWall,
-    FrontWall,
-    FrontWallLeftCorner,
-    FrontWallRightCorner,
-    LeftWallDown,
-    RightWallDown,
-    LeftWallUp,
-    RightWallUp,
-    TUpDownLeft,
-    TUpDownRight,
-    Player(usize),
-    Door,
-    Blank,
-    Shrubbery,
-    DarkShrubbery,
-    Tree,
-    WarpedTree,
+    BackWall = 19,
+    BackWallLeftCorner = 18,
+    BackWallRightCorner = 20,
+    LeftWall = 66,
+    RightWall = 68,
+    // LeftWallDown = 1,
+    RightWallDown = 162,
+    // LeftWallUp = 1,
+    // RightWallUp = 1,
+    FrontWall = 115,
+    Door = 488,
+    FrontWallLeftCorner = 114,
+    FrontWallRightCorner = 116,
+    Player0 = 409,
+    Player1 = 361,
+    Player2 = 366,
+    Player3 = 367,
+    TUpDownLeft = 71,
+    TUpDownRight = 70,
+    Shrubbery = 96,
+    DarkShrubbery = 4,
+    Tree = 51,
+    WarpedTree = 102,
+    Blank = -1,
 }
 impl Default for SpriteRequest {
     fn default() -> Self {
@@ -57,7 +61,10 @@ impl FromSpr for Tag {
     fn from_spr(spr: SpriteRequest) -> Self {
         use SpriteRequest::*;
         match spr {
-            SpriteRequest::Player(id) => Self::Player(id),
+            SpriteRequest::Player0 => Self::Player(0),
+            SpriteRequest::Player1 => Self::Player(1),
+            SpriteRequest::Player2 => Self::Player(2),
+            SpriteRequest::Player3 => Self::Player(3),
             SpriteRequest::Door => Self::Trigger(TriggerType::Door),
             Blank | Shrubbery | DarkShrubbery => Floor,
             _ => Collision,
@@ -82,17 +89,17 @@ lazy_static! {
         s(223, 113, 38, FrontWallLeftCorner);
         s(217, 160, 102, FrontWallRightCorner);
         s(238, 195, 154, FrontWall);
-        s(251, 242, 54, LeftWallDown);//3
-        s(153, 229, 80, RightWallDown);
+        // s(251, 242, 54, LeftWallDown);//3
+        // s(153, 229, 80, RightWallDown);
         s(106, 190, 48, Door);
         s(75, 105, 47, Shrubbery);//4
         s(82, 75, 36, DarkShrubbery);
         s(50, 60, 57, Tree);
         s(63, 63, 116, WarpedTree);
-        s(48, 96, 130, Player(0)); //5
-        s(91, 110, 225, Player(1));
-        s(99, 155, 255, Player(2));
-        s(95, 205, 228, Player(3));
+        s(48, 96, 130, Player0); //5
+        s(91, 110, 225, Player1);
+        s(99, 155, 255, Player2);
+        s(95, 205, 228, Player3);
         s(203, 219, 252, TUpDownLeft); //6
         s(255, 255, 255, TUpDownRight);
 
@@ -120,16 +127,16 @@ lazy_static! {
             FrontWall,
             FrontWallLeftCorner,
             FrontWallRightCorner,
-            LeftWallDown,
+            // LeftWallDown,
             RightWallDown,
-            LeftWallUp,
-            RightWallUp,
+            // LeftWallUp,
+            // RightWallUp,
             TUpDownLeft,
             TUpDownRight,
-            Player(0),
-            Player(1),
-            Player(2),
-            Player(3),
+            Player0,
+            Player1,
+            Player2,
+            Player3,
             Door,
             Blank,
             Shrubbery,
@@ -153,36 +160,11 @@ lazy_static! {
 impl SpriteRequest {
     ///Function to get the index on the spritesheet for a SpriteRequest
     pub fn get_spritesheet_index(&self) -> usize {
-        //REMEMBER - AMETHYST GOES BY ROWS
-        use SpriteRequest::*;
-        match self {
-            BackWall => 19,
-            BackWallLeftCorner => 18,
-            BackWallRightCorner => 20,
-            LeftWall => 66,
-            RightWall => 68,
-            LeftWallDown => 1, //fix
-            RightWallDown => 162,
-            LeftWallUp => 1,  //fix
-            RightWallUp => 1, //fix
-            FrontWall => 115,
-            Door => 488,
-            FrontWallLeftCorner => 114,  //fix
-            FrontWallRightCorner => 116, //fix
-            Player(index) => match index {
-                0 => 409,
-                1 => 361,
-                2 => 366,
-                3 => 367,
-                _ => 0,
-            },
-            TUpDownLeft => 71,  //fix
-            TUpDownRight => 70, //fix
-            Shrubbery => 96,
-            DarkShrubbery => 4,
-            Tree => 51,
-            WarpedTree => 102,
-            Blank => 0,
+        let attempt = *self as i32;
+        if attempt > 0 {
+            attempt as usize
+        } else {
+            0
         }
     }
 

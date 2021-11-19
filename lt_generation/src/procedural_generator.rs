@@ -35,11 +35,11 @@ lazy_static! {
         a([n, n, n, b, b, n, n, n], BackWall);
         a([n, n, r, b, r, n, n, n], BackWall);
         a([l, n, n, l, b, n, n, n], BackWall);
-        a([n, l, n, n, b, n, n, n], BackWallRightCorner);
-        a([n, r, n, b, n, n, n, n], BackWallLeftCorner);
+        a([n, l, n, n, b, n, n, n], BackWallLeftCorner);
+        a([n, r, n, b, n, n, n, n], BackWallRightCorner);
 
-        a([n, n, n, n, f, n, l, n], FrontWallLeftCorner);
-        a([n, n, n, f, n, n, r, n], FrontWallRightCorner);
+        a([n, n, n, n, f, n, l, n], FrontWallRightCorner);
+        a([n, n, n, f, n, n, r, n], FrontWallLeftCorner);
         a([n, n, n, f, f, n, n, n], FrontWall);
         a([n, n, n, l, f, l, n, n], FrontWall);
         a([n, n, n, f, r, n, n, r], FrontWall);
@@ -112,8 +112,15 @@ impl ProceduralGenerator {
                     let x = rng.gen_range(0..WIDTH as usize);
                     let y = rng.gen_range(0..HEIGHT as usize);
                     if !blocked_bits.contains(&(x, y)) && !players.contains(&(x, y)) {
+                        let player = match id {
+                            1 => SpriteRequest::Player1,
+                            2 => SpriteRequest::Player2,
+                            3 => SpriteRequest::Player3,
+                            _ => SpriteRequest::Player0
+                        };
+
                         players.push((x, y));
-                        map.push((x, y, SpriteRequest::Player(id)));
+                        map.push((x, y, player));
                         break;
                     }
                 }

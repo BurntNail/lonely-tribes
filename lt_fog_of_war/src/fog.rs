@@ -24,7 +24,7 @@ impl LightCacher {
     fn get_lighted_cells_no_cache(
         light: TileTransform,
         rad: i32,
-        colls: &[TileTransform],
+        _colls: &[TileTransform],
     ) -> Vec<TileTransform> {
         let (sender, receiver) = channel();
 
