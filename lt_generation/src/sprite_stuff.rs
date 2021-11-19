@@ -12,8 +12,11 @@ use std::{
     collections::HashMap,
     ops::{Deref, DerefMut},
 };
+use std::fs::read_to_string;
+use std::convert::TryFrom;
+use derive_try_from_primitive::TryFromPrimitive;
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, TryFromPrimitive)]
 #[repr(i32)]
 pub enum SpriteRequest {
     BackWall = 19,
@@ -206,18 +209,27 @@ impl Room {
         let path = get_directory(false).join("../maps").join(path);
         let path = path.to_str().unwrap_or_default();
 
-        image::open(path)
-            .unwrap_or_else(|err| {
-                log::error!("Image Error for Room {}: {}", path, err);
-                DynamicImage::new_bgr8(WIDTH as u32, HEIGHT as u32)
-            })
-            .pixels()
-            .for_each(|(x, y, px)| {
+        let img = image::open(path);
+        match img {
+            Ok(img) => img.pixels().for_each(|(x, y, px)| {
                 let res = *SpriteRequest::from_colour_swatch(&px);
                 if res != SpriteRequest::Blank {
                     data[x as usize][y as usize] = res;
                 }
-            });
+            }),
+            Err(_) => {
+                let contents = read_to_string(path).unwrap_or_else(|err| {log::error!("Image Error for Room {}: {}", path, err); String::default()});
+                
+                for (y, line) in contents.lines().into_iter().enumerate() {
+                    for (x, thing) in line.split(',').into_iter().enumerate() {
+                        log::info!("At ({}, {}) {}", x, y, thing);
+                        let i = thing.parse().unwrap_or(-1);
+                        let spr = SpriteRequest::try_from(i).unwrap_or_default();
+                        data[x][y] = spr;
+                    }
+                }
+            }
+        };
 
         Self { data }
     }
