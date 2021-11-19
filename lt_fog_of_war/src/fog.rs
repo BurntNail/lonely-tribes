@@ -41,8 +41,7 @@ impl LightCacher {
                             let delta = TileTransform::new(i, j);
                             let pos = light + delta;
 
-                            if delta.get_magnitude() < rad as f32
-                            {
+                            if delta.get_magnitude() < rad as f32 {
                                 tx.send(pos).unwrap_or_else(|err| {
                                     log::warn!("Couldn't send position to cells to test: {}", err)
                                 });

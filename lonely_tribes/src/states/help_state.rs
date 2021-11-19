@@ -3,11 +3,13 @@ use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
+    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
-use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
-use amethyst::winit::{WindowEvent, Event};
-use lonely_tribes_lib::config::change_screen_res;
+use lonely_tribes_lib::{
+    config::change_screen_res,
+    states_util::{get_scaling_factor, load_font},
+};
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = include_str!("help_text.txt");
@@ -31,19 +33,18 @@ impl SimpleState for HelpState {
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
         match event {
-            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
                 if key_code == VirtualKeyCode::Space || key_code == VirtualKeyCode::Return {
                     t = SimpleTrans::Switch(Box::new(StartGameState::default()));
                 }
-            },
-            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
-                if let WindowEvent::Resized(size) = event {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
             }
+            StateEvent::Window(Event::WindowEvent {
+                window_id: _,
+                event: WindowEvent::Resized(size),
+            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
-        
+
         t
     }
 }

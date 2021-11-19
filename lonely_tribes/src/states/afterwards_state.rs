@@ -3,19 +3,19 @@ use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
+    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_components::win_related::{GameState, GameStateEnum};
 use lonely_tribes_generation::level::Level;
 use lonely_tribes_lib::{
+    config::change_screen_res,
     either::Either,
     high_scores::HighScores,
     states_util::{get_scaling_factor, levels_len, load_font},
     CONFIG,
 };
 use std::collections::HashMap;
-use amethyst::winit::{Event, WindowEvent};
-use lonely_tribes_lib::config::change_screen_res;
 
 ///State for when after a *PuzzleState*
 #[derive(Default)]
@@ -97,9 +97,9 @@ impl SimpleState for PostGameState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = Trans::None;
-        
+
         match event {
-            StateEvent::Input(InputEvent::KeyPressed {key_code, ..}) => {
+            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
                 self.map.iter().for_each(|(k, v)| {
                     if &key_code == k {
                         t = Trans::Switch(Box::new(PuzzleState::new(v.clone())));
@@ -108,12 +108,11 @@ impl SimpleState for PostGameState {
                 if key_code == VirtualKeyCode::L {
                     t = Trans::Switch(Box::new(LevelSelectState::default()));
                 }
-            },
-            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
-                if let WindowEvent::Resized(size) = event {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
             }
+            StateEvent::Window(Event::WindowEvent {
+                window_id: _,
+                event: WindowEvent::Resized(size),
+            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
         t

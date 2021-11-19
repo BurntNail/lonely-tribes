@@ -54,14 +54,11 @@ impl HighScores {
         //     return None;
         // }
 
-        let replaced = path.replace("lvl-", "")
-            .replace(".ron", "");
-        let index = replaced
-            .parse::<usize>()
-            .unwrap_or_else(|err| {
-                log::warn!("Unable to parse {} into usize: {}", replaced, err);
-                0
-            });
+        let replaced = path.replace("lvl-", "").replace(".ron", "");
+        let index = replaced.parse::<usize>().unwrap_or_else(|err| {
+            log::warn!("Unable to parse {} into usize: {}", replaced, err);
+            0
+        });
 
         let mut new_high_score = false;
         let current = {

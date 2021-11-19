@@ -73,7 +73,7 @@ impl From<ParsedConfig> for ReadInConfig {
             screen_dimensions: Some(c.screen_dimensions),
             dpi_factor: Some(c.dpi_factor),
             maximised: c.maximised,
-            vol: c.vol
+            vol: c.vol,
         }
     }
 }
@@ -90,7 +90,7 @@ impl ParsedConfig {
                     screen_dimensions: sd,
                     maximised: w.maximised,
                     vol: w.vol,
-                    dpi_factor
+                    dpi_factor,
                 }
             }
             Err(e) => {
@@ -119,26 +119,27 @@ impl Default for LTConfig {
     }
 }
 
-
-pub fn change_screen_res (new_x: u32, new_y: u32) {
+pub fn change_screen_res(new_x: u32, new_y: u32) {
     log::info!("Changing to {}, {}", new_x, new_y);
     let mut conf = ParsedConfig::new();
     conf.screen_dimensions.0 = new_x;
     conf.screen_dimensions.1 = new_y;
-    
+
     if let Ok(str_version) = ron::to_string(&ReadInConfig::from(conf)) {
-        std::fs::write(get_directory(true).join("conf.ron"), str_version).unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));
+        std::fs::write(get_directory(true).join("conf.ron"), str_version)
+            .unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));
     }
 }
 
-pub fn change_screen (new_x: u32, new_y: u32, dpi: f64) {
+pub fn change_screen(new_x: u32, new_y: u32, dpi: f64) {
     log::info!("Changing to {}, {}", new_x, new_y);
     let mut conf = ParsedConfig::new();
     conf.screen_dimensions.0 = new_x;
     conf.screen_dimensions.1 = new_y;
     conf.dpi_factor = dpi;
-    
+
     if let Ok(str_version) = ron::to_string(&ReadInConfig::from(conf)) {
-        std::fs::write(get_directory(true).join("conf.ron"), str_version).unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));
+        std::fs::write(get_directory(true).join("conf.ron"), str_version)
+            .unwrap_or_else(|err| log::warn!("Unable to write new stuff to config: {}", err));
     }
 }

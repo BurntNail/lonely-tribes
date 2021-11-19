@@ -33,6 +33,7 @@ use lonely_tribes_generation::{
     sprite_stuff::{FromSpr, Room},
 };
 use lonely_tribes_lib::{
+    config::change_screen_res,
     either::Either,
     paths::get_directory,
     states_util::{
@@ -48,7 +49,6 @@ use lonely_tribes_systems::{
 };
 use lonely_tribes_tags::{tag::Tag, trigger_type::TriggerType};
 use std::{collections::HashMap, fs::File, io::Write};
-use lonely_tribes_lib::config::change_screen_res;
 
 ///State for when the User is in a puzzle
 pub struct PuzzleState {
@@ -227,10 +227,10 @@ impl SimpleState for PuzzleState {
                     gws.ws = GameStateEnum::End {
                         lost_position: Some(TileTransform::default()),
                     };
-                },
+                }
                 WindowEvent::Resized(size) => {
                     change_screen_res(size.width as u32, size.height as u32);
-                },
+                }
                 _ => {}
             },
             _ => {}
@@ -457,7 +457,7 @@ fn add_score(world: &mut World) -> Entity {
         -50.0 * sf_x,
         0.5,
         333.3 * sf_x,
-        500.0 * sf_y
+        500.0 * sf_y,
     );
     let txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),

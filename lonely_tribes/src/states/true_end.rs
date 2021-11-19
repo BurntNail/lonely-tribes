@@ -3,11 +3,13 @@ use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
+    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
-use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
-use amethyst::winit::{Event, WindowEvent};
-use lonely_tribes_lib::config::change_screen_res;
+use lonely_tribes_lib::{
+    config::change_screen_res,
+    states_util::{get_scaling_factor, load_font},
+};
 
 ///State for when the user has finished all levels
 #[derive(Default)]
@@ -59,12 +61,11 @@ impl SimpleState for TrueEnd {
                         _ => {}
                     }
                 }
-            },
-            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
-                if let WindowEvent::Resized(size) = event {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
             }
+            StateEvent::Window(Event::WindowEvent {
+                window_id: _,
+                event: WindowEvent::Resized(size),
+            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
 

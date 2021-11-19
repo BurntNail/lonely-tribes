@@ -2,19 +2,18 @@ use super::{help_state::HelpState, level_select::LevelSelectState};
 use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
+    winit::{Event, Window, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use lonely_tribes_components::text_wobble::TextWobble;
 use lonely_tribes_lib::{
     audio::init_audio,
+    config::{change_screen, change_screen_res, DEFAULT_DPI, DEFAULT_SCREEN_RES},
     states_util::{get_scaling_factor, load_font},
-    HOVER_COLOUR,
+    CONFIG, HOVER_COLOUR,
 };
 use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
 use std::collections::HashMap;
-use amethyst::winit::{Event, WindowEvent, Window};
-use lonely_tribes_lib::config::{change_screen_res, change_screen, DEFAULT_DPI, DEFAULT_SCREEN_RES};
-use lonely_tribes_lib::CONFIG;
 
 ///State for welcoming the player to the game
 #[derive(Default)]
@@ -40,12 +39,18 @@ impl SimpleState for StartGameState {
         world.insert(TimedMessagesToAdd::default());
 
         init_audio(world);
-        
-        if CONFIG.conf.screen_dimensions == DEFAULT_SCREEN_RES || CONFIG.conf.dpi_factor == DEFAULT_DPI {
+
+        if CONFIG.conf.screen_dimensions == DEFAULT_SCREEN_RES
+            || CONFIG.conf.dpi_factor == DEFAULT_DPI
+        {
             let w = world.read_resource::<Window>();
             let monitor = w.get_current_monitor();
             let res = monitor.get_dimensions();
-            change_screen(res.width as u32, res.height as u32, monitor.get_hidpi_factor());
+            change_screen(
+                res.width as u32,
+                res.height as u32,
+                monitor.get_hidpi_factor(),
+            );
             std::process::exit(0);
         }
 
@@ -58,26 +63,25 @@ impl SimpleState for StartGameState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
-        
+
         match event {
-            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
-                if let WindowEvent::Resized(size) = event {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
-            }
+            StateEvent::Window(Event::WindowEvent {
+                window_id: _,
+                event: WindowEvent::Resized(size),
+            }) => change_screen_res(size.width as u32, size.height as u32),
             StateEvent::Ui(ui_event) => {
                 let mut target = None;
-    
+
                 for (t, e) in &self.btns {
                     if &ui_event.target == e {
                         target = Some(*t);
                     }
                 }
-    
+
                 if let Some(target) = target {
                     let mut texts = data.world.write_storage::<UiText>();
                     let txt = texts.get_mut(ui_event.target);
-        
+
                     if let Some(txt) = txt {
                         match ui_event.event_type {
                             UiEventType::HoverStart => txt.color = HOVER_COLOUR,
@@ -86,7 +90,9 @@ impl SimpleState for StartGameState {
                             UiEventType::ClickStop => {
                                 match target {
                                     ButtonType::Start => {
-                                        t = SimpleTrans::Switch(Box::new(LevelSelectState::default()));
+                                        t = SimpleTrans::Switch(Box::new(
+                                            LevelSelectState::default(),
+                                        ));
                                     }
                                     ButtonType::Help => {
                                         t = SimpleTrans::Switch(Box::new(HelpState::default()));
@@ -100,10 +106,10 @@ impl SimpleState for StartGameState {
                         }
                     }
                 }
-            },
+            }
             _ => {}
         }
-        
+
         t
     }
 }

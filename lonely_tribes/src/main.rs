@@ -49,7 +49,6 @@ fn main() -> amethyst::Result<()> {
         app_root.join("../assets")
     };
 
-
     amethyst::start_logger(if opts.flags.console {
         LoggerConfig {
             log_file: Some(resources.join("log.txt")),

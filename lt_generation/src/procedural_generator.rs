@@ -116,7 +116,7 @@ impl ProceduralGenerator {
                             1 => SpriteRequest::Player1,
                             2 => SpriteRequest::Player2,
                             3 => SpriteRequest::Player3,
-                            _ => SpriteRequest::Player0
+                            _ => SpriteRequest::Player0,
                         };
 
                         players.push((x, y));

@@ -6,17 +6,17 @@ use amethyst::{
     },
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEvent, UiEventType, UiText, UiTransform},
+    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use lonely_tribes_components::data_holder::EntityHolder;
 use lonely_tribes_lib::{
+    config::change_screen_res,
     states_util::{get_scaling_factor, load_font},
     HOVER_COLOUR,
 };
 use lonely_tribes_systems::move_player::{MovementDisabler, MovementType};
 use std::collections::HashMap;
-use amethyst::winit::{Event, WindowEvent};
-use lonely_tribes_lib::config::change_screen_res;
 
 ///Enum which contains different actions for buttons and whatnot
 #[derive(Copy, Clone, Hash)]
@@ -130,12 +130,11 @@ impl SimpleState for PausedState {
                 world.insert(MovementDisabler {
                     enabled: disabler_enabled,
                 });
-            },
-            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
-                if let WindowEvent::Resized(size) = event {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
             }
+            StateEvent::Window(Event::WindowEvent {
+                window_id: _,
+                event: WindowEvent::Resized(size),
+            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
 

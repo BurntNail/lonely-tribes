@@ -4,10 +4,12 @@ use amethyst::{
     input::{InputEvent, VirtualKeyCode},
     renderer::SpriteRender,
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
+    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_generation::level::RT_PROCGEN_FILENAME;
 use lonely_tribes_lib::{
+    config::change_screen_res,
     high_scores::HighScores,
     states_util::{
         get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet, LevelType,
@@ -15,8 +17,6 @@ use lonely_tribes_lib::{
     HOVER_COLOUR,
 };
 use std::collections::HashMap;
-use amethyst::winit::{Event, WindowEvent};
-use lonely_tribes_lib::config::change_screen_res;
 
 pub struct LevelSelectState {
     buttons: HashMap<Entity, String>,
@@ -150,12 +150,11 @@ impl SimpleState for LevelSelectState {
                     self.proc_gen = Some(proc_gen);
                     self.leftright = Some(lr);
                 }
-            },
-            StateEvent::Window(Event::WindowEvent {window_id: _, event}) => {
-                if let WindowEvent::Resized(size) = event {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
             }
+            StateEvent::Window(Event::WindowEvent {
+                window_id: _,
+                event: WindowEvent::Resized(size),
+            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
 
