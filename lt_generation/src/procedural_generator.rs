@@ -1,6 +1,6 @@
 use crate::sprite_stuff::SpriteRequest;
 use lonely_tribes_components::tile_transform::TileTransform;
-use lonely_tribes_lib::{HEIGHT, WIDTH};
+use lonely_tribes_lib::{scoped_timer::ScopedTimer, HEIGHT, WIDTH};
 use noise::{Fbm, NoiseFn, Seedable};
 use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg64;
@@ -76,6 +76,8 @@ impl ProceduralGenerator {
     }
 
     pub fn get(&self) -> Map {
+        let _st = ScopedTimer::new("Creating a PG map took {}".to_string());
+
         let mut map = Self::generate_walls_sprs(self.seed as u64);
         Self::add_plants(self.seed, &mut map);
         Self::add_players(self.seed, &mut map);

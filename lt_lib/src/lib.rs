@@ -3,6 +3,7 @@ pub mod config;
 pub mod either;
 pub mod high_scores;
 pub mod paths;
+pub mod scoped_timer;
 pub mod states_util;
 pub mod ui_input;
 
