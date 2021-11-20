@@ -1,4 +1,3 @@
-Text prompt system (maybe make it as part of the animator?)
 Limit which special modes can be used?
 More level meta-data options
 come up with a better name (stupid acronym?) for special (cos thats kinda a fallout thing)
@@ -31,4 +30,3 @@ More levels, more bosses
 
 TODO:
 Sound (Music (lexi)/FX)
-config editor program

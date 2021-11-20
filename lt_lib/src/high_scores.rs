@@ -50,15 +50,14 @@ impl HighScores {
     /// If it is None, then the high score was beaten
     /// If Some, then the i32 is the old high score
     pub fn add_score_and_write(&mut self, path: String, score: i32) -> Option<i32> {
-        // if score == 0 {
-        //     return None;
-        // }
-
         let replaced = path.replace("lvl-", "").replace(".ron", "");
         let index = replaced.parse::<usize>().unwrap_or_else(|err| {
             log::warn!("Unable to parse {} into usize: {}", replaced, err);
-            0
-        });
+            usize::MAX
+        }) - 1;
+        if index == usize::MAX {
+            return None;
+        }
 
         let mut new_high_score = false;
         let current = {

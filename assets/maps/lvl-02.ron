@@ -1,5 +1,6 @@
 (
     seed: None,
     specials: 0,
-    messages: [(1.0, "Same as before, but a bigger level, and more guys")]
+    messages: [(1.0, "Same as before, but a bigger level, and more guys")],
+    is_csv: false
 )

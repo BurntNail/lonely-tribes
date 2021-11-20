@@ -2,12 +2,13 @@ use crate::data::AnimationData;
 use amethyst::core::ecs::{Component, DenseVecStorage};
 use std::ops::{Deref, DerefMut};
 
-///Component on all players to hold an lt_animations
+///Component on all players to hold an Animator trait object
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Animator<T: AnimationData + Sync + Send + 'static + Copy> {
     pub animation_data: Option<T>,
 }
 impl<T: AnimationData + Sync + Send + 'static + Copy> Animator<T> {
+    ///Constructor function
     #[allow(dead_code)]
     pub fn new(animation_data: T) -> Self {
         Self {

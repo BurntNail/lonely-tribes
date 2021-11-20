@@ -352,6 +352,7 @@ impl PuzzleState {
             seed: Some(current_index),
             specials: 50,
             messages: Vec::new(),
+            is_csv: false,
         };
         let contents_str = ron::to_string(&contents).unwrap_or_default();
 

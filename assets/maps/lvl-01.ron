@@ -1,5 +1,6 @@
 (
     seed: None,
     specials: 0,
-    messages: [(0.5, "Use WASD or Arrow Keys to move"), (0.5, "Merge the two dudes together")]
+    messages: [(0.5, "Use WASD or Arrow Keys to move"), (0.5, "Merge the two dudes together")],
+    is_csv: false
 )

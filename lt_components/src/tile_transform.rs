@@ -34,6 +34,8 @@ impl Default for TileTransform {
     }
 }
 
+//Marks the component as OK for multi-threading stuff.
+//Unsafe means that the code could incur data races etc, if I mess it up (hopefully I haven't)
 unsafe impl Send for TileTransform {}
 unsafe impl Sync for TileTransform {}
 

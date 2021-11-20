@@ -1140,6 +1140,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "derive-try-from-primitive"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "302ccf094df1151173bb6f5a2282fcd2f45accd5eae1bdf82dcbfefbc501ad5c"
+dependencies = [
+ "proc-macro2 1.0.28",
+ "quote 1.0.9",
+ "syn 1.0.74",
+]
+
+[[package]]
 name = "dirs"
 version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2018,6 +2029,7 @@ name = "lonely_tribes_generation"
 version = "0.1.0"
 dependencies = [
  "criterion",
+ "derive-try-from-primitive",
  "image 0.23.14",
  "lazy_static",
  "log",

@@ -71,6 +71,7 @@ impl Default for GameModeManager {
     }
 }
 impl GameModeManager {
+    ///constructor
     pub fn new(moves: i32) -> Self {
         Self {
             total_moves: moves,

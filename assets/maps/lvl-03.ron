@@ -1,5 +1,6 @@
 (
     seed: None,
     specials: 0,
-    messages: [(0.5, "Now, make sure the two types of guys don't touch each other.")]
+    messages: [(0.5, "Now, make sure the two types of guys don't touch each other.")],
+    is_csv: false
 )

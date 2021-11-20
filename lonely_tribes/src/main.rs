@@ -1,5 +1,3 @@
-#![windows_subsystem = "windows"] //removes console window
-
 mod states;
 
 use amethyst::{
@@ -50,8 +48,12 @@ fn main() -> amethyst::Result<()> {
     };
 
     amethyst::start_logger(if opts.flags.console {
+        let log_path = resources.join("log.txt");
+
+        std::fs::write(log_path.clone(), "")
+            .unwrap_or_else(|err| log::error!("Error deleting old log file: {}", err));
         LoggerConfig {
-            log_file: Some(resources.join("log.txt")),
+            log_file: Some(log_path),
             ..Default::default()
         }
     } else {

@@ -1,5 +1,6 @@
 use crate::procedural_generator::ProceduralGenerator;
-use image::{DynamicImage, GenericImageView, Rgba};
+use derive_try_from_primitive::TryFromPrimitive;
+use image::{GenericImageView, Rgba};
 use lonely_tribes_lib::{paths::get_directory, HEIGHT, WIDTH};
 use lonely_tribes_tags::{
     tag::{
@@ -10,11 +11,10 @@ use lonely_tribes_tags::{
 };
 use std::{
     collections::HashMap,
+    convert::TryFrom,
+    fs::read_to_string,
     ops::{Deref, DerefMut},
 };
-use std::fs::read_to_string;
-use std::convert::TryFrom;
-use derive_try_from_primitive::TryFromPrimitive;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, TryFromPrimitive)]
 #[repr(i32)]
@@ -218,8 +218,11 @@ impl Room {
                 }
             }),
             Err(_) => {
-                let contents = read_to_string(path).unwrap_or_else(|err| {log::error!("Image Error for Room {}: {}", path, err); String::default()});
-                
+                let contents = read_to_string(path).unwrap_or_else(|err| {
+                    log::error!("Image Error for Room {}: {}", path, err);
+                    String::default()
+                });
+
                 for (y, line) in contents.lines().into_iter().enumerate() {
                     for (x, thing) in line.split(',').into_iter().enumerate() {
                         log::info!("At ({}, {}) {}", x, y, thing);

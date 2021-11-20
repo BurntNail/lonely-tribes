@@ -9,7 +9,7 @@ pub struct ReadInLevel {
     pub seed: Option<u32>,
     pub specials: usize,
     pub messages: Vec<(f32, String)>,
-    pub is_csv: bool
+    pub is_csv: bool,
 }
 
 #[derive(Debug)]
@@ -68,12 +68,10 @@ impl Level {
             Ok(ok) => {
                 let room = if let Some(s) = ok.seed {
                     Room::proc_gen(s)
+                } else if ok.is_csv {
+                    Room::new(path.replace(".ron", ".csv"))
                 } else {
-                    if ok.is_csv {
-                        Room::new(path.replace(".ron", ".csv"))
-                    } else {
-                        Room::new(path.replace(".ron", ".csv"))
-                    }
+                    Room::new(path.replace(".ron", ".png"))
                 };
 
                 Self {

@@ -7,16 +7,23 @@ use amethyst::renderer::{palette::Srgba, resources::Tint};
 #[derive(Copy, Clone, Debug)]
 ///component to change an entitiy's tint
 pub struct TintAnimatorData {
+    ///Start rotation
     pub start: f32,
+    ///End rotation
     pub end: f32,
+    ///Override tint for if the object has an active tint
     pub override_tint: Option<Tint>,
 
+    ///Total animation length
     pub total_time: f32,
+    ///Time elapsed so far for the animation
     pub time_elapsed: f32,
 
+    ///Interpolation type for the rotation
     pub interpolation: AnimInterpolation,
 }
 impl TintAnimatorData {
+    ///Constructor
     pub fn new(
         start: f32,
         end: f32,
