@@ -4,6 +4,6 @@ use crate::trigger_type::TriggerType;
 pub enum Tag {
     Player(usize),
     Collision,
-    Floor,
     Trigger(TriggerType),
+    Other,
 }

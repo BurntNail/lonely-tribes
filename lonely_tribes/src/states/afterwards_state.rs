@@ -50,15 +50,20 @@ impl SimpleState for PostGameState {
         let won_txt = if won && level_from.contains("lvl-") {
             let win = "You Won! Press [R] to Restart, [N] to go to the Next Level, or [L] to go to Level Select.";
             if let Some(nu_high_score) = nu_high_score {
-                if nu_high_score.is_none() {
-                    format!("You got a new high score - {}!\n\n{}", score, win)
+                if let Some(nu_high_score) = nu_high_score {
+                    if nu_high_score == score {
+                        format!(
+                            "You got the same as your high score: {}...\n\n{}",
+                            score, win
+                        )
+                    } else {
+                        format!(
+                            "You didn't beat your high score of {}, you only got: {}...\n\n{}",
+                            nu_high_score, score, win
+                        )
+                    }
                 } else {
-                    format!(
-                        "You didn't beat your high score of {}, you only got: {}...\n\n{}",
-                        nu_high_score.unwrap_or_else(|| unreachable!()),
-                        score,
-                        win
-                    )
+                    format!("You got a new high score - {}!\n\n{}", score, win)
                 }
             } else {
                 format!(

@@ -28,6 +28,7 @@ use lonely_tribes_components::{
     tile_transform::TileTransform,
     win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
 };
+use lonely_tribes_generation::sprite_stuff::SpriteRequest;
 use lonely_tribes_generation::{
     level::{Level, ReadInLevel, RT_PROCGEN_FILENAME},
     sprite_stuff::{FromSpr, Room},
@@ -497,10 +498,14 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, lvl: Room)
 
     for x in 0..lvl.len() {
         for y in 0..lvl[0].len() {
-            let spr_index = lvl[x][y].get_spritesheet_index();
-            if spr_index == 0 {
+            let spr_index_i = match lvl[x][y] {
+                Either::One(s) => s as i32,
+                Either::Two(id) => id,
+            };
+            if spr_index_i == -1 {
                 continue;
             }
+            let spr_index = spr_index_i as usize;
 
             let spr = SpriteRender::new(sprites_handle.clone(), spr_index);
             let tt = TileTransform::new(x as i32, y as i32);
@@ -512,60 +517,65 @@ fn load_level(world: &mut World, sprites_handle: Handle<SpriteSheet>, lvl: Room)
             let mut trans = Transform::default();
             trans.set_translation_z(0.1);
 
-            match Tag::from_spr(lvl[x][y]) {
-                Tag::Player(id) => {
-                    trans.set_translation_z(0.2);
+            let mut other = || {
+                let ent = world
+                    .create_entity()
+                    .with(spr.clone())
+                    .with(tt)
+                    .with(trans.clone())
+                    .with(tint)
+                    .with(Animator::<TintAnimatorData>::default())
+                    .build();
+                holder.add_tile(ent);
+            };
 
-                    let ent = world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(Collider::new(TriggerType::from_id(&id)))
-                        .with(lonely_tribes_components::player::Player::new(id))
-                        .with(Animator::<MovementAnimationData>::default())
-                        .with(Animator::<RotationAnimationData>::default())
-                        .with(Animator::<TintAnimatorData>::default())
-                        .with(PointLight::new(3))
-                        .with(tint)
-                        .build();
-                    holder.add_player_entity(ent);
-                }
-                Tag::Collision => {
-                    let ent = world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(Collider::default())
-                        .with(Animator::<TintAnimatorData>::default())
-                        .with(tint)
-                        .build();
-                    holder.add_tile(ent);
-                }
-                Tag::Trigger(trigger_type) => {
-                    let ent = world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(Collider::new(trigger_type))
-                        .with(Animator::<TintAnimatorData>::default())
-                        .with(tint)
-                        .build();
-                    holder.add_tile(ent);
-                }
-                _ => {
-                    let ent = world
-                        .create_entity()
-                        .with(spr)
-                        .with(tt)
-                        .with(trans)
-                        .with(tint)
-                        .with(Animator::<TintAnimatorData>::default())
-                        .build();
-                    holder.add_tile(ent);
-                }
+            match lvl[x][y] {
+                Either::One(tag) => match Tag::from_spr(tag) {
+                    Tag::Player(id) => {
+                        trans.set_translation_z(0.2);
+
+                        let ent = world
+                            .create_entity()
+                            .with(spr)
+                            .with(tt)
+                            .with(trans)
+                            .with(Collider::new(TriggerType::from_id(&id)))
+                            .with(lonely_tribes_components::player::Player::new(id))
+                            .with(Animator::<MovementAnimationData>::default())
+                            .with(Animator::<RotationAnimationData>::default())
+                            .with(Animator::<TintAnimatorData>::default())
+                            .with(PointLight::new(3))
+                            .with(tint)
+                            .build();
+                        holder.add_player_entity(ent);
+                    }
+                    Tag::Collision => {
+                        let ent = world
+                            .create_entity()
+                            .with(spr)
+                            .with(tt)
+                            .with(trans)
+                            .with(Collider::default())
+                            .with(Animator::<TintAnimatorData>::default())
+                            .with(tint)
+                            .build();
+                        holder.add_tile(ent);
+                    }
+                    Tag::Trigger(trigger_type) => {
+                        let ent = world
+                            .create_entity()
+                            .with(spr)
+                            .with(tt)
+                            .with(trans)
+                            .with(Collider::new(trigger_type))
+                            .with(Animator::<TintAnimatorData>::default())
+                            .with(tint)
+                            .build();
+                        holder.add_tile(ent);
+                    }
+                    _ => other(),
+                },
+                _ => other(),
             }
         }
     }

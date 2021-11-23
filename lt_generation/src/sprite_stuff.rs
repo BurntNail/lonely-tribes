@@ -1,17 +1,16 @@
 use crate::procedural_generator::ProceduralGenerator;
 use derive_try_from_primitive::TryFromPrimitive;
 use image::{GenericImageView, Rgba};
+use lonely_tribes_lib::either::Either;
 use lonely_tribes_lib::{paths::get_directory, HEIGHT, WIDTH};
+use lonely_tribes_tags::tag::Tag::Other;
 use lonely_tribes_tags::{
-    tag::{
-        Tag,
-        Tag::{Collision, Floor},
-    },
+    tag::{Tag, Tag::Collision},
     trigger_type::TriggerType,
 };
+use std::convert::{Infallible, TryFrom};
 use std::{
     collections::HashMap,
-    convert::TryFrom,
     fs::read_to_string,
     ops::{Deref, DerefMut},
 };
@@ -36,8 +35,6 @@ pub enum SpriteRequest {
     Player1 = 361,
     Player2 = 366,
     Player3 = 367,
-    TUpDownLeft = 71,
-    TUpDownRight = 70,
     Shrubbery = 96,
     DarkShrubbery = 4,
     Tree = 51,
@@ -69,7 +66,7 @@ impl FromSpr for Tag {
             SpriteRequest::Player2 => Self::Player(2),
             SpriteRequest::Player3 => Self::Player(3),
             SpriteRequest::Door => Self::Trigger(TriggerType::Door),
-            Blank | Shrubbery | DarkShrubbery => Floor,
+            Blank | Shrubbery | DarkShrubbery => Other,
             _ => Collision,
         }
     }
@@ -103,8 +100,6 @@ lazy_static! {
         s(91, 110, 225, Player1);
         s(99, 155, 255, Player2);
         s(95, 205, 228, Player3);
-        s(203, 219, 252, TUpDownLeft); //6
-        s(255, 255, 255, TUpDownRight);
 
 
         map
@@ -134,8 +129,6 @@ lazy_static! {
             RightWallDown,
             // LeftWallUp,
             // RightWallUp,
-            TUpDownLeft,
-            TUpDownRight,
             Player0,
             Player1,
             Player2,
@@ -153,7 +146,8 @@ lazy_static! {
         let mut map = HashMap::new();
 
         for sp in LIST_OF_ALL_SPRITEREQUESTS.clone() {
-            map.insert(sp.get_spritesheet_index(), sp);
+
+            map.insert(sp as i32 as usize, sp);
         }
 
         map
@@ -161,16 +155,6 @@ lazy_static! {
 }
 
 impl SpriteRequest {
-    ///Function to get the index on the spritesheet for a SpriteRequest
-    pub fn get_spritesheet_index(&self) -> usize {
-        let attempt = *self as i32;
-        if attempt > 0 {
-            attempt as usize
-        } else {
-            0
-        }
-    }
-
     pub fn from_colour_swatch(col: &Rgba<u8>) -> &Self {
         SPRITESHEET_SWATCH_HASHMAP
             .get(col)
@@ -180,18 +164,18 @@ impl SpriteRequest {
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Room {
-    pub data: Vec<Vec<SpriteRequest>>,
+    pub data: Vec<Vec<Either<SpriteRequest, i32>>>,
 }
 impl Default for Room {
     fn default() -> Self {
         Self {
-            data: vec![vec![SpriteRequest::Blank; WIDTH as usize]; HEIGHT as usize],
+            data: vec![vec![Either::One(SpriteRequest::Blank); WIDTH as usize]; HEIGHT as usize],
         }
     }
 }
 
 impl Deref for Room {
-    type Target = Vec<Vec<SpriteRequest>>;
+    type Target = Vec<Vec<Either<SpriteRequest, i32>>>;
 
     fn deref(&self) -> &Self::Target {
         &self.data
@@ -205,7 +189,8 @@ impl DerefMut for Room {
 
 impl Room {
     pub fn new(path: String) -> Self {
-        let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
+        let mut data =
+            vec![vec![Either::One(SpriteRequest::Blank); HEIGHT as usize]; WIDTH as usize];
         let path = get_directory(false).join("../maps").join(path);
         let path = path.to_str().unwrap_or_default();
 
@@ -214,7 +199,7 @@ impl Room {
             Ok(img) => img.pixels().for_each(|(x, y, px)| {
                 let res = *SpriteRequest::from_colour_swatch(&px);
                 if res != SpriteRequest::Blank {
-                    data[x as usize][y as usize] = res;
+                    data[x as usize][y as usize] = Either::One(res);
                 }
             }),
             Err(_) => {
@@ -227,8 +212,11 @@ impl Room {
                     for (x, thing) in line.split(',').into_iter().enumerate() {
                         log::info!("At ({}, {}) {}", x, y, thing);
                         let i = thing.parse().unwrap_or(-1);
-                        let spr = SpriteRequest::try_from(i).unwrap_or_default();
-                        data[x][y] = spr;
+                        let spr = SpriteRequest::try_from(i);
+                        data[x][y] = match spr {
+                            Ok(spr) => Either::One(spr),
+                            Err(_) => Either::Two(i),
+                        };
                     }
                 }
             }
@@ -240,10 +228,11 @@ impl Room {
     pub fn proc_gen(seed: u32) -> Self {
         let mappings = ProceduralGenerator::new(seed).get();
 
-        let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
+        let mut data =
+            vec![vec![Either::One(SpriteRequest::Blank); HEIGHT as usize]; WIDTH as usize];
 
         mappings.into_iter().for_each(|(x, y, spr)| {
-            data[x][y] = spr;
+            data[x][y] = Either::One(spr);
         });
 
         Self { data }

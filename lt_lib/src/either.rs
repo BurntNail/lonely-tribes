@@ -11,3 +11,10 @@ impl<T1, T2> Either<T1, T2> {
         matches!(self, Self::Two(_))
     }
 }
+
+impl<T1: PartialEq, T2: PartialEq> PartialEq for Either<T1, T2> {
+    fn eq(&self, other: &Self) -> bool {
+        self == other
+    }
+}
+impl<T1: Eq + PartialEq, T2: Eq + PartialEq> Eq for Either<T1, T2> {}
