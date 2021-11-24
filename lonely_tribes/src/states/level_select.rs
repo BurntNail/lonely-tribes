@@ -162,7 +162,7 @@ impl SimpleState for LevelSelectState {
     }
 }
 
-pub const MAX_LEVELS_ONE_SCREEN: i32 = 6;
+pub const MAX_LEVELS_ONE_SCREEN: i32 = 5;
 
 ///Function to initialise the Level Select
 ///
@@ -216,12 +216,14 @@ fn create_lvl_select_btns(
     let next_level = high_scores.find_next_level();
     for (i, (level, level_type)) in get_levels()
         .iter()
-        .skip(current_screen * (MAX_LEVELS_ONE_SCREEN - 1) as usize)
-        .take(5)
+        .skip(current_screen * MAX_LEVELS_ONE_SCREEN as usize)
+        .take(MAX_LEVELS_ONE_SCREEN as usize)
         .enumerate()
     {
         let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
-
+        log::info!("({}, {}), ({}, {:?})", i, i_adj, level, level_type);
+    
+    
         let (text, colour, can_be_played) = {
             if level_type == &LevelType::Developer {
                 let high_score = high_scores.get_high_score(i_adj as usize);
@@ -234,7 +236,7 @@ fn create_lvl_select_btns(
                         true,
                     )
                 } else {
-                    if i == next_level {
+                    if i_adj == next_level as i32 {
                         (format!("Level number: {:02}", i_adj + 1), [1.0; 4], true)
                     } else {
                         (
@@ -291,7 +293,7 @@ fn create_lvl_select_btns(
             Anchor::Middle,
             Anchor::Middle,
             0.0,
-            get_height(MAX_LEVELS_ONE_SCREEN as usize - 1), //already multiplied by sf in func
+            get_height(MAX_LEVELS_ONE_SCREEN as usize), //already multiplied by sf in func
             0.5,
             sf_x * 1500.0,
             font_height,

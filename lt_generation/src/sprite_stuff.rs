@@ -225,7 +225,6 @@ impl Room {
 
                 for (y, line) in contents.lines().into_iter().enumerate() {
                     for (x, thing) in line.split(',').into_iter().enumerate() {
-                        log::info!("At ({}, {}) {}", x, y, thing);
                         let i = thing.parse().unwrap_or(-1);
                         let spr = SpriteRequest::try_from(i).unwrap_or_default();
                         data[x][y] = spr;
