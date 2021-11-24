@@ -8,7 +8,7 @@ use lonely_tribes_tags::{
     tag::{Tag, Tag::Collision},
     trigger_type::TriggerType,
 };
-use std::convert::{Infallible, TryFrom};
+use std::convert::TryFrom;
 use std::{
     collections::HashMap,
     fs::read_to_string,
@@ -37,7 +37,7 @@ pub enum SpriteRequest {
     Player3 = 367,
     Shrubbery = 96,
     DarkShrubbery = 4,
-    Tree = 51,
+    Tree = 50,
     WarpedTree = 102,
     Blank = -1,
 }
@@ -210,8 +210,11 @@ impl Room {
 
                 for (y, line) in contents.lines().into_iter().enumerate() {
                     for (x, thing) in line.split(',').into_iter().enumerate() {
-                        log::info!("At ({}, {}) {}", x, y, thing);
                         let i = thing.parse().unwrap_or(-1);
+                        if i == -1 {
+                            continue;
+                        }
+
                         let spr = SpriteRequest::try_from(i);
                         data[x][y] = match spr {
                             Ok(spr) => Either::One(spr),

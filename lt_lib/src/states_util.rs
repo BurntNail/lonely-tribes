@@ -8,6 +8,7 @@ use amethyst::{
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{FontAsset, TtfFormat},
 };
+use itertools::Itertools;
 use lazy_static::lazy_static;
 use std::{cmp::Ordering, fs::read_dir, path::Path};
 
@@ -120,7 +121,7 @@ impl Ord for LevelType {
 }
 
 pub fn get_levels() -> Vec<(String, LevelType)> {
-    let mut out: Vec<(String, LevelType)> = list_file_names_in_dir("../maps", false)
+    list_file_names_in_dir("../maps", false)
         .into_iter()
         .filter_map(|nom| {
             let mut t = None;
@@ -134,10 +135,8 @@ pub fn get_levels() -> Vec<(String, LevelType)> {
 
             t.map(|t| (name, t))
         })
-        .collect();
-    out.sort();
-    log::info!("Got: {:?}", out);
-    out
+        .sorted()
+        .collect()
 }
 pub fn get_levels_str() -> Vec<String> {
     get_levels().into_iter().map(|(s, _)| s).collect()

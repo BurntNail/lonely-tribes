@@ -20,6 +20,7 @@ serde = { version = "1", features = ["derive"] } # for serialising and deseriali
 lonely_tribes_lib = {path= "../lt_lib" }
 lonely_tribes_components = {path= "../lt_components" }
 lonely_tribes_tags = {path = "../lt_tags" }
+itertools = "0.10.1"
 
 [dev-dependencies]
 criterion = "0.3.5"
