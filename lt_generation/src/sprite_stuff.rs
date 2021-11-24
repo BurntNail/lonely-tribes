@@ -205,7 +205,7 @@ impl DerefMut for Room {
 
 impl Room {
     pub fn new(path: String) -> Self {
-        let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize];
+        let mut data = vec![vec![SpriteRequest::Blank; HEIGHT as usize]; WIDTH as usize]; //TODO: Should be either - changes are probs on WB2
         let path = get_directory(false).join("../maps").join(path);
         let path = path.to_str().unwrap_or_default();
 
@@ -225,7 +225,7 @@ impl Room {
 
                 for (y, line) in contents.lines().into_iter().enumerate() {
                     for (x, thing) in line.split(',').into_iter().enumerate() {
-                        let i = thing.parse().unwrap_or(-1);
+                        let i = thing.parse().unwrap_or(-1); //TODO: Fix borked colliders
                         let spr = SpriteRequest::try_from(i).unwrap_or_default();
                         data[x][y] = spr;
                     }
