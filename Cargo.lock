@@ -2031,7 +2031,6 @@ dependencies = [
  "criterion",
  "derive-try-from-primitive",
  "image 0.23.14",
- "itertools 0.10.1",
  "lazy_static",
  "log",
  "lonely_tribes_components",
@@ -2050,6 +2049,7 @@ name = "lonely_tribes_lib"
 version = "0.11.0"
 dependencies = [
  "amethyst",
+ "itertools 0.10.1",
  "lazy_static",
  "log",
  "ron 0.6.5",

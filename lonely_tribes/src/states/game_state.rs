@@ -28,7 +28,6 @@ use lonely_tribes_components::{
     tile_transform::TileTransform,
     win_related::{GameModeManager, GamePlayingMode, GameState, GameStateEnum},
 };
-use lonely_tribes_generation::sprite_stuff::SpriteRequest;
 use lonely_tribes_generation::{
     level::{Level, ReadInLevel, RT_PROCGEN_FILENAME},
     sprite_stuff::{FromSpr, Room},

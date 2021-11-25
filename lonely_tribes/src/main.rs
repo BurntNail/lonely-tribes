@@ -141,11 +141,3 @@ pub fn get_colours(r: f32, g: f32, b: f32) -> [f32; 4] {
         .into_components();
     [r, g, b, a]
 }
-
-//todos
-
-//TODO: Move fog of war into it's own crate
-
-//TODO: Music/SFX
-
-//TODO: Steam Page/Steamworks
