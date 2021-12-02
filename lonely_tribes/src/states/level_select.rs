@@ -222,8 +222,7 @@ fn create_lvl_select_btns(
     {
         let i_adj = (current_screen as i32) * MAX_LEVELS_ONE_SCREEN + i as i32;
         log::info!("({}, {}), ({}, {:?})", i, i_adj, level, level_type);
-    
-    
+
         let (text, colour, can_be_played) = {
             if level_type == &LevelType::Developer {
                 let high_score = high_scores.get_high_score(i_adj as usize);

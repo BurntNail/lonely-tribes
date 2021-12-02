@@ -48,6 +48,8 @@ fn main() -> amethyst::Result<()> {
     };
 
     amethyst::start_logger(if opts.flags.console {
+        color_eyre::install().unwrap();
+
         let log_path = resources.join("log.txt");
 
         std::fs::write(log_path.clone(), "")

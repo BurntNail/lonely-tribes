@@ -1,16 +1,17 @@
 use crate::procedural_generator::ProceduralGenerator;
 use derive_try_from_primitive::TryFromPrimitive;
 use image::{GenericImageView, Rgba};
-use lonely_tribes_lib::either::Either;
-use lonely_tribes_lib::{paths::get_directory, HEIGHT, WIDTH};
-use lonely_tribes_tags::tag::Tag::Other;
+use lonely_tribes_lib::{either::Either, paths::get_directory, HEIGHT, WIDTH};
 use lonely_tribes_tags::{
-    tag::{Tag, Tag::Collision},
+    tag::{
+        Tag,
+        Tag::{Collision, Other},
+    },
     trigger_type::TriggerType,
 };
-use std::convert::TryFrom;
 use std::{
     collections::HashMap,
+    convert::TryFrom,
     fs::read_to_string,
     ops::{Deref, DerefMut},
 };

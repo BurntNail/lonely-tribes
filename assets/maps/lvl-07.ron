@@ -1,0 +1,6 @@
+(
+    seed: None,
+    specials: 6,
+    messages: [],
+    is_csv: true
+)

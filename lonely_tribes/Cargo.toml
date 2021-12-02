@@ -23,6 +23,7 @@ lonely_tribes_components = {path = "../lt_components"}
 lonely_tribes_animations = {path="../lt_animations"}
 lonely_tribes_generation = {path="../lt_generation"}
 lonely_tribes_tags = {path="../lt_tags"}
+color-eyre = "0.5.11"
 
 [dependencies.amethyst] # base game engine
 version = "0.15.3" # latest specs version

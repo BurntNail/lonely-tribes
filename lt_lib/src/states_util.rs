@@ -8,9 +8,9 @@ use amethyst::{
     renderer::{Camera, ImageFormat, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{FontAsset, TtfFormat},
 };
+use itertools::Itertools;
 use lazy_static::lazy_static;
 use std::{cmp::Ordering, fs::read_dir, path::Path};
-use itertools::Itertools;
 
 pub const CAMERA_BASE_WIDTH: f32 = (TILE_WIDTH_HEIGHT * WIDTH) as f32; //For ingame-transform Measurements
 pub const CAMERA_BASE_HEIGHT: f32 = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;

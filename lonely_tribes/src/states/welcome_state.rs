@@ -1,6 +1,9 @@
 use super::{help_state::HelpState, level_select::LevelSelectState};
 use amethyst::{
-    core::ecs::{Builder, Entity, World, WorldExt},
+    core::{
+        ecs::{Builder, Entity, World, WorldExt},
+        Time,
+    },
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
     winit::{Event, Window, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
@@ -13,15 +16,10 @@ use lonely_tribes_lib::{
     CONFIG, HOVER_COLOUR,
 };
 use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
-use std::collections::HashMap;
 use rand::{thread_rng, Rng};
-use amethyst::core::Time;
+use std::collections::HashMap;
 
-pub static WELCOME_MSGS: &[&str] = &[
-    "Hello!",
-    "Join our discord!",
-    "Email the creator!"
-];
+pub static WELCOME_MSGS: &[&str] = &["Hello!", "Join our discord!", "Email the creator!"];
 pub const SCALE_SPEED: f32 = 0.1;
 
 ///State for welcoming the player to the game
@@ -30,7 +28,7 @@ pub struct StartGameState {
     btns: HashMap<ButtonType, Entity>,
     welcome: Option<Entity>,
     time_elapsed: f32,
-    total_time: f32
+    total_time: f32,
 }
 
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
@@ -127,43 +125,58 @@ impl SimpleState for StartGameState {
 
         t
     }
-    
+
     fn fixed_update(&mut self, data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         let world = data.world;
-        
+
         let te = world.read_resource::<Time>().delta_seconds() as f32;
-        
+
         if let Some(welcome) = self.welcome {
             if let Some(txt) = world.write_component::<UiText>().get_mut(welcome) {
                 self.time_elapsed += te;
                 self.time_elapsed %= self.total_time;
-    
+
                 let sec_time = self.total_time / 4.0;
-    
-                let scale_mod = if self.time_elapsed < sec_time || self.time_elapsed > sec_time * 3.0 {
-                    SCALE_SPEED
-                } else {
-                    -SCALE_SPEED
-                };
-        
+
+                let scale_mod =
+                    if self.time_elapsed < sec_time || self.time_elapsed > sec_time * 3.0 {
+                        SCALE_SPEED
+                    } else {
+                        -SCALE_SPEED
+                    };
+
                 txt.font_size += scale_mod;
             }
         }
-        
-        
-        
+
         SimpleTrans::None
     }
 }
 
-fn init_welcome_msgs (world: &mut World) -> Entity {
+fn init_welcome_msgs(world: &mut World) -> Entity {
     let (sf_x, sf_y) = get_scaling_factor();
     let font_handle = load_font(world, "ZxSpectrum");
     let msg = WELCOME_MSGS[thread_rng().gen_range(0..WELCOME_MSGS.len())];
-    
-    let trans = UiTransform::new("welcome".to_string(), Anchor::Middle, Anchor::Middle, 400.0 * sf_x, 250.0 * sf_y, 0.0, sf_x * 500.0, sf_y * 500.0);
-    let txt = UiText::new(font_handle, msg.to_string(), [1.0; 4], sf_y * 25.0, LineMode::Wrap, Anchor::Middle);
-    
+
+    let trans = UiTransform::new(
+        "welcome".to_string(),
+        Anchor::Middle,
+        Anchor::Middle,
+        400.0 * sf_x,
+        250.0 * sf_y,
+        0.0,
+        sf_x * 500.0,
+        sf_y * 500.0,
+    );
+    let txt = UiText::new(
+        font_handle,
+        msg.to_string(),
+        [1.0; 4],
+        sf_y * 25.0,
+        LineMode::Wrap,
+        Anchor::Middle,
+    );
+
     world.create_entity().with(trans).with(txt).build()
 }
 
