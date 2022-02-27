@@ -21,6 +21,7 @@ use lonely_tribes_lib::{
     paths::{get_directory, is_end_user_build},
     CONFIG,
 };
+use lonely_tribes_systems::steamworks_manager::SteamworksManager;
 use lonely_tribes_systems::{
     colliders_list_system::ListSystem,
     fog_of_war::{FogOfWarSystem, LightListSystem},
@@ -98,7 +99,8 @@ fn main() -> amethyst::Result<()> {
         .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"])
         .with(TintAnimatorSystem, "tint_animtor", &[])
         .with(UiTextAnimator, "uitext_animator", &[])
-        .with(MessageSystem::default(), "message_list", &[]);
+        .with(MessageSystem::default(), "message_list", &[])
+        .with(SteamworksManager, "steamy_boi", &[]);
 
     if opts.flags.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
