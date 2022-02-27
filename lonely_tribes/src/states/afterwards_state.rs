@@ -8,6 +8,7 @@ use amethyst::{
 };
 use lonely_tribes_components::win_related::{GameState, GameStateEnum};
 use lonely_tribes_generation::level::Level;
+use lonely_tribes_lib::SteamworksHolder;
 use lonely_tribes_lib::{
     config::change_screen_res,
     either::Either,
@@ -16,6 +17,7 @@ use lonely_tribes_lib::{
     CONFIG,
 };
 use std::collections::HashMap;
+use steamworks::{AppId, Client, FriendFlags, PersonaStateChange, UserStatsReceived};
 
 ///State for when after a *PuzzleState*
 #[derive(Default)]
@@ -45,6 +47,9 @@ impl SimpleState for PostGameState {
 
         if !opts.debug && won && level_from.contains("lvl-") {
             nu_high_score = Some(high_score.add_score_and_write(level_from.clone(), score));
+
+            let steam = world.write_resource::<SteamworksHolder>();
+            let client = &steam.0;
         }
 
         let won_txt = if won && level_from.contains("lvl-") {

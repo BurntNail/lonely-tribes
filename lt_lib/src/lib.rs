@@ -1,3 +1,6 @@
+use std::ops::{Deref, DerefMut};
+use steamworks::{Client, SingleClient};
+
 pub mod audio;
 pub mod config;
 pub mod either;
@@ -14,6 +17,16 @@ pub const WIDTH: i32 = 64;
 pub const HEIGHT: i32 = 36;
 ///The colour when a txt is hovered over
 pub const HOVER_COLOUR: [f32; 4] = [1.0, 0.5, 0.75, 1.0];
+
+pub struct SteamworksHolder(pub Client, pub SingleClient);
+unsafe impl Sync for SteamworksHolder {}
+unsafe impl Send for SteamworksHolder {}
+impl Default for SteamworksHolder {
+    fn default() -> Self {
+        let (c, s) = Client::init().unwrap();
+        Self(c, s)
+    }
+}
 
 lazy_static::lazy_static! {
     pub static ref CONFIG: config::LTConfig = {

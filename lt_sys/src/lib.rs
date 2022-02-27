@@ -4,6 +4,7 @@ pub mod fps_counter;
 pub mod message_system;
 pub mod move_player;
 pub mod player_overlap_checker;
+pub mod steamworks_manager;
 pub mod tint_animator;
 pub mod txt_wobble_system;
 pub mod uitext_animator;
