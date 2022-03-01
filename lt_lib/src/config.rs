@@ -35,15 +35,15 @@ impl Flags {
     }
 }
 
-pub const DEFAULT_SCREEN_RES: (u32, u32) = (10, 10);
-pub const DEFAULT_DPI: f64 = 100.0;
+pub const DEFAULT_SCREEN_RES: (u32, u32) = (1920, 1080);
+pub const DEFAULT_DPI: f64 = 1.0;
 
 #[derive(Copy, Clone, Debug)]
 pub struct LTConfig {
     pub flags: Flags,
     pub conf: ParsedConfig,
 }
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct ReadInConfig {
     pub screen_dimensions: Option<(u32, u32)>,
     pub dpi_factor: Option<f64>,
@@ -60,9 +60,9 @@ pub struct ParsedConfig {
 impl Default for ParsedConfig {
     fn default() -> Self {
         ParsedConfig {
-            screen_dimensions: (1600, 900),
-            dpi_factor: 1.0,
-            maximised: false,
+            screen_dimensions: DEFAULT_SCREEN_RES,
+            dpi_factor: DEFAULT_DPI,
+            maximised: true,
             vol: 1.0,
         }
     }
@@ -83,8 +83,12 @@ impl ParsedConfig {
         let contents = read_to_string(path.clone()).unwrap_or_default();
         match from_str(contents.as_str()) {
             Ok(w) => {
+                log::info!("Parsing conf: {:?}", w);
                 let w: ReadInConfig = w;
-                let sd = w.screen_dimensions.unwrap_or(DEFAULT_SCREEN_RES);
+                let sd = w.screen_dimensions.unwrap_or_else(|| {
+                    log::warn!("Unable to parse screen dims");
+                    DEFAULT_SCREEN_RES
+                });
                 let dpi_factor = w.dpi_factor.unwrap_or(DEFAULT_DPI);
                 Self {
                     screen_dimensions: sd,

@@ -40,6 +40,7 @@ use lonely_tribes_lib::{
         get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet,
         CAMERA_DIMENSIONS,
     },
+    SteamworksHolder,
 };
 use lonely_tribes_systems::{
     message_system::{MessageList, TimedMessagesToAdd},
@@ -322,6 +323,10 @@ impl SimpleState for PuzzleState {
                 }
             }
         }
+
+        // {
+        //     let client = &data.world.read_resource::<SteamworksHolder>().0;
+        // }
 
         t
     }

@@ -11,4 +11,6 @@ Welcome to Lonely Tribes!
   - Press F to make players dash 3 moves at once
   - Press B to get back to normal modes
 
+- The majority of the game is in the endless mode, and if you like a level there, press 1-9 to save it to your levels list.
+
 (Press Space or Return to go to the main menu)

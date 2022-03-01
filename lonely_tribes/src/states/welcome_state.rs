@@ -13,7 +13,7 @@ use lonely_tribes_lib::{
     audio::init_audio,
     config::{change_screen, change_screen_res, DEFAULT_DPI, DEFAULT_SCREEN_RES},
     states_util::{get_scaling_factor, load_font},
-    CONFIG, HOVER_COLOUR,
+    SteamworksHolder, CONFIG, HOVER_COLOUR,
 };
 use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
 use rand::{thread_rng, Rng};
@@ -51,8 +51,9 @@ impl SimpleState for StartGameState {
         init_audio(world);
 
         if CONFIG.conf.screen_dimensions == DEFAULT_SCREEN_RES
-            || CONFIG.conf.dpi_factor == DEFAULT_DPI
+            && CONFIG.conf.dpi_factor == DEFAULT_DPI
         {
+            log::info!("Def res: changing + restarting.");
             let w = world.read_resource::<Window>();
             let monitor = w.get_current_monitor();
             let res = monitor.get_dimensions();

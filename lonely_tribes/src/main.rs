@@ -28,6 +28,7 @@ use lonely_tribes_systems::{
     message_system::MessageSystem,
     move_player::MovePlayerSystem,
     player_overlap_checker::PlayerOverlapChecker,
+    steamworks_manager::SteamworksManager,
     tint_animator::TintAnimatorSystem,
     txt_wobble_system::TextWobbleSystem,
     uitext_animator::UiTextAnimator,
@@ -98,7 +99,8 @@ fn main() -> amethyst::Result<()> {
         .with(FogOfWarSystem::default(), "fog_of_war", &["light_list"])
         .with(TintAnimatorSystem, "tint_animtor", &[])
         .with(UiTextAnimator, "uitext_animator", &[])
-        .with(MessageSystem::default(), "message_list", &[]);
+        .with(MessageSystem::default(), "message_list", &[])
+        .with(SteamworksManager, "steamy_boi", &[]);
 
     if opts.flags.fps {
         game_data = game_data.with(FpsCounterSystem, "fps", &[]).with(
