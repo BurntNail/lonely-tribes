@@ -1,6 +1,7 @@
 use crate::paths::get_directory;
 use ron::from_str;
 use serde::{Deserialize, Serialize};
+use std::f64::consts::PI;
 use std::fs::read_to_string;
 use structopt::StructOpt;
 
@@ -35,8 +36,8 @@ impl Flags {
     }
 }
 
-pub const DEFAULT_SCREEN_RES: (u32, u32) = (1920, 1080);
-pub const DEFAULT_DPI: f64 = 1.0;
+pub const DEFAULT_SCREEN_RES: (u32, u32) = (69, 420);
+pub const DEFAULT_DPI: f64 = PI;
 
 #[derive(Copy, Clone, Debug)]
 pub struct LTConfig {

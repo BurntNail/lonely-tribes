@@ -1,3 +1,4 @@
+use crate::procedural_generator::IS_DEMO;
 use crate::sprite_stuff::Room;
 use lonely_tribes_lib::{either::Either, paths::get_directory};
 use ron::from_str;
@@ -54,7 +55,13 @@ impl Level {
                 Self {
                     room: Room::proc_gen(seed),
                     specials: 50,
-                    messages: Vec::new(),
+                    messages: {
+                        if IS_DEMO {
+                            vec![(0.5, "Please purchase to access Procgen Levels.".into())]
+                        } else {
+                            vec![]
+                        }
+                    },
                 },
                 Some(seed),
             );
@@ -74,10 +81,18 @@ impl Level {
                     Room::new(path.replace(".ron", ".png"))
                 };
 
+                let mut msgs = ok.messages;
+                if IS_DEMO {
+                    msgs.push((0.5, "Please remember to buy the game".into()));
+                    if ok.seed.is_some() {
+                        msgs.push((0.5, "Procgen doens't work unless you buy the game".into()));
+                    }
+                }
+
                 Self {
                     room,
                     specials: ok.specials,
-                    messages: ok.messages,
+                    messages: msgs,
                 }
             }
             Err(err) => {

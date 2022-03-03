@@ -18,16 +18,18 @@ pub const CAMERA_BASE_HEIGHT: f32 = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
 lazy_static! {
     pub static ref CAMERA_WIDTH_MULTIPLIER: (f32, f32) = {
         let (w, h) = CONFIG.conf.screen_dimensions;
-        let (x, y) = (w as f32 / CAMERA_BASE_WIDTH, h as f32 / CAMERA_BASE_HEIGHT);
+        // let (x, y) = (w as f32 / CAMERA_BASE_WIDTH, h as f32 / CAMERA_BASE_HEIGHT);
 
-        if x > y {
-            (1.0, y / x)
+        if w > h {
+            (1.0, (h / w) as f32)
         } else {
-            (x / y, 1.0)
+            //WTF?
+            ((w / h) as f32, 1.0)
         }
     };
     pub static ref CAMERA_DIMENSIONS: (f32, f32) = {
         let (x, y) = *CAMERA_WIDTH_MULTIPLIER;
+
         (CAMERA_BASE_WIDTH * x, CAMERA_BASE_HEIGHT * y)
     };
 }

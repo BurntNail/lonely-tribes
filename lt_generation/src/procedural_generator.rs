@@ -8,6 +8,7 @@ use rayon::{iter::ParallelIterator, prelude::IntoParallelIterator};
 use std::{collections::HashMap, sync::mpsc::channel};
 
 pub const PERLIN_SCALE: f64 = 5.0;
+pub const IS_DEMO: bool = true;
 
 ///for walls which need more info than 8 bits
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
@@ -76,13 +77,21 @@ impl ProceduralGenerator {
     }
 
     pub fn get(&self) -> Map {
-        let _st = ScopedTimer::new("Creating a PG map took {}".to_string());
+        if !IS_DEMO {
+            let _st = ScopedTimer::new("Creating a PG map took {}".to_string());
 
-        let mut map = Self::generate_walls_sprs(self.seed as u64);
-        Self::add_plants(self.seed, &mut map);
-        Self::add_players(self.seed, &mut map);
+            let mut map = Self::generate_walls_sprs(self.seed as u64);
+            Self::add_plants(self.seed, &mut map);
+            Self::add_players(self.seed, &mut map);
 
-        map
+            map
+        } else {
+            let map: Map = vec![
+                (0, 0, SpriteRequest::Player0),
+                (0, 1, SpriteRequest::Player0),
+            ];
+            map
+        }
     }
 
     fn find_blocked_bits(map: &MapSlice) -> Vec<(usize, usize)> {

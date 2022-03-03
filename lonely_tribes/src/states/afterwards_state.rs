@@ -118,10 +118,6 @@ impl SimpleState for PostGameState {
                     t = Trans::Switch(Box::new(LevelSelectState::default()));
                 }
             }
-            StateEvent::Window(Event::WindowEvent {
-                window_id: _,
-                event: WindowEvent::Resized(size),
-            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
         t

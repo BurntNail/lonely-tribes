@@ -79,10 +79,6 @@ impl SimpleState for StartGameState {
         let mut t = SimpleTrans::None;
 
         match event {
-            StateEvent::Window(Event::WindowEvent {
-                window_id: _,
-                event: WindowEvent::Resized(size),
-            }) => change_screen_res(size.width as u32, size.height as u32),
             StateEvent::Ui(ui_event) => {
                 let mut target = None;
 

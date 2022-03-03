@@ -131,10 +131,6 @@ impl SimpleState for PausedState {
                     enabled: disabler_enabled,
                 });
             }
-            StateEvent::Window(Event::WindowEvent {
-                window_id: _,
-                event: WindowEvent::Resized(size),
-            }) => change_screen_res(size.width as u32, size.height as u32),
             _ => {}
         }
 

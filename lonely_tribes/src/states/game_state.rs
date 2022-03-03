@@ -229,9 +229,6 @@ impl SimpleState for PuzzleState {
                         lost_position: Some(TileTransform::default()),
                     };
                 }
-                WindowEvent::Resized(size) => {
-                    change_screen_res(size.width as u32, size.height as u32);
-                }
                 _ => {}
             },
             _ => {}
