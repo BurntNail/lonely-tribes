@@ -33,14 +33,12 @@ use lonely_tribes_generation::{
     sprite_stuff::{FromSpr, Room},
 };
 use lonely_tribes_lib::{
-    config::change_screen_res,
     either::Either,
     paths::get_directory,
     states_util::{
         get_levels_str, get_scaling_factor, init_camera, load_font, load_sprite_sheet,
         CAMERA_DIMENSIONS,
     },
-    SteamworksHolder,
 };
 use lonely_tribes_systems::{
     message_system::{MessageList, TimedMessagesToAdd},
@@ -457,7 +455,7 @@ fn add_score(world: &mut World) -> Entity {
         Anchor::TopLeft,
         Anchor::TopLeft,
         50.0 * sf_x,
-        -50.0 * sf_x,
+        -50.0 * sf_y,
         0.5,
         333.3 * sf_x,
         500.0 * sf_y,

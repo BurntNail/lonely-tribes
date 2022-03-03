@@ -4,12 +4,10 @@ use amethyst::{
     input::{InputEvent, VirtualKeyCode},
     renderer::SpriteRender,
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
-    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_generation::level::RT_PROCGEN_FILENAME;
 use lonely_tribes_lib::{
-    config::change_screen_res,
     high_scores::HighScores,
     states_util::{
         get_levels, get_scaling_factor, levels_len, load_font, load_sprite_sheet, LevelType,
@@ -158,7 +156,7 @@ impl SimpleState for LevelSelectState {
     }
 }
 
-pub const MAX_LEVELS_ONE_SCREEN: i32 = 5;
+pub const MAX_LEVELS_ONE_SCREEN: i32 = 6;
 
 ///Function to initialise the Level Select
 ///
@@ -178,10 +176,11 @@ fn create_lvl_select_btns(
         let tot_height = (sf_y * 900.0) as i32;
         let buffer_space = (sf_y * 200.0) as i32;
 
-        (tot_height - buffer_space) / MAX_LEVELS_ONE_SCREEN
+        (tot_height - buffer_space) / (MAX_LEVELS_ONE_SCREEN + 1)
     };
+
     let get_height = |index: usize| {
-        let pos = level_txt_height as f32 * (MAX_LEVELS_ONE_SCREEN as usize - index) as f32;
+        let pos = level_txt_height as f32 * ((MAX_LEVELS_ONE_SCREEN + 1) as usize - index) as f32;
         pos - (sf_y * 450.0)
     };
 
@@ -190,16 +189,16 @@ fn create_lvl_select_btns(
         Anchor::TopMiddle,
         Anchor::TopMiddle,
         0.0,
-        sf_y * -75.0,
+        sf_y * -60.0,
         0.5,
-        sf_x * 1500.0,
-        sf_y * 100.0,
+        sf_x * 1550.0,
+        sf_y * 125.0,
     );
     let main_txt = UiText::new(
         load_font(world, "ZxSpectrumBold"),
         "Welcome to the Level Select. Press [Space] Or [Return] to Automatically go to the next unlocked level (or the last level if you have finished the game)".to_string(),
         [1.0; 4],
-        sf_y * 33.3,
+        sf_y * (level_txt_height as f32) / 4.0,
         LineMode::Wrap,
         Anchor::Middle
     );
@@ -230,16 +229,14 @@ fn create_lvl_select_btns(
                         [1.0; 4],
                         true,
                     )
+                } else if i_adj == next_level as i32 {
+                    (format!("Level number: {:02}", i_adj + 1), [1.0; 4], true)
                 } else {
-                    if i_adj == next_level as i32 {
-                        (format!("Level number: {:02}", i_adj + 1), [1.0; 4], true)
-                    } else {
-                        (
-                            format!("Level number: {:02}", i_adj + 1),
-                            [1.0, 0.25, 0.25, 1.0],
-                            false,
-                        )
-                    }
+                    (
+                        format!("Level number: {:02}", i_adj + 1),
+                        [1.0, 0.25, 0.25, 1.0],
+                        false,
+                    )
                 }
             } else {
                 (
@@ -253,7 +250,7 @@ fn create_lvl_select_btns(
             }
         };
 
-        let font_height = sf_y * 50.0;
+        let font_height = sf_y * (level_txt_height as f32) / 3.0;
         let trans = UiTransform::new(
             format!("{}-text", level),
             Anchor::Middle,

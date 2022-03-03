@@ -3,13 +3,9 @@ use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
-    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
-use lonely_tribes_lib::{
-    config::change_screen_res,
-    states_util::{get_scaling_factor, load_font},
-};
+use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
 
 ///Text displayed in HelpState
 pub const HELP_TXT: &str = include_str!("help_text.txt");
@@ -32,13 +28,10 @@ impl SimpleState for HelpState {
         event: StateEvent,
     ) -> SimpleTrans {
         let mut t = SimpleTrans::None;
-        match event {
-            StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) => {
-                if key_code == VirtualKeyCode::Space || key_code == VirtualKeyCode::Return {
-                    t = SimpleTrans::Switch(Box::new(StartGameState::default()));
-                }
+        if let StateEvent::Input(InputEvent::KeyPressed { key_code, .. }) = event {
+            if key_code == VirtualKeyCode::Space || key_code == VirtualKeyCode::Return {
+                t = SimpleTrans::Switch(Box::new(StartGameState::default()));
             }
-            _ => {}
         }
 
         t
@@ -59,13 +52,13 @@ fn get_help_txt(world: &mut World) {
         0.0,
         0.5,
         sf_x * 1500.0,
-        sf_y * 800.0,
+        10_000.0,
     );
     let txt = UiText::new(
         load_font(world, "Hyperlegible"),
         HELP_TXT.to_string(),
         [1.0; 4],
-        sf_y * 42.5,
+        sf_y * 25.0,
         LineMode::Wrap,
         Anchor::MiddleLeft,
     );

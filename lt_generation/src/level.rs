@@ -1,5 +1,4 @@
-use crate::procedural_generator::IS_DEMO;
-use crate::sprite_stuff::Room;
+use crate::{procedural_generator::IS_DEMO, sprite_stuff::Room};
 use lonely_tribes_lib::{either::Either, paths::get_directory};
 use ron::from_str;
 use serde::{Deserialize, Serialize};

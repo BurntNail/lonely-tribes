@@ -6,12 +6,10 @@ use amethyst::{
     },
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEvent, UiEventType, UiText, UiTransform},
-    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use lonely_tribes_components::data_holder::EntityHolder;
 use lonely_tribes_lib::{
-    config::change_screen_res,
     states_util::{get_scaling_factor, load_font},
     HOVER_COLOUR,
 };

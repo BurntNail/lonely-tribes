@@ -8,7 +8,7 @@ use rayon::{iter::ParallelIterator, prelude::IntoParallelIterator};
 use std::{collections::HashMap, sync::mpsc::channel};
 
 pub const PERLIN_SCALE: f64 = 5.0;
-pub const IS_DEMO: bool = true;
+pub const IS_DEMO: bool = false;
 
 ///for walls which need more info than 8 bits
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]

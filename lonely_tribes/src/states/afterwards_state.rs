@@ -3,17 +3,15 @@ use amethyst::{
     core::ecs::{Builder, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, LineMode, UiText, UiTransform},
-    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
 use lonely_tribes_components::win_related::{GameState, GameStateEnum};
 use lonely_tribes_generation::level::Level;
 use lonely_tribes_lib::{
-    config::change_screen_res,
     either::Either,
     high_scores::HighScores,
     states_util::{get_scaling_factor, levels_len, load_font},
-    SteamworksHolder, CONFIG,
+    CONFIG,
 };
 use std::collections::HashMap;
 
@@ -46,8 +44,8 @@ impl SimpleState for PostGameState {
         if !opts.debug && won && level_from.contains("lvl-") {
             nu_high_score = Some(high_score.add_score_and_write(level_from.clone(), score));
 
-            let steam = world.write_resource::<SteamworksHolder>();
-            let client = &steam.0;
+            // let steam = world.write_resource::<SteamworksHolder>();
+            // let client = &steam.0;
             //TODO: Work out how to do stats
         }
 

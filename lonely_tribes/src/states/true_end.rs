@@ -3,13 +3,9 @@ use amethyst::{
     core::ecs::{Builder, Entity, World, WorldExt},
     input::{InputEvent, VirtualKeyCode},
     ui::{Anchor, Interactable, LineMode, UiEventType, UiText, UiTransform},
-    winit::{Event, WindowEvent},
     GameData, SimpleState, SimpleTrans, StateData, StateEvent, Trans,
 };
-use lonely_tribes_lib::{
-    config::change_screen_res,
-    states_util::{get_scaling_factor, load_font},
-};
+use lonely_tribes_lib::states_util::{get_scaling_factor, load_font};
 
 ///State for when the user has finished all levels
 #[derive(Default)]

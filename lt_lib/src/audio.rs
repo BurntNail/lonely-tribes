@@ -21,6 +21,10 @@ pub struct Muzac {
 pub fn init_audio(world: &mut World) {
     let vol = LTConfig::new().conf.vol;
 
+    if vol <= 0.0 {
+        return;
+    }
+
     let music = {
         let loader = world.read_resource::<Loader>();
 

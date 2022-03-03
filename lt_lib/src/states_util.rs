@@ -18,19 +18,20 @@ pub const CAMERA_BASE_HEIGHT: f32 = (TILE_WIDTH_HEIGHT * HEIGHT) as f32;
 lazy_static! {
     pub static ref CAMERA_WIDTH_MULTIPLIER: (f32, f32) = {
         let (w, h) = CONFIG.conf.screen_dimensions;
-        // let (x, y) = (w as f32 / CAMERA_BASE_WIDTH, h as f32 / CAMERA_BASE_HEIGHT);
+        let (x, y) = (w as f32 / CAMERA_BASE_WIDTH, h as f32 / CAMERA_BASE_HEIGHT);
 
-        if w > h {
-            (1.0, (h / w) as f32)
+        if x > y {
+            (1.0, (y / x) as f32)
         } else {
             //WTF?
-            ((w / h) as f32, 1.0)
+            ((x / y) as f32, 1.0)
         }
     };
     pub static ref CAMERA_DIMENSIONS: (f32, f32) = {
         let (x, y) = *CAMERA_WIDTH_MULTIPLIER;
 
         (CAMERA_BASE_WIDTH * x, CAMERA_BASE_HEIGHT * y)
+        //TODO: Ultrawide
     };
 }
 
@@ -41,6 +42,8 @@ lazy_static! {
 pub fn init_camera(world: &mut World, wh: (f32, f32)) {
     let mut transform = Transform::default();
     transform.set_translation_xyz(wh.0 * 0.5, wh.1 * 0.5, 100.0);
+
+    log::info!("Initting camera with DEEZ NITS: {:?}", wh);
 
     world
         .create_entity()
@@ -80,21 +83,12 @@ pub fn load_sprite_sheet(world: &mut World, path: &str) -> Handle<SpriteSheet> {
     )
 }
 
-pub fn get_scaling_factor_non_normalised() -> (f32, f32) {
+pub fn get_scaling_factor() -> (f32, f32) {
     let c = CONFIG.conf;
     (
         c.screen_dimensions.0 as f32 / 1600.0, //game was originally designed for 1600x900
         c.screen_dimensions.1 as f32 / 900.0,
     )
-}
-pub fn get_scaling_factor() -> (f32, f32) {
-    let (x, y) = get_scaling_factor_non_normalised();
-
-    if x > y {
-        (1.0, y / x)
-    } else {
-        (x / y, 1.0)
-    }
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]

@@ -5,21 +5,26 @@ use amethyst::{
         Time,
     },
     ui::{Anchor, Interactable, LineMode, UiEventType, UiImage, UiText, UiTransform},
-    winit::{Event, Window, WindowEvent},
+    winit::Window,
     GameData, SimpleState, SimpleTrans, StateData, StateEvent,
 };
 use lonely_tribes_components::text_wobble::TextWobble;
 use lonely_tribes_lib::{
     audio::init_audio,
-    config::{change_screen, change_screen_res, DEFAULT_DPI, DEFAULT_SCREEN_RES},
+    config::{change_screen, DEFAULT_DPI, DEFAULT_SCREEN_RES},
     states_util::{get_scaling_factor, load_font},
-    SteamworksHolder, CONFIG, HOVER_COLOUR,
+    CONFIG, HOVER_COLOUR,
 };
 use lonely_tribes_systems::message_system::{MessageList, TimedMessagesToAdd};
 use rand::{thread_rng, Rng};
 use std::collections::HashMap;
 
-pub static WELCOME_MSGS: &[&str] = &["Hello!", "Join our discord!", "Email the creator!"];
+pub static WELCOME_MSGS: &[&str] = &[
+    "Hello!",
+    "Join our discord! - https://discord.gg/NGJFeBGSuA",
+    "Email the creator! - lonely.tribes@gmail.com",
+    "Check out the code! - https://gitlab.com/Epacnoss/roguelike-rpg",
+];
 pub const SCALE_SPEED: f32 = 0.1;
 
 ///State for welcoming the player to the game
@@ -159,7 +164,7 @@ fn init_welcome_msgs(world: &mut World) -> Entity {
         "welcome".to_string(),
         Anchor::Middle,
         Anchor::Middle,
-        400.0 * sf_x,
+        500.0 * sf_x,
         250.0 * sf_y,
         0.0,
         sf_x * 500.0,
@@ -194,7 +199,7 @@ fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
         0.0,
         sf_y * 100.0,
         0.0,
-        sf_x * 1000.0,
+        sf_x * 1400.0,
         sf_y * 250.0,
     );
     let welcome_txt = UiText::new(
@@ -220,7 +225,7 @@ fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
         0.0,
         sf_y * -85.0,
         0.0,
-        sf_x * 1000.0,
+        sf_x * 1400.0,
         sf_y * 40.0,
     );
     let start_btn_txt = UiText::new(
@@ -251,7 +256,7 @@ fn init_menu(world: &mut World) -> HashMap<ButtonType, Entity> {
         0.0,
         sf_y * -145.0,
         0.0,
-        sf_x * 1000.0,
+        sf_x * 1400.0,
         sf_y * 40.0,
     );
     let help_btn_txt = UiText::new(

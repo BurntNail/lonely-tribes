@@ -1,8 +1,7 @@
 use crate::paths::get_directory;
 use ron::from_str;
 use serde::{Deserialize, Serialize};
-use std::f64::consts::PI;
-use std::fs::read_to_string;
+use std::{f64::consts::PI, fs::read_to_string};
 use structopt::StructOpt;
 
 ///Flags for Lonely Tribes
